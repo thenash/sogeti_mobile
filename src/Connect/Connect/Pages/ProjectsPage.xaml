@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Connect.Pages.ProjectsPage" xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect" BackgroundColor="#EAEAEA">
+	<ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="15" HorizontalOptions="Center">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Results (201)" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
+                    <Button Text="FILTER + SEARCH" Style="{StaticResource blueButtonStyle}" />
+                </StackLayout>
+
+                <ListView x:Name="projectsList" SeparatorVisibility="None" HasUnevenRows="true" ItemsSource="{Binding Projects}" >
+                    
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                        <Label Text="Stuff"/>
+                                        <Button Text="Detals" />
+                     
+                                    
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+     
+            </StackLayout>
+        </ScrollView>
+	</ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Connect.App">
+	<Application.Resources>
+        <ResourceDictionary>
+            <Style x:Key="blueButtonStyle" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="BorderRadius" Value="5" />
+                <Setter Property="WidthRequest" Value="200" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="#2F4973" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+            <Style x:Key="linkButtonStyleGray" TargetType="Button">
+                <Setter Property="TextColor" Value="Gray" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

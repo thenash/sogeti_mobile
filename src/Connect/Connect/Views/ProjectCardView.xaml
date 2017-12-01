@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Connect.Views.ProjectCardView" xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect">
+    <ContentView.Content>
+        <Frame Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" CornerRadius="0" OutlineColor="#DBDBDB" Padding="1">
+            <Grid Padding="0" RowSpacing="1" ColumnSpacing="1" BackgroundColor="#DBDBDB">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                 <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <myViews:CardCellView Grid.Row="0" Grid.Column="0" Title="Project Code" Description="Project 1"/>
+                <myViews:CardCellView Grid.Row="0" Grid.Column="1" Title="Customer" Description="Customer"/>
+                <myViews:CardCellView Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Title="Business Unit" Description="1000 - Central Nervous System (CNS)"/>
+                <myViews:CardCellView Grid.Row="2" Grid.Column="0" Title="Protocol ID" Description="Protocol 1"/>
+                <myViews:CardCellView Grid.Row="2" Grid.Column="1" Title="Study Phase" Description="4"/>
+                <myViews:CardCellView Grid.Row="3" Grid.Column="0" Title="Therapeuutic Area" Description="Psychiatry"/>
+                <myViews:CardCellView Grid.Row="3" Grid.Column="1" Title="INC Project Director" Description="redacted"/>
+                <myViews:CardCellView Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Title="Indication" Description="Indication 1"/>
+                <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="Select" BackgroundColor="#F7B809" TextColor="Black" />
+            </Grid>
+        </Frame>
+    </ContentView.Content>
+</ContentView>

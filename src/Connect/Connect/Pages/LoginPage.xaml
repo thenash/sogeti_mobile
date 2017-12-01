@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Connect.Pages.LoginPage" xmlns:effects="clr-namespace:Connect.Effects">
+	<ContentPage.Content>
+        <StackLayout VerticalOptions="CenterAndExpand" Padding="25">
+            <Image Source="TPD-Logo1024x244.png" />
+
+            <Frame HasShadow="false" BackgroundColor="#EAEAEA" Padding="12" CornerRadius="0" Margin="0,25,0,0" >
+                <Entry x:Name="username" Placeholder="Username" TextColor="#838688" FontSize="20">
+                    <Entry.Effects>
+                        <effects:BorderlessEntryEffect>
+                        </effects:BorderlessEntryEffect>
+                    </Entry.Effects>
+                </Entry>
+            </Frame>
+            <Frame HasShadow="false" BackgroundColor="#EAEAEA" Padding="12" CornerRadius="0" Margin="0,25,0,0" >
+                <Entry x:Name="password" Placeholder="Password" TextColor="#838688" FontSize="20">
+                    <Entry.Effects>
+                        <effects:BorderlessEntryEffect>
+                        </effects:BorderlessEntryEffect>
+                    </Entry.Effects>
+                </Entry>
+            </Frame>
+            <Button x:Name="login" Text="LOGIN" FontSize="20" Margin="0,25,0,0" Clicked="login_Clicked" Style="{StaticResource blueButtonStyle}" />
+            <Button x:Name="forgotPassword" Text="Forgot Password" Margin="0,25,0,0" Style="{StaticResource linkButtonStyleGray}" />
+            <Label Text="INC Research" HorizontalOptions="CenterAndExpand" Margin= "0,25,0,0"/>
+            <Label Text="Customer Version" HorizontalOptions="CenterAndExpand" Margin= "0,25,0,0"/>
+        </StackLayout>
+	</ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Connect.Views.VarianceViewCard" xmlns:effects="clr-namespace:Connect.Effects">
+	<ContentView.Content>
+        <Frame CornerRadius="0" OutlineColor="#7E7F7E" HasShadow="false" Padding="0">
+            <Frame.Effects>
+                <effects:DropShadowEffect>
+                </effects:DropShadowEffect>
+            </Frame.Effects>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                </Grid.ColumnDefinitions>
+                <BoxView x:Name="statusIndicator" Grid.Row="0" Grid.Column="0" HorizontalOptions="FillAndExpand" BackgroundColor="White" />
+                <Label x:Name="varianceCardStatus" Grid.Row="1" Grid.Column="0" Text="ALL" HorizontalOptions="CenterAndExpand" />
+            </Grid>
+        </Frame>
+	</ContentView.Content>
+</ContentView>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Connect.Pages.SitesPage"
+    xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect" BackgroundColor="#EAEAEA"
+    Title="{Binding Title}"
+    xmlns:telerikChart="clr-namespace:Telerik.XamarinForms.Chart;assembly=Telerik.XamarinForms.Chart">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="15" HorizontalOptions="Center">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <myViews:CardCellView Grid.Row="0" Grid.Column="0" Title="Project Code" Description="{Binding Project.projectId}" TextAlignment="StartAndExpand" />
+                    <myViews:CardCellView Grid.Row="0" Grid.Column="1" Title="Customer" Description="{Binding Project.customerName}" />
+                    <myViews:CardCellView Grid.Row="0" Grid.Column="2" Title="Protocol ID" Description="{Binding Project.protocolId}" TextAlignment="EndAndExpand" />
+                </Grid>
+                <telerikChart:RadCartesianChart x:Name="siteStatusChart">
+                  <!--<telerikChart:RadCartesianChart.BindingContext>
+                    <local:siteStatsList />
+                  </telerikChart:RadCartesianChart.BindingContext>-->
+                  <telerikChart:RadCartesianChart.HorizontalAxis>
+                      <telerikChart:DateTimeContinuousAxis LabelFormat="h:mm" GapLength="0.5" PlotMode="BetweenTicks" MajorStepUnit="Minute" MajorStep="15" />
+                  </telerikChart:RadCartesianChart.HorizontalAxis>
+                  <telerikChart:RadCartesianChart.VerticalAxis>
+                    <telerikChart:NumericalAxis />
+                  </telerikChart:RadCartesianChart.VerticalAxis>
+                  <telerikChart:RadCartesianChart.Series>
+
+                        <telerikChart:AreaSeries ItemsSource="{Binding SiteStats}">
+                          <telerikChart:AreaSeries.ValueBinding>
+                            <telerikChart:PropertyNameDataPointBinding PropertyName="activated"/>
+                          </telerikChart:AreaSeries.ValueBinding>
+                          <telerikChart:AreaSeries.CategoryBinding>
+                            <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
+                          </telerikChart:AreaSeries.CategoryBinding>
+                        </telerikChart:AreaSeries>
+
+
+                   <!-- <telerikChart:BarSeries CategoryBinding="isoDate"
+                                            ValueBinding="activated"
+                                            ItemsSource="{Binding siteStatsList}" />-->
+                  </telerikChart:RadCartesianChart.Series>
+                </telerikChart:RadCartesianChart>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
