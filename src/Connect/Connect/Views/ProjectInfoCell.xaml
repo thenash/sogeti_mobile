@@ -53,7 +53,7 @@
                                   Grid.Column="1" />
         </Grid>
 
-        <Grid BackgroundColor="{StaticResource Yellow}"
+        <Grid BackgroundColor="{StaticResource OrangeYellow}"
               Grid.Row="0"
               Grid.Column="1">
             <Grid.RowDefinitions>

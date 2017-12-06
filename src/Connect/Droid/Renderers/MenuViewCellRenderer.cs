@@ -23,8 +23,6 @@ namespace Connect.Droid.Renderers {
         protected override View GetCellCore(Cell item, View convertView, ViewGroup parent, Context context) {
             _cellCore = base.GetCellCore(item, convertView, parent, context);
 
-            //menuCell.PropertyChanged +=
-
             if(parent is ListView listView) {
                 //Color color = menuCell.SelectedBackgroundColor.ToAndroid();
 

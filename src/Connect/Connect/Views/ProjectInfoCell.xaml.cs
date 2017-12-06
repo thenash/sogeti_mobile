@@ -40,8 +40,12 @@ namespace Connect.Views {
             set => SetValue(ArrowTappedCommandProperty, value);
         }
 
-        protected override void OnPropertyChanged(string propertyName) {
+        protected override void OnPropertyChanged(string propertyName = null) {
             base.OnPropertyChanged(propertyName);
+
+            if(propertyName == null) {
+                return;
+            }
 
             switch(propertyName) {
                 case "BusinessUnit":

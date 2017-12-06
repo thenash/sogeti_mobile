@@ -16,7 +16,7 @@
                     <myViews:CardCellView Grid.Row="0" Grid.Column="1" Title="Customer" Description="{Binding Project.customerName}" />
                     <myViews:CardCellView Grid.Row="0" Grid.Column="2" Title="Protocol ID" Description="{Binding Project.protocolId}" TextAlignment="EndAndExpand" />
                 </Grid>
-                <Frame Padding="10" Margin="0, 10" BackgroundColor="White" OutlineColor="#7E7F7E" CornerRadius="0">
+                <Frame Padding="10" Margin="0, 10" BackgroundColor="White" OutlineColor="{StaticResource DarkGray}" CornerRadius="0">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />

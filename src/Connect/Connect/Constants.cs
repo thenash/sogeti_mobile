@@ -8,6 +8,6 @@
         //public const string AlertOccurred   = "AlertOccurred";
 
         public const string ChangeMenuFirstBackground = "ChangeMenuFirstBackground";
-        public const string ProjectSelected = "ProjectSelected";
+        public const string ProjectSelected           = "ProjectSelected";
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ViewCell xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Connect.Views.MilestoneCellView" xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect">
-    <Frame Padding="0" Margin="0" BackgroundColor="White" OutlineColor="#7E7F7E" CornerRadius="0" HasShadow="false">
+    <Frame Padding="0" Margin="0" BackgroundColor="White" OutlineColor="{StaticResource DarkGray}" CornerRadius="0" HasShadow="false">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

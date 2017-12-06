@@ -1,46 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Connect.Pages.LoginPage" xmlns:effects="clr-namespace:Connect.Effects">
-	<ContentPage.Content>
-        <ScrollView>
-            <Grid VerticalOptions="FillAndExpand" Padding="25" RowSpacing="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-            </Grid>
-            <StackLayout VerticalOptions="FillAndExpand" Padding="25" Spacing="20">
-                <Image Source="tpd_logo1024x244.png" />
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Connect.Pages.LoginPage"
+             xmlns:effects="clr-namespace:Connect.Effects">
+  <ContentPage.Content>
+    <ScrollView>
+      <!--<Grid VerticalOptions="FillAndExpand"
+            Padding="25"
+            RowSpacing="20">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+      </Grid>-->
 
-                <Frame HasShadow="false" BackgroundColor="#EAEAEA" Padding="12" CornerRadius="0" >
-                    <Entry x:Name="username" Placeholder="Username" TextColor="#838688" FontSize="20">
-                        <Entry.Effects>
-                            <effects:BorderlessEntryEffect>
-                            </effects:BorderlessEntryEffect>
-                        </Entry.Effects>
-                    </Entry>
-                </Frame>
-                <Frame HasShadow="false" BackgroundColor="#EAEAEA" Padding="12" CornerRadius="0" >
-                    <Entry x:Name="password" Placeholder="Password" TextColor="#838688" FontSize="20">
-                        <Entry.Effects>
-                            <effects:BorderlessEntryEffect>
-                            </effects:BorderlessEntryEffect>
-                        </Entry.Effects>
-                    </Entry>
-                </Frame>
-                <Label x:Name="login" Text="LOGIN" FontSize="20" BackgroundColor="#2F4973" HorizontalOptions="Center" HorizontalTextAlignment="Center" TextColor="White" FontAttributes="Bold" WidthRequest="100">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="login_Clicked"/>
-                    </Label.GestureRecognizers>
-                </Label>
-                <Button x:Name="forgotPassword" Text="Forgot Password" Style="{StaticResource linkButtonStyleGray}" />
-                <!--<Label Text="INC Research" HorizontalOptions="CenterAndExpand" Margin= "0,25,0,0"/>-->
-                <Image Source="inc_logo.png" HorizontalOptions="CenterAndExpand" VerticalOptions="End"/>
-                <Label Text="Customer Version" HorizontalOptions="CenterAndExpand" VerticalOptions="End"/>
-            </StackLayout>
-        </ScrollView>
-	</ContentPage.Content>
+      <StackLayout VerticalOptions="FillAndExpand"
+                   Padding="25"
+                   Spacing="20">
+
+        <Image Source="tpd_logo1024x244.png" />
+
+        <Frame HasShadow="False"
+               BackgroundColor="{StaticResource LightGray}"
+               Padding="12"
+               CornerRadius="0" >
+          <Entry x:Name="username"
+                 Placeholder="Username"
+                 TextColor="{StaticResource DarkGray}"
+                 FontSize="20">
+            <Entry.Effects>
+              <effects:BorderlessEntryEffect>
+              </effects:BorderlessEntryEffect>
+            </Entry.Effects>
+          </Entry>
+        </Frame>
+        <Frame HasShadow="False"
+               BackgroundColor="{StaticResource LightGray}"
+               Padding="12"
+               CornerRadius="0" >
+          <Entry x:Name="password"
+                 Placeholder="Password"
+                 TextColor="{StaticResource DarkGray}"
+                 FontSize="20">
+            <Entry.Effects>
+              <effects:BorderlessEntryEffect>
+              </effects:BorderlessEntryEffect>
+            </Entry.Effects>
+          </Entry>
+        </Frame>
+        <Frame HasShadow="False"
+               WidthRequest="100"
+               HeightRequest="40"
+               CornerRadius="2"
+               Padding="0"
+               BackgroundColor="{StaticResource DarkBlue}"
+               HorizontalOptions="Center">
+          <Label Text="LOGIN"
+                 FontSize="20"
+                 HorizontalTextAlignment="Center"
+                 VerticalTextAlignment="Center"
+                 TextColor="White"
+                 FontAttributes="Bold">
+            <Label.GestureRecognizers>
+              <TapGestureRecognizer Tapped="login_Clicked"/>
+            </Label.GestureRecognizers>
+          </Label>
+        </Frame>
+        <Button Text="Forgot Password"
+                Style="{StaticResource linkButtonStyleGray}" />
+        <!--<Label Text="INC Research" HorizontalOptions="CenterAndExpand" Margin= "0,25,0,0"/>-->
+        <Image Source="inc_logo.png"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="End"/>
+        <Label Text="Customer Version"
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="End"/>
+      </StackLayout>
+    </ScrollView>
+  </ContentPage.Content>
 </ContentPage>

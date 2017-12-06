@@ -9,7 +9,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Label x:Name="cellTitle" Text="Title" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" TextColor="#7E7F7E" FontSize="16" />
+            <Label x:Name="cellTitle" Text="Title" Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" TextColor="{StaticResource DarkGray}" FontSize="16" />
             <Label x:Name="cellDescription" Text="Description" Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" LineBreakMode="NoWrap" />
         </Grid>
 	</ContentView.Content>

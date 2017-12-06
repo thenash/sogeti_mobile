@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:helpers="clr-namespace:Connect.Helpers;assembly=Connect"
-             xmlns:effects="clr-namespace:Connect.Effects;assembly=Connect"
              xmlns:views="clr-namespace:Connect.Views;assembly=Connect"
              x:Class="Connect.Pages.MenuPage"
              BackgroundColor="{StaticResource SkyBlue}"
@@ -31,19 +29,10 @@
                     <DataTemplate>
                         <views:MenuViewCell BindingContext="{Binding .}"
                                             SelectedBackgroundColor="White"
-                                            IsSelected="{Binding IsSelected, Mode=TwoWay}"
-                                            IsFirst="{Binding IsFirst, Mode=TwoWay}"/>
-                        <!--<ViewCell>
-                            <Label Text="{Binding Title, StringFormat='    {0}'}"
-                                   BackgroundColor="{Binding IsSelected,
-                                                             Converter={x:Static helpers:BoolToColorConverter.Instance},
-                                                             ConverterParameter={x:Static Color.White}}"
-                                   VerticalTextAlignment="Center">
-                                <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnItemTapped"/>
-                                </Label.GestureRecognizers>
-                            </Label>
-                        </ViewCell>-->
+                                            IsSelected="{Binding IsSelected,
+                                                                 Mode=TwoWay}"
+                                            IsFirst="{Binding IsFirst,
+                                                              Mode=TwoWay}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
@@ -52,7 +41,7 @@
                    Style="{StaticResource SmallLabelStyle}"
                    FontAttributes="Bold" />
             <Frame HasShadow="False"
-                   OutlineColor="{StaticResource Gray}"
+                   OutlineColor="{StaticResource DarkGray}"
                    CornerRadius="3"
                    HorizontalOptions="Center"
                    Margin="10,0,10,15">

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -18,10 +19,7 @@ namespace Connect.ViewModels {
 		/// <summary>
 		/// gets or sets the feed items.
 		/// </summary>
-		public ObservableCollection<Project> Projects {
-			get;
-			private set;
-		}
+		public ObservableCollection<Project> Projects { get; private set; }
 
 		private Command _loadCommand;
 		/// <summary>
@@ -33,6 +31,7 @@ namespace Connect.ViewModels {
         /// <summary>
         /// Command to handle a project being selected.
         /// </summary>
+        // ReSharper disable once UnusedMember.Global
         public Command<Project> ProjectSelectedCommand => _projectSelectedCommand ?? (_projectSelectedCommand = new Command<Project>(OnProjectSelectedCommand));
 
         private void OnProjectSelectedCommand(Project project) {
@@ -46,74 +45,74 @@ namespace Connect.ViewModels {
 
 			IsBusy = true;
 
+#if DEBUG
+            Projects.Add(new Project {
+                customerName = "Generic Customer",
+                owningBu = "9500 Biometrics",
+                phase = 4,
+                primaryIndication = "Dry Eye",
+                primaryTherapeuticArea = "Psychiatry",
+                projectDirector = "Sally Smith",
+                projectId = "1001234",
+                protocolId = "9083E1-ES3"
+            });
+
+            Projects.Add(new Project {
+                customerName = "Generic Customer",
+                owningBu = "9500 Biometrics",
+                phase = 4,
+                primaryIndication = "Dry Eye",
+                primaryTherapeuticArea = "Psychiatry",
+                projectDirector = "Sally Smith",
+                projectId = "1001234",
+                protocolId = "9083E1-ES3"
+            });
+
+            Projects.Add(new Project {
+                customerName = "Generic Customer",
+                owningBu = "9500 Biometrics",
+                phase = 4,
+                primaryIndication = "Dry Eye",
+                primaryTherapeuticArea = "Psychiatry",
+                projectDirector = "Sally Smith",
+                projectId = "1001234",
+                protocolId = "9083E1-ES3"
+            });
+
+            Projects.Add(new Project {
+                customerName = "Generic Customer",
+                owningBu = "9500 Biometrics",
+                phase = 4,
+                primaryIndication = "Dry Eye",
+                primaryTherapeuticArea = "Psychiatry",
+                projectDirector = "Sally Smith",
+                projectId = "1001234",
+                protocolId = "9083E1-ES3"
+            });
+#endif
+
             try {
 				string url = "https://ecs.incresearch.com/ECS/mobile/project";
 
-				var client = new HttpClient();
+				HttpClient client = new HttpClient();
 				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
-				var response = await client.GetAsync(url);
+				HttpResponseMessage response = await client.GetAsync(url);
 
-				if (response.IsSuccessStatusCode)
-				{
-					var content = await response.Content.ReadAsStringAsync();
-					var projects = Utility.DeserializeResponse<System.Collections.Generic.List<Project>>(content, "data/projects/projectinfo");
+				if (response.IsSuccessStatusCode) {
+					string content = await response.Content.ReadAsStringAsync();
+					List<Project> projects = Utility.DeserializeResponse<List<Project>>(content, "data/projects/projectinfo");
 
                     Projects.Clear();
 
-					foreach (var project in projects)
-					{
+					foreach (Project project in projects) {
 						Projects.Add(project);
 					}
-				} else {
-				    Projects.Add(new Project {
-				        customerName = "Generic Customer",
-				        owningBu = "9500 Biometrics",
-				        phase = 4,
-				        primaryIndication = "Dry Eye",
-				        primaryTherapeuticArea = "Psychiatry",
-				        projectDirector = "Sally Smith",
-				        projectId = "1001234",
-				        protocolId = "9083E1-ES3"
-				    });
-
-				    Projects.Add(new Project {
-				        customerName = "Generic Customer",
-				        owningBu = "9500 Biometrics",
-				        phase = 4,
-				        primaryIndication = "Dry Eye",
-				        primaryTherapeuticArea = "Psychiatry",
-				        projectDirector = "Sally Smith",
-				        projectId = "1001234",
-				        protocolId = "9083E1-ES3"
-				    });
-
-				    Projects.Add(new Project {
-				        customerName = "Generic Customer",
-				        owningBu = "9500 Biometrics",
-				        phase = 4,
-				        primaryIndication = "Dry Eye",
-				        primaryTherapeuticArea = "Psychiatry",
-				        projectDirector = "Sally Smith",
-				        projectId = "1001234",
-				        protocolId = "9083E1-ES3"
-				    });
-
-				    Projects.Add(new Project {
-				        customerName = "Generic Customer",
-				        owningBu = "9500 Biometrics",
-				        phase = 4,
-				        primaryIndication = "Dry Eye",
-				        primaryTherapeuticArea = "Psychiatry",
-				        projectDirector = "Sally Smith",
-				        projectId = "1001234",
-				        protocolId = "9083E1-ES3"
-				    });
-                }
+				}
 
 			} catch (Exception ex) {
-				var page = new ContentPage();
-				page.DisplayAlert("Error", "Unable to load projects.", "OK");
+				ContentPage page = new ContentPage();
+				await page.DisplayAlert("Error", "Unable to load projects.", "OK");
 			}
 
 			IsBusy = false;
