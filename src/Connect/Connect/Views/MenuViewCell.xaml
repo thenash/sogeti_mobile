@@ -6,6 +6,8 @@
     <ViewCell.View>
         <Label Text="{Binding Title, StringFormat='    {0}'}"
                VerticalTextAlignment="Center"
-               BackgroundColor="{Binding IsFirst, Converter={x:Static helpers:BoolToColorConverter.Instance}, ConverterParameter={x:Static Color.White}}"/>
+               BackgroundColor="{Binding IsFirst,
+                                         Converter={x:Static helpers:BoolToColorConverter.Instance},
+                                         ConverterParameter={x:Static Color.White}}"/>
     </ViewCell.View>
 </ViewCell>

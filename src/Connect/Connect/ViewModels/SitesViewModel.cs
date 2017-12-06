@@ -10,7 +10,7 @@ using Xamarin.Forms;
 namespace Connect.ViewModels
 {
     public class SitesViewModel : BaseViewModel
-    { 
+    {
 		/// <summary>
 		/// gets or sets the feed items
 		/// </summary>
@@ -95,22 +95,22 @@ namespace Connect.ViewModels
 
 			try
 			{
-				var url = $"https://ecs.incresearch.com/ECS/mobile/sitedetails/projectId/{_projectID}";
+				string url = $"https://ecs.incresearch.com/ECS/mobile/sitedetails/projectId/{_projectID}";
 
-				var _client = new HttpClient();
+				HttpClient _client = new HttpClient();
 				_client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
-				var response = await _client.GetAsync(url);
+				HttpResponseMessage response = await _client.GetAsync(url);
 
 				if (response.IsSuccessStatusCode)
 				{
-					var content = await response.Content.ReadAsStringAsync();
+					string content = await response.Content.ReadAsStringAsync();
 
-					var siteDetails = Utility.DeserializeResponse<List<SiteDetails>>(content, "data/sites/details");
+					List<SiteDetails> siteDetails = Utility.DeserializeResponse<List<SiteDetails>>(content, "data/sites/details");
 
 					SiteDetails.Clear();
 
-					foreach (var siteDetail in siteDetails)
+					foreach (SiteDetails siteDetail in siteDetails)
 					{
 						SiteDetails.Add(siteDetail);
 					}
@@ -119,8 +119,8 @@ namespace Connect.ViewModels
 			}
 			catch (Exception ex)
 			{
-				var page = new ContentPage();
-				page.DisplayAlert("Error", "Unable to load projects.", "OK");
+				ContentPage page = new ContentPage();
+				await page.DisplayAlert("Error", "Unable to load projects.", "OK");
 			}
 
 			IsBusy = false;
@@ -145,22 +145,22 @@ namespace Connect.ViewModels
 
 			try
 			{
-				var url = $"https://ecs.incresearch.com/ECS/mobile/sitetrends/projectId/{_projectID}";
+				string url = $"https://ecs.incresearch.com/ECS/mobile/sitetrends/projectId/{_projectID}";
 
-				var _client = new HttpClient();
+				HttpClient _client = new HttpClient();
 				_client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
-				var response = await _client.GetAsync(url);
+				HttpResponseMessage response = await _client.GetAsync(url);
 
 				if (response.IsSuccessStatusCode)
 				{
-					var content = await response.Content.ReadAsStringAsync();
+					string content = await response.Content.ReadAsStringAsync();
 
-					var siteTrends = Utility.DeserializeResponse<List<SiteTrends>>(content, "data/project/siteTrends");
+					List<SiteTrends> siteTrends = Utility.DeserializeResponse<List<SiteTrends>>(content, "data/project/siteTrends");
 
 					SiteTrends.Clear();
 
-					foreach (var siteTrend in siteTrends)
+					foreach (SiteTrends siteTrend in siteTrends)
 					{
 						SiteTrends.Add(siteTrend);
 					}
@@ -168,7 +168,7 @@ namespace Connect.ViewModels
 			}
 			catch (Exception ex)
 			{
-				var page = new ContentPage();
+				ContentPage page = new ContentPage();
 				page.DisplayAlert("Error", "Unable to load projects.", "OK");
 			}
 
@@ -194,22 +194,22 @@ namespace Connect.ViewModels
 
 			try
 			{
-				var url = $"https://ecs.incresearch.com/ECS/mobile/sitestats/projectId/{_projectID}";
+				string url = $"https://ecs.incresearch.com/ECS/mobile/sitestats/projectId/{_projectID}";
 
-				var _client = new HttpClient();
+				HttpClient _client = new HttpClient();
 				_client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
-				var response = await _client.GetAsync(url);
+				HttpResponseMessage response = await _client.GetAsync(url);
 
 				if (response.IsSuccessStatusCode)
 				{
-					var content = await response.Content.ReadAsStringAsync();
+					string content = await response.Content.ReadAsStringAsync();
 
-					var siteStats = Utility.DeserializeResponse<List<SiteStats>>(content, "data/project/siteStats");
+					List<SiteStats> siteStats = Utility.DeserializeResponse<List<SiteStats>>(content, "data/project/siteStats");
 
 					SiteStats.Clear();
 
-					foreach (var siteStat in siteStats)
+					foreach (SiteStats siteStat in siteStats)
 					{
 						SiteStats.Add(siteStat);
 					}
@@ -217,7 +217,7 @@ namespace Connect.ViewModels
 			}
 			catch (Exception ex)
 			{
-				var page = new ContentPage();
+				ContentPage page = new ContentPage();
 				page.DisplayAlert("Error", "Unable to load projects.", "OK");
 			}
 
@@ -244,22 +244,22 @@ namespace Connect.ViewModels
 			{
 				string url = $"https://ecs.incresearch.com/ECS/mobile/project/projectId/{_projectID}";
 
-				var _client = new HttpClient();
+				HttpClient _client = new HttpClient();
 				_client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
-				var response = await _client.GetAsync(url);
+				HttpResponseMessage response = await _client.GetAsync(url);
 
 				if (response.IsSuccessStatusCode)
 				{
-					var content = await response.Content.ReadAsStringAsync();
+					string content = await response.Content.ReadAsStringAsync();
 
-                    var projects = Utility.DeserializeResponse<List<Project>>(content, "data/projects/projectinfo");
+                    List<Project> projects = Utility.DeserializeResponse<List<Project>>(content, "data/projects/projectinfo");
                     Project = projects[0];
 				}
 			}
 			catch (Exception ex)
 			{
-				var page = new ContentPage();
+				ContentPage page = new ContentPage();
 				page.DisplayAlert("Error", "Unable to load projects.", "OK");
 			}
 
