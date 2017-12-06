@@ -15,38 +15,43 @@ namespace Connect.Pages
             InitializeComponent();
 
 			username.Text = "tpdmdev2";
-			password.Text = "kL11178%";
+			password.Text = "kL11179%";
         }
 
-		async void login_Clicked(object sender, System.EventArgs e)
+		async void login_Clicked(object sender, EventArgs e)
 		{
-			HttpClient client = new HttpClient();
+		    Label label = (Label)sender;
 
-			var url = "https://ecs.incresearch.com/ECS/mobile/login";
+		    if(!label.IsEnabled) {
+		        return;
+		    }
 
-			var _login = new Login();
-			_login.uid = username.Text;
-			_login.pw = password.Text;
+		    label.IsEnabled = false;
 
-			var json = JsonConvert.SerializeObject(_login);
+            HttpClient client = new HttpClient();
+
+			string url = "https://ecs.incresearch.com/ECS/mobile/login";
+
+		    Login login = new Login {
+		        uid = username.Text,
+		        pw  = password.Text
+		    };
+
+		    string json = JsonConvert.SerializeObject(login);
 			//var content = new StringContent(json, Encoding.UTF8, "application/json");
 
 			//IEnumerable<KeyValuePair<string, string>> formLogin;
 
 
-			var content = new FormUrlEncodedContent(new[]
+			FormUrlEncodedContent content = new FormUrlEncodedContent(new[]
 			{
 				new KeyValuePair<string, string>("uid", username.Text),
 				new KeyValuePair<string, string>("pw", password.Text),
 			});
 
-			HttpResponseMessage response = null;
+		    HttpResponseMessage response = await client.PostAsync(url, content);
 
-			response = await client.PostAsync(url, content);
-
-			IEnumerable<string> xAuth;
-
-			if (response.Headers.TryGetValues("X-Authorization", out xAuth))
+		    if (response.Headers.TryGetValues("X-Authorization", out IEnumerable<string> xAuth))
 			{
 				App.AuthKey = xAuth.First();
 
@@ -56,11 +61,10 @@ namespace Connect.Pages
 			}
 			else
 			{
-                App.LoggedIn = true;
-                await Navigation.PopModalAsync();
-				//await DisplayAlert("Invalid Login", "Your credentials were not recongized", "Ok");
+				await DisplayAlert("Invalid Login", "Your credentials were not recognized", "Ok");
 			}
 
-		}
+		    label.IsEnabled = true;
+        }
 	}
 }

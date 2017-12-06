@@ -1,40 +1,100 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Connect.Pages.MenuPage" BackgroundColor="#C4E3FE">
-	<ContentPage.Content>
-        <StackLayout Padding="40">
-            <ListView x:Name="listView" VerticalOptions="FillAndExpand" SeparatorVisibility="None">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:helpers="clr-namespace:Connect.Helpers;assembly=Connect"
+             xmlns:effects="clr-namespace:Connect.Effects;assembly=Connect"
+             xmlns:views="clr-namespace:Connect.Views;assembly=Connect"
+             x:Class="Connect.Pages.MenuPage"
+             BackgroundColor="{StaticResource SkyBlue}"
+             Icon="ic_hamburger.png"
+             Title="Menu">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="SmallLabelStyle"
+                   TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="Small" />
+                <Setter Property="HorizontalTextAlignment"
+                        Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout Padding="0,30,0,0">
+            <ListView ItemsSource="{Binding .}"
+                      VerticalOptions="FillAndExpand"
+                      SeparatorVisibility="None"
+                      ItemSelected="OnItemSelected"
+                      BackgroundColor="Transparent">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <ViewCell>
-                            <Label Text="{Binding Title}" />
-                        </ViewCell>
+                        <views:MenuViewCell BindingContext="{Binding .}"
+                                            SelectedBackgroundColor="White"
+                                            IsSelected="{Binding IsSelected, Mode=TwoWay}"
+                                            IsFirst="{Binding IsFirst, Mode=TwoWay}"/>
+                        <!--<ViewCell>
+                            <Label Text="{Binding Title, StringFormat='    {0}'}"
+                                   BackgroundColor="{Binding IsSelected,
+                                                             Converter={x:Static helpers:BoolToColorConverter.Instance},
+                                                             ConverterParameter={x:Static Color.White}}"
+                                   VerticalTextAlignment="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnItemTapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </ViewCell>-->
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Label Text="Sites" />
-            <Label Text="Subjects" />
-            <Label Text="Monitoring" />
-            <Label Text="Selected:" HorizontalOptions="Center" />
-            <Grid BackgroundColor="White">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                 <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Label Text="Project 1"
-                   Grid.Row="0" Grid.Column="0" HorizontalOptions="Center" />
-                <Label Text="Protocol 1"
-                   Grid.Row="1" Grid.Column="0" HorizontalOptions="Center" />
-                <Label Text="Customer"
-                   Grid.Row="2" Grid.Column="0" HorizontalOptions="Center" />
-                <Label Text="1000 - Central Nervous System"
-                   Grid.Row="3" Grid.Column="0" HorizontalOptions="Center" />
-            </Grid>
-            <Button Text="SIGN OUT" />
+
+            <Label Text="Selected:"
+                   Style="{StaticResource SmallLabelStyle}"
+                   FontAttributes="Bold" />
+            <Frame HasShadow="False"
+                   OutlineColor="{StaticResource Gray}"
+                   CornerRadius="3"
+                   HorizontalOptions="Center"
+                   Margin="10,0,10,15">
+                <Grid BackgroundColor="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label x:Name="NoProjectLabel"
+                           Text="None"
+                           HorizontalTextAlignment="Center"
+                           Grid.Row="0"
+                           Grid.Column="0"/>
+
+                    <Label x:Name="ProjectCodeLabel"
+                           IsVisible="False"
+                           Style="{StaticResource SmallLabelStyle}"
+                           Grid.Row="0"
+                           Grid.Column="0"/>
+                    <Label x:Name="ProtocolIdLabel"
+                           IsVisible="False"
+                           Style="{StaticResource SmallLabelStyle}"
+                           Grid.Row="1"
+                           Grid.Column="0" />
+                    <Label x:Name="CustomerLabel"
+                           IsVisible="False"
+                           Style="{StaticResource SmallLabelStyle}"
+                           Grid.Row="2"
+                           Grid.Column="0" />
+                    <Label x:Name="BusinessUnitLabel"
+                           IsVisible="False"
+                           Style="{StaticResource SmallLabelStyle}"
+                           Grid.Row="3"
+                           Grid.Column="0" />
+                </Grid>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

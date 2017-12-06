@@ -2,17 +2,28 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Connect.App">
 	<Application.Resources>
         <ResourceDictionary>
+            <Color x:Key="Yellow">#FEC000</Color>
+            <Color x:Key="DarkBlue">#395E84</Color>
+            <Color x:Key="LightGray">#EEEEEE</Color>
+            <Color x:Key="SkyBlue">#CCEAFD</Color>
+            <Color x:Key="Gray">Gray</Color>
+
             <Style x:Key="blueButtonStyle" TargetType="Button">
                 <Setter Property="HorizontalOptions" Value="Center" />
                 <Setter Property="VerticalOptions" Value="CenterAndExpand" />
                 <Setter Property="BorderRadius" Value="5" />
                 <Setter Property="WidthRequest" Value="200" />
                 <Setter Property="TextColor" Value="White" />
-                <Setter Property="BackgroundColor" Value="#2F4973" />
+                <Setter Property="BackgroundColor" Value="{StaticResource DarkBlue}" />
                 <Setter Property="FontAttributes" Value="Bold" />
             </Style>
             <Style x:Key="linkButtonStyleGray" TargetType="Button">
-                <Setter Property="TextColor" Value="Gray" />
+                <Setter Property="TextColor" Value="{StaticResource Gray}" />
+            </Style>
+
+            <Style x:Key="NavigationPageStyle" TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor" Value="{StaticResource DarkBlue}" />
+                <Setter Property="BarTextColor" Value="White" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>

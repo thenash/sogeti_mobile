@@ -1,71 +1,151 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Connect.Models;
+using Connect.ViewModels;
 using Connect.Views;
 using Xamarin.Forms;
 
-namespace Connect.Pages
-{
+namespace Connect.Pages {
+
     public delegate void PageNavigatedHandler(object sender, PageNavigationEventArgs e);
 
-    public partial class MenuPage : ContentPage
-	{
+    public partial class MenuPage : ContentPage {
+
         public event PageNavigatedHandler PageNavigated;
 
-        public MenuPage()
-        {
-			InitializeComponent();
+        private ObservableCollection<MasterPageItem> _masterPageItems;
+        private ObservableCollection<MasterPageItem> MasterPageItems {
+            get => _masterPageItems;
+            set {
+                if(!Equals(_masterPageItems, value)) {
+                    _masterPageItems = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
-            var masterPageItems = new List<MasterPageItem>() {
-				new MasterPageItem() { Title = "Project Selection", TargetType = typeof(ProjectsPage) },
-				new MasterPageItem() { Title = "Project Information", TargetType = typeof(ProjectInfoPage) },
-                new MasterPageItem() { Title = "Sites", TargetType = typeof(SitesPage) },
-                new MasterPageItem() { Title = "Subjects", TargetType = typeof(SubjectsPage) },
-                new MasterPageItem() { Title = "Monitoring", TargetType = typeof(MonitoringPage) }
+        public MenuPage() {
+            _masterPageItems = new ObservableCollection<MasterPageItem> {
+                new MasterPageItem { Title = "Project Selection", TargetType = typeof(ProjectsPage), IsFirst = true },
+                new MasterPageItem { Title = "Project Information", TargetType = typeof(ProjectInfoPage) },
+                new MasterPageItem { Title = "Sites", TargetType = typeof(SitesPage) },
+                new MasterPageItem { Title = "Subjects", TargetType = typeof(SubjectsPage) },
+                new MasterPageItem { Title = "Monitoring", TargetType = typeof(MonitoringPage) }
             };
 
-			listView = new ListView
-			{
-				ItemsSource = masterPageItems,
-				ItemTemplate = new DataTemplate(() =>
-				{
-					var imageCell = new ImageCell();
-					imageCell.SetBinding(TextCell.TextProperty, "Title");
-					imageCell.SetBinding(ImageCell.ImageSourceProperty, "IconSource");
-					return imageCell;
-				}),
-				VerticalOptions = LayoutOptions.FillAndExpand,
-				SeparatorVisibility = SeparatorVisibility.None
-			};
+            BindingContext = MasterPageItems;
 
-            listView.ItemSelected += (object sender, SelectedItemChangedEventArgs e) => {
-                PageNavigationEventArgs args = new PageNavigationEventArgs((MasterPageItem)e.SelectedItem);
-                PageNavigated(this, args);
-            };
+            InitializeComponent();
 
-			Padding = new Thickness(0, 40, 0, 0);
-			Icon = "ic_hamburger.png";
-			Title = "Menu";
-			Content = new StackLayout
-			{
-				VerticalOptions = LayoutOptions.FillAndExpand,
-				Children = {
-					listView
-				}
-			};
+            //listView.ItemsSource  = MasterPageItems;
+            //listView.SelectedItem = MasterPageItems[0];
+
+            /* Subscription is going in the constructor so that the page will update values whether its displayed or not */
+            MessagingCenter.Unsubscribe<ProjectsViewModel, Project>(this, ConstantKeys.ProjectSelected);
+            MessagingCenter.Subscribe<ProjectsViewModel, Project>(this, ConstantKeys.ProjectSelected, (vm, project) => {
+                if(project == null) {
+                    return;
+                }
+
+                ToggleProjectLabelVisibility(true);
+                SetProjectLabels(project);
+            });
+        }
+
+        private void OnItemSelected(object sender, SelectedItemChangedEventArgs e) {
+
+            MessagingCenter.Send(this, ConstantKeys.ChangeMenuFirstBackground);
+
+            MasterPageItem selectedItem = MasterPageItems.FirstOrDefault(item => item.TargetType == ((MasterPageItem)e.SelectedItem).TargetType);
+
+            if(selectedItem != null) {
+
+                MasterPageItem previouslySelectedItem = MasterPageItems.FirstOrDefault(item => item.IsSelected);
+
+                if(previouslySelectedItem != null) {
+                    previouslySelectedItem.IsSelected = false;
+                }
+
+                selectedItem.IsSelected = true;
+
+                //MasterPageItems = new ObservableCollection<MasterPageItem>(MasterPageItems);
+                OnPropertyChanged(nameof(MasterPageItems));
+
+                PageNavigationEventArgs args = new PageNavigationEventArgs(selectedItem);
+                PageNavigated?.Invoke(this, args);
+            }
+
+            //selectedViewCell.IsEnabled = true;
+        }
+
+        //private void OnItemTapped(object sender, EventArgs e) {
+
+        //    if(sender == null) {
+        //        return;
+        //    }
+
+        //    MenuViewCell selectedViewCell = (MenuViewCell)sender;
+
+        //    if(!selectedViewCell.IsEnabled) {
+        //        return;
+        //    }
+
+        //    selectedViewCell.IsEnabled = false;
+
+        //    MasterPageItem selectedItem = MasterPageItems.FirstOrDefault(item => item.TargetType == ((MasterPageItem)selectedViewCell.BindingContext).TargetType);
+
+        //    if(selectedItem != null) {
+
+        //        MasterPageItem previouslySelectedItem = MasterPageItems.FirstOrDefault(item => item.IsSelected);
+
+        //        if(previouslySelectedItem != null) {
+        //            previouslySelectedItem.IsSelected = false;
+        //        }
+
+        //        selectedItem.IsSelected = true;
+
+        //        MasterPageItems = new ObservableCollection<MasterPageItem>(MasterPageItems);
+        //        //OnPropertyChanged(nameof(MasterPageItems));
+
+        //        PageNavigationEventArgs args = new PageNavigationEventArgs(selectedItem);
+        //        PageNavigated?.Invoke(this, args);
+        //    }
+
+        //    selectedViewCell.IsEnabled = true;
+        //}
+
+        private void ToggleProjectLabelVisibility(bool display) {
+            NoProjectLabel.IsVisible = !display;
+
+            ProjectCodeLabel.IsVisible  = display;
+            ProtocolIdLabel.IsVisible   = display;
+            CustomerLabel.IsVisible     = display;
+            BusinessUnitLabel.IsVisible = display;
+        }
+
+        private void SetProjectLabels(Project project) {
+            ProjectCodeLabel.Text  = "Project Code: " + project.projectId;
+            ProtocolIdLabel.Text   = "Protocol ID: " + project.protocolId;
+            CustomerLabel.Text     = project.customerName;
+            BusinessUnitLabel.Text = project.owningBu;
         }
     }
 
-	public class PageNavigationEventArgs : EventArgs
-	{
-		public PageNavigationEventArgs(MasterPageItem page)
-		{
+    public class PageNavigationEventArgs : EventArgs {
+
+        public PageNavigationEventArgs(MasterPageItem page) {
             TargetType = page.TargetType;
-            Title = page.Title;
-		}
+            Title      = page.Title;
+        }
 
-        public Type TargetType { get; set; }
+        public Type TargetType {
+            get; set;
+        }
 
-        public string Title { get; set; }
-	}
+        public string Title {
+            get; set;
+        }
+    }
 }

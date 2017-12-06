@@ -32,16 +32,14 @@
                   <telerikChart:RadCartesianChart.Series>
 
                         <telerikChart:AreaSeries ItemsSource="{Binding SiteStats}">
-                          <telerikChart:AreaSeries.ValueBinding>
-                            <telerikChart:PropertyNameDataPointBinding PropertyName="activated"/>
-                          </telerikChart:AreaSeries.ValueBinding>
-                          <telerikChart:AreaSeries.CategoryBinding>
-                            <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
-                          </telerikChart:AreaSeries.CategoryBinding>
+                            <telerikChart:AreaSeries.ValueBinding>
+                                <telerikChart:PropertyNameDataPointBinding PropertyName="activated"/>
+                            </telerikChart:AreaSeries.ValueBinding>
+                            <telerikChart:AreaSeries.CategoryBinding>
+                                <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
+                            </telerikChart:AreaSeries.CategoryBinding>
                         </telerikChart:AreaSeries>
-
-
-                   <!-- <telerikChart:BarSeries CategoryBinding="isoDate"
+                        <!-- <telerikChart:BarSeries CategoryBinding="isoDate"
                                             ValueBinding="activated"
                                             ItemsSource="{Binding siteStatsList}" />-->
                   </telerikChart:RadCartesianChart.Series>

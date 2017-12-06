@@ -3,47 +3,50 @@ using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Connect.Models;
-using Newtonsoft.Json;
 using Xamarin.Forms;
 using Connect.Helpers;
 
-namespace Connect.ViewModels
-{
-    public class ProjectsViewModel : BaseViewModel
-    {
-        public ProjectsViewModel()
-		{
-			this.Title = "Projects";
+namespace Connect.ViewModels {
+
+    public class ProjectsViewModel : BaseViewModel {
+
+        public ProjectsViewModel() {
+			Title = "Projects";
 			Projects = new ObservableCollection<Project>();
         }
 
 		/// <summary>
-		/// gets or sets the feed items
+		/// gets or sets the feed items.
 		/// </summary>
-		public ObservableCollection<Project> Projects
-		{
+		public ObservableCollection<Project> Projects {
 			get;
 			private set;
 		}
 
-		private Command loadCommand;
+		private Command _loadCommand;
 		/// <summary>
-		/// Command to load/refresh artitists
+		/// Command to load/refresh projects.
 		/// </summary>
-		public Command LoadCommand
-		{
-			get { return loadCommand ?? (loadCommand = new Command(async () => await ExecuteLoadCommand())); }
-		}
+		public Command LoadCommand => _loadCommand ?? (_loadCommand = new Command(async () => await ExecuteLoadCommand()));
 
-		private async Task ExecuteLoadCommand()
-		{
-			if (IsBusy)
-				return;
+        private Command<Project> _projectSelectedCommand;
+        /// <summary>
+        /// Command to handle a project being selected.
+        /// </summary>
+        public Command<Project> ProjectSelectedCommand => _projectSelectedCommand ?? (_projectSelectedCommand = new Command<Project>(OnProjectSelectedCommand));
+
+        private void OnProjectSelectedCommand(Project project) {
+            MessagingCenter.Send(this, ConstantKeys.ProjectSelected, project);
+        }
+
+		private async Task ExecuteLoadCommand() {
+		    if(IsBusy) {
+		        return;
+		    }
 
 			IsBusy = true;
 
-			try
-			{
+            try {
 				string url = "https://ecs.incresearch.com/ECS/mobile/project";
 
 				var client = new HttpClient();
@@ -62,11 +65,53 @@ namespace Connect.ViewModels
 					{
 						Projects.Add(project);
 					}
-				}
-				
-			}
-			catch (Exception ex)
-			{
+				} else {
+				    Projects.Add(new Project {
+				        customerName = "Generic Customer",
+				        owningBu = "9500 Biometrics",
+				        phase = 4,
+				        primaryIndication = "Dry Eye",
+				        primaryTherapeuticArea = "Psychiatry",
+				        projectDirector = "Sally Smith",
+				        projectId = "1001234",
+				        protocolId = "9083E1-ES3"
+				    });
+
+				    Projects.Add(new Project {
+				        customerName = "Generic Customer",
+				        owningBu = "9500 Biometrics",
+				        phase = 4,
+				        primaryIndication = "Dry Eye",
+				        primaryTherapeuticArea = "Psychiatry",
+				        projectDirector = "Sally Smith",
+				        projectId = "1001234",
+				        protocolId = "9083E1-ES3"
+				    });
+
+				    Projects.Add(new Project {
+				        customerName = "Generic Customer",
+				        owningBu = "9500 Biometrics",
+				        phase = 4,
+				        primaryIndication = "Dry Eye",
+				        primaryTherapeuticArea = "Psychiatry",
+				        projectDirector = "Sally Smith",
+				        projectId = "1001234",
+				        protocolId = "9083E1-ES3"
+				    });
+
+				    Projects.Add(new Project {
+				        customerName = "Generic Customer",
+				        owningBu = "9500 Biometrics",
+				        phase = 4,
+				        primaryIndication = "Dry Eye",
+				        primaryTherapeuticArea = "Psychiatry",
+				        projectDirector = "Sally Smith",
+				        projectId = "1001234",
+				        protocolId = "9083E1-ES3"
+				    });
+                }
+
+			} catch (Exception ex) {
 				var page = new ContentPage();
 				page.DisplayAlert("Error", "Unable to load projects.", "OK");
 			}

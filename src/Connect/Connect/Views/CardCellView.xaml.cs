@@ -1,59 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
-namespace Connect.Views
-{
-    public partial class CardCellView : ContentView
-    {
+namespace Connect.Views {
+
+    public partial class CardCellView : ContentView {
+
         public Color BackgroundColor {
-            get { return containerGrid.BackgroundColor;  }
-            set { containerGrid.BackgroundColor = value;  }
+            get => containerGrid.BackgroundColor;
+            set => containerGrid.BackgroundColor = value;
         }
 
-        public string Title { 
-            get { return cellTitle.Text;  }
-            set { cellTitle.Text = value;  }
+        public string Title {
+            get => cellTitle.Text;
+            set => cellTitle.Text = value;
         }
-        
+
         public Color TitleColor {
-            get { return cellTitle.TextColor;  }
-            set { cellTitle.TextColor = value;  }
+            get => cellTitle.TextColor;
+            set => cellTitle.TextColor = value;
         }
 
-		public static readonly BindableProperty DescriptionProperty = BindableProperty.Create("Description", typeof(string), typeof(CardCellView), default(string));
+        public static readonly BindableProperty DescriptionProperty = BindableProperty.Create(nameof(Description), typeof(string), typeof(CardCellView), default(string));
 
-		public string Description
-		{
-			get { 
-                return GetValue(DescriptionProperty).ToString(); 
-            }
-			set { 
-                SetValue(DescriptionProperty, value); 
-            }
-		}
+        public string Description {
+            get => GetValue(DescriptionProperty).ToString();
+            set => SetValue(DescriptionProperty, value);
+        }
 
         public LayoutOptions TextAlignment {
             set {
                 cellTitle.HorizontalOptions = value;
                 cellDescription.HorizontalOptions = value;
             }
-		}
+        }
 
-		protected override void OnPropertyChanged(string propertyName)
-		{
-			base.OnPropertyChanged(propertyName);
+        protected override void OnPropertyChanged(string propertyName) {
+            base.OnPropertyChanged(propertyName);
 
-			switch (propertyName)
-			{
-				case "Description":
-					cellDescription.Text = GetValue(DescriptionProperty).ToString();
-					break;
-			}
-		}
+            switch(propertyName) {
+                case nameof(Description):
+                    cellDescription.Text = GetValue(DescriptionProperty).ToString();
+                    break;
+            }
+        }
 
-        public CardCellView()
-        {
+        public CardCellView() {
             InitializeComponent();
         }
     }

@@ -1,27 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using Foundation;
+﻿using Foundation;
 using UIKit;
+using Xamarin.Forms;
 
-namespace Connect.iOS
-{
-	[Register("AppDelegate")]
-	public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
-	{
-		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
-		{
-			global::Xamarin.Forms.Forms.Init();
+[assembly: ExportRenderer(typeof(Telerik.XamarinForms.Chart.RadCartesianChart), typeof(Telerik.XamarinForms.ChartRenderer.iOS.CartesianChartRenderer))]
+[assembly: ExportRenderer(typeof(Telerik.XamarinForms.Chart.RadPieChart), typeof(Telerik.XamarinForms.ChartRenderer.iOS.PieChartRenderer))]
 
-			// Code for starting up the Xamarin Test Cloud Agent
+namespace Connect.iOS {
+
+    [Register("AppDelegate")]
+    public partial class AppDelegate : Xamarin.Forms.Platform.iOS.FormsApplicationDelegate {
+
+        public override bool FinishedLaunching(UIApplication app, NSDictionary options) {
+            Forms.Init();
+
+            // Code for starting up the Xamarin Test Cloud Agent
 #if ENABLE_TEST_CLOUD
-			Xamarin.Calabash.Start();
+            Xamarin.Calabash.Start();
 #endif
 
-			LoadApplication(new App());
+            LoadApplication(new App());
 
-			return base.FinishedLaunching(app, options);
-		}
-	}
+            return base.FinishedLaunching(app, options);
+        }
+    }
 }

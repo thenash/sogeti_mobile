@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Connect.Helpers;
-using Connect.Models;
+﻿using Connect.Models;
 using Connect.ViewModels;
 using Xamarin.Forms;
 
@@ -15,7 +10,7 @@ namespace Connect.Pages
         private string _projectID = "Project 1";
 
 
-        public SitesPage() : this(null) {} 
+        public SitesPage() : this(null) {}
 
         public SitesPage(Milestone project)
         {
@@ -40,9 +35,9 @@ namespace Connect.Pages
 				//_viewModel.LoadCommand.Execute(null);
 			}
 		}
-       
+
     }
 
-	
-	
+
+
 }

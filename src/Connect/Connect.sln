@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Connect", "Connect\Connect.csproj", "{52D67023-9CD5-4938-A364-BA3CF29BB797}"
 EndProject
@@ -37,7 +37,7 @@ Global
 		{6D0A77DB-8C11-4D1C-BA41-E4CDF850D6E7}.Debug|iPhone.Build.0 = Debug|iPhone
 		{6D0A77DB-8C11-4D1C-BA41-E4CDF850D6E7}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{6D0A77DB-8C11-4D1C-BA41-E4CDF850D6E7}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
-		{6D0A77DB-8C11-4D1C-BA41-E4CDF850D6E7}.Release|Any CPU.ActiveCfg = Release|iPhone
+		{6D0A77DB-8C11-4D1C-BA41-E4CDF850D6E7}.Release|Any CPU.ActiveCfg = Release|iPhoneSimulator
 		{6D0A77DB-8C11-4D1C-BA41-E4CDF850D6E7}.Release|iPhone.ActiveCfg = Release|iPhone
 		{6D0A77DB-8C11-4D1C-BA41-E4CDF850D6E7}.Release|iPhone.Build.0 = Release|iPhone
 		{6D0A77DB-8C11-4D1C-BA41-E4CDF850D6E7}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
@@ -69,6 +69,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {48334218-C5A8-4009-B94A-01D607526C8A}
+		SolutionGuid = {E53D0A3A-E575-4A93-9724-E5262EA150E0}
 	EndGlobalSection
 EndGlobal

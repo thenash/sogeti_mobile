@@ -1,32 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
-using Connect.Models;
 using Xamarin.Forms;
 
 namespace Connect.Pages
 {
-    public partial class MainPage : MasterDetailPage
-    {
-        MenuPage masterPage;
+    public partial class MainPage : MasterDetailPage {
 
-        public MainPage()
-        {
-            masterPage = new MenuPage();
+        public MainPage() {
+            Master = new MenuPage();
 
-            Master = masterPage;
-
-            Detail = new NavigationPage(new ProjectsPage() { Title = "Project Selection" }) { BarBackgroundColor = Color.FromHex("#2C4A70"), BarTextColor = Color.White }; //new ProjectsPage() { Title = "Project Selection" }) { BackgroundColor = Color.FromHex("#2F4973") };
-
-			masterPage.PageNavigated += (object sender, PageNavigationEventArgs e) =>
-			{
-                Detail = new NavigationPage((Page)Activator.CreateInstance(e.TargetType)) { Title = e.Title };
-                IsPresented = false;
+            Detail = new NavigationPage(new ProjectsPage { Title = "Project Selection" }) {
+                Title = "Project Selection",
+                Style = (Style)Application.Current.Resources["NavigationPageStyle"]
             };
-
-			if (!App.LoggedIn)
-			{
-				Navigation.PushModalAsync(new LoginPage(), true);
-			}
 		}
+
+        protected override async void OnAppearing() {
+            base.OnAppearing();
+
+            ((MenuPage)Master).PageNavigated += OnPageNavigated;
+
+            if(!App.LoggedIn) {
+                await Navigation.PushModalAsync(new LoginPage(), true);
+            }
+        }
+
+        protected override void OnDisappearing() {
+            base.OnDisappearing();
+
+            ((MenuPage)Master).PageNavigated -= OnPageNavigated;
+        }
+
+        private void OnPageNavigated(object o, PageNavigationEventArgs e) {
+            Detail      = new NavigationPage((Page)Activator.CreateInstance(e.TargetType)) { Title = e.Title, Style = (Style)Application.Current.Resources["NavigationPageStyle"] };
+            IsPresented = false;
+        }
     }
 }

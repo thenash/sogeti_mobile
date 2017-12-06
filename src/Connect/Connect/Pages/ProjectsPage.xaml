@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Connect.Pages.ProjectsPage" xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect" BackgroundColor="#EAEAEA">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Connect.Pages.ProjectsPage"
+             xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect"
+             x:Name="ProjectsPageItem"
+             BackgroundColor="{StaticResource LightGray}">
 	<ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="15" HorizontalOptions="Center">
@@ -7,23 +12,21 @@
                     <Label Text="Results (201)" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand"/>
                     <Button Text="FILTER + SEARCH" Style="{StaticResource blueButtonStyle}" />
                 </StackLayout>
-
-                <ListView x:Name="projectsList" SeparatorVisibility="None" HasUnevenRows="true" ItemsSource="{Binding Projects}" >
-                    
+                <ListView x:Name="projectsList"
+                          SeparatorVisibility="None"
+                          HasUnevenRows="true"
+                          ItemsSource="{Binding Projects}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <ViewCell>
-                                <StackLayout>
-                                        <Label Text="Stuff"/>
-                                        <Button Text="Detals" />
-                     
-                                    
-                                </StackLayout>
-                            </ViewCell>
+                            <myViews:ProjectInfoCell BusinessUnit="{Binding owningBu}"
+                                                     CustomerName="{Binding customerName}"
+                                                     ProtocolId="{Binding protocolId}"
+                                                     ProjectCode="{Binding projectId}"
+                                                     ArrowTappedCommand="{Binding Source={x:Reference ProjectsPageItem},
+                                                                                  Path=BindingContext.ProjectSelectedCommand}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-     
             </StackLayout>
         </ScrollView>
 	</ContentPage.Content>

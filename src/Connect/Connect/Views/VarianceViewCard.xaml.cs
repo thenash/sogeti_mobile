@@ -1,56 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
-namespace Connect.Views
-{
-    public partial class VarianceViewCard : ContentView
-	{
-		public static readonly BindableProperty IndicatorColorProperty = BindableProperty.Create("IndicatorColor", typeof(Color), typeof(VarianceViewCard), Color.White);
+namespace Connect.Views {
 
-		public Color IndicatorColor
-		{
-			get
-			{
-				return (Color)GetValue(IndicatorColorProperty);
-			}
-			set
-			{
-				SetValue(IndicatorColorProperty, value);
-			}
-		}
+    public partial class VarianceViewCard : ContentView {
 
-		public static readonly BindableProperty DescriptionProperty = BindableProperty.Create("Description", typeof(string), typeof(VarianceViewCard), default(string));
+        public static readonly BindableProperty IndicatorColorProperty = BindableProperty.Create(nameof(IndicatorColor), typeof(Color), typeof(VarianceViewCard), Color.White);
 
-		public string Description
-		{
-			get
-			{
-				return GetValue(DescriptionProperty).ToString();
-			}
-			set
-			{
-				SetValue(DescriptionProperty, value);
-			}
-		}
+        public Color IndicatorColor {
+            get => (Color)GetValue(IndicatorColorProperty);
+            set => SetValue(IndicatorColorProperty, value);
+        }
 
-		protected override void OnPropertyChanged(string propertyName)
-		{
-			base.OnPropertyChanged(propertyName);
+        public static readonly BindableProperty DescriptionProperty = BindableProperty.Create(nameof(Description), typeof(string), typeof(VarianceViewCard), default(string));
 
-			switch (propertyName)
-			{
-				case "Description":
-					varianceCardStatus.Text = GetValue(DescriptionProperty).ToString();
-					break;
-				case "IndicatorColor":
+        public string Description {
+            get => GetValue(DescriptionProperty).ToString();
+            set => SetValue(DescriptionProperty, value);
+        }
+
+        protected override void OnPropertyChanged(string propertyName) {
+            base.OnPropertyChanged(propertyName);
+
+            switch(propertyName) {
+                case nameof(Description):
+                    varianceCardStatus.Text = GetValue(DescriptionProperty).ToString();
+                    break;
+                case nameof(IndicatorColor):
                     statusIndicator.Color = (Color)GetValue(IndicatorColorProperty);
-					break;
-			}
-		}
+                    break;
+            }
+        }
 
-        public VarianceViewCard()
-        {
+        public VarianceViewCard() {
             InitializeComponent();
         }
     }
