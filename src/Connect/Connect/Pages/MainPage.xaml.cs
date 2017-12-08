@@ -1,9 +1,10 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace Connect.Pages
 {
     public partial class MainPage : MasterDetailPage {
+
+        public MenuPage MenuPageItem => (MenuPage)Master;
 
         public MainPage() {
             Master = new MenuPage();
@@ -30,9 +31,17 @@ namespace Connect.Pages
             ((MenuPage)Master).PageNavigated -= OnPageNavigated;
         }
 
-        private void OnPageNavigated(object o, PageNavigationEventArgs e) {
-            Detail      = new NavigationPage((Page)Activator.CreateInstance(e.TargetType)) { Title = e.Title, Style = (Style)Application.Current.Resources["NavigationPageStyle"] };
+        public void SetDetailPage(Page page) {
+            Detail = new NavigationPage(page) {
+                Title = page.Title,
+                Style = (Style)Application.Current.Resources["NavigationPageStyle"]
+            };
+
             IsPresented = false;
+        }
+
+        private void OnPageNavigated(object o, PageNavigationEventArgs e) {
+            SetDetailPage(e.PageItem);
         }
     }
 }

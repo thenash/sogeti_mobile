@@ -8,6 +8,8 @@ namespace Connect {
 
     public partial class App : Application {
 
+        public static MainPage NavPage;
+
         public static bool IsPhone {
             get; private set;
         }
@@ -32,7 +34,7 @@ namespace Connect {
             IsPhone   = Device.Idiom           == TargetIdiom.Phone;
             IsAndroid = Device.RuntimePlatform == Device.Android;
 
-            MainPage = new MainPage();
+            MainPage = NavPage = new MainPage();
         }
 
         protected override void OnStart() {

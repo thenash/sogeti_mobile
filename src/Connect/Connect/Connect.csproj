@@ -82,6 +82,7 @@
     </Compile>
     <Compile Include="Constants.cs" />
     <Compile Include="Helpers\Converters.cs" />
+    <Compile Include="Interfaces\INavigationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\Utility.cs" />
     <Compile Include="Models\Login.cs" />
@@ -103,6 +104,8 @@
     <Compile Include="Pages\ProjectsPage.xaml.cs">
       <DependentUpon>ProjectsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Views\ButtonLabelContentView.cs" />
     <Compile Include="Views\CardCellView.xaml.cs">
       <DependentUpon>CardCellView.xaml</DependentUpon>
     </Compile>

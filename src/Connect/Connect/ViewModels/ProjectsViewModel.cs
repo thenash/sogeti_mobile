@@ -1,27 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Net.Http;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Connect.Models;
 using Xamarin.Forms;
-using Connect.Helpers;
+using Connect.Pages;
 
 namespace Connect.ViewModels {
 
     public class ProjectsViewModel : BaseViewModel {
 
         public ProjectsViewModel() {
-			Title = "Projects";
+			Title    = "Projects";
 			Projects = new ObservableCollection<Project>();
         }
 
-		/// <summary>
-		/// gets or sets the feed items.
-		/// </summary>
-		public ObservableCollection<Project> Projects { get; private set; }
+        private ObservableCollection<Project> _projects;
+        /// <summary>
+        /// gets or sets the feed items.
+        /// </summary>
+        public ObservableCollection<Project> Projects {
+            get => _projects;
+            private set {
+                if(_projects != value) {
+                    _projects = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(ProjectCount));
+                }
+            }
+        }
 
-		private Command _loadCommand;
+        public int ProjectCount => Projects.Count;
+
+        private Command _loadCommand;
 		/// <summary>
 		/// Command to load/refresh projects.
 		/// </summary>
@@ -36,10 +45,13 @@ namespace Connect.ViewModels {
 
         private void OnProjectSelectedCommand(Project project) {
             MessagingCenter.Send(this, ConstantKeys.ProjectSelected, project);
+
+            NavService.Push(new ProjectInfoPage(project));
         }
 
 		private async Task ExecuteLoadCommand() {
-		    if(IsBusy) {
+
+            if(IsBusy) {
 		        return;
 		    }
 
@@ -90,32 +102,34 @@ namespace Connect.ViewModels {
                 protocolId = "9083E1-ES3"
             });
 #endif
+            OnPropertyChanged(nameof(Projects));
+		    OnPropertyChanged(nameof(ProjectCount));
 
-            try {
-				string url = "https://ecs.incresearch.com/ECS/mobile/project";
+            //         try {
+            //	string url = "https://ecs.incresearch.com/ECS/mobile/project";
 
-				HttpClient client = new HttpClient();
-				client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
+            //	HttpClient client = new HttpClient();
+            //	client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
-				HttpResponseMessage response = await client.GetAsync(url);
+            //	HttpResponseMessage response = await client.GetAsync(url);
 
-				if (response.IsSuccessStatusCode) {
-					string content = await response.Content.ReadAsStringAsync();
-					List<Project> projects = Utility.DeserializeResponse<List<Project>>(content, "data/projects/projectinfo");
+            //	if (response.IsSuccessStatusCode) {
+            //		string content = await response.Content.ReadAsStringAsync();
+            //		List<Project> projects = Utility.DeserializeResponse<List<Project>>(content, "data/projects/projectinfo");
 
-                    Projects.Clear();
+            //                 Projects.Clear();
 
-					foreach (Project project in projects) {
-						Projects.Add(project);
-					}
-				}
+            //		foreach (Project project in projects) {
+            //			Projects.Add(project);
+            //		}
+            //	}
 
-			} catch (Exception ex) {
-				ContentPage page = new ContentPage();
-				await page.DisplayAlert("Error", "Unable to load projects.", "OK");
-			}
+            //} catch (Exception ex) {
+            //	ContentPage page = new ContentPage();
+            //	await page.DisplayAlert("Error", "Unable to load projects.", "OK");
+            //}
 
-			IsBusy = false;
+            IsBusy = false;
 		}
     }
 }

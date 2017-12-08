@@ -54,10 +54,10 @@ namespace Connect.Views {
             if(propertyName == IsFirstProperty.PropertyName) {
 
                 if(IsFirst) {
-                    MessagingCenter.Unsubscribe<MenuPage>(this, ConstantKeys.ChangeMenuFirstBackground);
-                    MessagingCenter.Subscribe<MenuPage>(this, ConstantKeys.ChangeMenuFirstBackground, page => {
+                    MessagingCenter.Unsubscribe<MenuPage>(this, ConstantKeys.ChangeMenuBackground);
+                    MessagingCenter.Subscribe<MenuPage>(this, ConstantKeys.ChangeMenuBackground, page => {
                         View.BackgroundColor = Color.Default;
-                        MessagingCenter.Unsubscribe<MenuPage>(this, ConstantKeys.ChangeMenuFirstBackground);
+                        MessagingCenter.Unsubscribe<MenuPage>(this, ConstantKeys.ChangeMenuBackground);
                     });
                 }
             }

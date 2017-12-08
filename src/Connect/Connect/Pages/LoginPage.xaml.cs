@@ -20,13 +20,13 @@ namespace Connect.Pages {
         }
 
         async void login_Clicked(object sender, EventArgs e) {
-            Label label = (Label)sender;
+            View loginButton = (View)sender;
 
-            if(!label.IsEnabled) {
+            if(!loginButton.IsEnabled) {
                 return;
             }
 
-            label.IsEnabled = false;
+            loginButton.IsEnabled = false;
 
             HttpClient client = new HttpClient();
 
@@ -60,7 +60,7 @@ namespace Connect.Pages {
                 await DisplayAlert("Invalid Login", "Your credentials were not recognized", "Ok");
             }
 
-            label.IsEnabled = true;
+            loginButton.IsEnabled = true;
         }
     }
 }

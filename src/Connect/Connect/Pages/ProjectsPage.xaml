@@ -5,17 +5,26 @@
              xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect"
              x:Name="ProjectsPageItem"
              BackgroundColor="{StaticResource LightGray}">
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="LOGOUT" />
+  </ContentPage.ToolbarItems>
+
 	<ContentPage.Content>
     <StackLayout Padding="15"
                  HorizontalOptions="Center">
       <StackLayout Orientation="Horizontal">
-        <Label Text="Results (201)"
-               VerticalOptions="CenterAndExpand"
-               HorizontalOptions="CenterAndExpand"
+        <Label Text="{Binding ProjectCount, StringFormat='Results ({0})'}"
+               VerticalTextAlignment="Center"
+               HorizontalOptions="StartAndExpand"
                FontSize="Small"
                FontAttributes="Bold"/>
-        <Button Text="FILTER / SEARCH"
-                Style="{StaticResource blueButtonStyle}" />
+        <!--<Button Text="FILTER / SEARCH"
+                Style="{StaticResource blueButtonStyle}" />-->
+
+        <myViews:ButtonLabelContentView LabelText="FILTER / SEARCH"
+                                        HorizontalOptions="End"
+                                        WidthRequest="150"
+                                        HeightRequest="40" />
       </StackLayout>
 
       <ListView x:Name="projectsList"
@@ -29,7 +38,7 @@
                                      ProtocolId="{Binding protocolId}"
                                      ProjectCode="{Binding projectId}"
                                      ArrowTappedCommand="{Binding Source={x:Reference ProjectsPageItem},
-                                                                                  Path=BindingContext.ProjectSelectedCommand}"/>
+                                                                  Path=BindingContext.ProjectSelectedCommand}"/>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>

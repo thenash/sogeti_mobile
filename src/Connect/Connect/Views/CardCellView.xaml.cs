@@ -4,7 +4,7 @@ namespace Connect.Views {
 
     public partial class CardCellView : ContentView {
 
-        public Color BackgroundColor {
+        public new Color BackgroundColor {
             get => containerGrid.BackgroundColor;
             set => containerGrid.BackgroundColor = value;
         }

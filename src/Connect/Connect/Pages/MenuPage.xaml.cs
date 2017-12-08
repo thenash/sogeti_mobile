@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Connect.Models;
 using Connect.ViewModels;
-using Connect.Views;
 using Xamarin.Forms;
 
 namespace Connect.Pages {
@@ -54,9 +52,30 @@ namespace Connect.Pages {
             });
         }
 
-        private void OnItemSelected(object sender, SelectedItemChangedEventArgs e) {
+        public void Navigate(Page page) {
+            MessagingCenter.Send(this, ConstantKeys.ChangeMenuBackground);
 
-            MessagingCenter.Send(this, ConstantKeys.ChangeMenuFirstBackground);
+            MasterPageItem selectedItem = MasterPageItems.FirstOrDefault(item => item.TargetType == page.GetType());
+
+            if(selectedItem != null) {
+
+                MasterPageItem previouslySelectedItem = MasterPageItems.FirstOrDefault(item => item.IsSelected);
+
+                if(previouslySelectedItem != null) {
+                    previouslySelectedItem.IsSelected = false;
+                }
+
+                selectedItem.IsSelected = true;
+
+                OnPropertyChanged(nameof(MasterPageItems));
+
+                PageNavigationEventArgs args = new PageNavigationEventArgs(selectedItem, page);
+                PageNavigated?.Invoke(this, args);
+            }
+        }
+
+        private void OnItemSelected(object sender, SelectedItemChangedEventArgs e) {
+            MessagingCenter.Send(this, ConstantKeys.ChangeMenuBackground);
 
             MasterPageItem selectedItem = MasterPageItems.FirstOrDefault(item => item.TargetType == ((MasterPageItem)e.SelectedItem).TargetType);
 
@@ -70,51 +89,12 @@ namespace Connect.Pages {
 
                 selectedItem.IsSelected = true;
 
-                //MasterPageItems = new ObservableCollection<MasterPageItem>(MasterPageItems);
                 OnPropertyChanged(nameof(MasterPageItems));
 
-                PageNavigationEventArgs args = new PageNavigationEventArgs(selectedItem);
+                PageNavigationEventArgs args = new PageNavigationEventArgs(selectedItem, (Page)Activator.CreateInstance(selectedItem.TargetType));
                 PageNavigated?.Invoke(this, args);
             }
-
-            //selectedViewCell.IsEnabled = true;
         }
-
-        //private void OnItemTapped(object sender, EventArgs e) {
-
-        //    if(sender == null) {
-        //        return;
-        //    }
-
-        //    MenuViewCell selectedViewCell = (MenuViewCell)sender;
-
-        //    if(!selectedViewCell.IsEnabled) {
-        //        return;
-        //    }
-
-        //    selectedViewCell.IsEnabled = false;
-
-        //    MasterPageItem selectedItem = MasterPageItems.FirstOrDefault(item => item.TargetType == ((MasterPageItem)selectedViewCell.BindingContext).TargetType);
-
-        //    if(selectedItem != null) {
-
-        //        MasterPageItem previouslySelectedItem = MasterPageItems.FirstOrDefault(item => item.IsSelected);
-
-        //        if(previouslySelectedItem != null) {
-        //            previouslySelectedItem.IsSelected = false;
-        //        }
-
-        //        selectedItem.IsSelected = true;
-
-        //        MasterPageItems = new ObservableCollection<MasterPageItem>(MasterPageItems);
-        //        //OnPropertyChanged(nameof(MasterPageItems));
-
-        //        PageNavigationEventArgs args = new PageNavigationEventArgs(selectedItem);
-        //        PageNavigated?.Invoke(this, args);
-        //    }
-
-        //    selectedViewCell.IsEnabled = true;
-        //}
 
         private void ToggleProjectLabelVisibility(bool display) {
             NoProjectLabel.IsVisible = !display;
@@ -135,9 +115,14 @@ namespace Connect.Pages {
 
     public class PageNavigationEventArgs : EventArgs {
 
-        public PageNavigationEventArgs(MasterPageItem page) {
+        public PageNavigationEventArgs(MasterPageItem page, Page pageItem) {
             TargetType = page.TargetType;
             Title      = page.Title;
+            PageItem   = pageItem;
+        }
+
+        public Page PageItem {
+            get; set;
         }
 
         public Type TargetType {

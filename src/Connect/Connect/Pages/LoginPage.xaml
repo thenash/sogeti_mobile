@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Connect.Pages.LoginPage"
-             xmlns:effects="clr-namespace:Connect.Effects">
+             xmlns:effects="clr-namespace:Connect.Effects"
+             xmlns:views="clr-namespace:Connect.Views;assembly=Connect">
   <ContentPage.Content>
     <ScrollView>
       <!--<Grid VerticalOptions="FillAndExpand"
@@ -52,7 +53,7 @@
             </Entry.Effects>
           </Entry>
         </Frame>
-        <Frame HasShadow="False"
+        <!--<Frame HasShadow="False"
                WidthRequest="100"
                HeightRequest="40"
                CornerRadius="2"
@@ -69,10 +70,16 @@
               <TapGestureRecognizer Tapped="login_Clicked"/>
             </Label.GestureRecognizers>
           </Label>
-        </Frame>
+        </Frame>-->
+
+        <views:ButtonLabelContentView Tapped="login_Clicked"
+                                      LabelText="LOGIN"
+                                      WidthRequest="100"
+                                      HeightRequest="40" />
+
         <Button Text="Forgot Password"
                 Style="{StaticResource linkButtonStyleGray}" />
-        <!--<Label Text="INC Research" HorizontalOptions="CenterAndExpand" Margin= "0,25,0,0"/>-->
+
         <Image Source="inc_logo.png"
                HorizontalOptions="CenterAndExpand"
                VerticalOptions="End"/>
