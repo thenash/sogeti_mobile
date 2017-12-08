@@ -1,155 +1,129 @@
-﻿using System;
-namespace Connect.Models
-{
-    public class ProjectDetails
-    {
-		public string projectId
-        {
-            get;
-            set;
-        }
-       
-        public string projectName
-        {
+﻿namespace Connect.Models {
+
+    public class ProjectDetails {
+
+        public string projectId {
             get;
             set;
         }
 
-        public string projectDescription
-        {
+        public string projectName {
             get;
             set;
         }
 
-        public string customerName
-        {
+        public string projectDescription {
             get;
             set;
         }
 
-        public string protocolId
-        {
+        public string customerName {
             get;
             set;
         }
 
-        public string protocolDesc
-        {
+        public string protocolId {
             get;
             set;
         }
 
-        public string phase
-        {
+        public string protocolDesc {
             get;
             set;
         }
 
-        public string projectDirector
-        {
+        public string phase {
             get;
             set;
         }
 
-        public string directorEmail
-        {
+        public string projectDirector {
             get;
             set;
         }
 
-        public string directorPhone
-        {
+        public string directorEmail {
             get;
             set;
         }
 
-        public string projectLead
-        {
+        public string directorPhone {
             get;
             set;
         }
 
-        public string leadEmail
-        {
+        public string projectLead {
             get;
             set;
         }
 
-        public string leadPhone
-        {
+        public string leadEmail {
             get;
             set;
         }
 
-        public string leadDataManager
-        {
+        public string leadPhone {
             get;
             set;
         }
 
-        public string leadDmEmail
-        {
+        public string leadDataManager {
             get;
             set;
         }
 
-        public string leadDmPhone
-        {
+        public string leadDmEmail {
             get;
             set;
         }
 
-        public string projectLifecycleStage
-        {
+        public string leadDmPhone {
             get;
             set;
         }
 
-        public string projectStartDate
-        {
+        public string projectLifecycleStage {
             get;
             set;
         }
 
-        public string projectEndDate
-        {
+        public string projectStartDate {
             get;
             set;
         }
 
-        public string primaryTherapeuticArea
-        {
+        public string projectEndDate {
             get;
             set;
         }
 
-        public string primaryIndication
-        {
+        public string primaryTherapeuticArea {
             get;
             set;
         }
 
-        public string owningBu
-        {
+        public string primaryIndication {
             get;
             set;
         }
 
-        public int totalDirectBudgetAmt
-        {
+        public string owningBu {
             get;
             set;
         }
 
-        public int totalIndirectBudgetAmt
-        {
+        public int totalDirectBudgetAmt {
+            get;
+            set;
+        }
+
+        public int totalIndirectBudgetAmt {
             get;
             set;
         }
 
 
-        public ProjectDetails()
-        {
+        public ProjectDetails() {
         }
     }
 }

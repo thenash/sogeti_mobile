@@ -1,88 +1,72 @@
-﻿using System;
-namespace Connect.Models
-{
-    public class VisitDetails
-    {
-		public string siteId
-        {
+﻿namespace Connect.Models {
+
+    public class VisitDetails {
+
+        public string siteId {
             get;
             set;
         }
 
-        public string piName
-        {
+        public string piName {
             get;
             set;
         }
 
-        public string siteName
-        {
+        public string siteName {
             get;
             set;
         }
 
-        public string countryId
-        {
+        public string countryId {
             get;
             set;
         }
 
-        public string visitType
-        {
+        public string visitType {
             get;
             set;
         }
 
-        public string monitor
-        {
+        public string monitor {
             get;
             set;
         }
 
-        public string visitStartDate
-        {
+        public string visitStartDate {
             get;
             set;
         }
 
-        public string visitEndDate
-        {
+        public string visitEndDate {
             get;
             set;
         }
 
-        public string reportCreationDate
-        {
+        public string reportCreationDate {
             get;
             set;
         }
 
-        public string reportCompletionDate
-        {
+        public string reportCompletionDate {
             get;
             set;
         }
 
-        public string dataSource
-        {
+        public string dataSource {
             get;
             set;
         }
 
-        public string projectId
-        {
+        public string projectId {
             get;
             set;
         }
 
-        public string visitId
-        {
+        public string visitId {
             get;
             set;
         }
 
-		public VisitDetails()
-        {
-        }
+        public VisitDetails() { }
     }
 }

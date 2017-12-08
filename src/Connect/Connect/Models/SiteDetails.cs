@@ -1,64 +1,52 @@
-﻿using System;
-namespace Connect.Models
-{
-    public class SiteDetails
-    {
-        public string projectId
-        {
-            get;
-            set;
-        }
-		
-        public string siteId
-        {
+﻿namespace Connect.Models {
+
+    public class SiteDetails {
+
+        public string projectId {
             get;
             set;
         }
 
-        public string piId
-        {
+        public string siteId {
             get;
             set;
         }
 
-        public string piName
-        {
+        public string piId {
             get;
             set;
         }
 
-        public string country
-        {
+        public string piName {
             get;
             set;
         }
 
-        public string siteName
-        {
+        public string country {
             get;
             set;
         }
 
-        public string eventType
-        {
+        public string siteName {
             get;
             set;
         }
 
-        public string activationDate
-        {
+        public string eventType {
             get;
             set;
         }
 
-        public string dataSource
-        {
+        public string activationDate {
             get;
             set;
         }
 
-		public SiteDetails()
-        {
+        public string dataSource {
+            get;
+            set;
         }
+
+        public SiteDetails() { }
     }
 }

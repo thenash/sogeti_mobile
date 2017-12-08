@@ -1,71 +1,57 @@
-﻿using System;
-namespace Connect.Models
-{
-    public class SubjectDetails
-    {
-		public string subjectId
-        {
+﻿namespace Connect.Models {
+
+    public class SubjectDetails {
+
+        public string subjectId {
             get;
             set;
         }
 
-        public string projectId
-        {
+        public string projectId {
             get;
             set;
         }
 
-        public string siteId
-        {
+        public string siteId {
             get;
             set;
         }
 
-        public string subjectStatus
-        {
+        public string subjectStatus {
             get;
             set;
         }
 
-        public string siteStatus
-        {
+        public string siteStatus {
             get;
             set;
         }
 
-        public string siteName
-        {
+        public string siteName {
             get;
             set;
         }
 
-        public string country
-        {
+        public string country {
             get;
             set;
         }
 
-        public string isoDate
-        {
+        public string isoDate {
             get;
             set;
         }
 
-        public string piName
-        {
+        public string piName {
             get;
             set;
         }
 
-        public string dataSource
-        {
+        public string dataSource {
             get;
             set;
         }
 
-
-		public SubjectDetails()
-        {
-        }
+        public SubjectDetails() { }
     }
 }

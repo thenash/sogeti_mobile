@@ -1,58 +1,48 @@
-﻿using System;
-namespace Connect.Models
-{
-    public class Project
-    {
-        public string projectId
-        {
+﻿namespace Connect.Models {
+
+    public class Project {
+
+        public string projectId {
             get;
             set;
         }
 
-        public string customerName
-        {
+        public string customerName {
             get;
             set;
         }
 
-        public string protocolId
-        {
+        public string protocolId {
             get;
             set;
         }
 
-        public string owningBu
-        {
+        public string owningBu {
             get;
             set;
         }
 
-        public int phase
-        {
+        public int phase {
             get;
             set;
         }
 
-        public string projectDirector
-        {
+        public string projectDirector {
             get;
             set;
         }
 
-        public string primaryTherapeuticArea
-        {
+        public string primaryTherapeuticArea {
             get;
             set;
         }
 
-        public string primaryIndication
-        {
+        public string primaryIndication {
             get;
             set;
         }
-   
-        public Project()
-        {
+
+        public Project() {
         }
     }
 }
