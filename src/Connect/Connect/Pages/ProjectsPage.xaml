@@ -10,9 +10,10 @@
   </ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
-    <StackLayout Padding="15"
+    <StackLayout Padding="0,10,0,0"
                  HorizontalOptions="Center">
-      <StackLayout Orientation="Horizontal">
+      <StackLayout Orientation="Horizontal"
+                   Padding="10,0">
         <Label Text="{Binding ProjectCount, StringFormat='Results ({0})'}"
                VerticalTextAlignment="Center"
                HorizontalOptions="StartAndExpand"
@@ -23,14 +24,15 @@
 
         <myViews:ButtonLabelContentView LabelText="FILTER / SEARCH"
                                         HorizontalOptions="End"
-                                        WidthRequest="150"
-                                        HeightRequest="40" />
+                                        WidthRequest="180"
+                                        HeightRequest="35" />
       </StackLayout>
 
       <ListView x:Name="projectsList"
                 SeparatorVisibility="None"
                 HasUnevenRows="True"
-                ItemsSource="{Binding Projects}">
+                ItemsSource="{Binding Projects}"
+                ItemSelected="OnProjectSelected">
         <ListView.ItemTemplate>
           <DataTemplate>
             <myViews:ProjectInfoCell BusinessUnit="{Binding owningBu}"

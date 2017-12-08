@@ -48,27 +48,45 @@ namespace Connect.Views {
             }
 
             switch(propertyName) {
-                case "BusinessUnit":
+                case nameof(BusinessUnit):
                     businessUnitCell.Description = GetValue(BusinessUnitProperty).ToString();
                     break;
-                case "ProtocolId":
+
+                case nameof(ProtocolId):
                     protocolIdCell.Description = GetValue(ProtocolIdProperty).ToString();
                     break;
-                case "CustomerName":
+
+                case nameof(CustomerName):
                     customerNameCell.Description = GetValue(CustomerNameProperty).ToString();
                     break;
-                case "ProjectCode":
+
+                case nameof(ProjectCode):
                     projectCodeCell.Description = GetValue(ProjectCodeProperty).ToString();
+                    break;
+
+                case nameof(ArrowTappedCommand):
+
+                    if(ArrowTappedCommand == null) {
+                        ArrowButtonGrid.GestureRecognizers.Clear();
+                        return;
+                    }
+
+                    TapGestureRecognizer tapGesture = new TapGestureRecognizer {
+                        Command = ArrowTappedCommand
+                    };
+
+                    if(ArrowButtonGrid.GestureRecognizers.Contains(tapGesture)) {
+                        ArrowButtonGrid.GestureRecognizers.Remove(tapGesture);
+                    }
+
+                    ArrowButtonGrid.GestureRecognizers.Add(tapGesture);
+
                     break;
             }
         }
 
         public ProjectInfoCell() {
             InitializeComponent();
-
-            View.GestureRecognizers.Add(new TapGestureRecognizer {
-                Command = new Command(() => ArrowTappedCommand?.Execute(BindingContext))
-            });
         }
     }
 }

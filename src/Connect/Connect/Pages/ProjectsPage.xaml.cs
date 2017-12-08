@@ -16,16 +16,6 @@ namespace Connect.Pages {
             BindingContext = viewModel = new ProjectsViewModel();
 
             InitializeComponent();
-
-            projectsList.ItemSelected += async (sender, e) => {
-                if(projectsList.SelectedItem == null) {
-                    return;
-                }
-
-                await Navigation.PushAsync(new ProjectInfoPage(projectsList.SelectedItem as Project));
-
-                projectsList.SelectedItem = null;
-            };
         }
 
         protected override void OnAppearing() {
@@ -39,6 +29,10 @@ namespace Connect.Pages {
                 viewModel.IsInitialized = true;
                 viewModel.LoadCommand?.Execute(null);
             }
+        }
+
+        private void OnProjectSelected(object sender, SelectedItemChangedEventArgs e) {
+            projectsList.SelectedItem = null;
         }
     }
 }

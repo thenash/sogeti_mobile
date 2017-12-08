@@ -4,73 +4,90 @@
           x:Class="Connect.Views.ProjectInfoCell"
           xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="25" />
-        </Grid.ColumnDefinitions>
+  <Grid BackgroundColor="{StaticResource LightGray}"
+        Padding="0,0,0,5"
+        ColumnSpacing="0">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="25" />
+    </Grid.ColumnDefinitions>
 
-        <Grid ColumnSpacing="0"
-              RowSpacing="4"
-              Grid.Row="0"
-              Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+    <Grid BackgroundColor="White"
+          ColumnSpacing="0"
+          RowSpacing="4"
+          Grid.Row="0"
+          Grid.Column="0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
 
-            <myViews:CardCellView x:Name="projectCodeCell"
-                                  Title="Project Code:"
-                                  Description="{Binding projectId}"
-                                  TextAlignment="StartAndExpand"
-                                  Grid.Row="0"
-                                  Grid.Column="0" />
+      <myViews:CardCellView x:Name="projectCodeCell"
+                            Title="Project Code:"
+                            TextAlignment="StartAndExpand"
+                            Grid.Row="0"
+                            Grid.Column="0" />
 
-            <myViews:CardCellView x:Name="protocolIdCell"
-                                  Title="Protocol ID:"
-                                  Description="{Binding protocolId}"
-                                  TextAlignment="EndAndExpand"
-                                  Grid.Row="0"
-                                  Grid.Column="1"/>
+      <myViews:CardCellView x:Name="protocolIdCell"
+                            Title="Protocol ID:"
+                            TextAlignment="EndAndExpand"
+                            Grid.Row="0"
+                            Grid.Column="1"/>
 
-            <myViews:CardCellView x:Name="customerNameCell"
-                                  Title="Customer Name:"
-                                  Description="{Binding customerName}"
-                                  TextAlignment="StartAndExpand"
-                                  Grid.Row="1"
-                                  Grid.Column="0"/>
+      <myViews:CardCellView x:Name="customerNameCell"
+                            Title="Customer Name:"
+                            TextAlignment="StartAndExpand"
+                            Grid.Row="1"
+                            Grid.Column="0"/>
 
-            <myViews:CardCellView x:Name="businessUnitCell"
-                                  Title="Business Unit:"
-                                  Description="{Binding owningBu}"
-                                  TextAlignment="EndAndExpand"
-                                  Grid.Row="1"
-                                  Grid.Column="1" />
-        </Grid>
+      <myViews:CardCellView x:Name="businessUnitCell"
+                            Title="Business Unit:"
+                            TextAlignment="EndAndExpand"
+                            Grid.Row="1"
+                            Grid.Column="1" />
 
-        <Grid BackgroundColor="{StaticResource OrangeYellow}"
-              Grid.Row="0"
-              Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Label Text=">"
+      <StackLayout Orientation="Horizontal"
                    HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   FontAttributes="Bold"
-                   Grid.Row="0"
-                   Grid.Column="0"/>
-        </Grid>
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="2">
+        <Image Source="chev-down.png"/>
+        <Label Text="Show More Details"
+               TextColor="Black"
+               FontAttributes="Bold"
+               FontSize="Small">
+        </Label>
+        <!--<StackLayout.GestureRecognizers>
+             TODO: Do something
+          </StackLayout.GestureRecognizers>-->
+      </StackLayout>
     </Grid>
+
+    <Grid x:Name="ArrowButtonGrid"
+          BackgroundColor="{StaticResource OrangeYellow}"
+          Grid.Row="0"
+          Grid.Column="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Label Text=">"
+             HorizontalTextAlignment="Center"
+             VerticalTextAlignment="Center"
+             FontAttributes="Bold"
+             Grid.Row="0"
+             Grid.Column="0"/>
+    </Grid>
+  </Grid>
 </ViewCell>
