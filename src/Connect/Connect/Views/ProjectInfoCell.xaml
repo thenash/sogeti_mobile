@@ -59,7 +59,7 @@
                    Grid.Row="2"
                    Grid.Column="0"
                    Grid.ColumnSpan="2">
-        <Image Source="chev-down.png"/>
+        <Image Source="chev_down.png"/>
         <Label Text="Show More Details"
                TextColor="Black"
                FontAttributes="Bold"

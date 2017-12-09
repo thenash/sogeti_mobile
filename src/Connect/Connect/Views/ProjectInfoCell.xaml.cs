@@ -40,6 +40,13 @@ namespace Connect.Views {
             set => SetValue(ArrowTappedCommandProperty, value);
         }
 
+        public static readonly BindableProperty ArrowTappedCommandParameterProperty = BindableProperty.Create(nameof(ArrowTappedCommandParameter), typeof(Project), typeof(ProjectInfoCell));
+
+        public Project ArrowTappedCommandParameter {
+            get => (Project)GetValue(ArrowTappedCommandParameterProperty);
+            set => SetValue(ArrowTappedCommandParameterProperty, value);
+        }
+
         protected override void OnPropertyChanged(string propertyName = null) {
             base.OnPropertyChanged(propertyName);
 
@@ -64,6 +71,7 @@ namespace Connect.Views {
                     projectCodeCell.Description = GetValue(ProjectCodeProperty).ToString();
                     break;
 
+                case nameof(ArrowTappedCommandParameter):
                 case nameof(ArrowTappedCommand):
 
                     if(ArrowTappedCommand == null) {
@@ -72,7 +80,8 @@ namespace Connect.Views {
                     }
 
                     TapGestureRecognizer tapGesture = new TapGestureRecognizer {
-                        Command = ArrowTappedCommand
+                        Command          = ArrowTappedCommand,
+                        CommandParameter = ArrowTappedCommandParameter
                     };
 
                     if(ArrowButtonGrid.GestureRecognizers.Contains(tapGesture)) {

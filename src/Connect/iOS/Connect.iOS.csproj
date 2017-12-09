@@ -157,22 +157,22 @@
     <BundleResource Include="Resources\inc_logo%403x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\chev-up%403x.png" />
+    <BundleResource Include="Resources\chev_up%403x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\chev-up.png" />
+    <BundleResource Include="Resources\chev_up.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\chev-up%402x.png" />
+    <BundleResource Include="Resources\chev_up%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\chev-down%403x.png" />
+    <BundleResource Include="Resources\chev_down%403x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\chev-down.png" />
+    <BundleResource Include="Resources\chev_down.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\chev-down%402x.png" />
+    <BundleResource Include="Resources\chev_down%402x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />

@@ -40,7 +40,8 @@
                                      ProtocolId="{Binding protocolId}"
                                      ProjectCode="{Binding projectId}"
                                      ArrowTappedCommand="{Binding Source={x:Reference ProjectsPageItem},
-                                                                  Path=BindingContext.ProjectSelectedCommand}"/>
+                                                                  Path=BindingContext.ProjectSelectedCommand}"
+                                     ArrowTappedCommandParameter="{Binding .}"/>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>

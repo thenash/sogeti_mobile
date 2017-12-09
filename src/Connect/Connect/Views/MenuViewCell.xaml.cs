@@ -1,4 +1,5 @@
-﻿using Connect.Pages;
+﻿using Connect.Models;
+using Connect.Pages;
 using Xamarin.Forms;
 
 namespace Connect.Views {
@@ -48,19 +49,36 @@ namespace Connect.Views {
             InitializeComponent();
         }
 
-        protected override void OnPropertyChanged(string propertyName = null) {
-            base.OnPropertyChanged(propertyName);
+        protected override void OnParentSet() {
+            base.OnParentSet();
 
-            if(propertyName == IsFirstProperty.PropertyName) {
-
-                if(IsFirst) {
-                    MessagingCenter.Unsubscribe<MenuPage>(this, ConstantKeys.ChangeMenuBackground);
-                    MessagingCenter.Subscribe<MenuPage>(this, ConstantKeys.ChangeMenuBackground, page => {
-                        View.BackgroundColor = Color.Default;
-                        MessagingCenter.Unsubscribe<MenuPage>(this, ConstantKeys.ChangeMenuBackground);
-                    });
-                }
+            if(Parent != null) {
+                MessagingCenter.Unsubscribe<MenuPage, string>(this, ConstantKeys.ChangeMenuBackground);
+                MessagingCenter.Subscribe<MenuPage, string>(this, ConstantKeys.ChangeMenuBackground, (page, selectedCellTitle) => {
+                    if(selectedCellTitle == ((MasterPageItem)BindingContext).Title) {
+                        Device.BeginInvokeOnMainThread(() => TitleLabel.BackgroundColor = Color.White);
+                    } else {
+                        Device.BeginInvokeOnMainThread(() => TitleLabel.BackgroundColor = Color.Default);
+                    }
+                });
+            } else {
+                MessagingCenter.Unsubscribe<MenuPage, string>(this, ConstantKeys.ChangeMenuBackground);
             }
         }
+
+        //protected override void OnPropertyChanged(string propertyName = null) {
+        //    base.OnPropertyChanged(propertyName);
+
+        //    if(propertyName == IsFirstProperty.PropertyName) {
+
+        //        if(IsFirst) {
+        //            MessagingCenter.Unsubscribe<MenuPage>(this, ConstantKeys.ResetMenuBackground);
+        //            MessagingCenter.Subscribe<MenuPage>(this, ConstantKeys.ResetMenuBackground, page => {
+        //                View.BackgroundColor = Color.Default;
+        //                MessagingCenter.Unsubscribe<MenuPage>(this, ConstantKeys.ResetMenuBackground);
+        //            });
+        //        }
+        //    }
+        //}
     }
 }

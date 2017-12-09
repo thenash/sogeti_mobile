@@ -49,15 +49,16 @@ namespace Connect.Pages {
 
                 ToggleProjectLabelVisibility(true);
                 SetProjectLabels(project);
+                Navigate(new ProjectInfoPage(project));
             });
         }
 
         public void Navigate(Page page) {
-            MessagingCenter.Send(this, ConstantKeys.ChangeMenuBackground);
-
             MasterPageItem selectedItem = MasterPageItems.FirstOrDefault(item => item.TargetType == page.GetType());
 
             if(selectedItem != null) {
+
+                MessagingCenter.Send(this, ConstantKeys.ChangeMenuBackground, selectedItem.Title);
 
                 MasterPageItem previouslySelectedItem = MasterPageItems.FirstOrDefault(item => item.IsSelected);
 
@@ -75,11 +76,11 @@ namespace Connect.Pages {
         }
 
         private void OnItemSelected(object sender, SelectedItemChangedEventArgs e) {
-            MessagingCenter.Send(this, ConstantKeys.ChangeMenuBackground);
-
             MasterPageItem selectedItem = MasterPageItems.FirstOrDefault(item => item.TargetType == ((MasterPageItem)e.SelectedItem).TargetType);
 
             if(selectedItem != null) {
+
+                MessagingCenter.Send(this, ConstantKeys.ChangeMenuBackground, selectedItem.Title);
 
                 MasterPageItem previouslySelectedItem = MasterPageItems.FirstOrDefault(item => item.IsSelected);
 

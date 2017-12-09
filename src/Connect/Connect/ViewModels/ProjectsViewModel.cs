@@ -2,14 +2,13 @@
 using System.Threading.Tasks;
 using Connect.Models;
 using Xamarin.Forms;
-using Connect.Pages;
 
 namespace Connect.ViewModels {
 
     public class ProjectsViewModel : BaseViewModel {
 
         public ProjectsViewModel() {
-			Title    = "Projects";
+			Title    = "Project Selection";
 			Projects = new ObservableCollection<Project>();
         }
 
@@ -45,8 +44,6 @@ namespace Connect.ViewModels {
 
         private void OnProjectSelectedCommand(Project project) {
             MessagingCenter.Send(this, ConstantKeys.ProjectSelected, project);
-
-            NavService.Push(new ProjectInfoPage(project));
         }
 
 		private async Task ExecuteLoadCommand() {

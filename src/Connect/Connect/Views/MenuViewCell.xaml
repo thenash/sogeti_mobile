@@ -4,7 +4,8 @@
           xmlns:helpers="clr-namespace:Connect.Helpers;assembly=Connect"
           x:Class="Connect.Views.MenuViewCell">
     <ViewCell.View>
-        <Label Text="{Binding Title, StringFormat='    {0}'}"
+        <Label x:Name="TitleLabel"
+               Text="{Binding Title, StringFormat='    {0}'}"
                VerticalTextAlignment="Center"
                BackgroundColor="{Binding IsFirst,
                                          Converter={x:Static helpers:BoolToColorConverter.Instance},
