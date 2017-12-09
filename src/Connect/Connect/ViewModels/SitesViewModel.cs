@@ -7,263 +7,245 @@ using Connect.Helpers;
 using Connect.Models;
 using Xamarin.Forms;
 
-namespace Connect.ViewModels
-{
-    public class SitesViewModel : BaseViewModel
-    {
-		/// <summary>
-		/// gets or sets the feed items
-		/// </summary>
-		public ObservableCollection<SiteDetails> SiteDetails
-		{
-			get;
-			private set;
-		}
+namespace Connect.ViewModels {
+
+    public class SitesViewModel : BaseViewModel {
+
+        /// <summary>
+        /// gets or sets the feed items
+        /// </summary>
+        public ObservableCollection<SiteDetails> SiteDetails {
+            get;
+            private set;
+        }
 
         /// <summary>
 	    /// gets or sets the feed items
 	    /// </summary>
-		public ObservableCollection<SiteStats> SiteStats
-		{
-			get;
-			private set;
-		}
+		public ObservableCollection<SiteStats> SiteStats {
+            get;
+            private set;
+        }
 
-		/// <summary>
-		/// gets or sets the feed items
-		/// </summary>
-		public ObservableCollection<SiteTrends> SiteTrends
-		{
-			get;
-			private set;
-		}
+        /// <summary>
+        /// gets or sets the feed items
+        /// </summary>
+        public ObservableCollection<SiteTrends> SiteTrends {
+            get;
+            private set;
+        }
 
-		private ProjectDetails _projectDetails;
+        private ProjectDetails _projectDetails;
 
-		public ProjectDetails ProjectDetails
-		{
-			get { return _projectDetails; }
-			set { _projectDetails = value; OnPropertyChanged("ProjectDetails"); }
-		}
+        public ProjectDetails ProjectDetails {
+            get => _projectDetails;
+            set {
+                _projectDetails = value;
+                OnPropertyChanged();
+            }
+        }
 
-		private Project _project;
+        private Project _project;
 
-		public Project Project
-		{
-			get { return _project; }
-			set { _project = value; OnPropertyChanged("Project"); }
-		}
+        public Project Project {
+            get => _project;
+            set {
+                _project = value;
+                OnPropertyChanged();
+            }
+        }
 
-        private string _projectID = "Project 1";
+        private string _projectId = "Project 1";
 
-        public SitesViewModel(string ProjectID)
-		{
-			this.Title = "Sites";
+        public SitesViewModel(string projectId) {
+            Title = "Sites";
 
-            _projectID = ProjectID;
-			SiteStats = new ObservableCollection<SiteStats>();
-			SiteTrends = new ObservableCollection<SiteTrends>();
-			SiteDetails = new ObservableCollection<SiteDetails>();
+            _projectId = projectId;
 
-            refreshData();
-		}
+            SiteStats   = new ObservableCollection<SiteStats>();
+            SiteTrends  = new ObservableCollection<SiteTrends>();
+            SiteDetails = new ObservableCollection<SiteDetails>();
 
-        private async void refreshData()
-		{
-			await ExecuteLoadProjectCommand();
+            RefreshData();
+        }
+
+        private async void RefreshData() {
+            await ExecuteLoadProjectCommand();
             await ExecuteLoadSiteStatsCommand();
-			await ExecuteLoadSiteDetailsCommand();
+            await ExecuteLoadSiteDetailsCommand();
             //Big request... takes long to execute
-			//await ExecuteLoadSiteTrendsCommand();
-		}
+            //await ExecuteLoadSiteTrendsCommand();
+        }
 
-        private Command loadSiteDetailsCommand;
-		/// <summary>
-		/// Command to load/refresh artitists
-		/// </summary>
-        public Command LoadSiteDetailsCommand
-		{
-			get { return loadSiteDetailsCommand ?? (loadSiteDetailsCommand = new Command(async () => await ExecuteLoadSiteDetailsCommand())); }
-		}
+        private Command _loadSiteDetailsCommand;
+        /// <summary>
+        /// Command to load/refresh artitists
+        /// </summary>
+        public Command LoadSiteDetailsCommand {
+            get {
+                return _loadSiteDetailsCommand ?? (_loadSiteDetailsCommand = new Command(async () => await ExecuteLoadSiteDetailsCommand()));
+            }
+        }
 
-        private async Task ExecuteLoadSiteDetailsCommand()
-		{
-			if (IsBusy)
-				return;
+        private async Task ExecuteLoadSiteDetailsCommand() {
+            if(IsBusy) {
+                return;
+            }
 
-			IsBusy = true;
+            IsBusy = true;
 
-			try
-			{
-				string url = $"https://ecs.incresearch.com/ECS/mobile/sitedetails/projectId/{_projectID}";
+            try {
+                string url = $"https://ecs.incresearch.com/ECS/mobile/sitedetails/projectId/{_projectId}";
 
-				HttpClient _client = new HttpClient();
-				_client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
-				HttpResponseMessage response = await _client.GetAsync(url);
+                HttpResponseMessage response = await client.GetAsync(url);
 
-				if (response.IsSuccessStatusCode)
-				{
-					string content = await response.Content.ReadAsStringAsync();
+                if(response.IsSuccessStatusCode) {
+                    string content = await response.Content.ReadAsStringAsync();
 
-					List<SiteDetails> siteDetails = Utility.DeserializeResponse<List<SiteDetails>>(content, "data/sites/details");
+                    List<SiteDetails> siteDetails = Utility.DeserializeResponse<List<SiteDetails>>(content, "data/sites/details");
 
-					SiteDetails.Clear();
+                    SiteDetails.Clear();
 
-					foreach (SiteDetails siteDetail in siteDetails)
-					{
-						SiteDetails.Add(siteDetail);
-					}
-				}
+                    foreach(SiteDetails siteDetail in siteDetails) {
+                        SiteDetails.Add(siteDetail);
+                    }
+                }
 
-			}
-			catch (Exception ex)
-			{
-				ContentPage page = new ContentPage();
-				await page.DisplayAlert("Error", "Unable to load projects.", "OK");
-			}
+            } catch(Exception ex) {
+                ContentPage page = new ContentPage();
+                await page.DisplayAlert("Error", "Unable to load projects.", "OK");
+            }
 
-			IsBusy = false;
-		}
+            IsBusy = false;
+        }
 
 
-		private Command loadSiteTrendsCommand;
-		/// <summary>
-		/// Command to load/refresh artitists
-		/// </summary>
-		public Command LoadSiteTrendsCommand
-        {
-			get { return loadSiteTrendsCommand ?? (loadSiteTrendsCommand = new Command(async () => await ExecuteLoadSiteTrendsCommand())); }
-		}
+        private Command _loadSiteTrendsCommand;
+        /// <summary>
+        /// Command to load/refresh artitists
+        /// </summary>
+        public Command LoadSiteTrendsCommand {
+            get {
+                return _loadSiteTrendsCommand ?? (_loadSiteTrendsCommand = new Command(async () => await ExecuteLoadSiteTrendsCommand()));
+            }
+        }
 
-        private async Task ExecuteLoadSiteTrendsCommand()
-		{
-			if (IsBusy)
-				return;
+        private async Task ExecuteLoadSiteTrendsCommand() {
+            if(IsBusy)
+                return;
 
-			IsBusy = true;
+            IsBusy = true;
 
-			try
-			{
-				string url = $"https://ecs.incresearch.com/ECS/mobile/sitetrends/projectId/{_projectID}";
+            try {
+                string url = $"https://ecs.incresearch.com/ECS/mobile/sitetrends/projectId/{_projectId}";
 
-				HttpClient _client = new HttpClient();
-				_client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
-				HttpResponseMessage response = await _client.GetAsync(url);
+                HttpResponseMessage response = await client.GetAsync(url);
 
-				if (response.IsSuccessStatusCode)
-				{
-					string content = await response.Content.ReadAsStringAsync();
+                if(response.IsSuccessStatusCode) {
+                    string content = await response.Content.ReadAsStringAsync();
 
-					List<SiteTrends> siteTrends = Utility.DeserializeResponse<List<SiteTrends>>(content, "data/project/siteTrends");
+                    List<SiteTrends> siteTrends = Utility.DeserializeResponse<List<SiteTrends>>(content, "data/project/siteTrends");
 
-					SiteTrends.Clear();
+                    SiteTrends.Clear();
 
-					foreach (SiteTrends siteTrend in siteTrends)
-					{
-						SiteTrends.Add(siteTrend);
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				ContentPage page = new ContentPage();
-				page.DisplayAlert("Error", "Unable to load projects.", "OK");
-			}
+                    foreach(SiteTrends siteTrend in siteTrends) {
+                        SiteTrends.Add(siteTrend);
+                    }
+                }
+            } catch(Exception ex) {
+                ContentPage page = new ContentPage();
+                await page.DisplayAlert("Error", "Unable to load projects.", "OK");
+            }
 
-			IsBusy = false;
-		}
+            IsBusy = false;
+        }
 
 
-		private Command loadSiteStatsCommand;
-		/// <summary>
-		/// Command to load/refresh artitists
-		/// </summary>
-        public Command LoadSiteStatsCommand
-		{
-			get { return loadSiteStatsCommand ?? (loadSiteStatsCommand = new Command(async () => await ExecuteLoadSiteStatsCommand())); }
-		}
+        private Command _loadSiteStatsCommand;
+        /// <summary>
+        /// Command to load/refresh artitists
+        /// </summary>
+        public Command LoadSiteStatsCommand {
+            get {
+                return _loadSiteStatsCommand ?? (_loadSiteStatsCommand = new Command(async () => await ExecuteLoadSiteStatsCommand()));
+            }
+        }
 
-        private async Task ExecuteLoadSiteStatsCommand()
-		{
-			if (IsBusy)
-				return;
+        private async Task ExecuteLoadSiteStatsCommand() {
+            if(IsBusy)
+                return;
 
-			IsBusy = true;
+            IsBusy = true;
 
-			try
-			{
-				string url = $"https://ecs.incresearch.com/ECS/mobile/sitestats/projectId/{_projectID}";
+            try {
+                string url = $"https://ecs.incresearch.com/ECS/mobile/sitestats/projectId/{_projectId}";
 
-				HttpClient _client = new HttpClient();
-				_client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
-				HttpResponseMessage response = await _client.GetAsync(url);
+                HttpResponseMessage response = await client.GetAsync(url);
 
-				if (response.IsSuccessStatusCode)
-				{
-					string content = await response.Content.ReadAsStringAsync();
+                if(response.IsSuccessStatusCode) {
+                    string content = await response.Content.ReadAsStringAsync();
 
-					List<SiteStats> siteStats = Utility.DeserializeResponse<List<SiteStats>>(content, "data/project/siteStats");
+                    List<SiteStats> siteStats = Utility.DeserializeResponse<List<SiteStats>>(content, "data/project/siteStats");
 
-					SiteStats.Clear();
+                    SiteStats.Clear();
 
-					foreach (SiteStats siteStat in siteStats)
-					{
-						SiteStats.Add(siteStat);
-					}
-				}
-			}
-			catch (Exception ex)
-			{
-				ContentPage page = new ContentPage();
-				page.DisplayAlert("Error", "Unable to load projects.", "OK");
-			}
+                    foreach(SiteStats siteStat in siteStats) {
+                        SiteStats.Add(siteStat);
+                    }
+                }
+            } catch(Exception ex) {
+                ContentPage page = new ContentPage();
+                await page.DisplayAlert("Error", "Unable to load projects.", "OK");
+            }
 
-			IsBusy = false;
-		}
+            IsBusy = false;
+        }
 
-		private Command loadProjectCommand;
-		/// <summary>
-		/// Command to load/refresh artitists
-		/// </summary>
-		public Command LoadProjectCommand
-		{
-			get { return loadSiteStatsCommand ?? (loadSiteStatsCommand = new Command(async () => await ExecuteLoadProjectCommand())); }
-		}
+        private Command _loadProjectCommand;
+        /// <summary>
+        /// Command to load/refresh artitists
+        /// </summary>
+        public Command LoadProjectCommand {
+            get {
+                return _loadSiteStatsCommand ?? (_loadSiteStatsCommand = new Command(async () => await ExecuteLoadProjectCommand()));
+            }
+        }
 
-		private async Task ExecuteLoadProjectCommand()
-		{
-			if (IsBusy)
-				return;
+        private async Task ExecuteLoadProjectCommand() {
+            if(IsBusy)
+                return;
 
-			IsBusy = true;
+            IsBusy = true;
 
-			try
-			{
-				string url = $"https://ecs.incresearch.com/ECS/mobile/project/projectId/{_projectID}";
+            try {
+                string url = $"https://ecs.incresearch.com/ECS/mobile/project/projectId/{_projectId}";
 
-				HttpClient _client = new HttpClient();
-				_client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
-				HttpResponseMessage response = await _client.GetAsync(url);
+                HttpResponseMessage response = await client.GetAsync(url);
 
-				if (response.IsSuccessStatusCode)
-				{
-					string content = await response.Content.ReadAsStringAsync();
+                if(response.IsSuccessStatusCode) {
+                    string content = await response.Content.ReadAsStringAsync();
 
                     List<Project> projects = Utility.DeserializeResponse<List<Project>>(content, "data/projects/projectinfo");
                     Project = projects[0];
-				}
-			}
-			catch (Exception ex)
-			{
-				ContentPage page = new ContentPage();
-				page.DisplayAlert("Error", "Unable to load projects.", "OK");
-			}
+                }
+            } catch(Exception ex) {
+                ContentPage page = new ContentPage();
+                await page.DisplayAlert("Error", "Unable to load projects.", "OK");
+            }
 
-			IsBusy = false;
-		}
+            IsBusy = false;
+        }
     }
 }

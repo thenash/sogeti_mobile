@@ -9,23 +9,24 @@ using Connect.ViewModels;
 
 namespace Connect.Pages {
     public partial class ProjectInfoPage : ContentPage {
-        HttpClient client;
-        private string _projectID;
-        List<Milestone> _miletones;
-        List<ProjectDetails> _projectDetails;
 
-        ProjectInfoViewModel viewModel;
+        private HttpClient _client;
+        private string _projectId;
+        private List<Milestone> _miletones;
+        private List<ProjectDetails> _projectDetails;
+
+        private readonly ProjectInfoViewModel _viewModel;
 
         public ProjectInfoPage() : this(new Project()) { }
 
         public ProjectInfoPage(Project project) {
 
-            BindingContext = viewModel = new ProjectInfoViewModel(project);
+            BindingContext = _viewModel = new ProjectInfoViewModel(project);
 
             InitializeComponent();
 
             if(project != null) {
-                _projectID = project.projectId;
+                _projectId = project.projectId;
             }
         }
 
@@ -53,7 +54,10 @@ namespace Connect.Pages {
         protected override async void OnAppearing() {
             base.OnAppearing();
 
-            await GetMilestones();
+            if(string.IsNullOrEmpty(_projectId)) {
+                await GetMilestones(_projectId);
+                await GetProjectDetails(_projectId);
+            }
 
             //milestonesList.ItemsSource = new List<Milestone> {
             //    new Milestone { milestoneName = "Milestone 1", plannedDate = "02Jul2015", actualDate = "22Jul2015", status = "20" },
@@ -65,19 +69,19 @@ namespace Connect.Pages {
             milestonesList.ItemsSource = _miletones;
 
             if(App.LoggedIn) {
-                if(viewModel.IsInitialized) {
+                if(_viewModel.IsInitialized) {
                     return;
                 }
 
-                viewModel.IsInitialized = true;
+                _viewModel.IsInitialized = true;
             }
         }
 
-        async Task GetMilestones() {
-            string url = $"https://ecs.incresearch.com/ECS/mobile/milestones/projectId/{_projectID}";
+        private async Task GetMilestones(string projectId) {
+            string url = "https://ecs.incresearch.com/ECS/mobile/milestones/projectId/" + projectId;
 
-            client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
 #if DEBUG
             _miletones = new List<Milestone> {
@@ -112,7 +116,7 @@ namespace Connect.Pages {
             };
 #endif
 
-            HttpResponseMessage response = await client.GetAsync(url);
+            HttpResponseMessage response = await _client.GetAsync(url);
 
             if(response.IsSuccessStatusCode) {
                 string content = await response.Content.ReadAsStringAsync();
@@ -120,11 +124,11 @@ namespace Connect.Pages {
             }
         }
 
-        async Task GetProjectDetails() {
-            string url = $"https://ecs.incresearch.com/ECS/mobile/projectdetails/projectId/{_projectID}";
+        private async Task GetProjectDetails(string projectId) {
+            string url = "https://ecs.incresearch.com/ECS/mobile/projectdetails/projectId/" + projectId;
 
-            client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
 #if DEBUG
             _projectDetails = new List<ProjectDetails> {
@@ -157,14 +161,13 @@ namespace Connect.Pages {
             };
 #endif
 
-            HttpResponseMessage response = await client.GetAsync(url);
+            HttpResponseMessage response = await _client.GetAsync(url);
 
             if(response.IsSuccessStatusCode) {
                 string content = await response.Content.ReadAsStringAsync();
 
                 _projectDetails = Utility.DeserializeResponse<List<ProjectDetails>>(content, "data/projects/project");
             }
-
         }
     }
 }

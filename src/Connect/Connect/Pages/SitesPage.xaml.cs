@@ -2,18 +2,16 @@
 using Connect.ViewModels;
 using Xamarin.Forms;
 
-namespace Connect.Pages
-{
-    public partial class SitesPage : ContentPage
-    {
-        SitesViewModel _viewModel;
+namespace Connect.Pages {
+    public partial class SitesPage : ContentPage {
+
+        private SitesViewModel _viewModel;
+
         private string _projectID = "Project 1";
 
+        public SitesPage() : this(null) { }
 
-        public SitesPage() : this(null) {}
-
-        public SitesPage(Milestone project)
-        {
+        public SitesPage(Milestone project) {
             InitializeComponent();
 
             BindingContext = _viewModel = new SitesViewModel(_projectID);
@@ -22,22 +20,17 @@ namespace Connect.Pages
                 _projectID = project.projectId;
         }
 
-		protected override async void OnAppearing()
-		{
-			base.OnAppearing();
+        protected override void OnAppearing() {
+            base.OnAppearing();
 
-			if (App.LoggedIn)
-			{
-				//if (_viewModel.IsInitialized)
-				//	return;
+            if(App.LoggedIn) {
+                //if (_viewModel.IsInitialized)
+                //	return;
 
-				//_viewModel.IsInitialized = true;
-				//_viewModel.LoadCommand.Execute(null);
-			}
-		}
+                //_viewModel.IsInitialized = true;
+                //_viewModel.LoadCommand.Execute(null);
+            }
+        }
 
     }
-
-
-
 }
