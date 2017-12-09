@@ -1,4 +1,5 @@
 ﻿using System;
+using Connect.Helpers;
 using Xamarin.Forms;
 
 namespace Connect.Views {
@@ -7,7 +8,6 @@ namespace Connect.Views {
         private TapGestureRecognizer _tapGesture;
 
         private readonly Label _label;
-
         private readonly Frame _frame;
 
         /// <summary>
@@ -43,14 +43,16 @@ namespace Connect.Views {
                 FontAttributes          = FontAttributes.Bold,
                 FontSize                = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
                 HorizontalTextAlignment = TextAlignment.Center,
-                VerticalTextAlignment   = TextAlignment.Center
+                VerticalTextAlignment   = TextAlignment.Center,
+                InputTransparent        = false,
+                Style                   = Utility.GetResource<Style>("BaseLabelStyle")
             };
 
             _frame = new Frame {
                 HasShadow         = false,
                 CornerRadius      = 2,
                 Padding           = 0,
-                BackgroundColor   = (Color)Application.Current.Resources["DarkBlue"],
+                BackgroundColor   = Utility.GetResource<Color>("DarkBlue"),
                 HorizontalOptions = LayoutOptions.Center,
                 Content           = _label
             };
@@ -64,12 +66,12 @@ namespace Connect.Views {
             if(Parent == null) {
                 _tapGesture.Tapped -= OnTapped;
 
-                GestureRecognizers.Remove(_tapGesture);
+                _frame.GestureRecognizers.Remove(_tapGesture);
             } else {
                 _tapGesture = new TapGestureRecognizer();
                 _tapGesture.Tapped += OnTapped;
 
-                GestureRecognizers.Add(_tapGesture);
+                _frame.GestureRecognizers.Add(_tapGesture);
             }
         }
 

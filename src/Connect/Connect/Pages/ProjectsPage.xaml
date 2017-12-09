@@ -19,8 +19,6 @@
                HorizontalOptions="StartAndExpand"
                FontSize="Small"
                FontAttributes="Bold"/>
-        <!--<Button Text="FILTER / SEARCH"
-                Style="{StaticResource blueButtonStyle}" />-->
 
         <myViews:ButtonLabelContentView LabelText="FILTER / SEARCH"
                                         HorizontalOptions="End"

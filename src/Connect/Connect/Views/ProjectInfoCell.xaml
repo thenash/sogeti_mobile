@@ -30,25 +30,25 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <myViews:CardCellView x:Name="projectCodeCell"
+      <myViews:CardCellView x:Name="ProjectCodeCell"
                             Title="Project Code:"
                             TextAlignment="StartAndExpand"
                             Grid.Row="0"
                             Grid.Column="0" />
 
-      <myViews:CardCellView x:Name="protocolIdCell"
+      <myViews:CardCellView x:Name="ProtocolIdCell"
                             Title="Protocol ID:"
                             TextAlignment="EndAndExpand"
                             Grid.Row="0"
                             Grid.Column="1"/>
 
-      <myViews:CardCellView x:Name="customerNameCell"
+      <myViews:CardCellView x:Name="CustomerNameCell"
                             Title="Customer Name:"
                             TextAlignment="StartAndExpand"
                             Grid.Row="1"
                             Grid.Column="0"/>
 
-      <myViews:CardCellView x:Name="businessUnitCell"
+      <myViews:CardCellView x:Name="BusinessUnitCell"
                             Title="Business Unit:"
                             TextAlignment="EndAndExpand"
                             Grid.Row="1"

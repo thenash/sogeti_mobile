@@ -14,8 +14,8 @@ namespace Connect.Pages {
             InitializeComponent();
 
 #if DEBUG
-            username.Text = "tpdmdev2";
-            password.Text = "kL11179%";
+            UsernameEntry.Text = "tpdmdev2";
+            PasswordEntry.Text = "kL11179%";
 #endif
         }
 
@@ -33,8 +33,8 @@ namespace Connect.Pages {
             string url = "https://ecs.incresearch.com/ECS/mobile/login";
 
             //Login loginObj = new Login {
-            //    uid = username.Text,
-            //    pw = password.Text
+            //    uid = UsernameEntry.Text,
+            //    pw  = PasswordEntry.Text
             //};
 
             //string json = JsonConvert.SerializeObject(loginObj);
@@ -44,8 +44,8 @@ namespace Connect.Pages {
 
 
             FormUrlEncodedContent content = new FormUrlEncodedContent(new[] {
-                new KeyValuePair<string, string>("uid", username.Text),
-                new KeyValuePair<string, string>("pw", password.Text),
+                new KeyValuePair<string, string>("uid", UsernameEntry.Text),
+                new KeyValuePair<string, string>("pw", PasswordEntry.Text)
             });
 
             HttpResponseMessage response = await client.PostAsync(url, content);

@@ -4,38 +4,44 @@
              x:Class="Connect.App">
   <Application.Resources>
     <ResourceDictionary>
+
+      <!-- Color -->
+
       <Color x:Key="DarkBlue">#395E84</Color>
       <Color x:Key="SkyBlue">#CCEAFD</Color>
       <Color x:Key="LightGray">#EEEEEE</Color>
-      <Color x:Key="Grey">#BABABA</Color>
+      <Color x:Key="Gray">#BABABA</Color>
       <Color x:Key="DarkGray">Gray</Color>
       <Color x:Key="Green">#139F15</Color>
       <Color x:Key="Red">#FF3B3C</Color>
       <Color x:Key="Yellow">#FCEA0F</Color>
       <Color x:Key="OrangeYellow">#FEC000</Color>
 
-      <Style x:Key="blueButtonStyle"
+      <!-- ////////////////////////////// -->
+
+      <!-- Button -->
+
+      <Style x:Key="BaseButtonStyle"
              TargetType="Button">
-        <Setter Property="HorizontalOptions"
-                Value="Center" />
-        <Setter Property="VerticalOptions"
-                Value="CenterAndExpand" />
-        <Setter Property="BorderRadius"
-                Value="5" />
-        <Setter Property="WidthRequest"
-                Value="200" />
-        <Setter Property="TextColor"
-                Value="White" />
         <Setter Property="BackgroundColor"
-                Value="{StaticResource DarkBlue}" />
-        <Setter Property="FontAttributes"
-                Value="Bold" />
+                Value="Transparent" />
       </Style>
-      <Style x:Key="linkButtonStyleGray"
-             TargetType="Button">
+
+      <Style TargetType="Button"
+             BasedOn="{StaticResource BaseButtonStyle}"/>
+
+      <!-- Label -->
+
+      <Style x:Key="BaseLabelStyle"
+             TargetType="Label">
         <Setter Property="TextColor"
-                Value="{StaticResource DarkGray}" />
+                Value="Black" />
       </Style>
+
+      <Style TargetType="Label"
+             BasedOn="{StaticResource BaseLabelStyle}"/>
+
+      <!-- NavigationPage -->
 
       <Style x:Key="NavigationPageStyle"
              TargetType="NavigationPage">
@@ -44,6 +50,7 @@
         <Setter Property="BarTextColor"
                 Value="White" />
       </Style>
+
     </ResourceDictionary>
   </Application.Resources>
 </Application>

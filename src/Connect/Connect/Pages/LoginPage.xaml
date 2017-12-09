@@ -28,57 +28,43 @@
         <Frame HasShadow="False"
                BackgroundColor="{StaticResource LightGray}"
                Padding="12"
-               CornerRadius="0" >
-          <Entry x:Name="username"
+               CornerRadius="0">
+          <Entry x:Name="UsernameEntry"
                  Placeholder="Username"
+                 AutomationId="ProjectsPageUsernameEntry"
                  TextColor="{StaticResource DarkGray}"
                  FontSize="20">
             <Entry.Effects>
-              <effects:BorderlessEntryEffect>
-              </effects:BorderlessEntryEffect>
+              <effects:BorderlessEntryEffect/>
             </Entry.Effects>
           </Entry>
         </Frame>
+
         <Frame HasShadow="False"
                BackgroundColor="{StaticResource LightGray}"
                Padding="12"
                CornerRadius="0" >
-          <Entry x:Name="password"
+          <Entry x:Name="PasswordEntry"
                  Placeholder="Password"
+                 AutomationId="ProjectsPagePasswordEntry"
                  TextColor="{StaticResource DarkGray}"
                  FontSize="20">
             <Entry.Effects>
-              <effects:BorderlessEntryEffect>
-              </effects:BorderlessEntryEffect>
+              <effects:BorderlessEntryEffect/>
             </Entry.Effects>
           </Entry>
         </Frame>
-        <!--<Frame HasShadow="False"
-               WidthRequest="100"
-               HeightRequest="40"
-               CornerRadius="2"
-               Padding="0"
-               BackgroundColor="{StaticResource DarkBlue}"
-               HorizontalOptions="Center">
-          <Label Text="LOGIN"
-                 FontSize="20"
-                 HorizontalTextAlignment="Center"
-                 VerticalTextAlignment="Center"
-                 TextColor="White"
-                 FontAttributes="Bold">
-            <Label.GestureRecognizers>
-              <TapGestureRecognizer Tapped="login_Clicked"/>
-            </Label.GestureRecognizers>
-          </Label>
-        </Frame>-->
 
-        <views:ButtonLabelContentView Tapped="login_Clicked"
-                                      LabelText="LOGIN"
+        <views:ButtonLabelContentView LabelText="LOGIN"
+                                      AutomationId="ProjectsPageLoginButtonLabelContentView"
+                                      Tapped="login_Clicked"
                                       WidthRequest="100"
                                       HeightRequest="40" />
 
-        <Button Text="Forgot Password"
-                Style="{StaticResource linkButtonStyleGray}" />
+        <Label Text="Forgot Password"
+               AutomationId="ProjectsPageForgotPasswordButtonLabel"
+               TextColor="{StaticResource DarkGray}"
+               HorizontalTextAlignment="Center"/>
 
         <Image Source="inc_logo.png"
                HorizontalOptions="CenterAndExpand"

@@ -5,6 +5,8 @@ namespace Connect.Views {
 
     public partial class ProjectInfoCell : ViewCell {
 
+        #region Properties
+
         public static readonly BindableProperty ProjectCodeProperty = BindableProperty.Create(nameof(ProjectCode), typeof(string), typeof(ProjectInfoCell), string.Empty, BindingMode.TwoWay);
 
         public string ProjectCode {
@@ -47,6 +49,18 @@ namespace Connect.Views {
             set => SetValue(ArrowTappedCommandParameterProperty, value);
         }
 
+        #endregion
+
+        #region Constructors
+
+        public ProjectInfoCell() {
+            InitializeComponent();
+        }
+
+        #endregion
+
+        #region Event Handler Overrides
+
         protected override void OnPropertyChanged(string propertyName = null) {
             base.OnPropertyChanged(propertyName);
 
@@ -56,19 +70,19 @@ namespace Connect.Views {
 
             switch(propertyName) {
                 case nameof(BusinessUnit):
-                    businessUnitCell.Description = GetValue(BusinessUnitProperty).ToString();
+                    BusinessUnitCell.Description = GetValue(BusinessUnitProperty).ToString();
                     break;
 
                 case nameof(ProtocolId):
-                    protocolIdCell.Description = GetValue(ProtocolIdProperty).ToString();
+                    ProtocolIdCell.Description = GetValue(ProtocolIdProperty).ToString();
                     break;
 
                 case nameof(CustomerName):
-                    customerNameCell.Description = GetValue(CustomerNameProperty).ToString();
+                    CustomerNameCell.Description = GetValue(CustomerNameProperty).ToString();
                     break;
 
                 case nameof(ProjectCode):
-                    projectCodeCell.Description = GetValue(ProjectCodeProperty).ToString();
+                    ProjectCodeCell.Description = GetValue(ProjectCodeProperty).ToString();
                     break;
 
                 case nameof(ArrowTappedCommandParameter):
@@ -94,8 +108,6 @@ namespace Connect.Views {
             }
         }
 
-        public ProjectInfoCell() {
-            InitializeComponent();
-        }
+        #endregion
     }
 }

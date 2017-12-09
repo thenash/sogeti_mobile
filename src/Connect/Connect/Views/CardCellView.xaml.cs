@@ -5,18 +5,18 @@ namespace Connect.Views {
     public partial class CardCellView : ContentView {
 
         public new Color BackgroundColor {
-            get => containerGrid.BackgroundColor;
-            set => containerGrid.BackgroundColor = value;
+            get => ContainerGrid.BackgroundColor;
+            set => ContainerGrid.BackgroundColor = value;
         }
 
         public string Title {
-            get => cellTitle.Text;
-            set => cellTitle.Text = value;
+            get => CellTitle.Text;
+            set => CellTitle.Text = value;
         }
 
         public Color TitleColor {
-            get => cellTitle.TextColor;
-            set => cellTitle.TextColor = value;
+            get => CellTitle.TextColor;
+            set => CellTitle.TextColor = value;
         }
 
         public static readonly BindableProperty DescriptionProperty = BindableProperty.Create(nameof(Description), typeof(string), typeof(CardCellView), default(string));
@@ -28,9 +28,13 @@ namespace Connect.Views {
 
         public LayoutOptions TextAlignment {
             set {
-                cellTitle.HorizontalOptions = value;
-                cellDescription.HorizontalOptions = value;
+                CellTitle.HorizontalOptions = value;
+                CellDescription.HorizontalOptions = value;
             }
+        }
+
+        public CardCellView() {
+            InitializeComponent();
         }
 
         protected override void OnPropertyChanged(string propertyName) {
@@ -38,13 +42,9 @@ namespace Connect.Views {
 
             switch(propertyName) {
                 case nameof(Description):
-                    cellDescription.Text = GetValue(DescriptionProperty).ToString();
+                    CellDescription.Text = GetValue(DescriptionProperty).ToString();
                     break;
             }
-        }
-
-        public CardCellView() {
-            InitializeComponent();
         }
     }
 }

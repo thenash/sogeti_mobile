@@ -63,40 +63,40 @@ namespace Connect.ViewModels {
                 primaryTherapeuticArea = "Psychiatry",
                 projectDirector = "Sally Smith",
                 projectId = "1001234",
-                protocolId = "9083E1-ES3"
+                protocolId = "9083-E1-ES3"
             });
 
             Projects.Add(new Project {
                 customerName = "Generic Customer",
-                owningBu = "9500 Biometrics",
-                phase = 4,
-                primaryIndication = "Dry Eye",
-                primaryTherapeuticArea = "Psychiatry",
-                projectDirector = "Sally Smith",
-                projectId = "1001234",
-                protocolId = "9083E1-ES3"
+                owningBu = "2000 Oncology",
+                phase = 2,
+                primaryIndication = "Hodgkin Lymphoma",
+                primaryTherapeuticArea = "Oncology",
+                projectDirector = "Lisa Jones",
+                projectId = "1000249",
+                protocolId = "7710-TM89-Y0"
             });
 
             Projects.Add(new Project {
                 customerName = "Generic Customer",
-                owningBu = "9500 Biometrics",
+                owningBu = "4000 General Medicine",
                 phase = 4,
-                primaryIndication = "Dry Eye",
-                primaryTherapeuticArea = "Psychiatry",
-                projectDirector = "Sally Smith",
-                projectId = "1001234",
-                protocolId = "9083E1-ES3"
+                primaryIndication = "Acne",
+                primaryTherapeuticArea = "Dermatology",
+                projectDirector = "James White",
+                projectId = "200008",
+                protocolId = "5404-Y5TT-U1"
             });
 
             Projects.Add(new Project {
                 customerName = "Generic Customer",
-                owningBu = "9500 Biometrics",
+                owningBu = "1000 Central Nervous System (CNS)",
                 phase = 4,
-                primaryIndication = "Dry Eye",
-                primaryTherapeuticArea = "Psychiatry",
-                projectDirector = "Sally Smith",
-                projectId = "1001234",
-                protocolId = "9083E1-ES3"
+                primaryIndication = "Eyelid Spasms",
+                primaryTherapeuticArea = "Neurology",
+                projectDirector = "Tom Johnson",
+                projectId = "0963801",
+                protocolId = "8008-1GG6-P3"
             });
 #endif
             OnPropertyChanged(nameof(Projects));

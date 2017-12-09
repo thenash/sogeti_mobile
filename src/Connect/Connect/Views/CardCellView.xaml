@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Connect.Views.CardCellView">
   <ContentView.Content>
-    <Grid x:Name="containerGrid"
+    <Grid x:Name="ContainerGrid"
           Padding="5"
           RowSpacing="2">
       <Grid.RowDefinitions>
@@ -14,19 +14,18 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <Label x:Name="cellTitle"
-             Text="Title"
+      <Label x:Name="CellTitle"
              HorizontalOptions="Center"
-             TextColor="{StaticResource DarkGray}"
+             TextColor="{StaticResource Gray}"
              FontSize="Small"
              Grid.Row="0"
              Grid.Column="0" />
 
-      <Label x:Name="cellDescription"
-             Text="Description"
+      <Label x:Name="CellDescription"
              HorizontalOptions="Center"
              LineBreakMode="TailTruncation"
              FontSize="Small"
+             FontAttributes="Bold"
              Grid.Row="1"
              Grid.Column="0" />
     </Grid>

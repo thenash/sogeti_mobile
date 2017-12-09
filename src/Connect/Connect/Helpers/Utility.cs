@@ -1,12 +1,24 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Xamarin.Forms;
 
 namespace Connect.Helpers {
 
     public class Utility {
 
         public Utility() { }
+
+        /// <summary>
+        /// Returns a resource dictionary item from <c>Application.Current.Resources</c>.
+        /// </summary>
+        /// <typeparam name="T">The type of object being returned.</typeparam>
+        /// <param name="styleKey">The key used for looking up the resource.</param>
+        /// <returns>The type of resource requested.</returns>
+        /// <example><![CDATA[Utility.GetResource<Color>("Gray");]]></example>
+        public static T GetResource<T>(string styleKey) {
+            return (T)Application.Current.Resources[styleKey];
+        }
 
         public static T DeserializeResponse<T>(string jsonResponse) {
             return DeserializeResponse<T>(jsonResponse, string.Empty);
