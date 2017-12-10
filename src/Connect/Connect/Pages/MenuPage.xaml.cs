@@ -75,8 +75,8 @@ namespace Connect.Pages {
             }
         }
 
-        private void OnItemSelected(object sender, SelectedItemChangedEventArgs e) {
-            MasterPageItem selectedItem = MasterPageItems.FirstOrDefault(item => item.TargetType == ((MasterPageItem)e.SelectedItem).TargetType);
+        private void OnMenuItemTapped(object sender, EventArgs e) {
+            MasterPageItem selectedItem = MasterPageItems.FirstOrDefault(item => item.TargetType == ((MasterPageItem)((ViewCell)sender).BindingContext).TargetType);
 
             if(selectedItem != null) {
 

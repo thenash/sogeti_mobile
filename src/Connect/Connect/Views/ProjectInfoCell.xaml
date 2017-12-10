@@ -6,21 +6,34 @@
 
   <Grid BackgroundColor="{StaticResource LightGray}"
         Padding="0,0,0,5"
-        ColumnSpacing="0">
+        ColumnSpacing="0"
+        RowSpacing="0">
     <Grid.RowDefinitions>
+      <RowDefinition Height="2" />
       <RowDefinition Height="Auto" />
+      <RowDefinition Height="2" />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*" />
       <ColumnDefinition Width="25" />
     </Grid.ColumnDefinitions>
 
+    <BoxView x:Name="TopSeparator"
+             Style="{StaticResource HorizontalSeparatorStyle}"
+             HeightRequest="2"
+             BackgroundColor="White"
+             Grid.Row="0"
+             Grid.Column="0"/>
+
     <Grid BackgroundColor="White"
           ColumnSpacing="0"
           RowSpacing="4"
-          Grid.Row="0"
+          Grid.Row="1"
           Grid.Column="0">
+
       <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
@@ -54,26 +67,63 @@
                             Grid.Row="1"
                             Grid.Column="1" />
 
+      <myViews:CardCellView x:Name="TherapeuticAreaCell"
+                            Title="Therapeutic Area:"
+                            TextAlignment="StartAndExpand"
+                            IsVisible="False"
+                            Grid.Row="2"
+                            Grid.Column="0"/>
+
+      <myViews:CardCellView x:Name="StudyPhaseCell"
+                            Title="Study Phase:"
+                            TextAlignment="EndAndExpand"
+                            IsVisible="False"
+                            Grid.Row="2"
+                            Grid.Column="1" />
+
+      <myViews:CardCellView x:Name="IndicationsCell"
+                            Title="Indications:"
+                            TextAlignment="StartAndExpand"
+                            IsVisible="False"
+                            Grid.Row="3"
+                            Grid.Column="0"/>
+
+      <myViews:CardCellView x:Name="ProjDirectorCell"
+                            Title="INC Project Director:"
+                            TextAlignment="EndAndExpand"
+                            IsVisible="False"
+                            Grid.Row="3"
+                            Grid.Column="1" />
+
       <StackLayout Orientation="Horizontal"
                    HorizontalOptions="Center"
-                   Grid.Row="2"
+                   Grid.Row="4"
                    Grid.Column="0"
                    Grid.ColumnSpan="2">
-        <Image Source="chev_down.png"/>
-        <Label Text="Show More Details"
+        <Image x:Name="ChevronImage"
+               Source="chev_down.png"/>
+        <Label x:Name="ShowDetailsLabel"
+               Text="{x:Static myViews:ProjectInfoCell.ShowMoreDetailLabel}"
                TextColor="Black"
                FontAttributes="Bold"
                FontSize="Small">
         </Label>
-        <!--<StackLayout.GestureRecognizers>
-             TODO: Do something
-          </StackLayout.GestureRecognizers>-->
+        <StackLayout.GestureRecognizers>
+          <TapGestureRecognizer Tapped="OnShowHideTapped"/>
+        </StackLayout.GestureRecognizers>
       </StackLayout>
     </Grid>
+
+    <BoxView x:Name="BottomSeparator"
+             Style="{StaticResource HorizontalSeparatorStyle}"
+             BackgroundColor="White"
+             Grid.Row="2"
+             Grid.Column="0"/>
 
     <Grid x:Name="ArrowButtonGrid"
           BackgroundColor="{StaticResource OrangeYellow}"
           Grid.Row="0"
+          Grid.RowSpan="3"
           Grid.Column="1">
       <Grid.RowDefinitions>
         <RowDefinition Height="*" />

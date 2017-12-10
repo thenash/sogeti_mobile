@@ -1,4 +1,6 @@
-﻿using Connect.Models;
+﻿using System;
+using Connect.Helpers;
+using Connect.Models;
 using Xamarin.Forms;
 
 namespace Connect.Views {
@@ -6,6 +8,21 @@ namespace Connect.Views {
     public partial class ProjectInfoCell : ViewCell {
 
         #region Properties
+
+        // ReSharper disable MemberCanBePrivate.Global
+        public const string ShowMoreDetailLabel = "Show More Detail";
+        public const string ShowLessDetailLabel = "Show Less Detail";
+        // ReSharper restore MemberCanBePrivate.Global
+
+        private bool _isSelected;
+        private bool _showHideIsRunning;
+
+        public static readonly BindableProperty IsSelectedProperty = BindableProperty.Create(nameof(IsSelected), typeof(bool), typeof(ProjectInfoCell), false, BindingMode.TwoWay);
+
+        public bool IsSelected {
+            get => (bool)GetValue(IsSelectedProperty);
+            set => SetValue(IsSelectedProperty, value);
+        }
 
         public static readonly BindableProperty ProjectCodeProperty = BindableProperty.Create(nameof(ProjectCode), typeof(string), typeof(ProjectInfoCell), string.Empty, BindingMode.TwoWay);
 
@@ -33,6 +50,34 @@ namespace Connect.Views {
         public string BusinessUnit {
             get => GetValue(BusinessUnitProperty).ToString();
             set => SetValue(BusinessUnitProperty, value);
+        }
+
+        public static readonly BindableProperty TherapeuticAreaProperty = BindableProperty.Create(nameof(TherapeuticArea), typeof(string), typeof(ProjectInfoCell), string.Empty, BindingMode.TwoWay);
+
+        public string TherapeuticArea {
+            get => GetValue(TherapeuticAreaProperty).ToString();
+            set => SetValue(TherapeuticAreaProperty, value);
+        }
+
+        public static readonly BindableProperty StudyPhaseProperty = BindableProperty.Create(nameof(StudyPhase), typeof(string), typeof(ProjectInfoCell), string.Empty, BindingMode.TwoWay);
+
+        public string StudyPhase {
+            get => GetValue(StudyPhaseProperty).ToString();
+            set => SetValue(StudyPhaseProperty, value);
+        }
+
+        public static readonly BindableProperty IndicationsProperty = BindableProperty.Create(nameof(Indications), typeof(string), typeof(ProjectInfoCell), string.Empty, BindingMode.TwoWay);
+
+        public string Indications {
+            get => GetValue(IndicationsProperty).ToString();
+            set => SetValue(IndicationsProperty, value);
+        }
+
+        public static readonly BindableProperty ProjDirectorProperty = BindableProperty.Create(nameof(ProjDirector), typeof(string), typeof(ProjectInfoCell), string.Empty, BindingMode.TwoWay);
+
+        public string ProjDirector {
+            get => GetValue(ProjDirectorProperty).ToString();
+            set => SetValue(ProjDirectorProperty, value);
         }
 
         public static readonly BindableProperty ArrowTappedCommandProperty = BindableProperty.Create(nameof(ArrowTappedCommand), typeof(Command<Project>), typeof(ProjectInfoCell));
@@ -69,6 +114,10 @@ namespace Connect.Views {
             }
 
             switch(propertyName) {
+                case nameof(IsSelected):
+                    ToggleIsSelected(IsSelected);
+                    break;
+
                 case nameof(BusinessUnit):
                     BusinessUnitCell.Description = GetValue(BusinessUnitProperty).ToString();
                     break;
@@ -83,6 +132,22 @@ namespace Connect.Views {
 
                 case nameof(ProjectCode):
                     ProjectCodeCell.Description = GetValue(ProjectCodeProperty).ToString();
+                    break;
+
+                case nameof(TherapeuticArea):
+                    TherapeuticAreaCell.Description = GetValue(TherapeuticAreaProperty).ToString();
+                    break;
+
+                case nameof(StudyPhase):
+                    StudyPhaseCell.Description = GetValue(StudyPhaseProperty).ToString();
+                    break;
+
+                case nameof(Indications):
+                    IndicationsCell.Description = GetValue(IndicationsProperty).ToString();
+                    break;
+
+                case nameof(ProjDirector):
+                    ProjDirectorCell.Description = GetValue(ProjDirectorProperty).ToString();
                     break;
 
                 case nameof(ArrowTappedCommandParameter):
@@ -109,5 +174,54 @@ namespace Connect.Views {
         }
 
         #endregion
+
+        private async void OnShowHideTapped(object sender, EventArgs e) {
+            if(_showHideIsRunning) {
+                return;
+            }
+
+            _showHideIsRunning = true;
+
+            bool willBeSelected = !_isSelected;
+
+            if(ChevronImage.AnimationIsRunning("RotateXTo")) {
+                ChevronImage.AbortAnimation("RotateXTo");
+            }
+
+            if(willBeSelected) {
+                ShowDetailsLabel.Text = ShowLessDetailLabel;
+                await ChevronImage.RotateXTo(180, 400, Easing.CubicInOut);
+            } else {
+                ShowDetailsLabel.Text = ShowMoreDetailLabel;
+                await ChevronImage.RotateXTo(-360, 400, Easing.CubicInOut);
+            }
+
+            Device.BeginInvokeOnMainThread(() => {  //This will be run almost at the same time as ForceUpdateSize() below to minimize sizing irregularities while expanding/contracting the cell
+                TherapeuticAreaCell.IsVisible = willBeSelected;
+                StudyPhaseCell.IsVisible      = willBeSelected;
+                IndicationsCell.IsVisible     = willBeSelected;
+                ProjDirectorCell.IsVisible    = willBeSelected;
+            });
+
+            ForceUpdateSize();
+
+            _isSelected = willBeSelected;
+
+            _showHideIsRunning = false;
+        }
+
+        private void ToggleIsSelected(bool isSelected) {
+            if(isSelected) {
+                Color color = Utility.GetResource<Color>("DarkBlue");
+
+                ArrowButtonGrid.BackgroundColor = color;
+                TopSeparator.BackgroundColor    = color;
+                BottomSeparator.BackgroundColor = color;
+            } else {
+                ArrowButtonGrid.BackgroundColor = Utility.GetResource<Color>("OrangeYellow");
+                TopSeparator.BackgroundColor    = Color.White;
+                BottomSeparator.BackgroundColor = Color.White;
+            }
+        }
     }
 }

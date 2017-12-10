@@ -19,6 +19,31 @@
 
       <!-- ////////////////////////////// -->
 
+      <!-- BoxView -->
+      <Style x:Key="BaseSeparatorStyle"
+             TargetType="BoxView">
+        <Setter Property="BackgroundColor"
+                Value="Black" />
+      </Style>
+
+      <Style x:Key="HorizontalSeparatorStyle"
+             TargetType="BoxView"
+             BasedOn="{StaticResource BaseSeparatorStyle}">
+        <Setter Property="HeightRequest"
+                Value="1"/>
+        <Setter Property="HorizontalOptions"
+                Value="FillAndExpand"/>
+      </Style>
+
+      <Style x:Key="VerticleSeparatorStyle"
+             TargetType="BoxView"
+             BasedOn="{StaticResource BaseSeparatorStyle}">
+        <Setter Property="WidthRequest"
+                Value="1"/>
+        <Setter Property="VerticalOptions"
+                Value="FillAndExpand"/>
+      </Style>
+
       <!-- Button -->
 
       <Style x:Key="BaseButtonStyle"

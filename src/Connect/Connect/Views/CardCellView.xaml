@@ -16,7 +16,7 @@
 
       <Label x:Name="CellTitle"
              HorizontalOptions="Center"
-             TextColor="{StaticResource Gray}"
+             TextColor="{StaticResource DarkGray}"
              FontSize="Small"
              Grid.Row="0"
              Grid.Column="0" />

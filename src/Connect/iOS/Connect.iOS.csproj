@@ -157,15 +157,6 @@
     <BundleResource Include="Resources\inc_logo%403x.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\chev_up%403x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\chev_up.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\chev_up%402x.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\chev_down%403x.png" />
   </ItemGroup>
   <ItemGroup>

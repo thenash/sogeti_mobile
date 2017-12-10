@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using Connect.Models;
+using Xamarin.Forms;
 using Connect.Pages;
 using Xamarin.Forms.Xaml;
 
@@ -9,6 +10,8 @@ namespace Connect {
     public partial class App : Application {
 
         public static MainPage NavPage;
+
+        public static Project SelectedProject { get; set; }
 
         public static bool IsPhone {
             get; private set;

@@ -1,4 +1,6 @@
-﻿namespace Connect.Models {
+﻿using Newtonsoft.Json;
+
+namespace Connect.Models {
 
     public class Project {
 
@@ -42,7 +44,11 @@
             set;
         }
 
-        public Project() {
+        [JsonIgnore]
+        public bool IsSelected {
+            get; set;
         }
+
+        public Project() { }
     }
 }

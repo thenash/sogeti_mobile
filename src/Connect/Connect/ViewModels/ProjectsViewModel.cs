@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Connect.Models;
 using Xamarin.Forms;
@@ -44,6 +45,22 @@ namespace Connect.ViewModels {
 
         private void OnProjectSelectedCommand(Project project) {
             MessagingCenter.Send(this, ConstantKeys.ProjectSelected, project);
+
+            Project selectedProject = Projects.FirstOrDefault(proj => proj.IsSelected);
+
+            if(selectedProject != null) {
+                selectedProject.IsSelected = false;
+            }
+
+            Project projectToSelect = Projects.FirstOrDefault(proj => proj.projectId == project.projectId && proj.protocolId == project.protocolId);
+
+            if(projectToSelect != null) {
+                projectToSelect.IsSelected = true;
+            }
+
+            App.SelectedProject = projectToSelect;
+
+            OnPropertyChanged(nameof(Projects));
         }
 
 		private async Task ExecuteLoadCommand() {
@@ -125,6 +142,16 @@ namespace Connect.ViewModels {
             //	ContentPage page = new ContentPage();
             //	await page.DisplayAlert("Error", "Unable to load projects.", "OK");
             //}
+
+		    if(App.SelectedProject != null) {
+		        Project selectedProject = Projects.FirstOrDefault(proj => proj.projectId == App.SelectedProject.projectId && proj.protocolId == App.SelectedProject.protocolId); //TODO: Ensure this is a good way to determine project equality (are protocolId and/or projectId always unique?)
+
+		        if(selectedProject != null) {
+		            selectedProject.IsSelected = true;
+		        }
+
+		        Projects = new ObservableCollection<Project>(Projects);
+            }
 
             IsBusy = false;
 		}
