@@ -44,7 +44,10 @@ namespace Connect.ViewModels {
         public Command<Project> ProjectSelectedCommand => _projectSelectedCommand ?? (_projectSelectedCommand = new Command<Project>(OnProjectSelectedCommand));
 
         private void OnProjectSelectedCommand(Project project) {
-            MessagingCenter.Send(this, ConstantKeys.ProjectSelected, project);
+
+            if(project == null) {
+                return;
+            }
 
             Project selectedProject = Projects.FirstOrDefault(proj => proj.IsSelected);
 
@@ -61,6 +64,8 @@ namespace Connect.ViewModels {
             App.SelectedProject = projectToSelect;
 
             OnPropertyChanged(nameof(Projects));
+
+            MessagingCenter.Send(this, ConstantKeys.ProjectSelected, project);
         }
 
 		private async Task ExecuteLoadCommand() {
@@ -72,6 +77,8 @@ namespace Connect.ViewModels {
 			IsBusy = true;
 
 #if DEBUG
+		    await Task.FromResult(0);
+
             Projects.Add(new Project {
                 customerName = "Generic Customer",
                 owningBu = "9500 Biometrics",

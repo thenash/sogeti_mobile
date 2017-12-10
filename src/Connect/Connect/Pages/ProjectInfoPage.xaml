@@ -1,58 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Connect.Pages.ProjectInfoPage" xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect" BackgroundColor="#EAEAEA" Title="{Binding Title}">
-	<ContentPage.Content>
-        <ScrollView>
-            <StackLayout Padding="15" HorizontalOptions="Center">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <myViews:CardCellView Grid.Row="0" Grid.Column="0" Title="Project Code" Description="{Binding Project.projectId}" TextAlignment="StartAndExpand" />
-                    <myViews:CardCellView Grid.Row="0" Grid.Column="1" Title="Customer" Description="{Binding Project.customerName}" />
-                    <myViews:CardCellView Grid.Row="0" Grid.Column="2" Title="Protocol ID" Description="{Binding Project.protocolId}" TextAlignment="EndAndExpand" />
-                </Grid>
-                <Frame Padding="10" Margin="0, 10" BackgroundColor="White" OutlineColor="{StaticResource DarkGray}" CornerRadius="0">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <myViews:CardCellView Grid.Row="0" Grid.Column="0" Title="Protocol Title" Description="{Binding ProjectDetails.protocolDesc}" TextAlignment="StartAndExpand" />
-                        <myViews:CardCellView Grid.Row="0" Grid.Column="1" Title="Therapeautic Area" Description="{Binding ProjectDetails.primaryTherapeuticArea}" TextAlignment="EndAndExpand" />
-                        <myViews:CardCellView Grid.Row="1" Grid.Column="0" Title="Study Phase" Description="{Binding ProjectDetails.phase}" TextAlignment="StartAndExpand" />
-                        <myViews:CardCellView Grid.Row="1" Grid.Column="1" Title="Indication" Description="{Binding ProjectDetails.primaryIndication}" TextAlignment="EndAndExpand" />
-                    </Grid>
-                </Frame>
-                <Frame CornerRadius="0" Padding="0">
-                    <StackLayout Padding="0">
-                        <Label Text="Project Milestones" HorizontalOptions="Center" FontAttributes="Bold"/>
-                        <Label Text="Display by Variance:" HorizontalOptions="Center" />
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                            <myViews:VarianceViewCard IndicatorColor="White" Description="ALL" />
-                            <myViews:VarianceViewCard IndicatorColor="Red" Description="&gt;= 15" />
-                            <myViews:VarianceViewCard IndicatorColor="Yellow" Description="&gt;= 1 and &lt;= 14" />
-                            <myViews:VarianceViewCard IndicatorColor="Green" Description="&gt;= 0" />
-                            <myViews:VarianceViewCard IndicatorColor="Gray" Description="Missing Date" />
-                        </StackLayout>
-                        <ListView x:Name="milestonesList" SeparatorVisibility="None" HasUnevenRows="true" ItemsSource="{Binding Milestones}" >
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <myViews:MilestoneCellView  />
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackLayout>
-                </Frame>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Connect.Pages.ProjectInfoPage"
+             xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect"
+             BackgroundColor="{StaticResource LightGray}"
+             Title="{Binding Title}">
+  <ContentPage.Content>
+    <ScrollView>
+      <StackLayout Padding="15"
+                   HorizontalOptions="Center">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <myViews:CardCellView Title="Project Code"
+                                Description="{Binding Project.projectId}"
+                                TextAlignment="StartAndExpand"
+                                Grid.Row="0"
+                                Grid.Column="0" />
+          <myViews:CardCellView Title="Customer"
+                                Description="{Binding Project.customerName}"
+                                Grid.Row="0"
+                                Grid.Column="1"/>
+          <myViews:CardCellView Title="Protocol ID"
+                                Description="{Binding Project.protocolId}"
+                                TextAlignment="EndAndExpand"
+                                Grid.Row="0"
+                                Grid.Column="2" />
+        </Grid>
+        <Frame Padding="10"
+               Margin="0, 10"
+               BackgroundColor="White"
+               OutlineColor="{StaticResource DarkGray}"
+               CornerRadius="0">
+          <Grid>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <myViews:CardCellView Title="Protocol Title"
+                                  Description="{Binding ProjectDetails.protocolDesc}"
+                                  TextAlignment="StartAndExpand"
+                                  Grid.Row="0"
+                                  Grid.Column="0" />
+            <myViews:CardCellView Title="Therapeautic Area"
+                                  Description="{Binding ProjectDetails.primaryTherapeuticArea}"
+                                  TextAlignment="EndAndExpand"
+                                  Grid.Row="0"
+                                  Grid.Column="1"/>
+            <myViews:CardCellView Title="Study Phase"
+                                  Description="{Binding ProjectDetails.phase}"
+                                  TextAlignment="StartAndExpand"
+                                  Grid.Row="1"
+                                  Grid.Column="0"/>
+            <myViews:CardCellView Title="Indication"
+                                  Description="{Binding ProjectDetails.primaryIndication}"
+                                  TextAlignment="EndAndExpand"
+                                  Grid.Row="1"
+                                  Grid.Column="1"/>
+          </Grid>
+        </Frame>
+        <Frame CornerRadius="0"
+               Padding="0">
+          <StackLayout Padding="0">
+            <Label Text="Project Milestones"
+                   HorizontalOptions="Center"
+                   FontAttributes="Bold"/>
+            <Label Text="Display by Variance:"
+                   HorizontalOptions="Center" />
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="Center">
+              <myViews:VarianceViewCard IndicatorColor="White"
+                                        Description="ALL" />
+              <myViews:VarianceViewCard IndicatorColor="{StaticResource Red}"
+                                        Description="&gt;= 15" />
+              <myViews:VarianceViewCard IndicatorColor="{StaticResource Yellow}"
+                                        Description="&gt;= 1 and &lt;= 14" />
+              <myViews:VarianceViewCard IndicatorColor="{StaticResource Green}"
+                                        Description="&gt;= 0" />
+              <myViews:VarianceViewCard IndicatorColor="{StaticResource Gray}"
+                                        Description="Missing Date" />
             </StackLayout>
-        </ScrollView>
-	</ContentPage.Content>
+            <ListView x:Name="milestonesList"
+                      SeparatorVisibility="None"
+                      HasUnevenRows="true"
+                      ItemsSource="{Binding Milestones}" >
+              <ListView.ItemTemplate>
+                <DataTemplate>
+                  <myViews:MilestoneCellView />
+                </DataTemplate>
+              </ListView.ItemTemplate>
+            </ListView>
+          </StackLayout>
+        </Frame>
+      </StackLayout>
+    </ScrollView>
+  </ContentPage.Content>
 </ContentPage>

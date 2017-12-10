@@ -16,13 +16,13 @@ namespace Connect.ViewModels {
             Project    = project;
             Milestones = new ObservableCollection<Milestone>();
 
-            RefreshData();
+            //RefreshData();
         }
 
-        private async void RefreshData() {
-            //await ExecuteLoadProjectDetailsCommand();
-            //await ExecuteLoadMilestonesCommand();
-        }
+        //private async void RefreshData() {
+        //    //await ExecuteLoadProjectDetailsCommand();
+        //    //await ExecuteLoadMilestonesCommand();
+        //}
 
         private ProjectDetails _projectDetails;
 

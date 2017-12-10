@@ -2,32 +2,32 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Connect.Helpers;
 using Connect.Models;
 using Xamarin.Forms;
 using Connect.ViewModels;
 
+#if !DEBUG
+using Connect.Helpers;
+#endif
+
 namespace Connect.Pages {
+
     public partial class ProjectInfoPage : ContentPage {
 
-        private HttpClient _client;
         private string _projectId;
-        private List<Milestone> _miletones;
+
+        private HttpClient _client;
+
+        private List<Milestone>      _miletones;
         private List<ProjectDetails> _projectDetails;
 
         private readonly ProjectInfoViewModel _viewModel;
 
-        public ProjectInfoPage() : this(new Project()) { }
+        public ProjectInfoPage() {
 
-        public ProjectInfoPage(Project project) {
-
-            BindingContext = _viewModel = new ProjectInfoViewModel(project);
+            BindingContext = _viewModel = new ProjectInfoViewModel(App.SelectedProject);
 
             InitializeComponent();
-
-            if(project != null) {
-                _projectId = project.projectId;
-            }
         }
 
         //protected override async void OnAppearing() {
@@ -54,17 +54,9 @@ namespace Connect.Pages {
         protected override async void OnAppearing() {
             base.OnAppearing();
 
-            if(string.IsNullOrEmpty(_projectId)) {
-                await GetMilestones(_projectId);
-                await GetProjectDetails(_projectId);
+            if(App.SelectedProject != null) {
+                _projectId = App.SelectedProject.projectId;
             }
-
-            //milestonesList.ItemsSource = new List<Milestone> {
-            //    new Milestone { milestoneName = "Milestone 1", plannedDate = "02Jul2015", actualDate = "22Jul2015", status = "20" },
-            //    new Milestone { milestoneName = "Milestone 2", plannedDate = "02Jul2015", actualDate = "22Jul2015", status = "20" },
-            //    new Milestone { milestoneName = "Milestone 3", plannedDate = "02Jul2015", actualDate = "22Jul2015", status = "20" },
-            //    new Milestone { milestoneName = "Milestone 4", plannedDate = "02Jul2015", actualDate = "22Jul2015", status = "20" }
-            //};
 
             milestonesList.ItemsSource = _miletones;
 
@@ -74,16 +66,18 @@ namespace Connect.Pages {
                 }
 
                 _viewModel.IsInitialized = true;
+
+                if(string.IsNullOrEmpty(_projectId)) {
+                    await GetMilestones(_projectId);
+                    await GetProjectDetails(_projectId);
+                }
             }
         }
 
         private async Task GetMilestones(string projectId) {
-            string url = "https://ecs.incresearch.com/ECS/mobile/milestones/projectId/" + projectId;
-
-            _client = new HttpClient();
-            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
-
 #if DEBUG
+            await Task.FromResult(0);
+
             _miletones = new List<Milestone> {
                 new Milestone {
                     projectId = "1001234",
@@ -114,7 +108,11 @@ namespace Connect.Pages {
                     status = "10"
                 }
             };
-#endif
+#else
+            string url = "https://ecs.incresearch.com/ECS/mobile/milestones/projectId/" + projectId;
+
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
             HttpResponseMessage response = await _client.GetAsync(url);
 
@@ -122,15 +120,13 @@ namespace Connect.Pages {
                 string content = await response.Content.ReadAsStringAsync();
                 _miletones = Utility.DeserializeResponse<List<Milestone>>(content, "data/project/milestone");
             }
+#endif
         }
 
         private async Task GetProjectDetails(string projectId) {
-            string url = "https://ecs.incresearch.com/ECS/mobile/projectdetails/projectId/" + projectId;
-
-            _client = new HttpClient();
-            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
-
 #if DEBUG
+            await Task.FromResult(0);
+
             _projectDetails = new List<ProjectDetails> {
                 new ProjectDetails {
                     customerName = "Generic Customer",
@@ -139,7 +135,7 @@ namespace Connect.Pages {
                     primaryIndication = "Dry Eye",
                     primaryTherapeuticArea = "Psychiatry",
                     projectDirector = "Sally Smith",
-                    projectId = "1001234",
+                    projectId = projectId,
                     protocolId = "9083E1-ES3",
                     directorEmail = "director@email.com",
                     directorPhone = "123-456-7890",
@@ -159,7 +155,11 @@ namespace Connect.Pages {
                     totalIndirectBudgetAmt = 75000
                 }
             };
-#endif
+#else
+            string url = "https://ecs.incresearch.com/ECS/mobile/projectdetails/projectId/" + projectId;
+
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
             HttpResponseMessage response = await _client.GetAsync(url);
 
@@ -168,6 +168,7 @@ namespace Connect.Pages {
 
                 _projectDetails = Utility.DeserializeResponse<List<ProjectDetails>>(content, "data/projects/project");
             }
+#endif
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Connect.Pages {
 
                 ToggleProjectLabelVisibility(true);
                 SetProjectLabels(project);
-                Navigate(new ProjectInfoPage(project));
+                Navigate(new ProjectInfoPage());
             });
         }
 
@@ -98,19 +98,23 @@ namespace Connect.Pages {
         }
 
         private void ToggleProjectLabelVisibility(bool display) {
-            NoProjectLabel.IsVisible = !display;
+            Device.BeginInvokeOnMainThread(() => {
+                NoProjectLabel.IsVisible = !display;
 
-            ProjectCodeLabel.IsVisible  = display;
-            ProtocolIdLabel.IsVisible   = display;
-            CustomerLabel.IsVisible     = display;
-            BusinessUnitLabel.IsVisible = display;
+                ProjectCodeLabel.IsVisible  = display;
+                ProtocolIdLabel.IsVisible   = display;
+                CustomerLabel.IsVisible     = display;
+                BusinessUnitLabel.IsVisible = display;
+            });
         }
 
         private void SetProjectLabels(Project project) {
-            ProjectCodeLabel.Text  = "Project Code: " + project.projectId;
-            ProtocolIdLabel.Text   = "Protocol ID: " + project.protocolId;
-            CustomerLabel.Text     = project.customerName;
-            BusinessUnitLabel.Text = project.owningBu;
+            Device.BeginInvokeOnMainThread(() => {
+                ProjectCodeLabel.Text  = "Project Code: " + project.projectId;
+                ProtocolIdLabel.Text   = "Protocol ID: " + project.protocolId;
+                CustomerLabel.Text     = project.customerName;
+                BusinessUnitLabel.Text = project.owningBu;
+            });
         }
     }
 
