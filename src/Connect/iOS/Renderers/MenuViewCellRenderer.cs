@@ -4,11 +4,12 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(MenuViewCell), typeof(MenuViewCellRenderer))]
+[assembly: ExportRenderer(typeof(MenuViewCell), typeof(NoBackgroundViewCellRenderer))]
+[assembly: ExportRenderer(typeof(ProjectInfoCell), typeof(NoBackgroundViewCellRenderer))]
 
 namespace Connect.iOS.Renderers {
 
-    public class MenuViewCellRenderer : ViewCellRenderer {
+    public class NoBackgroundViewCellRenderer : ViewCellRenderer {
 
         public override UITableViewCell GetCell(Cell item, UITableViewCell reusableCell, UITableView tv) {
             UITableViewCell  cell = base.GetCell(item, reusableCell, tv);
@@ -18,7 +19,7 @@ namespace Connect.iOS.Renderers {
                 cell.SelectionStyle = UITableViewCellSelectionStyle.None;
 
                 //cell.SelectedBackgroundView = new UIView(new RectangleF(0, 0, (float)cell.Bounds.Width, (float)cell.Bounds.Height)) {
-                //    BackgroundColor = menuCell.SelectedBackgroundColor.ToUIColor()
+                //    BackgroundColor = UIColor.Clear
                 //};
             }
 

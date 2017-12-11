@@ -8,7 +8,7 @@ using Xamarin.Forms;
 
 namespace Connect.Droid {
 
-    [Activity(Label = "Connect.Droid", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "INC Connect", Icon = "@drawable/icon", Theme = "@style/MyTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : Xamarin.Forms.Platform.Android.FormsAppCompatActivity {
 
         protected override void OnCreate(Bundle bundle) {

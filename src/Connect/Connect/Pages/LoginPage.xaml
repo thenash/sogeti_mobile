@@ -29,15 +29,16 @@
                BackgroundColor="{StaticResource LightGray}"
                Padding="12"
                CornerRadius="0">
-          <Entry x:Name="UsernameEntry"
-                 Placeholder="Username"
-                 AutomationId="ProjectsPageUsernameEntry"
-                 TextColor="{StaticResource DarkGray}"
-                 FontSize="20">
+          <views:ExtendedEntry x:Name="UsernameEntry"
+                               Placeholder="Username"
+                               AutomationId="ProjectsPageUsernameEntry"
+                               TextColor="{StaticResource DarkGray}"
+                               FontSize="20"
+                               NextEntry="{x:Reference PasswordEntry}">
             <Entry.Effects>
               <effects:BorderlessEntryEffect/>
             </Entry.Effects>
-          </Entry>
+          </views:ExtendedEntry>
         </Frame>
 
         <Frame HasShadow="False"
@@ -48,7 +49,8 @@
                  Placeholder="Password"
                  AutomationId="ProjectsPagePasswordEntry"
                  TextColor="{StaticResource DarkGray}"
-                 FontSize="20">
+                 FontSize="20"
+                 IsPassword="True">
             <Entry.Effects>
               <effects:BorderlessEntryEffect/>
             </Entry.Effects>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Connect.Helpers;
 using Connect.Models;
 using Xamarin.Forms;
@@ -189,10 +190,10 @@ namespace Connect.Views {
             }
 
             if(willBeSelected) {
-                ShowDetailsLabel.Text = ShowLessDetailLabel;
+                Device.BeginInvokeOnMainThread(() => ShowDetailsLabel.Text = ShowLessDetailLabel);
                 await ChevronImage.RotateXTo(180, 400, Easing.CubicInOut);
             } else {
-                ShowDetailsLabel.Text = ShowMoreDetailLabel;
+                Device.BeginInvokeOnMainThread(() => ShowDetailsLabel.Text = ShowMoreDetailLabel);
                 await ChevronImage.RotateXTo(-360, 400, Easing.CubicInOut);
             }
 
@@ -201,9 +202,9 @@ namespace Connect.Views {
                 StudyPhaseCell.IsVisible      = willBeSelected;
                 IndicationsCell.IsVisible     = willBeSelected;
                 ProjDirectorCell.IsVisible    = willBeSelected;
-            });
 
-            ForceUpdateSize();
+                ForceUpdateSize();
+            });
 
             _isSelected = willBeSelected;
 

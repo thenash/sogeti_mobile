@@ -55,7 +55,7 @@ namespace Connect.ViewModels {
             }
         }
 
-        private string _projectId = "Project 1";
+        private readonly string _projectId;
 
         public SitesViewModel(string projectId) {
             Title = "Sites";
@@ -70,9 +70,9 @@ namespace Connect.ViewModels {
         }
 
         private async void RefreshData() {
-            await ExecuteLoadProjectCommand();
-            await ExecuteLoadSiteStatsCommand();
-            await ExecuteLoadSiteDetailsCommand();
+            //await ExecuteLoadProjectCommand();
+            //await ExecuteLoadSiteStatsCommand();
+            //await ExecuteLoadSiteDetailsCommand();
             //Big request... takes long to execute
             //await ExecuteLoadSiteTrendsCommand();
         }
