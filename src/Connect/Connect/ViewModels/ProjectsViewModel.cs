@@ -86,7 +86,7 @@ namespace Connect.ViewModels {
                 primaryIndication = "Dry Eye",
                 primaryTherapeuticArea = "Psychiatry",
                 projectDirector = "Sally Smith",
-                projectId = "1001234",
+                projectId = "Project 2",
                 protocolId = "9083-E1-ES3"
             });
 
@@ -97,7 +97,7 @@ namespace Connect.ViewModels {
                 primaryIndication = "Hodgkin Lymphoma",
                 primaryTherapeuticArea = "Oncology",
                 projectDirector = "Lisa Jones",
-                projectId = "1000249",
+                projectId = "Project 1",
                 protocolId = "7710-TM89-Y0"
             });
 

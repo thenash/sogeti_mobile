@@ -1,50 +1,206 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Connect.Pages.SitesPage"
-    xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect" BackgroundColor="#EAEAEA"
-    Title="{Binding Title}"
-    xmlns:telerikChart="clr-namespace:Telerik.XamarinForms.Chart;assembly=Telerik.XamarinForms.Chart">
-    <ContentPage.Content>
-        <ScrollView>
-            <StackLayout Padding="15" HorizontalOptions="Center">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <myViews:CardCellView Grid.Row="0" Grid.Column="0" Title="Project Code" Description="{Binding Project.projectId}" TextAlignment="StartAndExpand" />
-                    <myViews:CardCellView Grid.Row="0" Grid.Column="1" Title="Customer" Description="{Binding Project.customerName}" />
-                    <myViews:CardCellView Grid.Row="0" Grid.Column="2" Title="Protocol ID" Description="{Binding Project.protocolId}" TextAlignment="EndAndExpand" />
-                </Grid>
-                <telerikChart:RadCartesianChart x:Name="siteStatusChart">
-                  <!--<telerikChart:RadCartesianChart.BindingContext>
-                    <local:siteStatsList />
-                  </telerikChart:RadCartesianChart.BindingContext>-->
-                  <telerikChart:RadCartesianChart.HorizontalAxis>
-                      <telerikChart:DateTimeContinuousAxis LabelFormat="h:mm" GapLength="0.5" PlotMode="BetweenTicks" MajorStepUnit="Minute" MajorStep="15" />
-                  </telerikChart:RadCartesianChart.HorizontalAxis>
-                  <telerikChart:RadCartesianChart.VerticalAxis>
-                    <telerikChart:NumericalAxis />
-                  </telerikChart:RadCartesianChart.VerticalAxis>
-                  <telerikChart:RadCartesianChart.Series>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect"
+             xmlns:telerikChart="clr-namespace:Telerik.XamarinForms.Chart;assembly=Telerik.XamarinForms.Chart"
+             xmlns:helpers="clr-namespace:Connect.Helpers;assembly=Connect"
+             x:Class="Connect.Pages.SitesPage"
+             BackgroundColor="{StaticResource LightGray}"
+             Title="{Binding Title}">
 
-                        <telerikChart:AreaSeries ItemsSource="{Binding SiteStats}">
-                            <telerikChart:AreaSeries.ValueBinding>
-                                <telerikChart:PropertyNameDataPointBinding PropertyName="activated"/>
-                            </telerikChart:AreaSeries.ValueBinding>
-                            <telerikChart:AreaSeries.CategoryBinding>
-                                <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
-                            </telerikChart:AreaSeries.CategoryBinding>
-                        </telerikChart:AreaSeries>
-                        <!-- <telerikChart:BarSeries CategoryBinding="isoDate"
-                                            ValueBinding="activated"
-                                            ItemsSource="{Binding siteStatsList}" />-->
-                  </telerikChart:RadCartesianChart.Series>
-                </telerikChart:RadCartesianChart>
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="LOGOUT"
+                 Command=""/>
+    <!-- TODO: Bind to Command in BaseViewModel -->
+  </ContentPage.ToolbarItems>
+
+  <ContentPage.Content>
+    <ScrollView>
+      <StackLayout Padding="15,0"
+                   HorizontalOptions="Center">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <myViews:CardCellView Title="Project Code"
+                                LabelFontSize="Micro"
+                                DescriptionFontAttributes="None"
+                                Description="{Binding Project.projectId}"
+                                TextAlignment="StartAndExpand"
+                                Grid.Row="0"
+                                Grid.Column="0"/>
+          <myViews:CardCellView Title="Customer"
+                                LabelFontSize="Micro"
+                                DescriptionFontAttributes="None"
+                                Description="{Binding Project.customerName}"
+                                Grid.Row="0"
+                                Grid.Column="1" />
+          <myViews:CardCellView Title="Protocol ID"
+                                LabelFontSize="Micro"
+                                DescriptionFontAttributes="None"
+                                Description="{Binding Project.protocolId}"
+                                TextAlignment="EndAndExpand"
+                                Grid.Row="0"
+                                Grid.Column="2"/>
+        </Grid>
+
+        <Frame BackgroundColor="White"
+               HasShadow="True"
+               CornerRadius="1">
+          <Grid RowSpacing="0">
+
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="*"/>
+              <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Site Status"
+                   TextColor="Black"
+                   FontSize="Small"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Start"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Grid.ColumnSpan="3"/>
+
+            <telerikChart:RadCartesianChart x:Name="siteStatusChart"
+                                            VerticalOptions="Fill"
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="3">
+
+              <telerikChart:RadCartesianChart.Grid>
+                <telerikChart:CartesianChartGrid StripLinesVisibility="None"
+                                                 MajorLinesVisibility="Y"
+                                                 MajorLineColor="{StaticResource Gray}">
+                </telerikChart:CartesianChartGrid>
+              </telerikChart:RadCartesianChart.Grid>
+
+              <telerikChart:RadCartesianChart.HorizontalAxis>
+                <telerikChart:DateTimeContinuousAxis x:Name="SiteStatusHorizontalAxis"
+                                                     GapLength="0.3"
+                                                     LabelFormat="MMM-yy"
+                                                     MajorStep="2"
+                                                     MajorStepUnit="Month"
+                                                     PlotMode="OnTicks"
+                                                     LabelFitMode="Rotate"
+                                                     LabelTextColor="{StaticResource DarkGray}"
+                                                     LineColor="{StaticResource Gray}"
+                                                     MajorTickBackgroundColor="{StaticResource Gray}"
+                                                     MajorTickThickness="1"
+                                                     Minimum="{x:Static x:DateTime.MinValue}"
+                                                     Maximum="{x:Static x:DateTime.MaxValue}">
+                </telerikChart:DateTimeContinuousAxis>
+              </telerikChart:RadCartesianChart.HorizontalAxis>
+              <telerikChart:RadCartesianChart.VerticalAxis>
+                <telerikChart:NumericalAxis x:Name="SiteStatusVerticalAxis"
+                                            MajorStep="5"
+                                            LabelFitMode="MultiLine"
+                                            LineColor="Transparent"
+                                            Maximum="24"/>
+              </telerikChart:RadCartesianChart.VerticalAxis>
+
+              <telerikChart:RadCartesianChart.Series>
+                <telerikChart:LineSeries ItemsSource="{Binding PlannedSiteStats}"
+                                         Stroke="{StaticResource DarkBlue}"
+                                         StrokeThickness="2"
+                                         DisplayName="Planned">
+                  <telerikChart:LineSeries.ValueBinding>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="activated"/>
+                  </telerikChart:LineSeries.ValueBinding>
+                  <telerikChart:LineSeries.CategoryBinding>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
+                  </telerikChart:LineSeries.CategoryBinding>
+                </telerikChart:LineSeries>
+
+                <telerikChart:LineSeries ItemsSource="{Binding ActualSiteStats}"
+                                         Stroke="{StaticResource Orange}"
+                                         StrokeThickness="2"
+                                         DisplayName="Actual">
+                  <telerikChart:LineSeries.ValueBinding>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="activated"/>
+                  </telerikChart:LineSeries.ValueBinding>
+                  <telerikChart:LineSeries.CategoryBinding>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
+                  </telerikChart:LineSeries.CategoryBinding>
+                </telerikChart:LineSeries>
+
+                <telerikChart:LineSeries ItemsSource="{Binding TotalSiteStats}"
+                                         Stroke="{StaticResource DarkGray}"
+                                         StrokeThickness="2"
+                                         DisplayName="Total">
+                  <telerikChart:LineSeries.ValueBinding>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="activated"/>
+                  </telerikChart:LineSeries.ValueBinding>
+                  <telerikChart:LineSeries.CategoryBinding>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
+                  </telerikChart:LineSeries.CategoryBinding>
+                </telerikChart:LineSeries>
+              </telerikChart:RadCartesianChart.Series>
+            </telerikChart:RadCartesianChart>
+
+            <!--<telerikChart:RadLegend LegendProvider="{x:Reference siteStatusChart}"
+                                    LegendItemFontColor="{StaticResource Gray}"
+                                    Orientation="Horizontal"
+                                    HorizontalOptions="CenterAndExpand"
+
+                                    Grid.Row="2"
+                                    Grid.Column="0"/>-->
+
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="Center"
+                         Grid.Row="2"
+                         Grid.Column="0">
+              <BoxView BackgroundColor="{StaticResource DarkBlue}"
+                       WidthRequest="20"
+                       HeightRequest="2"/>
+              <Label Text="Planned"
+                     TextColor="{StaticResource DarkGray}"
+                     FontSize="Small"
+                     VerticalTextAlignment="Center"/>
             </StackLayout>
-        </ScrollView>
-    </ContentPage.Content>
+
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="Center"
+                         Grid.Row="2"
+                         Grid.Column="1">
+              <BoxView BackgroundColor="{StaticResource Orange}"
+                       WidthRequest="20"
+                       HeightRequest="2"/>
+              <Label Text="Actual"
+                     TextColor="{StaticResource DarkGray}"
+                     FontSize="Small"
+                     VerticalTextAlignment="Center"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="Center"
+                         Grid.Row="2"
+                         Grid.Column="2">
+              <BoxView BackgroundColor="{StaticResource DarkGray}"
+                       WidthRequest="20"
+                       HeightRequest="2"/>
+              <Label Text="Total"
+                     TextColor="{StaticResource DarkGray}"
+                     FontSize="Small"
+                     VerticalTextAlignment="Center"/>
+            </StackLayout>
+          </Grid>
+        </Frame>
+      </StackLayout>
+    </ScrollView>
+  </ContentPage.Content>
 </ContentPage>

@@ -1,36 +1,63 @@
-﻿using Connect.Models;
+﻿using System;
 using Connect.ViewModels;
 using Xamarin.Forms;
 
 namespace Connect.Pages {
+
     public partial class SitesPage : ContentPage {
 
-        private SitesViewModel _viewModel;
+        private readonly SitesViewModel _viewModel;
 
-        private string _projectID = "Project 1";
+        private readonly string _projectId;
 
-        public SitesPage() : this(null) { }
+        public SitesPage() : this(App.SelectedProject?.projectId) { }
 
-        public SitesPage(Milestone project) {
+        public SitesPage(string projectId) {
+
+            BindingContext = _viewModel = new SitesViewModel(_projectId);
+
             InitializeComponent();
 
-            BindingContext = _viewModel = new SitesViewModel(_projectID);
+            if(projectId != null) {
+                _projectId = projectId;
+            }
 
-            if(project != null)
-                _projectID = project.projectId;
+            double microAmount        = Device.GetNamedSize(NamedSize.Micro, typeof(Label));
+            double smallToMicroAmount = Device.GetNamedSize(NamedSize.Small, typeof(Label)) - microAmount;
+
+            double finalAxisFontSize = App.IsAndroid ? microAmount : microAmount - smallToMicroAmount;
+
+            SiteStatusHorizontalAxis.LabelFontSize = finalAxisFontSize;
+            SiteStatusVerticalAxis.LabelFontSize   = finalAxisFontSize;
         }
 
-        protected override void OnAppearing() {
+        protected override async void OnAppearing() {
             base.OnAppearing();
 
-            if(App.LoggedIn) {
-                //if (_viewModel.IsInitialized)
-                //	return;
+            SizeChanged += OnSizeChanged;
 
-                //_viewModel.IsInitialized = true;
-                //_viewModel.LoadCommand.Execute(null);
+            if(App.LoggedIn) {
+                if(_viewModel.IsInitialized) {
+                    return;
+                }
+
+                _viewModel.IsInitialized = true;
+
+                await _viewModel.RefreshData(_projectId);
             }
         }
 
+        protected override void OnDisappearing() {
+            base.OnDisappearing();
+
+            SizeChanged -= OnSizeChanged;
+        }
+
+        private void OnSizeChanged(object sender, EventArgs eventArgs) {
+
+            if(App.IsAndroid && siteStatusChart.Height < 250) { //BUG: On Android, the chart height is not being calculated correctly
+                siteStatusChart.HeightRequest = 250;
+            }
+        }
     }
 }
