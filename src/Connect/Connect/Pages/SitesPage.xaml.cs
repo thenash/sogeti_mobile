@@ -29,6 +29,8 @@ namespace Connect.Pages {
 
             SiteStatusHorizontalAxis.LabelFontSize = finalAxisFontSize;
             SiteStatusVerticalAxis.LabelFontSize   = finalAxisFontSize;
+
+            BottomChartHorizontalAxis.LabelFontSize = finalAxisFontSize;
         }
 
         protected override async void OnAppearing() {
@@ -55,8 +57,15 @@ namespace Connect.Pages {
 
         private void OnSizeChanged(object sender, EventArgs eventArgs) {
 
-            if(App.IsAndroid && siteStatusChart.Height < 250) { //BUG: On Android, the chart height is not being calculated correctly
-                siteStatusChart.HeightRequest = 250;
+            if(App.IsAndroid) { //BUG: On Android, the chart height is not being calculated correctly
+
+                if(TopChart.Height < 250) {
+                    TopChart.HeightRequest = 250;
+                }
+
+                if(BottomChart.Height < 250) {
+                    BottomChart.HeightRequest = 250;
+                }
             }
         }
     }

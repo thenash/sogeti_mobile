@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Connect.Models;
+using Newtonsoft.Json;
 using Xamarin.Forms;
 
 #if DEBUG
@@ -29,6 +30,16 @@ namespace Connect.ViewModels {
             }
         }
 
+        /// <summary>
+        /// gets or sets the planned bottom chart site stats.
+        /// </summary>
+        public ObservableCollection<SiteStatCategory> PlannedBottomChartSiteStats => new ObservableCollection<SiteStatCategory>(Utility.GetChartCategories(PlannedSiteStats));
+
+        /// <summary>
+        /// gets or sets the actual bottom chart site stats.
+        /// </summary>
+        public ObservableCollection<SiteStatCategory> ActualBottomChartSiteStats => new ObservableCollection<SiteStatCategory>(Utility.GetChartCategories(ActualSiteStats));
+
         private ObservableCollection<SiteStats> _plannedSiteStats;
 
         /// <summary>
@@ -40,6 +51,7 @@ namespace Connect.ViewModels {
                 if(_plannedSiteStats != value) {
                     _plannedSiteStats = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(PlannedBottomChartSiteStats));
                 }
             }
         }
@@ -55,6 +67,7 @@ namespace Connect.ViewModels {
                 if(_actualSiteStats != value) {
                     _actualSiteStats = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(ActualBottomChartSiteStats));
                 }
             }
         }
@@ -376,146 +389,146 @@ namespace Connect.ViewModels {
             PlannedSiteStats = new ObservableCollection<SiteStats> {
                 new SiteStats {
                     projectId = "Project 2",
-                    activated = 0,
+                    activated = 3,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(1),
                     isoDate = DateTime.UtcNow.AddMonths(1).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
+                    pssv = 0,
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 5,
-                    closed = 3,
-                    enrolling = 16,
-                    inactive = 2,
+                    activated = 2,
+                    closed = 0,
+                    enrolling = 0,
+                    inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(2),
                     isoDate = DateTime.UtcNow.AddMonths(2).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
-                    selected = 21,
+                    pssv = 5,
+                    selected = 0,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 14,
-                    closed = 10,
-                    enrolling = 18,
-                    inactive = 3,
+                    activated = 1,
+                    closed = 0,
+                    enrolling = 0,
+                    inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(3),
                     isoDate = DateTime.UtcNow.AddMonths(3).ToString("ddMMMyyyy"),
-                    nonEnrolling = 4,
-                    pssv = 5,
-                    selected = 24,
+                    nonEnrolling = 0,
+                    pssv = 14,
+                    selected = 0,
                     siv = 1
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 15,
+                    activated = 1,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(4),
                     isoDate = DateTime.UtcNow.AddMonths(4).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
+                    pssv = 15,
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 15,
+                    activated = 1,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(5),
                     isoDate = DateTime.UtcNow.AddMonths(5).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
+                    pssv = 15,
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 15,
+                    activated = 2,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(6),
                     isoDate = DateTime.UtcNow.AddMonths(6).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
+                    pssv = 15,
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 16,
+                    activated = 2,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(7),
                     isoDate = DateTime.UtcNow.AddMonths(7).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
+                    pssv = 16,
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 16,
+                    activated = 4,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(8),
                     isoDate = DateTime.UtcNow.AddMonths(8).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
+                    pssv = 16,
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 17,
+                    activated = 1,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(9),
                     isoDate = DateTime.UtcNow.AddMonths(9).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
+                    pssv = 17,
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 17,
+                    activated = 2,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(10),
                     isoDate = DateTime.UtcNow.AddMonths(10).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
+                    pssv = 17,
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 19,
+                    activated = 0,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(11),
                     isoDate = DateTime.UtcNow.AddMonths(11).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
+                    pssv = 19,
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 20,
+                    activated = 1,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(12),
                     isoDate = DateTime.UtcNow.AddMonths(12).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
+                    pssv = 20,
                     selected = 0,
                     siv = 0
                 }
@@ -532,139 +545,139 @@ namespace Connect.ViewModels {
                     isoDate = DateTime.UtcNow.AddMonths(2).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
                     pssv = 4,
-                    selected = 0,
+                    selected = 2,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 10,
+                    activated = 2,
                     closed = 3,
                     enrolling = 16,
                     inactive = 2,
                     isoDateTime = DateTime.UtcNow.AddMonths(3),
                     isoDate = DateTime.UtcNow.AddMonths(3).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
-                    selected = 21,
+                    pssv = 10,
+                    selected = 1,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 10,
+                    activated = 1,
                     closed = 10,
                     enrolling = 18,
                     inactive = 3,
                     isoDateTime = DateTime.UtcNow.AddMonths(4),
                     isoDate = DateTime.UtcNow.AddMonths(4).ToString("ddMMMyyyy"),
                     nonEnrolling = 4,
-                    pssv = 5,
-                    selected = 24,
+                    pssv = 10,
+                    selected = 2,
                     siv = 1
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 11,
+                    activated = 0,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(5),
                     isoDate = DateTime.UtcNow.AddMonths(5).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
-                    selected = 0,
+                    pssv = 11,
+                    selected = 3,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 11,
+                    activated = 2,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(6),
                     isoDate = DateTime.UtcNow.AddMonths(6).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
-                    selected = 0,
+                    pssv = 11,
+                    selected = 2,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 12,
+                    activated = 1,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(7),
                     isoDate = DateTime.UtcNow.AddMonths(7).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
-                    selected = 0,
+                    pssv = 12,
+                    selected = 1,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 12,
+                    activated = 3,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(8),
                     isoDate = DateTime.UtcNow.AddMonths(8).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
-                    selected = 0,
+                    pssv = 12,
+                    selected = 2,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 12,
+                    activated = 2,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(9),
                     isoDate = DateTime.UtcNow.AddMonths(9).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
-                    selected = 0,
+                    pssv = 12,
+                    selected = 1,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 12,
+                    activated = 1,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(10),
                     isoDate = DateTime.UtcNow.AddMonths(10).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
-                    selected = 0,
+                    pssv = 12,
+                    selected = 2,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 12,
+                    activated = 0,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(11),
                     isoDate = DateTime.UtcNow.AddMonths(11).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
-                    selected = 0,
+                    pssv = 12,
+                    selected = 1,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 13,
+                    activated = 1,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(12),
                     isoDate = DateTime.UtcNow.AddMonths(12).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
-                    selected = 0,
+                    pssv = 13,
+                    selected = 2,
                     siv = 0
                 }, new SiteStats {
                     projectId = "Project 2",
-                    activated = 20,
+                    activated = 3,
                     closed = 0,
                     enrolling = 0,
                     inactive = 0,
                     isoDateTime = DateTime.UtcNow.AddMonths(13),
                     isoDate = DateTime.UtcNow.AddMonths(13).ToString("ddMMMyyyy"),
                     nonEnrolling = 0,
-                    pssv = 4,
-                    selected = 0,
+                    pssv = 20,
+                    selected = 3,
                     siv = 0
                 }
             };
@@ -890,10 +903,10 @@ namespace Connect.ViewModels {
 
                     List<SiteStats> siteStats = Utility.DeserializeResponse<List<SiteStats>>(content, "data/project/siteStats");
 
-                    SiteStats.Clear();
+                    PlannedSiteStats.Clear();
 
                     foreach(SiteStats siteStat in siteStats) {
-                        SiteStats.Add(siteStat);
+                        PlannedSiteStats.Add(siteStat);
                     }
                 }
             } catch(Exception ex) {
@@ -909,7 +922,7 @@ namespace Connect.ViewModels {
         /// <summary>
         /// Command to load/refresh artitists
         /// </summary>
-        public Command LoadProjectCommand => _loadSiteStatsCommand ?? (_loadSiteStatsCommand = new Command(async () => await ExecuteLoadProjectCommand(_projectId)));
+        public Command LoadProjectCommand => _loadProjectCommand ?? (_loadProjectCommand = new Command(async () => await ExecuteLoadProjectCommand(_projectId)));
 
         private async Task ExecuteLoadProjectCommand(string projectId) {
             if(IsBusy) {

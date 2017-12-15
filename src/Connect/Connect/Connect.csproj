@@ -81,8 +81,10 @@
       <DependentUpon>ConnectPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Constants.cs" />
+    <Compile Include="Helpers\ChartXAxisAttribute.cs" />
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Interfaces\INavigationService.cs" />
+    <Compile Include="Models\SiteStatCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\Utility.cs" />
     <Compile Include="Models\Login.cs" />

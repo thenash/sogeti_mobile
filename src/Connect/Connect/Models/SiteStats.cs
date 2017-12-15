@@ -1,79 +1,68 @@
 ﻿using System;
-namespace Connect.Models
-{
-    public class SiteStats
-    {
-        public string projectId
-        {
-            get;
-            set;
-        }
-		
-        public string isoDate
-        {
+using Connect.Helpers;
+
+namespace Connect.Models {
+
+    public class SiteStats {
+
+        public string projectId {
             get;
             set;
         }
 
-        public DateTime isoDateTime
-        {
-            get{
-                return Convert.ToDateTime(isoDate);
-            }
-            set{}
-        }
-
-        public int selected
-        {
+        public string isoDate {
             get;
             set;
         }
 
-        public int activated
-        {
+        public DateTime isoDateTime { get; set; }
+
+        [ChartXAxis(0, "Selected")]
+        public int selected {
             get;
             set;
         }
 
-        public int enrolling
-        {
+        [ChartXAxis(1, "Activated")]
+        public int activated {
             get;
             set;
         }
 
-        public int nonEnrolling
-        {
+        [ChartXAxis(2, "Enrolling")]
+        public int enrolling {
             get;
             set;
         }
 
-        public int inactive
-        {
+        public int nonEnrolling {
             get;
             set;
         }
 
-        public int closed
-        {
+        [ChartXAxis(3, "Dormant")]
+        public int inactive {
             get;
             set;
         }
 
-        public int siv
-        {
+        [ChartXAxis(4, "Closed")]
+        public int closed {
             get;
             set;
         }
 
-        public int pssv
-        {
+        public int siv {
+            get;
+            set;
+        }
+
+        public int pssv {
             get;
             set;
         }
 
 
-		public SiteStats()
-        {
-        }
+        public SiteStats() { }
     }
 }

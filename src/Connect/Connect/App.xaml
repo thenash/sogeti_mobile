@@ -6,12 +6,9 @@
     <ResourceDictionary>
 
       <!-- Color -->
-
-      <Color x:Key="LightOrange">#E99059</Color>
-      <Color x:Key="Orange">#EE8741</Color>
-
       <Color x:Key="LightBlue">#75A8D7</Color>
       <Color x:Key="DarkBlue">#395E84</Color>
+      <Color x:Key="OpaqueDarkBlue">#99395E84</Color>
       <Color x:Key="SkyBlue">#CCEAFD</Color>
       <Color x:Key="LightGray">#EEEEEE</Color>
       <Color x:Key="Gray">#BABABA</Color>
@@ -20,6 +17,8 @@
       <Color x:Key="Red">#FF3B3C</Color>
       <Color x:Key="Yellow">#FCEA0F</Color>
       <Color x:Key="OrangeYellow">#FEC000</Color>
+      <Color x:Key="LightOrange">#E99059</Color>
+      <Color x:Key="Orange">#EE8741</Color>
 
       <!-- ////////////////////////////// -->
 

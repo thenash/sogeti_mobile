@@ -4,7 +4,6 @@ using Xamarin.Forms;
 
 namespace Connect.Helpers {
 
-
     /// <summary>
     /// Used in a XAML trigger to return true or false based on the length of the 'value' text field.
     /// </summary>
@@ -20,9 +19,7 @@ namespace Connect.Helpers {
         /// <param name="parameter">Optional, specify what length to test against (example: for Pin Code, we would choose 3 characters, since the Pin Code needs to be over 3 characters), if not specified, defaults to 0.</param>
         /// <param name="culture">The current culture set in the device.</param>
         /// <returns>Which is a <c>bool</c> (<c>true</c> if <see cref="value"/> is greater than 0, <c>false</c> if not).</returns>
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            return DoWork(value, parameter);
-        }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => DoWork(value, parameter);
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {
 #if DEBUG

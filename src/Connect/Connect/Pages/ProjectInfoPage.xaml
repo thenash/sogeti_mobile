@@ -5,7 +5,15 @@
              xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect"
              BackgroundColor="{StaticResource LightGray}"
              Title="{Binding Title}">
+
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="LOGOUT"
+                 Command=""/>
+    <!-- TODO: Bind to Command in BaseViewModel -->
+  </ContentPage.ToolbarItems>
+  
   <ContentPage.Content>
+  
     <ScrollView>
       <StackLayout Padding="15"
                    HorizontalOptions="Center">
