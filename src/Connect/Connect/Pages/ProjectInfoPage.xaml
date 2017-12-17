@@ -11,13 +11,14 @@
                  Command=""/>
     <!-- TODO: Bind to Command in BaseViewModel -->
   </ContentPage.ToolbarItems>
-  
+
   <ContentPage.Content>
-  
+
     <ScrollView>
       <StackLayout Padding="15"
-                   HorizontalOptions="Center">
-        <Grid>
+                   HorizontalOptions="Center"
+                   Spacing="3">
+        <Grid ColumnSpacing="3">
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
@@ -41,12 +42,16 @@
                                 Grid.Row="0"
                                 Grid.Column="2" />
         </Grid>
-        <Frame Padding="10"
+
+        <Frame Padding="5"
                Margin="0, 10"
                BackgroundColor="White"
-               OutlineColor="{StaticResource DarkGray}"
-               CornerRadius="0">
-          <Grid>
+               OutlineColor="{StaticResource Gray}"
+               CornerRadius="0"
+               HasShadow="False">
+          <Grid ColumnSpacing="3"
+                RowSpacing="3">
+
             <Grid.RowDefinitions>
               <RowDefinition Height="Auto" />
               <RowDefinition Height="Auto" />
@@ -55,21 +60,25 @@
               <ColumnDefinition Width="*" />
               <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+
             <myViews:CardCellView Title="Protocol Title"
                                   Description="{Binding ProjectDetails.protocolDesc}"
                                   TextAlignment="StartAndExpand"
                                   Grid.Row="0"
                                   Grid.Column="0" />
+
             <myViews:CardCellView Title="Therapeautic Area"
                                   Description="{Binding ProjectDetails.primaryTherapeuticArea}"
                                   TextAlignment="EndAndExpand"
                                   Grid.Row="0"
                                   Grid.Column="1"/>
+
             <myViews:CardCellView Title="Study Phase"
                                   Description="{Binding ProjectDetails.phase}"
                                   TextAlignment="StartAndExpand"
                                   Grid.Row="1"
                                   Grid.Column="0"/>
+
             <myViews:CardCellView Title="Indication"
                                   Description="{Binding ProjectDetails.primaryIndication}"
                                   TextAlignment="EndAndExpand"
@@ -77,14 +86,20 @@
                                   Grid.Column="1"/>
           </Grid>
         </Frame>
+
         <Frame CornerRadius="0"
-               Padding="0">
+               Padding="0"
+               HasShadow="False"
+               BackgroundColor="White"
+               OutlineColor="{StaticResource Gray}">
           <StackLayout Padding="0">
+
             <Label Text="Project Milestones"
                    HorizontalOptions="Center"
                    FontAttributes="Bold"/>
             <Label Text="Display by Variance:"
                    HorizontalOptions="Center" />
+
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="Center">
               <myViews:VarianceViewCard IndicatorColor="White"
@@ -94,17 +109,21 @@
               <myViews:VarianceViewCard IndicatorColor="{StaticResource Yellow}"
                                         Description="&gt;= 1 and &lt;= 14" />
               <myViews:VarianceViewCard IndicatorColor="{StaticResource Green}"
-                                        Description="&gt;= 0" />
+                                        Description="&lt;= 0" />
               <myViews:VarianceViewCard IndicatorColor="{StaticResource Gray}"
                                         Description="Missing Date" />
             </StackLayout>
+
             <ListView x:Name="milestonesList"
                       SeparatorVisibility="None"
                       HasUnevenRows="true"
                       ItemsSource="{Binding Milestones}" >
               <ListView.ItemTemplate>
                 <DataTemplate>
-                  <myViews:MilestoneCellView />
+                  <myViews:MilestoneCellView ActualDate="{Binding actualDate}"
+                                             PlannedDate="{Binding plannedDate}"
+                                             ProjectCode="{Binding projectId}"
+                                             Variance=""/> <!-- TODO: Find out where this comes from -->
                 </DataTemplate>
               </ListView.ItemTemplate>
             </ListView>

@@ -32,8 +32,12 @@ namespace Connect.Views {
             set => SetValue(ActualDateProperty, value);
         }
 
-        protected override void OnPropertyChanged(string propertyName) {
+        protected override void OnPropertyChanged(string propertyName = null) {
             base.OnPropertyChanged(propertyName);
+
+            if(propertyName == null) {
+                return;
+            }
 
             switch(propertyName) {
                 case nameof(ActualDate):

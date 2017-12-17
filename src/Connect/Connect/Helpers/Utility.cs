@@ -43,9 +43,7 @@ namespace Connect.Helpers {
 
         public Utility() { }
 
-        public static string GetDateString(DateTime dateTime) {
-            return dateTime.ToString("mM/d/YY h:mm");
-        }
+        public static string GetDateString(DateTime dateTime) => dateTime.ToString("mM/d/YY h:mm");
 
         public static List<SiteStatCategory> GetChartCategories(IList<SiteStats> siteStatus) {
             List<SiteStatCategory> siteCats = new List<SiteStatCategory>();

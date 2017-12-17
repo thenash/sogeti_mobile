@@ -19,6 +19,7 @@
       <Color x:Key="OrangeYellow">#FEC000</Color>
       <Color x:Key="LightOrange">#E99059</Color>
       <Color x:Key="Orange">#EE8741</Color>
+      <Color x:Key="OpaqueOrange">#99EE8741</Color>
 
       <!-- ////////////////////////////// -->
 

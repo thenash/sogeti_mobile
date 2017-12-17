@@ -1,29 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="Connect.Views.MilestoneCellView" xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect">
-    <Frame Padding="0" Margin="0" BackgroundColor="White" OutlineColor="{StaticResource DarkGray}" CornerRadius="0" HasShadow="false">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="10" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <BoxView BackgroundColor="Green" Grid.Row="0" Grid.Column="0" />
-            <Grid Grid.Row="0" Grid.Column="1" Padding="0,5,5,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <myViews:CardCellView x:Name="milestoneCell" Grid.Row="0" Grid.Column="0" Title="Milestone" Description="{Binding milestoneName}" TextAlignment="StartAndExpand" />
-                <myViews:CardCellView x:Name="varianceCell" Grid.Row="0" Grid.Column="1" Title="Variance" Description="{Binding status}" TextAlignment="EndAndExpand" />
-                <myViews:CardCellView x:Name="plannedDateCell" Grid.Row="1" Grid.Column="0" Title="Planned Date" Description="{Binding plannedDate}" TextAlignment="StartAndExpand" />
-                <myViews:CardCellView x:Name="actualDateCell" Grid.Row="1" Grid.Column="1" Title="Actual Date" Description="{Binding actualDate}" TextAlignment="EndAndExpand" />
-            </Grid>
-        </Grid>
-    </Frame>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms"
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          x:Class="Connect.Views.MilestoneCellView"
+          xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect">
+  <Frame Padding="0"
+         Margin="0"
+         BackgroundColor="White"
+         OutlineColor="{StaticResource DarkGray}"
+         CornerRadius="0"
+         HasShadow="False">
+
+    <Grid ColumnSpacing="3">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="10" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <BoxView BackgroundColor="{StaticResource Green}"
+               Grid.Row="0"
+               Grid.Column="0" />
+
+      <Grid RowSpacing="1"
+            ColumnSpacing="3"
+            Padding="0,0,5,0"
+            Grid.Row="0"
+            Grid.Column="1">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <myViews:CardCellView x:Name="milestoneCell"
+                              Title="Milestone"
+                              Description="{Binding milestoneName}"
+                              TextAlignment="StartAndExpand"
+                              Grid.Row="0"
+                              Grid.Column="0"/>
+
+        <myViews:CardCellView x:Name="varianceCell"
+                              Title="Variance"
+                              Description="{Binding status}"
+                              TextAlignment="EndAndExpand"
+                              Grid.Row="0"
+                              Grid.Column="1" />
+
+        <myViews:CardCellView x:Name="plannedDateCell"
+                              Title="Planned Date"
+                              Description="{Binding plannedDate}"
+                              TextAlignment="StartAndExpand"
+                              Grid.Row="1"
+                              Grid.Column="0" />
+
+        <myViews:CardCellView x:Name="actualDateCell"
+                              Title="Actual Date"
+                              Description="{Binding actualDate}"
+                              TextAlignment="EndAndExpand"
+                              Grid.Row="1"
+                              Grid.Column="1" />
+      </Grid>
+    </Grid>
+  </Frame>
 </ViewCell>

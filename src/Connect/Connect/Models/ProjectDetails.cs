@@ -123,7 +123,6 @@
         }
 
 
-        public ProjectDetails() {
-        }
+        public ProjectDetails() { }
     }
 }

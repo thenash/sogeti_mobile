@@ -5,9 +5,9 @@
              xmlns:effects="clr-namespace:Connect.Effects">
   <ContentView.Content>
     <Frame CornerRadius="0"
-               OutlineColor="{StaticResource DarkGray}"
-               HasShadow="false"
-               Padding="0">
+           OutlineColor="{StaticResource DarkGray}"
+           HasShadow="false"
+           Padding="0">
       <Frame.Effects>
         <effects:DropShadowEffect/>
       </Frame.Effects>
@@ -18,18 +18,18 @@
           <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="60" />
+          <ColumnDefinition Width="50" />
         </Grid.ColumnDefinitions>
 
         <BoxView x:Name="statusIndicator"
-                 HorizontalOptions="FillAndExpand"
+                 HorizontalOptions="Fill"
                  BackgroundColor="White"
                  Grid.Row="0"
                  Grid.Column="0"/>
         <Label x:Name="varianceCardStatus"
                Text="ALL"
-               HorizontalOptions="CenterAndExpand"
-               FontSize="Small"
+               HorizontalOptions="Center"
+               FontSize="Micro"
                Grid.Row="1"
                Grid.Column="0"/>
       </Grid>

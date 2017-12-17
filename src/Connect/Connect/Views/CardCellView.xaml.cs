@@ -36,7 +36,7 @@ namespace Connect.Views {
         /// <summary>
         /// The <see cref="LabelFontSize"/> property for the label text.
         /// </summary>
-        public static readonly BindableProperty LabelFontSizeProperty = BindableProperty.Create(nameof(LabelFontSize), typeof(NamedSize), typeof(CardCellView), NamedSize.Small);
+        public static readonly BindableProperty LabelFontSizeProperty = BindableProperty.Create(nameof(LabelFontSize), typeof(NamedSize), typeof(CardCellView), App.IsPhone ? NamedSize.Micro : NamedSize.Small);
 
         /// <summary>
         /// Gets or sets the <see cref="Label.FontSize"/>.
