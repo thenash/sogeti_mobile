@@ -49,6 +49,8 @@ namespace Connect.Models {
             set;
         }
 
+        public int variance { get; set; }
+
         public Milestone() { }
     }
 }

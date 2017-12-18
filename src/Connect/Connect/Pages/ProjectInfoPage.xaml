@@ -123,7 +123,7 @@
                   <myViews:MilestoneCellView ActualDate="{Binding actualDate}"
                                              PlannedDate="{Binding plannedDate}"
                                              ProjectCode="{Binding projectId}"
-                                             Variance=""/> <!-- TODO: Find out where this comes from -->
+                                             Variance="{Binding variance}"/> <!-- TODO: Find out where this comes from -->
                 </DataTemplate>
               </ListView.ItemTemplate>
             </ListView>

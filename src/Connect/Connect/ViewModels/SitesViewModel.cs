@@ -2,13 +2,13 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Connect.Models;
-using Newtonsoft.Json;
 using Xamarin.Forms;
+using Connect.Helpers;
 
-#if DEBUG
+#if !DEBUG
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
-using Connect.Helpers;
 #endif
 
 namespace Connect.ViewModels {
@@ -39,6 +39,11 @@ namespace Connect.ViewModels {
         /// gets or sets the actual bottom chart site stats.
         /// </summary>
         public ObservableCollection<SiteStatCategory> ActualBottomChartSiteStats => new ObservableCollection<SiteStatCategory>(Utility.GetChartCategories(ActualSiteStats));
+
+        /// <summary>
+        /// gets or sets the total bottom chart site stats.
+        /// </summary>
+        public ObservableCollection<SiteStatCategory> TotalBottomChartSiteStats => new ObservableCollection<SiteStatCategory>(Utility.GetChartCategories(TotalSiteStats));
 
         private ObservableCollection<SiteStats> _plannedSiteStats;
 
@@ -162,7 +167,7 @@ namespace Connect.ViewModels {
 
             SiteDetails = new ObservableCollection<SiteDetails> {
                 new SiteDetails {
-                    projectId      = "Project 2",
+                    projectId      = projectId,
                     eventType      = "PSSV",
                     activationDate = Utility.GetDateString(new DateTime(year, 7, 30)),
                     country        = "USA",
@@ -172,7 +177,7 @@ namespace Connect.ViewModels {
                     siteId         = "100446452",
                     siteName       = "{redacted}"
                 }, new SiteDetails {
-                    projectId      = "Project 2",
+                    projectId      = projectId,
                     eventType      = "PSSV",
                     activationDate = Utility.GetDateString(new DateTime(year, 8, 17)),
                     country        = "USA",
@@ -182,7 +187,7 @@ namespace Connect.ViewModels {
                     siteId         = "109043379",
                     siteName       = "{redacted}"
                 }, new SiteDetails {
-                    projectId      = "Project 2",
+                    projectId      = projectId,
                     eventType      = "PSSV",
                     activationDate = Utility.GetDateString(new DateTime(year, 9, 21)),
                     country        = "USA",
@@ -192,7 +197,7 @@ namespace Connect.ViewModels {
                     siteId         = "115286140",
                     siteName       = "{redacted}"
                 }, new SiteDetails {
-                    projectId      = "Project 2",
+                    projectId      = projectId,
                     eventType      = "Selected",
                     activationDate = Utility.GetDateString(new DateTime(year, 9, 21)),
                     country        = "USA",
@@ -202,7 +207,7 @@ namespace Connect.ViewModels {
                     siteId         = "115286140",
                     siteName       = "{redacted}"
                 }, new SiteDetails {
-                    projectId      = "Project 1",
+                    projectId      = projectId,
                     eventType      = "PSSV",
                     activationDate = Utility.GetDateString(new DateTime(year, 9, 29)),
                     country        = "USA",
@@ -212,7 +217,7 @@ namespace Connect.ViewModels {
                     siteId         = "115391071",
                     siteName       = "{redacted}"
                 }, new SiteDetails {
-                    projectId      = "Project 1",
+                    projectId      = projectId,
                     eventType      = "PSSV",
                     activationDate = Utility.GetDateString(new DateTime(year, 10, 5)),
                     country        = "USA",
@@ -222,7 +227,7 @@ namespace Connect.ViewModels {
                     siteId         = "115391062",
                     siteName       = "{redacted}"
                 }, new SiteDetails {
-                    projectId      = "Project 1",
+                    projectId      = projectId,
                     eventType      = "PSSV",
                     activationDate = Utility.GetDateString(new DateTime(year, 10, 6)),
                     country        = "USA",
@@ -232,7 +237,7 @@ namespace Connect.ViewModels {
                     siteId         = "115391067",
                     siteName       = "{redacted}"
                 }, new SiteDetails {
-                    projectId      = "Project 1",
+                    projectId      = projectId,
                     eventType      = "PSSV",
                     activationDate = Utility.GetDateString(new DateTime(year, 10, 6)),
                     country        = "USA",
@@ -291,7 +296,7 @@ namespace Connect.ViewModels {
 
             SiteTrends = new ObservableCollection<SiteTrends> {
                 new SiteTrends {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     actual    = "8",
                     ceiling   = "8",
                     eventType = "activeSitesColumn",
@@ -299,7 +304,7 @@ namespace Connect.ViewModels {
                     low       = "0",
                     month     = Utility.GetDateString(new DateTime(year, 4, 1)),
                 }, new SiteTrends {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     actual    = "8",
                     ceiling   = "8",
                     eventType = "activeSitesColumn",
@@ -307,7 +312,7 @@ namespace Connect.ViewModels {
                     low       = "1",
                     month     = Utility.GetDateString(new DateTime(year, 5, 1)),
                 }, new SiteTrends {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     actual    = "8",
                     ceiling   = "8",
                     eventType = "activeSitesColumn",
@@ -315,7 +320,7 @@ namespace Connect.ViewModels {
                     low       = "1",
                     month     = Utility.GetDateString(new DateTime(year, 6, 1)),
                 }, new SiteTrends {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     actual    = "8",
                     ceiling   = "8",
                     eventType = "activeSitesColumn",
@@ -323,7 +328,7 @@ namespace Connect.ViewModels {
                     low       = "2",
                     month     = Utility.GetDateString(new DateTime(year, 7, 1)),
                 }, new SiteTrends {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     actual    = "8",
                     ceiling   = "8",
                     eventType = "activeSitesColumn",
@@ -331,7 +336,7 @@ namespace Connect.ViewModels {
                     low       = "3",
                     month     = Utility.GetDateString(new DateTime(year, 8, 1)),
                 }, new SiteTrends {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     actual    = "8",
                     ceiling   = "8",
                     eventType = "activeSitesColumn",
@@ -388,7 +393,7 @@ namespace Connect.ViewModels {
 
             PlannedSiteStats = new ObservableCollection<SiteStats> {
                 new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 3,
                     closed = 0,
                     enrolling = 0,
@@ -400,7 +405,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 2,
                     closed = 0,
                     enrolling = 0,
@@ -412,7 +417,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 1,
                     closed = 0,
                     enrolling = 0,
@@ -424,7 +429,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 1
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 1,
                     closed = 0,
                     enrolling = 0,
@@ -436,7 +441,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 1,
                     closed = 0,
                     enrolling = 0,
@@ -448,7 +453,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 2,
                     closed = 0,
                     enrolling = 0,
@@ -460,7 +465,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 2,
                     closed = 0,
                     enrolling = 0,
@@ -472,7 +477,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 4,
                     closed = 0,
                     enrolling = 0,
@@ -484,7 +489,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 1,
                     closed = 0,
                     enrolling = 0,
@@ -496,7 +501,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 2,
                     closed = 0,
                     enrolling = 0,
@@ -508,7 +513,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 0,
                     closed = 0,
                     enrolling = 0,
@@ -520,7 +525,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 1,
                     closed = 0,
                     enrolling = 0,
@@ -536,7 +541,7 @@ namespace Connect.ViewModels {
 
             ActualSiteStats = new ObservableCollection<SiteStats> {
                 new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 4,
                     closed = 0,
                     enrolling = 0,
@@ -548,7 +553,7 @@ namespace Connect.ViewModels {
                     selected = 2,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 2,
                     closed = 3,
                     enrolling = 16,
@@ -560,7 +565,7 @@ namespace Connect.ViewModels {
                     selected = 1,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 1,
                     closed = 10,
                     enrolling = 18,
@@ -572,7 +577,7 @@ namespace Connect.ViewModels {
                     selected = 2,
                     siv = 1
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 0,
                     closed = 0,
                     enrolling = 0,
@@ -584,7 +589,7 @@ namespace Connect.ViewModels {
                     selected = 3,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 2,
                     closed = 0,
                     enrolling = 0,
@@ -596,7 +601,7 @@ namespace Connect.ViewModels {
                     selected = 2,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 1,
                     closed = 0,
                     enrolling = 0,
@@ -608,7 +613,7 @@ namespace Connect.ViewModels {
                     selected = 1,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 3,
                     closed = 0,
                     enrolling = 0,
@@ -620,7 +625,7 @@ namespace Connect.ViewModels {
                     selected = 2,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 2,
                     closed = 0,
                     enrolling = 0,
@@ -632,7 +637,7 @@ namespace Connect.ViewModels {
                     selected = 1,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 1,
                     closed = 0,
                     enrolling = 0,
@@ -644,7 +649,7 @@ namespace Connect.ViewModels {
                     selected = 2,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 0,
                     closed = 0,
                     enrolling = 0,
@@ -656,7 +661,7 @@ namespace Connect.ViewModels {
                     selected = 1,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 1,
                     closed = 0,
                     enrolling = 0,
@@ -668,7 +673,7 @@ namespace Connect.ViewModels {
                     selected = 2,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 3,
                     closed = 0,
                     enrolling = 0,
@@ -684,7 +689,7 @@ namespace Connect.ViewModels {
 
             TotalSiteStats = new ObservableCollection<SiteStats> {
                 new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 0,
                     enrolling = 0,
@@ -696,7 +701,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 0,
                     enrolling = 0,
@@ -708,7 +713,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 3,
                     enrolling = 16,
@@ -720,7 +725,7 @@ namespace Connect.ViewModels {
                     selected = 21,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 10,
                     enrolling = 18,
@@ -732,7 +737,7 @@ namespace Connect.ViewModels {
                     selected = 24,
                     siv = 1
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 0,
                     enrolling = 0,
@@ -744,7 +749,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 0,
                     enrolling = 0,
@@ -756,7 +761,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 0,
                     enrolling = 0,
@@ -768,7 +773,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 0,
                     enrolling = 0,
@@ -780,7 +785,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 0,
                     enrolling = 0,
@@ -792,7 +797,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 0,
                     enrolling = 0,
@@ -804,7 +809,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 0,
                     enrolling = 0,
@@ -816,7 +821,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 0,
                     enrolling = 0,
@@ -828,7 +833,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 0,
                     enrolling = 0,
@@ -840,7 +845,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 0,
                     enrolling = 0,
@@ -852,7 +857,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 0,
                     enrolling = 0,
@@ -864,7 +869,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 0,
                     enrolling = 0,
@@ -876,7 +881,7 @@ namespace Connect.ViewModels {
                     selected = 0,
                     siv = 0
                 }, new SiteStats {
-                    projectId = "Project 2",
+                    projectId = projectId,
                     activated = 20,
                     closed = 0,
                     enrolling = 0,

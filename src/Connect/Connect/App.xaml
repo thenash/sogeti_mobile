@@ -39,7 +39,7 @@
                 Value="FillAndExpand"/>
       </Style>
 
-      <Style x:Key="VerticleSeparatorStyle"
+      <Style x:Key="VerticalSeparatorStyle"
              TargetType="BoxView"
              BasedOn="{StaticResource BaseSeparatorStyle}">
         <Setter Property="WidthRequest"

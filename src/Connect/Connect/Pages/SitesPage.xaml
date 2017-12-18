@@ -51,7 +51,8 @@
 
         <Frame BackgroundColor="White"
                HasShadow="True"
-               CornerRadius="1">
+               CornerRadius="1"
+               Padding="3">
           <Grid RowSpacing="0">
 
             <Grid.RowDefinitions>
@@ -198,14 +199,7 @@
           </Grid>
         </Frame>
 
-        <Label Text="Site Status"
-               TextColor="Black"
-               FontSize="Small"
-               VerticalTextAlignment="End"
-               Margin="0,5,0,0"/>
-
         <Grid RowSpacing="0"
-              Margin="0,0,0,5"
               BackgroundColor="White">
 
           <Grid.RowDefinitions>
@@ -219,6 +213,60 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
           </Grid.ColumnDefinitions>
+
+          <!-- TODO: Could make the below into a Grid using BoxViews for separators to get the borders closer to the mockups -->
+          <StackLayout Orientation="Horizontal"
+                       BackgroundColor="{StaticResource LightGray}"
+                       Spacing="0"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="3">
+            <Label Text="Site Status"
+                   TextColor="Black"
+                   FontSize="Small"
+                   VerticalTextAlignment="End"
+                   Margin="0,5,0,3"
+                   HorizontalOptions="StartAndExpand"/>
+
+            <Frame x:Name="ChartViewButtonFrame"
+                   OutlineColor="{StaticResource DarkGray}"
+                   Padding="0"
+                   HasShadow="False"
+                   CornerRadius="1"
+                   HorizontalOptions="End"
+                   HeightRequest="25"
+                   WidthRequest="25">
+              <Label Text="C"
+                     FontSize="Small"
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                     InputTransparent="True"/>
+
+              <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnChartViewTapped"/>
+              </Frame.GestureRecognizers>
+            </Frame>
+
+            <Frame x:Name="GridViewButtonFrame"
+                   OutlineColor="{StaticResource DarkGray}"
+                   Padding="0"
+                   HasShadow="False"
+                   CornerRadius="1"
+                   HorizontalOptions="End"
+                   HeightRequest="25"
+                   WidthRequest="25"
+                   BackgroundColor="{StaticResource Gray}">
+              <Label Text="G"
+                     FontSize="Small"
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                     InputTransparent="True"/>
+
+              <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnGridViewTapped"/>
+              </Frame.GestureRecognizers>
+            </Frame>
+          </StackLayout>
 
           <!--<StackLayout Orientation="Horizontal"
                        Spacing="0"
@@ -316,7 +364,30 @@
             </telerikChart:RadCartesianChart.Series>
           </telerikChart:RadCartesianChart>
 
-          <StackLayout Orientation="Horizontal"
+          <Grid x:Name="BottomGrid"
+                BackgroundColor="White"
+                IsVisible="False"
+                RowSpacing="0"
+                ColumnSpacing="0"
+                VerticalOptions="FillAndExpand"
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="3">
+
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="1"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="1"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="1"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+          </Grid>
+
+          <StackLayout x:Name="PlannedBottomLegendStackLayout"
+                       Orientation="Horizontal"
                        Padding="10,5,0,5"
                        Grid.Row="2"
                        Grid.Column="0">
@@ -329,7 +400,8 @@
                    VerticalTextAlignment="Center"/>
           </StackLayout>
 
-          <StackLayout Orientation="Horizontal"
+          <StackLayout x:Name="ActualBottomLegendStackLayout"
+                       Orientation="Horizontal"
                        Padding="10,5,0,5"
                        Grid.Row="2"
                        Grid.Column="2">
