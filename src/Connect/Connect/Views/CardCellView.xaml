@@ -5,7 +5,7 @@
   <ContentView.Content>
     <Grid x:Name="ContainerGrid"
           Padding="5"
-          RowSpacing="2">
+          RowSpacing="1">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />

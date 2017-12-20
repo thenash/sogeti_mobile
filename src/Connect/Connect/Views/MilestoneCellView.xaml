@@ -21,7 +21,7 @@
 
       <BoxView BackgroundColor="{StaticResource Green}"
                Grid.Row="0"
-               Grid.Column="0" />
+               Grid.Column="0" /> <!-- Change background color based on Variance -->
 
       <Grid RowSpacing="1"
             ColumnSpacing="3"

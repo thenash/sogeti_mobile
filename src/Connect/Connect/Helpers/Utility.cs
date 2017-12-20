@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using Connect.Models;
@@ -16,6 +15,8 @@ namespace Connect.Helpers {
         /// Grouping of property info for properties with the <see cref="ChartXAxisAttribute"/>.
         /// </summary>
         private static readonly Dictionary<string, PropertyInfo> XAxisSiteStatusCategoryProps;
+
+        #region Constructors
 
         static Utility() {
             XAxisSiteStatusCategoryProps = new Dictionary<string, PropertyInfo>();
@@ -42,6 +43,8 @@ namespace Connect.Helpers {
         }
 
         public Utility() { }
+
+        #endregion
 
         public static string GetDateString(DateTime dateTime) => dateTime.ToString("mM/d/YY h:mm");
 

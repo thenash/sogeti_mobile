@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Connect.Views.VarianceViewCard"
-             xmlns:effects="clr-namespace:Connect.Effects">
+             x:Class="Connect.Views.VarianceViewCard">
   <ContentView.Content>
-    <Frame CornerRadius="0"
+    <Frame x:Name="VarianceCardFrame"
+           CornerRadius="0"
            OutlineColor="{StaticResource DarkGray}"
-           HasShadow="false"
+           HasShadow="False"
            Padding="0">
-      <Frame.Effects>
+      <!--<Frame.Effects>
         <effects:DropShadowEffect/>
-      </Frame.Effects>
+      </Frame.Effects>-->
 
-      <Grid>
+      <Grid RowSpacing="3">
         <Grid.RowDefinitions>
           <RowDefinition Height="10" />
-          <RowDefinition Height="Auto" />
+          <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="50" />
@@ -27,9 +27,10 @@
                  Grid.Row="0"
                  Grid.Column="0"/>
         <Label x:Name="varianceCardStatus"
-               Text="ALL"
                HorizontalOptions="Center"
+               VerticalOptions="Center"
                FontSize="Micro"
+               Margin="3,0"
                Grid.Row="1"
                Grid.Column="0"/>
       </Grid>

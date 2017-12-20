@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Connect.Models;
+using Connect.Views;
 using Xamarin.Forms;
 
 #if DEBUG
@@ -14,12 +16,12 @@ namespace Connect.ViewModels {
 
     public class ProjectInfoViewModel : BaseViewModel {
 
+        private VarianceViewCard _varianceViewCard;
+
         public ProjectInfoViewModel(Project project) {
             Title      = "Project Information";
             Project    = project;
             Milestones = new ObservableCollection<Milestone>();
-
-            //RefreshData();
         }
 
         //private async void RefreshData() {
@@ -57,6 +59,17 @@ namespace Connect.ViewModels {
             set {
                 if(_milestones != value) {
                     _milestones = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<Milestone> _displayMilestones;
+        public ObservableCollection<Milestone> DisplayMilestones {
+            get => _displayMilestones ?? (_displayMilestones = new ObservableCollection<Milestone>());
+            set {
+                if(_displayMilestones != value) {
+                    _displayMilestones = value;
                     OnPropertyChanged();
                 }
             }
@@ -125,9 +138,11 @@ namespace Connect.ViewModels {
                             List<Milestone> miletones = Utility.DeserializeResponse<List<Milestone>>(content, "data/project/milestone");
 
                             Milestones.Clear();
+                            DisplayMilestones.Clear();
 
                             foreach(Milestone milestone in miletones) {
                                 Milestones.Add(milestone);
+                                DisplayMilestones.Add(milestone);
                             }
                         }
                     }
@@ -139,5 +154,7 @@ namespace Connect.ViewModels {
 
             IsBusy = false;
         }
+
+        public void FilterMilestonesByVariance(Variances variance) => DisplayMilestones = new ObservableCollection<Milestone>(Milestone.GetMilestonesByVariance(variance, Milestones));
     }
 }

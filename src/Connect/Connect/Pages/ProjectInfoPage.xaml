@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Connect.Pages.ProjectInfoPage"
              xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect"
+             x:Class="Connect.Pages.ProjectInfoPage"
+             x:Name="ProjectInfoContentPage"
              BackgroundColor="{StaticResource LightGray}"
              Title="{Binding Title}">
 
@@ -95,34 +96,73 @@
           <StackLayout Padding="0">
 
             <Label Text="Project Milestones"
-                   HorizontalOptions="Center"
+                   HorizontalTextAlignment="Center"
                    FontAttributes="Bold"/>
             <Label Text="Display by Variance:"
-                   HorizontalOptions="Center" />
+                   HorizontalTextAlignment="Center"
+                   FontSize="Small"/>
 
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="Center">
-              <myViews:VarianceViewCard IndicatorColor="White"
-                                        Description="ALL" />
-              <myViews:VarianceViewCard IndicatorColor="{StaticResource Red}"
-                                        Description="&gt;= 15" />
-              <myViews:VarianceViewCard IndicatorColor="{StaticResource Yellow}"
-                                        Description="&gt;= 1 and &lt;= 14" />
-              <myViews:VarianceViewCard IndicatorColor="{StaticResource Green}"
-                                        Description="&lt;= 0" />
-              <myViews:VarianceViewCard IndicatorColor="{StaticResource Gray}"
-                                        Description="Missing Date" />
+              <myViews:VarianceViewCard x:Name="WhiteVarianceViewCard"
+                                        IndicatorColor="White"
+                                        Description="ALL"
+                                        BackgroundColor="{StaticResource SkyBlue}"
+                                        Variance="White">
+                <myViews:VarianceViewCard.GestureRecognizers>
+                  <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
+                </myViews:VarianceViewCard.GestureRecognizers>
+              </myViews:VarianceViewCard>
+              <myViews:VarianceViewCard x:Name="RedVarianceViewCard"
+                                        IndicatorColor="{StaticResource Red}"
+                                        Description="&gt;= 15"
+                                        Variance="Red">
+                <myViews:VarianceViewCard.GestureRecognizers>
+                  <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
+                </myViews:VarianceViewCard.GestureRecognizers>
+              </myViews:VarianceViewCard>
+              <myViews:VarianceViewCard x:Name="YellowVarianceViewCard"
+                                        IndicatorColor="{StaticResource Yellow}"
+                                        Description="&gt;= 1 and &lt;= 14"
+                                        Variance="Yellow">
+                <myViews:VarianceViewCard.GestureRecognizers>
+                  <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
+                </myViews:VarianceViewCard.GestureRecognizers>
+              </myViews:VarianceViewCard>
+              <myViews:VarianceViewCard x:Name="GreenVarianceViewCard"
+                                        IndicatorColor="{StaticResource Green}"
+                                        Description="&lt;= 0"
+                                        Variance="Green">
+                <myViews:VarianceViewCard.GestureRecognizers>
+                  <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
+                </myViews:VarianceViewCard.GestureRecognizers>
+              </myViews:VarianceViewCard>
+              <myViews:VarianceViewCard x:Name="GrayVarianceViewCard"
+                                        IndicatorColor="{StaticResource Gray}"
+                                        Description="Missing Date"
+                                        Variance="Gray">
+                <myViews:VarianceViewCard.GestureRecognizers>
+                  <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
+                </myViews:VarianceViewCard.GestureRecognizers>
+              </myViews:VarianceViewCard>
             </StackLayout>
 
-            <ListView x:Name="milestonesList"
-                      SeparatorVisibility="None"
-                      HasUnevenRows="true"
-                      ItemsSource="{Binding Milestones}" >
+            <ListView SeparatorColor="{StaticResource DarkGray}"
+                      HasUnevenRows="True"
+                      ItemsSource="{Binding DisplayMilestones}">
+              <ListView.SeparatorVisibility>
+                <OnPlatform x:TypeArguments="SeparatorVisibility">
+                  <On Platform="iOS"
+                      Value="None"/>
+                  <On Platform="Android"
+                      Value="Default"/>
+                </OnPlatform>
+              </ListView.SeparatorVisibility>
               <ListView.ItemTemplate>
                 <DataTemplate>
-                  <myViews:MilestoneCellView ActualDate="{Binding actualDate}"
-                                             PlannedDate="{Binding plannedDate}"
-                                             ProjectCode="{Binding projectId}"
+                  <myViews:MilestoneCellView ActualDate="{Binding actualDateTime, StringFormat='{0:ddMMMyyyy}'}"
+                                             PlannedDate="{Binding plannedDateTime, StringFormat='{0:ddMMMyyyy}'}"
+                                             ProjectCode="{Binding milestoneName}"
                                              Variance="{Binding variance}"/> <!-- TODO: Find out where this comes from -->
                 </DataTemplate>
               </ListView.ItemTemplate>
