@@ -21,12 +21,12 @@
           <ColumnDefinition Width="50" />
         </Grid.ColumnDefinitions>
 
-        <BoxView x:Name="statusIndicator"
+        <BoxView x:Name="StatusIndicator"
                  HorizontalOptions="Fill"
                  BackgroundColor="White"
                  Grid.Row="0"
                  Grid.Column="0"/>
-        <Label x:Name="varianceCardStatus"
+        <Label x:Name="VarianceCardStatus"
                HorizontalOptions="Center"
                VerticalOptions="Center"
                FontSize="Micro"

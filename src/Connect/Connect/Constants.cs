@@ -7,7 +7,7 @@
         //public const string WarningOccurred = "WarningOccurred";
         //public const string AlertOccurred   = "AlertOccurred";
 
-        public const string ChangeMenuBackground = "ChangeMenuBackground";
-        public const string ProjectSelected      = "ProjectSelected";
+        public const string ChangeBackground = "ChangeBackground";
+        public const string ProjectSelected  = "ProjectSelected";
     }
 }

@@ -4,8 +4,8 @@
              x:Class="Connect.Views.CardCellView">
   <ContentView.Content>
     <Grid x:Name="ContainerGrid"
-          Padding="5"
-          RowSpacing="1">
+          Padding="5,3"
+          RowSpacing="0">
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />

@@ -58,7 +58,7 @@ namespace Connect.Pages {
 
             if(selectedItem != null) {
 
-                MessagingCenter.Send(this, ConstantKeys.ChangeMenuBackground, selectedItem.Title);
+                MessagingCenter.Send(this, ConstantKeys.ChangeBackground, selectedItem.Title);
 
                 MasterPageItem previouslySelectedItem = MasterPageItems.FirstOrDefault(item => item.IsSelected);
 
@@ -80,7 +80,7 @@ namespace Connect.Pages {
 
             if(selectedItem != null) {
 
-                MessagingCenter.Send(this, ConstantKeys.ChangeMenuBackground, selectedItem.Title);
+                MessagingCenter.Send(this, ConstantKeys.ChangeBackground, selectedItem.Title);
 
                 MasterPageItem previouslySelectedItem = MasterPageItems.FirstOrDefault(item => item.IsSelected);
 

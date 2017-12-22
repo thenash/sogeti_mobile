@@ -1,22 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net.Http;
 using System.Threading.Tasks;
-using System.Windows.Input;
+using Connect.Helpers;
 using Connect.Models;
 using Connect.Views;
 using Xamarin.Forms;
 
-#if DEBUG
-using System.Net.Http;
-using Connect.Helpers;
-using System.Collections.Generic;
-#endif
-
 namespace Connect.ViewModels {
 
     public class ProjectInfoViewModel : BaseViewModel {
-
-        private VarianceViewCard _varianceViewCard;
 
         public ProjectInfoViewModel(Project project) {
             Title      = "Project Information";
@@ -27,6 +21,16 @@ namespace Connect.ViewModels {
         //private async void RefreshData() {
         //    //await ExecuteLoadProjectDetailsCommand();
         //    //await ExecuteLoadMilestonesCommand();
+        //}
+
+        //private Color _backgroundColorReset;
+
+        //public Color BackgroundColorReset {//BUG: The VarianceViewCard.BackgroundColorReset binding is not working, so using this workaround instead
+        //    get => _backgroundColorReset;
+        //    set {
+        //        _backgroundColorReset = value;
+        //        OnPropertyChanged();
+        //    }
         //}
 
         private ProjectDetails _projectDetails;

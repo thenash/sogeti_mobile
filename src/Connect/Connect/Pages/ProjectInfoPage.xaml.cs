@@ -32,21 +32,25 @@ namespace Connect.Pages {
         }
 
         private void OnVarianceFilterTapped(object sender, EventArgs e) {
+            if(!(sender is VarianceViewCard card)) {
+                return;
+            }
+
             ResetVarianceFilterButtons();
 
-            if(sender is VarianceViewCard card) {
+            Device.BeginInvokeOnMainThread(() => {
                 card.BackgroundColor = (Color)Application.Current.Resources["SkyBlue"];
+            });
 
-                _viewModel.FilterMilestonesByVariance(card.Variance);
-            }
+            _viewModel.FilterMilestonesByVariance(card.Variance);
         }
 
         private void ResetVarianceFilterButtons() {
-            WhiteVarianceViewCard.BackgroundColor  = Color.Default;
-            RedVarianceViewCard.BackgroundColor    = Color.Default;
-            YellowVarianceViewCard.BackgroundColor = Color.Default;
-            GreenVarianceViewCard.BackgroundColor  = Color.Default;
-            GrayVarianceViewCard.BackgroundColor   = Color.Default;
+
+            //_viewModel.BackgroundColorReset = Color.Default;
+            //OnPropertyChanged(nameof(_viewModel.BackgroundColorReset));//BUG: The VarianceViewCard.BackgroundColorReset binding is not working, so using this workaround instead
+
+            MessagingCenter.Send(this, ConstantKeys.ChangeBackground);
         }
     }
 }

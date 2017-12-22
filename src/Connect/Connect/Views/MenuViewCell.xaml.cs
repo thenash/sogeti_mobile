@@ -53,8 +53,8 @@ namespace Connect.Views {
             base.OnParentSet();
 
             if(Parent != null) {
-                MessagingCenter.Unsubscribe<MenuPage, string>(this, ConstantKeys.ChangeMenuBackground);
-                MessagingCenter.Subscribe<MenuPage, string>(this, ConstantKeys.ChangeMenuBackground, (page, selectedCellTitle) => {
+                MessagingCenter.Unsubscribe<MenuPage, string>(this, ConstantKeys.ChangeBackground);
+                MessagingCenter.Subscribe<MenuPage, string>(this, ConstantKeys.ChangeBackground, (page, selectedCellTitle) => {
                     if(selectedCellTitle == ((MasterPageItem)BindingContext).Title) {
                         Device.BeginInvokeOnMainThread(() => TitleLabel.BackgroundColor = Color.White);
                     } else {
@@ -62,7 +62,7 @@ namespace Connect.Views {
                     }
                 });
             } else {
-                MessagingCenter.Unsubscribe<MenuPage, string>(this, ConstantKeys.ChangeMenuBackground);
+                MessagingCenter.Unsubscribe<MenuPage, string>(this, ConstantKeys.ChangeBackground);
             }
         }
 

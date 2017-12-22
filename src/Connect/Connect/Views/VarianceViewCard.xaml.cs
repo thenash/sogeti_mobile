@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Connect.Models;
+﻿using Connect.Pages;
 using Xamarin.Forms;
 
 namespace Connect.Views {
 
     public enum Variances {
-        White = 0,
-        Red = 1,
+        White  = 0,
+        Red    = 1,
         Yellow = 2,
-        Green = 3,
-        Gray = 4
+        Green  = 3,
+        Gray   = 4
     }
 
     public partial class VarianceViewCard : ContentView {
@@ -30,10 +27,35 @@ namespace Connect.Views {
             set => SetValue(DescriptionProperty, value);
         }
 
+        ///// <summary>
+        ///// Gets or sets the color to override the background with.
+        ///// </summary>
+        ///// <value>The color to override with.</value>
+        //public Color BackgroundColorReset {   //BUG: The VarianceViewCard.BackgroundColorReset binding is not working, so using this workaround instead
+        //    get => (Color)GetValue(BackgroundColorResetProperty);
+        //    set => SetValue(BackgroundColorResetProperty, value);
+        //}
+
+        ///// <summary>
+        ///// The background override color property    //BUG: The VarianceViewCard.BackgroundColorReset binding is not working, so using this workaround instead
+        ///// </summary>
+        //public static readonly BindableProperty BackgroundColorResetProperty = BindableProperty.Create(nameof(BackgroundColorReset), typeof(Color), typeof(VarianceViewCard), Color.Default, BindingMode.TwoWay);
+
         public Variances Variance { get; set; }
 
         public VarianceViewCard() {
             InitializeComponent();
+        }
+
+        protected override void OnParentSet() {
+            base.OnParentSet();
+
+            if(Parent == null) {
+                MessagingCenter.Unsubscribe<ProjectInfoPage>(this, ConstantKeys.ChangeBackground);
+            } else {
+                MessagingCenter.Unsubscribe<ProjectInfoPage>(this, ConstantKeys.ChangeBackground);
+                MessagingCenter.Subscribe<ProjectInfoPage>(this, ConstantKeys.ChangeBackground, page => Device.BeginInvokeOnMainThread(() => BackgroundColor = Color.Default));
+            }
         }
 
         protected override void OnPropertyChanged(string propertyName = null) {
@@ -47,42 +69,21 @@ namespace Connect.Views {
                 return;
             }
 
+            //if(propertyName == nameof(BackgroundColorReset)) {    //BUG: The VarianceViewCard.BackgroundColorReset binding is not working, so using this workaround instead
+            //    VarianceCardFrame.BackgroundColor = BackgroundColorReset;
+            //    return;
+            //}
+
             base.OnPropertyChanged(propertyName);
 
             switch(propertyName) {
                 case nameof(Description):
-                    varianceCardStatus.Text = (string)GetValue(DescriptionProperty);
+                    VarianceCardStatus.Text = (string)GetValue(DescriptionProperty);
                     break;
 
                 case nameof(IndicatorColor):
-                    statusIndicator.Color = (Color)GetValue(IndicatorColorProperty);
+                    StatusIndicator.Color = (Color)GetValue(IndicatorColorProperty);
                     break;
-            }
-        }
-
-        public static List<Milestone> GetMilestonesByVariance(Variances variance, List<Milestone> milestones) {
-            switch(variance) {
-                case Variances.White:
-                    return milestones;
-
-                case Variances.Red:
-                    return milestones.Where(mil => mil.variance >= 15).ToList();
-
-                case Variances.Yellow:
-                    return milestones.Where(mil => mil.variance >= 1 && mil.variance <= 14).ToList();
-
-                case Variances.Green:
-                    return milestones.Where(mil => mil.variance <= 0).ToList();
-
-                case Variances.Gray:
-                    return milestones.Where(mil => mil.plannedDateTime == DateTime.MinValue || mil.actualDateTime == DateTime.MinValue).ToList();   //TODO: Find out which date needs to be check for no value and what a no value date equals
-
-                default:
-#if DEBUG
-                    throw new ArgumentOutOfRangeException(nameof(variance), variance, null);
-#else
-                    break;
-#endif
             }
         }
     }

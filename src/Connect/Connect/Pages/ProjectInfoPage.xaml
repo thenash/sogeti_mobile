@@ -16,10 +16,10 @@
   <ContentPage.Content>
 
     <ScrollView>
-      <StackLayout Padding="15"
+      <StackLayout Padding="15,5,15,15"
                    HorizontalOptions="Center"
-                   Spacing="3">
-        <Grid ColumnSpacing="3">
+                   Spacing="5">
+        <!--<Grid ColumnSpacing="3">
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
@@ -42,16 +42,15 @@
                                 TextAlignment="EndAndExpand"
                                 Grid.Row="0"
                                 Grid.Column="2" />
-        </Grid>
+        </Grid>-->
 
-        <Frame Padding="5"
-               Margin="0, 10"
+        <!--<Frame Padding="5"
                BackgroundColor="White"
                OutlineColor="{StaticResource Gray}"
                CornerRadius="0"
                HasShadow="False">
           <Grid ColumnSpacing="3"
-                RowSpacing="3">
+                RowSpacing="0">
 
             <Grid.RowDefinitions>
               <RowDefinition Height="Auto" />
@@ -86,68 +85,19 @@
                                   Grid.Row="1"
                                   Grid.Column="1"/>
           </Grid>
-        </Frame>
+        </Frame>-->
 
-        <Frame CornerRadius="0"
+        <!--<Frame CornerRadius="0"
                Padding="0"
                HasShadow="False"
                BackgroundColor="White"
-               OutlineColor="{StaticResource Gray}">
-          <StackLayout Padding="0">
-
-            <Label Text="Project Milestones"
-                   HorizontalTextAlignment="Center"
-                   FontAttributes="Bold"/>
-            <Label Text="Display by Variance:"
-                   HorizontalTextAlignment="Center"
-                   FontSize="Small"/>
-
-            <StackLayout Orientation="Horizontal"
-                         HorizontalOptions="Center">
-              <myViews:VarianceViewCard x:Name="WhiteVarianceViewCard"
-                                        IndicatorColor="White"
-                                        Description="ALL"
-                                        BackgroundColor="{StaticResource SkyBlue}"
-                                        Variance="White">
-                <myViews:VarianceViewCard.GestureRecognizers>
-                  <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
-                </myViews:VarianceViewCard.GestureRecognizers>
-              </myViews:VarianceViewCard>
-              <myViews:VarianceViewCard x:Name="RedVarianceViewCard"
-                                        IndicatorColor="{StaticResource Red}"
-                                        Description="&gt;= 15"
-                                        Variance="Red">
-                <myViews:VarianceViewCard.GestureRecognizers>
-                  <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
-                </myViews:VarianceViewCard.GestureRecognizers>
-              </myViews:VarianceViewCard>
-              <myViews:VarianceViewCard x:Name="YellowVarianceViewCard"
-                                        IndicatorColor="{StaticResource Yellow}"
-                                        Description="&gt;= 1 and &lt;= 14"
-                                        Variance="Yellow">
-                <myViews:VarianceViewCard.GestureRecognizers>
-                  <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
-                </myViews:VarianceViewCard.GestureRecognizers>
-              </myViews:VarianceViewCard>
-              <myViews:VarianceViewCard x:Name="GreenVarianceViewCard"
-                                        IndicatorColor="{StaticResource Green}"
-                                        Description="&lt;= 0"
-                                        Variance="Green">
-                <myViews:VarianceViewCard.GestureRecognizers>
-                  <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
-                </myViews:VarianceViewCard.GestureRecognizers>
-              </myViews:VarianceViewCard>
-              <myViews:VarianceViewCard x:Name="GrayVarianceViewCard"
-                                        IndicatorColor="{StaticResource Gray}"
-                                        Description="Missing Date"
-                                        Variance="Gray">
-                <myViews:VarianceViewCard.GestureRecognizers>
-                  <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
-                </myViews:VarianceViewCard.GestureRecognizers>
-              </myViews:VarianceViewCard>
-            </StackLayout>
+               OutlineColor="{StaticResource Gray}">-->
+          <StackLayout Padding="0"
+                       Spacing="3">
 
             <ListView SeparatorColor="{StaticResource DarkGray}"
+                      BackgroundColor="Transparent"
+                      Header="{Binding .}"
                       HasUnevenRows="True"
                       ItemsSource="{Binding DisplayMilestones}">
               <ListView.SeparatorVisibility>
@@ -158,6 +108,136 @@
                       Value="Default"/>
                 </OnPlatform>
               </ListView.SeparatorVisibility>
+              <ListView.HeaderTemplate>
+                <DataTemplate>
+                  <StackLayout>
+                    <Grid ColumnSpacing="3">
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                      </Grid.RowDefinitions>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                      </Grid.ColumnDefinitions>
+                      <myViews:CardCellView Title="Project Code"
+                                            Description="{Binding Project.projectId}"
+                                            TextAlignment="StartAndExpand"
+                                            Grid.Row="0"
+                                            Grid.Column="0" />
+                      <myViews:CardCellView Title="Customer"
+                                            Description="{Binding Project.customerName}"
+                                            Grid.Row="0"
+                                            Grid.Column="1"/>
+                      <myViews:CardCellView Title="Protocol ID"
+                                            Description="{Binding Project.protocolId}"
+                                            TextAlignment="EndAndExpand"
+                                            Grid.Row="0"
+                                            Grid.Column="2" />
+                    </Grid>
+
+                    <Frame Padding="5"
+                           BackgroundColor="White"
+                           OutlineColor="{StaticResource Gray}"
+                           CornerRadius="0"
+                           HasShadow="False">
+                      <Grid ColumnSpacing="3"
+                            RowSpacing="0">
+
+                        <Grid.RowDefinitions>
+                          <RowDefinition Height="Auto" />
+                          <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                          <ColumnDefinition Width="*" />
+                          <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <myViews:CardCellView Title="Protocol Title"
+                                              Description="{Binding ProjectDetails.protocolDesc}"
+                                              TextAlignment="StartAndExpand"
+                                              Grid.Row="0"
+                                              Grid.Column="0" />
+
+                        <myViews:CardCellView Title="Therapeautic Area"
+                                              Description="{Binding ProjectDetails.primaryTherapeuticArea}"
+                                              TextAlignment="EndAndExpand"
+                                              Grid.Row="0"
+                                              Grid.Column="1"/>
+
+                        <myViews:CardCellView Title="Study Phase"
+                                              Description="{Binding ProjectDetails.phase}"
+                                              TextAlignment="StartAndExpand"
+                                              Grid.Row="1"
+                                              Grid.Column="0"/>
+
+                        <myViews:CardCellView Title="Indication"
+                                              Description="{Binding ProjectDetails.primaryIndication}"
+                                              TextAlignment="EndAndExpand"
+                                              Grid.Row="1"
+                                              Grid.Column="1"/>
+                      </Grid>
+                    </Frame>
+
+                    <Frame CornerRadius="0"
+                           Padding="0,0,0,5"
+                           HasShadow="False"
+                           BackgroundColor="White"
+                           OutlineColor="{StaticResource Gray}">
+                      <StackLayout Padding="0"
+                                   Spacing="3">
+
+                        <Label Text="Project Milestones"
+                               HorizontalTextAlignment="Center"
+                               FontAttributes="Bold"/>
+                        <Label Text="Display by Variance:"
+                               HorizontalTextAlignment="Center"
+                               FontSize="Small"/>
+
+                        <StackLayout Orientation="Horizontal"
+                                     HorizontalOptions="Center">
+                          <myViews:VarianceViewCard IndicatorColor="White"
+                                                    Description="ALL"
+                                                    BackgroundColor="{StaticResource SkyBlue}"
+                                                    Variance="White">
+                            <myViews:VarianceViewCard.GestureRecognizers>
+                              <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
+                            </myViews:VarianceViewCard.GestureRecognizers>
+                          </myViews:VarianceViewCard>
+                          <myViews:VarianceViewCard IndicatorColor="{StaticResource Red}"
+                                                    Description="&gt;= 15"
+                                                    Variance="Red">
+                            <myViews:VarianceViewCard.GestureRecognizers>
+                              <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
+                            </myViews:VarianceViewCard.GestureRecognizers>
+                          </myViews:VarianceViewCard>
+                          <myViews:VarianceViewCard IndicatorColor="{StaticResource Yellow}"
+                                                    Description="&gt;= 1 and &lt;= 14"
+                                                    Variance="Yellow">
+                            <myViews:VarianceViewCard.GestureRecognizers>
+                              <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
+                            </myViews:VarianceViewCard.GestureRecognizers>
+                          </myViews:VarianceViewCard>
+                          <myViews:VarianceViewCard IndicatorColor="{StaticResource Green}"
+                                                    Description="&lt;= 0"
+                                                    Variance="Green">
+                            <myViews:VarianceViewCard.GestureRecognizers>
+                              <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
+                            </myViews:VarianceViewCard.GestureRecognizers>
+                          </myViews:VarianceViewCard>
+                          <myViews:VarianceViewCard IndicatorColor="{StaticResource Gray}"
+                                                    Description="Missing Date"
+                                                    Variance="Gray">
+                            <myViews:VarianceViewCard.GestureRecognizers>
+                              <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
+                            </myViews:VarianceViewCard.GestureRecognizers>
+                          </myViews:VarianceViewCard>
+                        </StackLayout>
+                      </StackLayout>
+                    </Frame>
+                  </StackLayout>
+                </DataTemplate>
+              </ListView.HeaderTemplate>
               <ListView.ItemTemplate>
                 <DataTemplate>
                   <myViews:MilestoneCellView ActualDate="{Binding actualDateTime, StringFormat='{0:ddMMMyyyy}'}"
@@ -168,7 +248,7 @@
               </ListView.ItemTemplate>
             </ListView>
           </StackLayout>
-        </Frame>
+        <!--</Frame>-->
       </StackLayout>
     </ScrollView>
   </ContentPage.Content>
