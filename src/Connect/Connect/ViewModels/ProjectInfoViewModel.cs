@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Connect.Helpers;
@@ -11,6 +12,12 @@ using Xamarin.Forms;
 namespace Connect.ViewModels {
 
     public class ProjectInfoViewModel : BaseViewModel {
+
+        private const int _increaseMilestoneAmount = 3;
+
+        private int _milestonesToShowCount = 3;
+
+        private Variances _selectedVariance = Variances.White;
 
         public ProjectInfoViewModel(Project project) {
             Title      = "Project Information";
@@ -77,6 +84,36 @@ namespace Connect.ViewModels {
                     OnPropertyChanged();
                 }
             }
+        }
+
+        private Command _showMoreMilestones;
+        /// <summary>
+        /// Command to display additional milestones in the list.
+        /// </summary>
+        public Command ShowMoreMilestones => _showMoreMilestones ?? (_showMoreMilestones = new Command(ExecuteShowMoreMilestones));
+
+        private void ExecuteShowMoreMilestones() {
+            if(_milestonesToShowCount >= Milestones.Count) {
+                return;
+            }
+
+            _milestonesToShowCount += _increaseMilestoneAmount;
+            FilterMilestonesByVariance(_selectedVariance);
+        }
+
+        private Command _showLessMilestones;
+        /// <summary>
+        /// Command to display additional milestones in the list.
+        /// </summary>
+        public Command ShowLessMilestones => _showLessMilestones ?? (_showLessMilestones = new Command(ExecuteShowLessMilestones));
+
+        private void ExecuteShowLessMilestones() {
+            if(_milestonesToShowCount <= _increaseMilestoneAmount) {
+                return;
+            }
+
+            _milestonesToShowCount -= _increaseMilestoneAmount;
+            FilterMilestonesByVariance(_selectedVariance);
         }
 
         private Command _loadProjectDetails;
@@ -146,7 +183,10 @@ namespace Connect.ViewModels {
 
                             foreach(Milestone milestone in miletones) {
                                 Milestones.Add(milestone);
-                                DisplayMilestones.Add(milestone);
+
+                                if(DisplayMilestones.Count < _milestonesToShowCount) {
+                                    DisplayMilestones.Add(milestone);
+                                }
                             }
                         }
                     }
@@ -159,6 +199,15 @@ namespace Connect.ViewModels {
             IsBusy = false;
         }
 
-        public void FilterMilestonesByVariance(Variances variance) => DisplayMilestones = new ObservableCollection<Milestone>(Milestone.GetMilestonesByVariance(variance, Milestones));
+        public void FilterMilestonesByVariance(Variances variance) {
+
+            DisplayMilestones.Clear();
+
+            foreach(Milestone milestone in Milestone.GetMilestonesByVariance(variance, Milestones).Take(_milestonesToShowCount)) {
+                DisplayMilestones.Add(milestone);
+            }
+
+            _selectedVariance = variance;
+        }
     }
 }
