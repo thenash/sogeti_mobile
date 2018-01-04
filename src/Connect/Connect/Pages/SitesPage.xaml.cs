@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Linq;
-using Connect.Models;
+using Connect.Helpers;
 using Connect.ViewModels;
 using Xamarin.Forms;
 
@@ -31,6 +30,10 @@ namespace Connect.Pages {
 
             SiteStatusHorizontalAxis.LabelFontSize = finalAxisFontSize;
             SiteStatusVerticalAxis.LabelFontSize   = finalAxisFontSize;
+
+            if(!App.IsAndroid && finalAxisFontSize > 9.8 && finalAxisFontSize <= 11) {    //BUG: Telerik Charts will not appear to overlap properly if the LabelFontSize is between these values, they have been notified about the issue
+                finalAxisFontSize = 9.8;
+            }
 
             BottomChartHorizontalAxis.LabelFontSize = finalAxisFontSize;
         }
@@ -73,7 +76,7 @@ namespace Connect.Pages {
         }
 
         private void OnGridViewTapped(object sender, EventArgs e) {
-            ChartViewButtonFrame.BackgroundColor = (Color)Application.Current.Resources["Gray"];
+            ChartViewButtonFrame.BackgroundColor = Utility.GetResource<Color>("Gray");
             GridViewButtonFrame.BackgroundColor  = Color.White;
 
             PlannedBottomLegendStackLayout.IsVisible = false;
@@ -86,7 +89,7 @@ namespace Connect.Pages {
         }
 
         private void OnChartViewTapped(object sender, EventArgs e) {
-            GridViewButtonFrame.BackgroundColor  = (Color)Application.Current.Resources["Gray"];
+            GridViewButtonFrame.BackgroundColor  = Utility.GetResource<Color>("Gray");
             ChartViewButtonFrame.BackgroundColor = Color.White;
 
             PlannedBottomLegendStackLayout.IsVisible = true;
@@ -133,53 +136,53 @@ namespace Connect.Pages {
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Status",
-                TextColor             = (Color)Application.Current.Resources["DarkGray"],
+                TextColor             = Utility.GetResource<Color>("DarkGray"),
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 0, 0);
 
             BottomGrid.Children.Add(new BoxView {
-                Style           = (Style)Application.Current.Resources["VerticalSeparatorStyle"],
-                BackgroundColor = (Color)Application.Current.Resources["DarkGray"]
+                Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
+                BackgroundColor = Utility.GetResource<Color>("DarkGray")
             }, 1, 0);
 
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Planned to Date",
-                TextColor             = (Color)Application.Current.Resources["DarkGray"],
+                TextColor             = Utility.GetResource<Color>("DarkGray"),
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 2, 0);
 
             BottomGrid.Children.Add(new BoxView {
-                Style           = (Style)Application.Current.Resources["VerticalSeparatorStyle"],
-                BackgroundColor = (Color)Application.Current.Resources["DarkGray"]
+                Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
+                BackgroundColor = Utility.GetResource<Color>("DarkGray")
             }, 3, 0);
 
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Actual to Date",
-                TextColor             = (Color)Application.Current.Resources["DarkGray"],
+                TextColor             = Utility.GetResource<Color>("DarkGray"),
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 4, 0);
 
             BottomGrid.Children.Add(new BoxView {
-                Style           = (Style)Application.Current.Resources["VerticalSeparatorStyle"],
-                BackgroundColor = (Color)Application.Current.Resources["DarkGray"]
+                Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
+                BackgroundColor = Utility.GetResource<Color>("DarkGray")
             }, 5, 0);
 
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Total Contracted",
-                TextColor             = (Color)Application.Current.Resources["DarkGray"],
+                TextColor             = Utility.GetResource<Color>("DarkGray"),
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 6, 0);
 
             BottomGrid.Children.Add(new BoxView {
-                Style           = (Style)Application.Current.Resources["HorizontalSeparatorStyle"],
-                BackgroundColor = (Color)Application.Current.Resources["DarkGray"]
+                Style           = Utility.GetResource<Style>("HorizontalSeparatorStyle"),
+                BackgroundColor = Utility.GetResource<Color>("DarkGray")
             }, 0, 7, 1, 2);
 
             int rowSeparatorCount = 0;
@@ -187,8 +190,8 @@ namespace Connect.Pages {
             for(int index = 0; index < plannedCount; index++) {     //Create headers
                 int separatorRow = index + rowSeparatorCount + 2;   //Add 2 for the header row and the header separator row
 
-                Color backgroundColor = index % 2 == 0 ? Color.White : (Color)Application.Current.Resources["LightGray"];
-                Color darkGray        = (Color)Application.Current.Resources["DarkGray"];
+                Color backgroundColor = index % 2 == 0 ? Color.White : Utility.GetResource<Color>("LightGray");
+                Color darkGray        = Utility.GetResource<Color>("DarkGray");
 
                 #region Label Column
 
@@ -201,13 +204,13 @@ namespace Connect.Pages {
                 }, 0, separatorRow);
 
                 BottomGrid.Children.Add(new BoxView {
-                    Style           = (Style)Application.Current.Resources["VerticalSeparatorStyle"],
+                    Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
                     BackgroundColor = darkGray
                 }, 1, separatorRow);
 
                 if(index != plannedCount - 1) {
                     BottomGrid.Children.Add(new BoxView {
-                        Style           = (Style)Application.Current.Resources["HorizontalSeparatorStyle"],
+                        Style           = Utility.GetResource<Style>("HorizontalSeparatorStyle"),
                         BackgroundColor = darkGray
                     }, 0, 7, separatorRow + 1, separatorRow + 2);
 
@@ -228,7 +231,7 @@ namespace Connect.Pages {
                 }, 2, separatorRow);
 
                 BottomGrid.Children.Add(new BoxView {
-                    Style           = (Style)Application.Current.Resources["VerticalSeparatorStyle"],
+                    Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
                     BackgroundColor = darkGray
                 }, 3, separatorRow);
 
@@ -246,7 +249,7 @@ namespace Connect.Pages {
                 }, 4, separatorRow);
 
                 BottomGrid.Children.Add(new BoxView {
-                    Style           = (Style)Application.Current.Resources["VerticalSeparatorStyle"],
+                    Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
                     BackgroundColor = darkGray
                 }, 5, separatorRow);
 

@@ -15,319 +15,375 @@
 
   <ContentPage.Content>
 
-    <!--<ScrollView>-->
-      <StackLayout Padding="15,5,15,15"
-                   HorizontalOptions="Center"
-                   Spacing="0">
-        <!--<Grid ColumnSpacing="3">
-          <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-          </Grid.RowDefinitions>
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-          </Grid.ColumnDefinitions>
-          <myViews:CardCellView Title="Project Code"
-                                Description="{Binding Project.projectId}"
-                                TextAlignment="StartAndExpand"
-                                Grid.Row="0"
-                                Grid.Column="0" />
-          <myViews:CardCellView Title="Customer"
-                                Description="{Binding Project.customerName}"
-                                Grid.Row="0"
-                                Grid.Column="1"/>
-          <myViews:CardCellView Title="Protocol ID"
-                                Description="{Binding Project.protocolId}"
-                                TextAlignment="EndAndExpand"
-                                Grid.Row="0"
-                                Grid.Column="2" />
-        </Grid>-->
+    <StackLayout Padding="15,5,15,15"
+                 HorizontalOptions="Center"
+                 Spacing="10">
+      <StackLayout Padding="0"
+                   Spacing="3">
 
-        <!--<Frame Padding="5"
-               BackgroundColor="White"
-               OutlineColor="{StaticResource Gray}"
-               CornerRadius="0"
-               HasShadow="False">
-          <Grid ColumnSpacing="3"
-                RowSpacing="0">
+        <ListView x:Name="MilestoneListView"
+                  SeparatorColor="{StaticResource DarkGray}"
+                  BackgroundColor="Transparent"
+                  Header="{Binding .}"
+                  Footer="{Binding .}"
+                  HasUnevenRows="True"
+                  ItemsSource="{Binding DisplayMilestones}">
+          <ListView.SeparatorVisibility>
+            <OnPlatform x:TypeArguments="SeparatorVisibility">
+              <On Platform="iOS"
+                  Value="None"/>
+              <On Platform="Android"
+                  Value="Default"/>
+            </OnPlatform>
+          </ListView.SeparatorVisibility>
+          <ListView.HeaderTemplate>
+            <DataTemplate>
+              <StackLayout>
+                <Grid ColumnSpacing="3">
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                  </Grid.RowDefinitions>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+                  <myViews:CardCellView Title="Project Code"
+                                        Description="{Binding Project.projectId}"
+                                        TextAlignment="StartAndExpand"
+                                        Grid.Row="0"
+                                        Grid.Column="0" />
+                  <myViews:CardCellView Title="Customer"
+                                        Description="{Binding Project.customerName}"
+                                        Grid.Row="0"
+                                        Grid.Column="1"/>
+                  <myViews:CardCellView Title="Protocol ID"
+                                        Description="{Binding Project.protocolId}"
+                                        TextAlignment="EndAndExpand"
+                                        Grid.Row="0"
+                                        Grid.Column="2" />
+                </Grid>
 
-            <Grid.RowDefinitions>
-              <RowDefinition Height="Auto" />
-              <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="*" />
-              <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                <Frame Padding="5"
+                       BackgroundColor="White"
+                       OutlineColor="{StaticResource Gray}"
+                       CornerRadius="0"
+                       HasShadow="False">
+                  <Grid ColumnSpacing="3"
+                        RowSpacing="0">
 
-            <myViews:CardCellView Title="Protocol Title"
-                                  Description="{Binding ProjectDetails.protocolDesc}"
-                                  TextAlignment="StartAndExpand"
-                                  Grid.Row="0"
-                                  Grid.Column="0" />
-
-            <myViews:CardCellView Title="Therapeautic Area"
-                                  Description="{Binding ProjectDetails.primaryTherapeuticArea}"
-                                  TextAlignment="EndAndExpand"
-                                  Grid.Row="0"
-                                  Grid.Column="1"/>
-
-            <myViews:CardCellView Title="Study Phase"
-                                  Description="{Binding ProjectDetails.phase}"
-                                  TextAlignment="StartAndExpand"
-                                  Grid.Row="1"
-                                  Grid.Column="0"/>
-
-            <myViews:CardCellView Title="Indication"
-                                  Description="{Binding ProjectDetails.primaryIndication}"
-                                  TextAlignment="EndAndExpand"
-                                  Grid.Row="1"
-                                  Grid.Column="1"/>
-          </Grid>
-        </Frame>-->
-
-        <!--<Frame CornerRadius="0"
-               Padding="0"
-               HasShadow="False"
-               BackgroundColor="White"
-               OutlineColor="{StaticResource Gray}">-->
-          <StackLayout Padding="0"
-                       Spacing="3">
-
-            <ListView SeparatorColor="{StaticResource DarkGray}"
-                      BackgroundColor="Transparent"
-                      Header="{Binding .}"
-                      Footer="{Binding .}"
-                      HasUnevenRows="True"
-                      ItemsSource="{Binding DisplayMilestones}">
-              <ListView.SeparatorVisibility>
-                <OnPlatform x:TypeArguments="SeparatorVisibility">
-                  <On Platform="iOS"
-                      Value="None"/>
-                  <On Platform="Android"
-                      Value="Default"/>
-                </OnPlatform>
-              </ListView.SeparatorVisibility>
-              <ListView.HeaderTemplate>
-                <DataTemplate>
-                  <StackLayout>
-                    <Grid ColumnSpacing="3">
-                      <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                      </Grid.RowDefinitions>
-                      <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                      </Grid.ColumnDefinitions>
-                      <myViews:CardCellView Title="Project Code"
-                                            Description="{Binding Project.projectId}"
-                                            TextAlignment="StartAndExpand"
-                                            Grid.Row="0"
-                                            Grid.Column="0" />
-                      <myViews:CardCellView Title="Customer"
-                                            Description="{Binding Project.customerName}"
-                                            Grid.Row="0"
-                                            Grid.Column="1"/>
-                      <myViews:CardCellView Title="Protocol ID"
-                                            Description="{Binding Project.protocolId}"
-                                            TextAlignment="EndAndExpand"
-                                            Grid.Row="0"
-                                            Grid.Column="2" />
-                    </Grid>
-
-                    <Frame Padding="5"
-                           BackgroundColor="White"
-                           OutlineColor="{StaticResource Gray}"
-                           CornerRadius="0"
-                           HasShadow="False">
-                      <Grid ColumnSpacing="3"
-                            RowSpacing="0">
-
-                        <Grid.RowDefinitions>
-                          <RowDefinition Height="Auto" />
-                          <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                          <ColumnDefinition Width="*" />
-                          <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <myViews:CardCellView Title="Protocol Title"
-                                              Description="{Binding ProjectDetails.protocolDesc}"
-                                              TextAlignment="StartAndExpand"
-                                              Grid.Row="0"
-                                              Grid.Column="0" />
-
-                        <myViews:CardCellView Title="Therapeautic Area"
-                                              Description="{Binding ProjectDetails.primaryTherapeuticArea}"
-                                              TextAlignment="EndAndExpand"
-                                              Grid.Row="0"
-                                              Grid.Column="1"/>
-
-                        <myViews:CardCellView Title="Study Phase"
-                                              Description="{Binding ProjectDetails.phase}"
-                                              TextAlignment="StartAndExpand"
-                                              Grid.Row="1"
-                                              Grid.Column="0"/>
-
-                        <myViews:CardCellView Title="Indication"
-                                              Description="{Binding ProjectDetails.primaryIndication}"
-                                              TextAlignment="EndAndExpand"
-                                              Grid.Row="1"
-                                              Grid.Column="1"/>
-                      </Grid>
-                    </Frame>
-
-                    <Frame CornerRadius="0"
-                           Padding="0,0,0,5"
-                           HasShadow="False"
-                           BackgroundColor="White"
-                           OutlineColor="{StaticResource Gray}">
-                      <StackLayout Padding="0"
-                                   Spacing="3">
-
-                        <Label Text="Project Milestones"
-                               HorizontalTextAlignment="Center"
-                               FontAttributes="Bold"/>
-                        <Label Text="Display by Variance:"
-                               HorizontalTextAlignment="Center"
-                               FontSize="Small"/>
-
-                        <StackLayout Orientation="Horizontal"
-                                     HorizontalOptions="Center">
-                          <myViews:VarianceViewCard IndicatorColor="White"
-                                                    Description="ALL"
-                                                    BackgroundColor="{StaticResource SkyBlue}"
-                                                    Variance="White">
-                            <myViews:VarianceViewCard.GestureRecognizers>
-                              <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
-                            </myViews:VarianceViewCard.GestureRecognizers>
-                          </myViews:VarianceViewCard>
-                          <myViews:VarianceViewCard IndicatorColor="{StaticResource Red}"
-                                                    Description="&gt;= 15"
-                                                    Variance="Red">
-                            <myViews:VarianceViewCard.GestureRecognizers>
-                              <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
-                            </myViews:VarianceViewCard.GestureRecognizers>
-                          </myViews:VarianceViewCard>
-                          <myViews:VarianceViewCard IndicatorColor="{StaticResource Yellow}"
-                                                    Description="&gt;= 1 and &lt;= 14"
-                                                    Variance="Yellow">
-                            <myViews:VarianceViewCard.GestureRecognizers>
-                              <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
-                            </myViews:VarianceViewCard.GestureRecognizers>
-                          </myViews:VarianceViewCard>
-                          <myViews:VarianceViewCard IndicatorColor="{StaticResource Green}"
-                                                    Description="&lt;= 0"
-                                                    Variance="Green">
-                            <myViews:VarianceViewCard.GestureRecognizers>
-                              <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
-                            </myViews:VarianceViewCard.GestureRecognizers>
-                          </myViews:VarianceViewCard>
-                          <myViews:VarianceViewCard IndicatorColor="{StaticResource Gray}"
-                                                    Description="Missing Date"
-                                                    Variance="Gray">
-                            <myViews:VarianceViewCard.GestureRecognizers>
-                              <TapGestureRecognizer Tapped="OnVarianceFilterTapped"/>
-                            </myViews:VarianceViewCard.GestureRecognizers>
-                          </myViews:VarianceViewCard>
-                        </StackLayout>
-                      </StackLayout>
-                    </Frame>
-                  </StackLayout>
-                </DataTemplate>
-              </ListView.HeaderTemplate>
-              <ListView.ItemTemplate>
-                <DataTemplate>
-                  <myViews:MilestoneCellView ActualDate="{Binding actualDateTime, StringFormat='{0:ddMMMyyyy}'}"
-                                             PlannedDate="{Binding plannedDateTime, StringFormat='{0:ddMMMyyyy}'}"
-                                             ProjectCode="{Binding milestoneName}"
-                                             Variance="{Binding variance}"/> <!-- TODO: Find out where this comes from -->
-                </DataTemplate>
-              </ListView.ItemTemplate>
-              <ListView.FooterTemplate>
-                <DataTemplate>
-                  <Grid BackgroundColor="White"
-                        RowSpacing="0"
-                        ColumnSpacing="0">
                     <Grid.RowDefinitions>
-                      <RowDefinition Height="Auto"/>
-                      <RowDefinition Height="1"/>
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-
                     <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="1"/>
-                      <ColumnDefinition Width="*"/>
-                      <ColumnDefinition Width="1"/>
-                      <ColumnDefinition Width="*"/>
-                      <ColumnDefinition Width="1"/>
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <BoxView Style="{StaticResource VerticalSeparatorStyle}"
-                             HeightRequest="1"
-                             BackgroundColor="{StaticResource DarkGray}"
-                             Grid.Row="0"
-                             Grid.Column="0"/>
+                    <myViews:CardCellView Title="Protocol Title"
+                                          Description="{Binding ProjectDetails.protocolDesc}"
+                                          TextAlignment="StartAndExpand"
+                                          Grid.Row="0"
+                                          Grid.Column="0" />
 
-                    <StackLayout Orientation="Horizontal"
-                                 HorizontalOptions="Center"
-                                 Padding="0,5"
-                                 Grid.Row="0"
-                                 Grid.Column="1">
-                      <Image Source="chev_down.png"/>
-                      <Label Text="Show More"
-                             FontSize="Small"
-                             FontAttributes="Bold"/>
+                    <myViews:CardCellView Title="Therapeautic Area"
+                                          Description="{Binding ProjectDetails.primaryTherapeuticArea}"
+                                          TextAlignment="EndAndExpand"
+                                          Grid.Row="0"
+                                          Grid.Column="1"/>
 
-                      <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ShowMoreMilestones}"/>
-                      </StackLayout.GestureRecognizers>
-                    </StackLayout>
+                    <myViews:CardCellView Title="Study Phase"
+                                          Description="{Binding ProjectDetails.phase}"
+                                          TextAlignment="StartAndExpand"
+                                          Grid.Row="1"
+                                          Grid.Column="0"/>
 
-                    <BoxView Style="{StaticResource VerticalSeparatorStyle}"
-                             HeightRequest="1"
-                             BackgroundColor="{StaticResource DarkGray}"
-                             Grid.Row="0"
-                             Grid.Column="2"/>
-
-                    <StackLayout Orientation="Horizontal"
-                                 HorizontalOptions="Center"
-                                 Padding="0,5"
-                                 Grid.Row="0"
-                                 Grid.Column="3">
-                      <Image Source="chev_up.png"
-                             HorizontalOptions="Center"/>
-                      <Label Text="Show Less"
-                             FontSize="Small"
-                             FontAttributes="Bold"/>
-
-                      <StackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ShowLessMilestones}"/>
-                      </StackLayout.GestureRecognizers>
-                    </StackLayout>
-
-                    <BoxView Style="{StaticResource VerticalSeparatorStyle}"
-                             HeightRequest="1"
-                             BackgroundColor="{StaticResource DarkGray}"
-                             Grid.Row="0"
-                             Grid.Column="4"/>
-
-                    <BoxView Style="{StaticResource HorizontalSeparatorStyle}"
-                             HeightRequest="1"
-                             BackgroundColor="{StaticResource DarkGray}"
-                             Grid.Row="1"
-                             Grid.Column="0"
-                             Grid.ColumnSpan="5"/>
+                    <myViews:CardCellView Title="Indication"
+                                          Description="{Binding ProjectDetails.primaryIndication}"
+                                          TextAlignment="EndAndExpand"
+                                          Grid.Row="1"
+                                          Grid.Column="1"/>
                   </Grid>
-                </DataTemplate>
-              </ListView.FooterTemplate>
-            </ListView>
-          </StackLayout>
+                </Frame>
 
-        <!--</Frame>-->
+                <Frame CornerRadius="0"
+                       Padding="0,0,0,5"
+                       HasShadow="False"
+                       BackgroundColor="White"
+                       OutlineColor="{StaticResource Gray}">
+                  <StackLayout Padding="0"
+                               Spacing="3">
+
+                    <Label Text="Project Milestones"
+                           HorizontalTextAlignment="Center"
+                           FontAttributes="Bold"/>
+                    <Label Text="Display by Variance:"
+                           HorizontalTextAlignment="Center"
+                           FontSize="Small"/>
+
+                    <StackLayout Orientation="Horizontal"
+                                 HorizontalOptions="Center">
+                      <myViews:VarianceViewCard IndicatorColor="White"
+                                                Description="ALL"
+                                                BackgroundColor="{StaticResource SkyBlue}"
+                                                Variance="White">
+                        <myViews:VarianceViewCard.GestureRecognizers>
+                          <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
+                          <TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>
+                        </myViews:VarianceViewCard.GestureRecognizers>
+                      </myViews:VarianceViewCard>
+                      <myViews:VarianceViewCard IndicatorColor="{StaticResource Red}"
+                                                Description="&gt;= 15"
+                                                Variance="Red">
+                        <myViews:VarianceViewCard.GestureRecognizers>
+                          <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
+                          <TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>
+                        </myViews:VarianceViewCard.GestureRecognizers>
+                      </myViews:VarianceViewCard>
+                      <myViews:VarianceViewCard IndicatorColor="{StaticResource Yellow}"
+                                                Description="&gt;= 1 and &lt;= 14"
+                                                Variance="Yellow">
+                        <myViews:VarianceViewCard.GestureRecognizers>
+                          <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
+                          <TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>
+                        </myViews:VarianceViewCard.GestureRecognizers>
+                      </myViews:VarianceViewCard>
+                      <myViews:VarianceViewCard IndicatorColor="{StaticResource Green}"
+                                                Description="&lt;= 0"
+                                                Variance="Green">
+                        <myViews:VarianceViewCard.GestureRecognizers>
+                          <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
+                          <TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>
+                        </myViews:VarianceViewCard.GestureRecognizers>
+                      </myViews:VarianceViewCard>
+                      <myViews:VarianceViewCard IndicatorColor="{StaticResource Gray}"
+                                                Description="Missing Date"
+                                                Variance="Gray">
+                        <myViews:VarianceViewCard.GestureRecognizers>
+                          <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
+                          <TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>
+                        </myViews:VarianceViewCard.GestureRecognizers>
+                      </myViews:VarianceViewCard>
+                    </StackLayout>
+                  </StackLayout>
+                </Frame>
+              </StackLayout>
+            </DataTemplate>
+          </ListView.HeaderTemplate>
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <myViews:MilestoneCellView ActualDate="{Binding actualDateTime, StringFormat='{0:ddMMMyyyy}'}"
+                                         PlannedDate="{Binding plannedDateTime, StringFormat='{0:ddMMMyyyy}'}"
+                                         ProjectCode="{Binding milestoneName}"
+                                         Variance="{Binding variance}"/> <!-- TODO: Find out where this comes from -->
+            </DataTemplate>
+          </ListView.ItemTemplate>
+          <ListView.FooterTemplate>
+            <DataTemplate>
+              <Grid BackgroundColor="White"
+                    RowSpacing="0"
+                    ColumnSpacing="0">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="1"/>
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="1"/>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="1"/>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="1"/>
+                </Grid.ColumnDefinitions>
+
+                <BoxView Style="{StaticResource VerticalSeparatorStyle}"
+                         HeightRequest="1"
+                         BackgroundColor="{StaticResource DarkGray}"
+                         Grid.Row="0"
+                         Grid.Column="0"/>
+
+                <BoxView Grid.Row="0"
+                         Grid.Column="1">
+                  <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnShowMoreTapped"/>
+                  </BoxView.GestureRecognizers>
+                </BoxView>
+
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="Center"
+                             Padding="0,5"
+                             InputTransparent="True"
+                             Grid.Row="0"
+                             Grid.Column="1">
+                  <Image Source="chev_down.png"/>
+                  <Label Text="Show More"
+                         FontSize="Small"
+                         FontAttributes="Bold"
+                         VerticalTextAlignment="Center"/>
+                </StackLayout>
+
+                <BoxView Style="{StaticResource VerticalSeparatorStyle}"
+                         HeightRequest="1"
+                         BackgroundColor="{StaticResource DarkGray}"
+                         Grid.Row="0"
+                         Grid.Column="2"/>
+
+                <BoxView Grid.Row="0"
+                         Grid.Column="3">
+                  <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnShowLessTapped"/>
+                  </BoxView.GestureRecognizers>
+                </BoxView>
+
+                <StackLayout Orientation="Horizontal"
+                             HorizontalOptions="Center"
+                             Padding="0,5"
+                             InputTransparent="True"
+                             Grid.Row="0"
+                             Grid.Column="3">
+                  <Image Source="chev_up.png"
+                         HorizontalOptions="Center"/>
+                  <Label Text="Show Less"
+                         FontSize="Small"
+                         FontAttributes="Bold"
+                         VerticalTextAlignment="Center"/>
+                </StackLayout>
+
+                <BoxView Style="{StaticResource VerticalSeparatorStyle}"
+                         HeightRequest="1"
+                         BackgroundColor="{StaticResource DarkGray}"
+                         Grid.Row="0"
+                         Grid.Column="4"/>
+
+                <BoxView Style="{StaticResource HorizontalSeparatorStyle}"
+                         HeightRequest="1"
+                         BackgroundColor="{StaticResource DarkGray}"
+                         Grid.Row="1"
+                         Grid.Column="0"
+                         Grid.ColumnSpan="5"/>
+              </Grid>
+            </DataTemplate>
+          </ListView.FooterTemplate>
+        </ListView>
       </StackLayout>
-    <!--</ScrollView>-->
+
+      <Grid BackgroundColor="White"
+            RowSpacing="0"
+            ColumnSpacing="0">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="1"/>
+          <RowDefinition Height="Auto"/>
+          <RowDefinition Height="1"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="1"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="1"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="1"/>
+        </Grid.ColumnDefinitions>
+
+        <BoxView Style="{StaticResource HorizontalSeparatorStyle}"
+                 HeightRequest="1"
+                 BackgroundColor="{StaticResource DarkGray}"
+                 Grid.Row="0"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="5"/>
+
+        <BoxView Style="{StaticResource VerticalSeparatorStyle}"
+                 HeightRequest="1"
+                 BackgroundColor="{StaticResource DarkGray}"
+                 Grid.Row="1"
+                 Grid.Column="0"/>
+
+        <!--<StackLayout x:Name="ProjectCommentButtonStackLayout"
+                     AutomationId="ProjectInfoPageProjectCommentButtonStackLayout"
+                     HorizontalOptions="Center"
+                     Padding="0,7"
+                     Grid.Row="1"
+                     Grid.Column="1">
+          <Label Text="Project Comment"
+                 FontSize="Medium"
+                 FontAttributes="Bold"/>
+
+          <StackLayout.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnProjectCommentExecuteTapped"/>
+            <TapGestureRecognizer Tapped="OnProjectCommentAnimateTapped"/>
+          </StackLayout.GestureRecognizers>
+        </StackLayout>-->
+
+        <BoxView x:Name="ProjectCommentBackgroundBoxView"
+                 Grid.Row="1"
+                 Grid.Column="1">
+          <BoxView.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnProjectCommentExecuteTapped"/>
+            <TapGestureRecognizer Tapped="OnProjectCommentAnimateTapped"/>
+          </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <Label AutomationId="ProjectInfoPageProjectCommentButtonLabel"
+               Text="Project Comment"
+               FontSize="Medium"
+               FontAttributes="Bold"
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center"
+               InputTransparent="True"
+               Grid.Row="1"
+               Grid.Column="1"/>
+
+        <BoxView Style="{StaticResource VerticalSeparatorStyle}"
+                 HeightRequest="1"
+                 BackgroundColor="{StaticResource DarkGray}"
+                 Grid.Row="1"
+                 Grid.Column="2"/>
+
+        <BoxView x:Name="ContactInfoBackgroundBoxView"
+                 Grid.Row="1"
+                 Grid.Column="3">
+          <BoxView.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnContactInfoExecuteTapped"/>
+            <TapGestureRecognizer Tapped="OnContactInfoAnimateTapped"/>
+          </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <Label AutomationId="ProjectInfoPageContactInfoButtonLabel"
+               Text="Contact Info"
+               FontSize="Medium"
+               FontAttributes="Bold"
+               HorizontalTextAlignment="Center"
+               VerticalTextAlignment="Center"
+               InputTransparent="True"
+               Grid.Row="1"
+               Grid.Column="3"/> <!-- TODO: Dynamically set number of contacts in label text -->
+
+        <!--<StackLayout x:Name="ContactInfoButtonStackLayout"
+                     AutomationId="ProjectInfoContactInfoButtonStackLayout"
+                     HorizontalOptions="Center"
+                     Padding="0,7"
+                     Grid.Row="1"
+                     Grid.Column="3">
+
+          <StackLayout.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnContactInfoExecuteTapped"/>
+            <TapGestureRecognizer Tapped="OnContactInfoAnimateTapped"/>
+          </StackLayout.GestureRecognizers>
+        </StackLayout>-->
+
+        <BoxView Style="{StaticResource VerticalSeparatorStyle}"
+                 HeightRequest="1"
+                 BackgroundColor="{StaticResource DarkGray}"
+                 Grid.Row="1"
+                 Grid.Column="4"/>
+
+        <BoxView Style="{StaticResource HorizontalSeparatorStyle}"
+                 HeightRequest="1"
+                 BackgroundColor="{StaticResource DarkGray}"
+                 Grid.Row="2"
+                 Grid.Column="0"
+                 Grid.ColumnSpan="5"/>
+      </Grid>
+    </StackLayout>
   </ContentPage.Content>
 </ContentPage>

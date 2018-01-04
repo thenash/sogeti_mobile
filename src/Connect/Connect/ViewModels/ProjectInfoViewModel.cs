@@ -92,7 +92,7 @@ namespace Connect.ViewModels {
         /// </summary>
         public Command ShowMoreMilestones => _showMoreMilestones ?? (_showMoreMilestones = new Command(ExecuteShowMoreMilestones));
 
-        private void ExecuteShowMoreMilestones() {
+        public void ExecuteShowMoreMilestones() {
             if(_milestonesToShowCount >= Milestones.Count) {
                 return;
             }
@@ -107,7 +107,7 @@ namespace Connect.ViewModels {
         /// </summary>
         public Command ShowLessMilestones => _showLessMilestones ?? (_showLessMilestones = new Command(ExecuteShowLessMilestones));
 
-        private void ExecuteShowLessMilestones() {
+        public void ExecuteShowLessMilestones() {
             if(_milestonesToShowCount <= _increaseMilestoneAmount) {
                 return;
             }

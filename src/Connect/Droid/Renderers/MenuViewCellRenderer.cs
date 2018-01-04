@@ -2,6 +2,7 @@
 using Android.Graphics.Drawables;
 using Android.Views;
 using Connect.Droid.Renderers;
+using Connect.Helpers;
 using Connect.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
@@ -36,7 +37,7 @@ namespace Connect.Droid.Renderers {
             StateListDrawable states = new StateListDrawable();
             //states.AddState(new[] { Android.Resource.Attribute.StatePressed }, new ColorDrawable(Color.White));
             //states.AddState(new[] { Android.Resource.Attribute.StateFocused }, new ColorDrawable(Color.White));
-            states.AddState(new int[] { }, new ColorDrawable(((Xamarin.Forms.Color)Application.Current.Resources["SkyBlue"]).ToAndroid()));
+            states.AddState(new int[] { }, new ColorDrawable(Utility.GetResource<Xamarin.Forms.Color>("SkyBlue").ToAndroid()));
 
             return states;
         }
