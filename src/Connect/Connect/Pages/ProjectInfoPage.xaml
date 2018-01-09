@@ -270,7 +270,8 @@
 
       <Grid BackgroundColor="White"
             RowSpacing="0"
-            ColumnSpacing="0">
+            ColumnSpacing="0"
+            HorizontalOptions="End">
         <Grid.RowDefinitions>
           <RowDefinition Height="1"/>
           <RowDefinition Height="Auto"/>
@@ -316,12 +317,7 @@
 
         <BoxView x:Name="ProjectCommentBackgroundBoxView"
                  Grid.Row="1"
-                 Grid.Column="1">
-          <BoxView.GestureRecognizers>
-            <TapGestureRecognizer Tapped="OnProjectCommentExecuteTapped"/>
-            <TapGestureRecognizer Tapped="OnProjectCommentAnimateTapped"/>
-          </BoxView.GestureRecognizers>
-        </BoxView>
+                 Grid.Column="1"/>
 
         <Label AutomationId="ProjectInfoPageProjectCommentButtonLabel"
                Text="Project Comment"
@@ -341,12 +337,7 @@
 
         <BoxView x:Name="ContactInfoBackgroundBoxView"
                  Grid.Row="1"
-                 Grid.Column="3">
-          <BoxView.GestureRecognizers>
-            <TapGestureRecognizer Tapped="OnContactInfoExecuteTapped"/>
-            <TapGestureRecognizer Tapped="OnContactInfoAnimateTapped"/>
-          </BoxView.GestureRecognizers>
-        </BoxView>
+                 Grid.Column="3"/>
 
         <Label AutomationId="ProjectInfoPageContactInfoButtonLabel"
                Text="Contact Info"

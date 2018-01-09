@@ -133,56 +133,62 @@ namespace Connect.Pages {
             double size = Device.GetNamedSize(NamedSize.Micro, typeof(Label));
             const double margin = 3;
 
+            Color darkGray  = Utility.GetResource<Color>("DarkGray");
+            Color lightGray = Utility.GetResource<Color>("LightGray");
+
+            Style horizontalSeparatorStyle = Utility.GetResource<Style>("HorizontalSeparatorStyle");
+            Style vertSeparatorStyle       = Utility.GetResource<Style>("VerticalSeparatorStyle");
+
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Status",
-                TextColor             = Utility.GetResource<Color>("DarkGray"),
+                TextColor             = darkGray,
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 0, 0);
 
             BottomGrid.Children.Add(new BoxView {
-                Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
-                BackgroundColor = Utility.GetResource<Color>("DarkGray")
+                Style           = vertSeparatorStyle,
+                BackgroundColor = darkGray
             }, 1, 0);
 
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Planned to Date",
-                TextColor             = Utility.GetResource<Color>("DarkGray"),
+                TextColor             = darkGray,
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 2, 0);
 
             BottomGrid.Children.Add(new BoxView {
-                Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
-                BackgroundColor = Utility.GetResource<Color>("DarkGray")
+                Style           = vertSeparatorStyle,
+                BackgroundColor = darkGray
             }, 3, 0);
 
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Actual to Date",
-                TextColor             = Utility.GetResource<Color>("DarkGray"),
+                TextColor             = darkGray,
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 4, 0);
 
             BottomGrid.Children.Add(new BoxView {
-                Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
-                BackgroundColor = Utility.GetResource<Color>("DarkGray")
+                Style           = vertSeparatorStyle,
+                BackgroundColor = darkGray
             }, 5, 0);
 
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Total Contracted",
-                TextColor             = Utility.GetResource<Color>("DarkGray"),
+                TextColor             = darkGray,
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 6, 0);
 
             BottomGrid.Children.Add(new BoxView {
-                Style           = Utility.GetResource<Style>("HorizontalSeparatorStyle"),
-                BackgroundColor = Utility.GetResource<Color>("DarkGray")
+                Style           = horizontalSeparatorStyle,
+                BackgroundColor = darkGray
             }, 0, 7, 1, 2);
 
             int rowSeparatorCount = 0;
@@ -190,8 +196,7 @@ namespace Connect.Pages {
             for(int index = 0; index < plannedCount; index++) {     //Create headers
                 int separatorRow = index + rowSeparatorCount + 2;   //Add 2 for the header row and the header separator row
 
-                Color backgroundColor = index % 2 == 0 ? Color.White : Utility.GetResource<Color>("LightGray");
-                Color darkGray        = Utility.GetResource<Color>("DarkGray");
+                Color backgroundColor = index % 2 == 0 ? Color.White : lightGray;
 
                 #region Label Column
 
@@ -204,13 +209,13 @@ namespace Connect.Pages {
                 }, 0, separatorRow);
 
                 BottomGrid.Children.Add(new BoxView {
-                    Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
+                    Style           = vertSeparatorStyle,
                     BackgroundColor = darkGray
                 }, 1, separatorRow);
 
                 if(index != plannedCount - 1) {
                     BottomGrid.Children.Add(new BoxView {
-                        Style           = Utility.GetResource<Style>("HorizontalSeparatorStyle"),
+                        Style           = horizontalSeparatorStyle,
                         BackgroundColor = darkGray
                     }, 0, 7, separatorRow + 1, separatorRow + 2);
 
@@ -231,7 +236,7 @@ namespace Connect.Pages {
                 }, 2, separatorRow);
 
                 BottomGrid.Children.Add(new BoxView {
-                    Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
+                    Style           = vertSeparatorStyle,
                     BackgroundColor = darkGray
                 }, 3, separatorRow);
 
@@ -240,7 +245,7 @@ namespace Connect.Pages {
                 #region Actual To Date Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                    = _viewModel.PlannedBottomChartSiteStats[index].Value.ToString(),
+                    Text                    = _viewModel.ActualBottomChartSiteStats[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
                     BackgroundColor         = backgroundColor,
@@ -249,7 +254,7 @@ namespace Connect.Pages {
                 }, 4, separatorRow);
 
                 BottomGrid.Children.Add(new BoxView {
-                    Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
+                    Style           = vertSeparatorStyle,
                     BackgroundColor = darkGray
                 }, 5, separatorRow);
 

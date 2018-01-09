@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             x:Class="Connect.Views.ProjectCommentsPopup"
+             HasSystemPadding="False">
+  <pages:PopupPage.Animation>
+    <animations:ScaleAnimation
+                PositionIn="Center"
+                PositionOut="Center"
+                ScaleIn="1.2"
+                ScaleOut="0.8"
+                DurationIn="400"
+                DurationOut="300"
+                EasingIn="SinOut"
+                EasingOut="SinIn"
+                HasBackgroundAnimation="True"/>
+  </pages:PopupPage.Animation>
+  <pages:PopupPage.Content>
+    <!--<ContentView Padding="5">-->
+      <Grid BackgroundColor="White"
+            Padding="5">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Button Text="Close"
+                TextColor="Black"
+                FontAttributes="Bold"
+                FontSize="Small"
+                HorizontalOptions="End"
+                Clicked="OnClose"
+                Grid.Row="0"
+                Grid.Column="0"/>
+
+        <!--<Label x:Name="CommentLabel"
+             HorizontalOptions="Fill"
+             Grid.Row="1"
+             Grid.Column="0"/>-->
+
+        <Editor x:Name="CommentEditor"
+                HorizontalOptions="Fill"
+                IsEnabled="False"
+                VerticalOptions="Start"
+                TextColor="{StaticResource DarkGray}"
+                Grid.Row="1"
+                Grid.Column="0"/>
+
+        <Button x:Name="CommentEditButton"
+                Text="Edit"
+                TextColor="Black"
+                FontAttributes="Bold"
+                FontSize="Small"
+                HorizontalOptions="End"
+                Clicked="OnCommentEditButtonClicked"
+                Grid.Row="2"
+                Grid.Column="0"/>
+      </Grid>
+    <!--</ContentView>-->
+  </pages:PopupPage.Content>
+</pages:PopupPage>
+

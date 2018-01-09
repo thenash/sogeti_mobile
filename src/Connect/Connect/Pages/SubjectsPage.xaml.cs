@@ -1,84 +1,306 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System;
 using Connect.Helpers;
-using Connect.Models;
+using Connect.ViewModels;
 using Xamarin.Forms;
 
 namespace Connect.Pages {
+
     public partial class SubjectsPage : ContentPage {
 
-        private HttpClient _client;
+        private readonly SubjectsViewModel _viewModel;
+
         private readonly string _projectId;
-        private List<SubjectDetails> _subjectDetailsList;
-        private List<SubjectStats> _subjectStatsList;
-        private List<SubjectTrends> _subjectTrendsList;
 
-        public SubjectsPage() : this(null) { }
+        public SubjectsPage() : this(App.SelectedProject?.projectId) { }
 
-        public SubjectsPage(Milestone project) {
+        public SubjectsPage(string projectId) {
+
+            BindingContext = _viewModel = new SubjectsViewModel(_projectId);
+
             InitializeComponent();
 
-            if(project != null) {
-                _projectId = project.projectId;
+            if(projectId != null) {
+                _projectId = projectId;
             }
+
+            double microAmount        = Device.GetNamedSize(NamedSize.Micro, typeof(Label));
+            double smallToMicroAmount = Device.GetNamedSize(NamedSize.Small, typeof(Label)) - microAmount;
+
+            double finalAxisFontSize = App.IsAndroid ? microAmount : microAmount - smallToMicroAmount;
+
+            SubjectStatusHorizontalAxis.LabelFontSize = finalAxisFontSize;
+            SubjectStatusVerticalAxis.LabelFontSize   = finalAxisFontSize;
+
+            if(!App.IsAndroid && finalAxisFontSize > 9.8 && finalAxisFontSize <= 11) {    //BUG: Telerik Charts will not appear to overlap properly if the LabelFontSize is between these values, they have been notified about the issue
+                finalAxisFontSize = 9.8;
+            }
+
+            BottomChartHorizontalAxis.LabelFontSize = finalAxisFontSize;
         }
 
         protected override async void OnAppearing() {
             base.OnAppearing();
 
+            SizeChanged += OnSizeChanged;
+
             if(App.LoggedIn) {
-                if(!string.IsNullOrEmpty((_projectId))) {
-                    await GetSubjectDetails();
-                    await GetSubjectStats();
-                    await GetSubjectTrends();
+                if(_viewModel.IsInitialized) {
+                    return;
+                }
+
+                _viewModel.IsInitialized = true;
+
+                await _viewModel.RefreshData(_projectId);
+                InitGrid();
+            }
+        }
+
+        protected override void OnDisappearing() {
+            base.OnDisappearing();
+
+            SizeChanged -= OnSizeChanged;
+        }
+
+        private void OnSizeChanged(object sender, EventArgs eventArgs) {
+
+            if(App.IsAndroid) { //BUG: On Android, the chart height is not being calculated correctly
+
+                if(TopChart.Height < 250) {
+                    TopChart.HeightRequest = 250;
+                }
+
+                if(BottomChart.Height < 250) {
+                    BottomChart.HeightRequest = 250;
                 }
             }
         }
 
-        private async Task GetSubjectDetails() {
-            string url = $"https://ecs.incresearch.com/ECS/mobile/subdetails/projectId/{_projectId}";
+        private void OnGridViewTapped(object sender, EventArgs e) {
+            ChartViewButtonFrame.BackgroundColor = Utility.GetResource<Color>("Gray");
+            GridViewButtonFrame.BackgroundColor  = Color.White;
 
-            _client = new HttpClient();
-            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
+            PlannedBottomLegendStackLayout.IsVisible = false;
+            ActualBottomLegendStackLayout.IsVisible  = false;
 
-            HttpResponseMessage response = await _client.GetAsync(url);
+            BottomChart.IsVisible = false;
+            BottomGrid.IsVisible  = true;
 
-            if(response.IsSuccessStatusCode) {
-                string content = await response.Content.ReadAsStringAsync();
-
-                _subjectDetailsList = Utility.DeserializeResponse<List<SubjectDetails>>(content, "data/subjects/details");
-            }
+            //TODO: Animate Grid
         }
 
-        private async Task GetSubjectStats() {
-            string url = $"https://ecs.incresearch.com/ECS/mobile/substats/projectId/{_projectId}";
+        private void OnChartViewTapped(object sender, EventArgs e) {
+            GridViewButtonFrame.BackgroundColor  = Utility.GetResource<Color>("Gray");
+            ChartViewButtonFrame.BackgroundColor = Color.White;
 
-            _client = new HttpClient();
-            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
+            PlannedBottomLegendStackLayout.IsVisible = true;
+            ActualBottomLegendStackLayout.IsVisible  = true;
 
-            HttpResponseMessage response = await _client.GetAsync(url);
+            BottomGrid.IsVisible  = false;
+            BottomChart.IsVisible = true;
 
-            if(response.IsSuccessStatusCode) {
-                string content = await response.Content.ReadAsStringAsync();
-
-                _subjectStatsList = Utility.DeserializeResponse<List<SubjectStats>>(content, "data/project/subjectStats");
-            }
+            //TODO: Animate Chart
         }
 
-        private async Task GetSubjectTrends() {
-            string url = $"https://ecs.incresearch.com/ECS/mobile/subtrends/projectId/{_projectId}";
+        private void InitGrid() {
+            BottomGrid.Children.Clear();
 
-            _client = new HttpClient();
-            _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
+            BottomGrid.RowDefinitions = new RowDefinitionCollection {
+                new RowDefinition {             //Create header row
+                    Height = GridLength.Auto
+                }, new RowDefinition {          //Create header separator row
+                    Height = 1
+                }
+            };
 
-            HttpResponseMessage response = await _client.GetAsync(url);
+            int plannedCount = _viewModel.PlannedBottomChartSubjectStats.Count;
 
-            if(response.IsSuccessStatusCode) {
-                string content = await response.Content.ReadAsStringAsync();
+            for(int i = 0; i < plannedCount; i++) {
+                BottomGrid.RowDefinitions.Add(new RowDefinition {
+                    Height = GridLength.Auto
+                });
 
-                _subjectTrendsList = Utility.DeserializeResponse<List<SubjectTrends>>(content, "data/project/subjectTrends");
+                if(i != 0 && i != plannedCount - 1) {
+                    BottomGrid.RowDefinitions.Add(new RowDefinition {   //Create separator rows
+                        Height = GridLength.Auto
+                    });
+                }
             }
+
+            //BottomGrid.RowDefinitions.Add(new RowDefinition {   //HACK: Prevents the Grid background color from being cut off to soon
+            //    Height = 10
+            //});
+
+            double size = Device.GetNamedSize(NamedSize.Micro, typeof(Label));
+            const double margin = 3;
+
+            Color darkGray  = Utility.GetResource<Color>("DarkGray");
+            Color lightGray = Utility.GetResource<Color>("LightGray");
+
+            Style horizontalSeparatorStyle = Utility.GetResource<Style>("HorizontalSeparatorStyle");
+            Style vertSeparatorStyle       = Utility.GetResource<Style>("VerticalSeparatorStyle");
+
+            BottomGrid.Children.Add(new Label {
+                Margin                = margin,
+                Text                  = "Status",
+                TextColor             = darkGray,
+                FontSize              = size,
+                VerticalTextAlignment = TextAlignment.Center
+            }, 0, 0);
+
+            BottomGrid.Children.Add(new BoxView {
+                Style           = vertSeparatorStyle,
+                BackgroundColor = darkGray
+            }, 1, 0);
+
+            BottomGrid.Children.Add(new Label {
+                Margin                = margin,
+                Text                  = "Planned to Date",
+                TextColor             = darkGray,
+                FontSize              = size,
+                VerticalTextAlignment = TextAlignment.Center
+            }, 2, 0);
+
+            BottomGrid.Children.Add(new BoxView {
+                Style           = vertSeparatorStyle,
+                BackgroundColor = darkGray
+            }, 3, 0);
+
+            BottomGrid.Children.Add(new Label {
+                Margin                = margin,
+                Text                  = "Actual to Date",
+                TextColor             = darkGray,
+                FontSize              = size,
+                VerticalTextAlignment = TextAlignment.Center
+            }, 4, 0);
+
+            BottomGrid.Children.Add(new BoxView {
+                Style           = vertSeparatorStyle,
+                BackgroundColor = darkGray
+            }, 5, 0);
+
+            BottomGrid.Children.Add(new Label {
+                Margin                = margin,
+                Text                  = "Total Contracted",
+                TextColor             = darkGray,
+                FontSize              = size,
+                VerticalTextAlignment = TextAlignment.Center
+            }, 6, 0);
+
+            BottomGrid.Children.Add(new BoxView {
+                Style           = vertSeparatorStyle,
+                BackgroundColor = darkGray
+            }, 7, 0);
+
+            BottomGrid.Children.Add(new Label {
+                Margin                = margin,
+                Text                  = "MonthlyRate",
+                TextColor             = darkGray,
+                FontSize              = size,
+                VerticalTextAlignment = TextAlignment.Center
+            }, 8, 0);
+
+            BottomGrid.Children.Add(new BoxView {
+                Style           = horizontalSeparatorStyle,
+                BackgroundColor = darkGray
+            }, 0, 8, 1, 2);
+
+            int rowSeparatorCount = 0;
+
+            for(int index = 0; index < plannedCount; index++) {     //Create headers
+                int separatorRow = index + rowSeparatorCount + 2;   //Add 2 for the header row and the header separator row
+
+                Color backgroundColor = index % 2 == 0 ? Color.White : lightGray;
+
+                #region Label Column
+
+                BottomGrid.Children.Add(new Label {
+                    Text                  = "  " + _viewModel.PlannedBottomChartSubjectStats[index].Group,
+                    TextColor             = darkGray,
+                    FontSize              = size,
+                    BackgroundColor       = backgroundColor,
+                    VerticalTextAlignment = TextAlignment.Center
+                }, 0, separatorRow);
+
+                BottomGrid.Children.Add(new BoxView {
+                    Style           = vertSeparatorStyle,
+                    BackgroundColor = darkGray
+                }, 1, separatorRow);
+
+                if(index != plannedCount - 1) {
+                    BottomGrid.Children.Add(new BoxView {
+                        Style           = horizontalSeparatorStyle,
+                        BackgroundColor = darkGray
+                    }, 0, 8, separatorRow + 1, separatorRow + 2);
+
+                    rowSeparatorCount++;
+                }
+
+                #endregion
+
+                #region Planned To Date Column
+
+                BottomGrid.Children.Add(new Label {
+                    Text                    = _viewModel.PlannedBottomChartSubjectStats[index].Value.ToString(),
+                    TextColor               = darkGray,
+                    FontSize                = size,
+                    BackgroundColor         = backgroundColor,
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    VerticalTextAlignment   = TextAlignment.Center
+                }, 2, separatorRow);
+
+                BottomGrid.Children.Add(new BoxView {
+                    Style           = vertSeparatorStyle,
+                    BackgroundColor = darkGray
+                }, 3, separatorRow);
+
+                #endregion
+
+                #region Actual To Date Column
+
+                BottomGrid.Children.Add(new Label {
+                    Text                    = _viewModel.ActualBottomChartSubjectStats[index].Value.ToString(),
+                    TextColor               = darkGray,
+                    FontSize                = size,
+                    BackgroundColor         = backgroundColor,
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    VerticalTextAlignment   = TextAlignment.Center
+                }, 4, separatorRow);
+
+                BottomGrid.Children.Add(new BoxView {
+                    Style           = vertSeparatorStyle,
+                    BackgroundColor = darkGray
+                }, 5, separatorRow);
+
+                #endregion
+
+                #region Total Contracted Column
+
+                BottomGrid.Children.Add(new Label {
+                    Text                    = _viewModel.TotalBottomChartSubjectStats[index].Value.ToString(),
+                    TextColor               = darkGray,
+                    FontSize                = size,
+                    BackgroundColor         = backgroundColor,
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    VerticalTextAlignment   = TextAlignment.Center
+                }, 6, separatorRow);
+
+                #endregion
+
+                #region Monthly Rate Column
+
+                BottomGrid.Children.Add(new Label {
+                    Text                    = _viewModel.MonthlyRateBottomChartSubjectStats[index].Value.ToString(),
+                    TextColor               = darkGray,
+                    FontSize                = size,
+                    BackgroundColor         = backgroundColor,
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    VerticalTextAlignment   = TextAlignment.Center
+                }, 7, separatorRow);
+
+                #endregion
+            }
+
+            BottomGrid.ForceLayout();
         }
     }
 }

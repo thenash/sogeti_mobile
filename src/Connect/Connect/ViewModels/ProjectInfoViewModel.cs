@@ -13,7 +13,7 @@ namespace Connect.ViewModels {
 
     public class ProjectInfoViewModel : BaseViewModel {
 
-        private const int _increaseMilestoneAmount = 3;
+        private const int IncreaseMilestoneAmount = 3;
 
         private int _milestonesToShowCount = 3;
 
@@ -97,7 +97,7 @@ namespace Connect.ViewModels {
                 return;
             }
 
-            _milestonesToShowCount += _increaseMilestoneAmount;
+            _milestonesToShowCount += IncreaseMilestoneAmount;
             FilterMilestonesByVariance(_selectedVariance);
         }
 
@@ -108,11 +108,11 @@ namespace Connect.ViewModels {
         public Command ShowLessMilestones => _showLessMilestones ?? (_showLessMilestones = new Command(ExecuteShowLessMilestones));
 
         public void ExecuteShowLessMilestones() {
-            if(_milestonesToShowCount <= _increaseMilestoneAmount) {
+            if(_milestonesToShowCount <= IncreaseMilestoneAmount) {
                 return;
             }
 
-            _milestonesToShowCount -= _increaseMilestoneAmount;
+            _milestonesToShowCount -= IncreaseMilestoneAmount;
             FilterMilestonesByVariance(_selectedVariance);
         }
 
@@ -132,7 +132,7 @@ namespace Connect.ViewModels {
             try {
                 string url = $"https://ecs.incresearch.com/ECS/mobile/projectdetails/projectId/{Project.projectId}";
 
-                using(HttpClient client = new HttpClient()) {
+                using(HttpClient client = new HttpClient { Timeout = TimeSpan.FromSeconds(60) }) {
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
                     using(HttpResponseMessage response = await client.GetAsync(url)) {
@@ -169,7 +169,7 @@ namespace Connect.ViewModels {
             try {
                 string url = $"https://ecs.incresearch.com/ECS/mobile/milestones/projectId/{Project.projectId}";
 
-                using(HttpClient client = new HttpClient()) {
+                using(HttpClient client = new HttpClient { Timeout = TimeSpan.FromSeconds(60) }) {
 
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 

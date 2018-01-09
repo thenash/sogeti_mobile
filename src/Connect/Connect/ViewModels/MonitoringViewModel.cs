@@ -13,7 +13,7 @@ using System.Net.Http;
 
 namespace Connect.ViewModels {
 
-    public class SitesViewModel : BaseViewModel {
+    public class MonitoringViewModel : BaseViewModel {
 
         private ObservableCollection<SiteDetails> _siteDetails;
 
@@ -129,8 +129,8 @@ namespace Connect.ViewModels {
 
         private readonly string _projectId;
 
-        public SitesViewModel(string projectId) {
-            Title = "Sites";
+        public MonitoringViewModel(string projectId) {
+            Title = "Monitoring";
 
             _projectId = projectId;
 
@@ -940,14 +940,14 @@ namespace Connect.ViewModels {
             await Task.FromResult(0);
 
             Project = new Project {
-                customerName           = "Generic Customer",
-                owningBu               = "9500 Biometrics",
-                phase                  = 4,
-                primaryIndication      = "Dry Eye",
+                customerName = "Generic Customer",
+                owningBu = "9500 Biometrics",
+                phase = 4,
+                primaryIndication = "Dry Eye",
                 primaryTherapeuticArea = "Psychiatry",
-                projectDirector        = "Sally Smith",
-                projectId              = projectId,
-                protocolId             = "9083-E1-ES3"
+                projectDirector = "Sally Smith",
+                projectId = projectId,
+                protocolId = "9083-E1-ES3"
             };
 #else
             try {

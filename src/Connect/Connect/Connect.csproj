@@ -48,7 +48,7 @@
     <EmbeddedResource Include="Views\CardCellView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\LegendValueCell.xaml">
+    <EmbeddedResource Include="Views\ProjectCommentsPopup.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MilestoneCellView.xaml">
@@ -61,12 +61,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\SitesPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Pages\SubjectsPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Pages\MonitoringPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\VarianceViewCard.xaml">
@@ -84,7 +78,13 @@
     <Compile Include="Helpers\ChartXAxisAttribute.cs" />
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Interfaces\INavigationService.cs" />
-    <Compile Include="Models\SiteStatCategory.cs" />
+    <Compile Include="Models\GraphCategory.cs" />
+    <Compile Include="Pages\MonitoringPage.xaml.cs">
+      <DependentUpon>MonitoringPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\SubjectsPage.xaml.cs">
+      <DependentUpon>SubjectsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\Utility.cs" />
     <Compile Include="Models\Login.cs" />
@@ -107,13 +107,18 @@
       <DependentUpon>ProjectsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="ViewModels\MonitoringViewModel.cs" />
+    <Compile Include="ViewModels\SubjectsViewModel.cs" />
     <Compile Include="Views\ExtendedEntry.cs" />
     <Compile Include="Views\ButtonLabelContentView.cs" />
     <Compile Include="Views\CardCellView.xaml.cs">
       <DependentUpon>CardCellView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\LegendValueCell.xaml.cs">
-      <DependentUpon>LegendValueCell.xaml</DependentUpon>
+    <Compile Include="Views\ContactInfoPopup.xaml.cs">
+      <DependentUpon>ContactInfoPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectCommentsPopup.xaml.cs">
+      <DependentUpon>ProjectCommentsPopup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MilestoneCellView.xaml.cs">
       <DependentUpon>MilestoneCellView.xaml</DependentUpon>
@@ -134,15 +139,9 @@
     <Compile Include="Models\SiteDetails.cs" />
     <Compile Include="Models\SiteStats.cs" />
     <Compile Include="Models\SiteTrends.cs" />
-    <Compile Include="Pages\SubjectsPage.xaml.cs">
-      <DependentUpon>SubjectsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Models\SubjectDetails.cs" />
     <Compile Include="Models\SubjectStats.cs" />
     <Compile Include="Models\SubjectTrends.cs" />
-    <Compile Include="Pages\MonitoringPage.xaml.cs">
-      <DependentUpon>MonitoringPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Models\VisitDetails.cs" />
     <Compile Include="Models\VisitMetrics.cs" />
     <Compile Include="ViewModels\ProjectsViewModel.cs" />
@@ -158,6 +157,12 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>$(SolutionDir)packages\Newtonsoft.Json.10.0.3\lib\portable-net45+win8+wp8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Rg.Plugins.Popup, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\Rg.Plugins.Popup.1.0.4\lib\portable-win+net45+wp8+win8+wpa81\Rg.Plugins.Popup.dll</HintPath>
+    </Reference>
+    <Reference Include="Rg.Plugins.Popup.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)packages\Rg.Plugins.Popup.1.0.4\lib\portable-win+net45+wp8+win8+wpa81\Rg.Plugins.Popup.Platform.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.XamarinForms.Chart">
       <HintPath>$(SolutionDir)packages\Telerik.XamarinForms.Chart.Portable\Telerik.XamarinForms.Chart.dll</HintPath>
@@ -188,7 +193,26 @@
       </SubType>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ContactInfoPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\SubjectsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>
+      </SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\MonitoringPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>
+      </SubType>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.3.4.247\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+Xamarin.iOS10+xamarinmac20\Xamarin.Forms.targets')" />
 </Project>
-

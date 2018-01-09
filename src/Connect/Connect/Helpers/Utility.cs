@@ -12,34 +12,26 @@ namespace Connect.Helpers {
     public class Utility {
 
         /// <summary>
-        /// Grouping of property info for properties with the <see cref="ChartXAxisAttribute"/>.
+        /// Grouping of property info for Site Status properties with the <see cref="ChartXAxisAttribute"/>.
         /// </summary>
-        private static readonly Dictionary<string, PropertyInfo> XAxisSiteStatusCategoryProps;
+        private static Dictionary<string, PropertyInfo> _xAxisSiteStatusCategoryProps;
+
+        /// <summary>
+        /// Grouping of property info for Subject Status properties with the <see cref="ChartXAxisAttribute"/>.
+        /// </summary>
+        private static Dictionary<string, PropertyInfo> _xAxisSubjectStatusCategoryProps;
+
+        ///// <summary>
+        ///// Grouping of property info for Site Visit Status properties with the <see cref="ChartXAxisAttribute"/>.
+        ///// </summary>
+        //private static Dictionary<string, PropertyInfo> _xAxisVisitStatusCategoryProps;
 
         #region Constructors
 
         static Utility() {
-            XAxisSiteStatusCategoryProps = new Dictionary<string, PropertyInfo>();
-            List<PropertyInfo> info = new List<PropertyInfo>();
-
-            List<string> categories = new List<string>();
-
-            IEnumerable<PropertyInfo> propertyInfos = typeof(SiteStats).GetRuntimeProperties()?.Where(p => p != null && p.GetCustomAttributes(false).Any(a => a?.GetType() == typeof(ChartXAxisAttribute)));
-
-            if(propertyInfos == null) {
-                return;
-            }
-
-            foreach(PropertyInfo propertyInfo in propertyInfos) {
-                ChartXAxisAttribute attr = propertyInfo.GetCustomAttributes(typeof(ChartXAxisAttribute), true).Cast<ChartXAxisAttribute>().Single();
-
-                categories.Insert(attr.Priority, attr.DisplayName);
-                info.Insert(attr.Priority, propertyInfo);
-            }
-
-            for(int i = 0; i < categories.Count; i++) {
-                XAxisSiteStatusCategoryProps[categories[i]] = info[i];
-            }
+            InitXAxisSiteStatusCategory();
+            InitXAxisSubjectStatusCategory();
+            //InitXAxisVisitStatusCategory();
         }
 
         public Utility() { }
@@ -48,18 +40,44 @@ namespace Connect.Helpers {
 
         public static string GetDateString(DateTime dateTime) => dateTime.ToString("mM/d/YY h:mm");
 
-        public static List<SiteStatCategory> GetChartCategories(IList<SiteStats> siteStatus) {
-            List<SiteStatCategory> siteCats = new List<SiteStatCategory>();
+        public static List<GraphCategory> GetSiteStatusChartCategories(IList<SiteStats> chartData) {
+            List<GraphCategory> categories = new List<GraphCategory>();
 
-            foreach(KeyValuePair<string, PropertyInfo> prop in XAxisSiteStatusCategoryProps) {
-                siteCats.Add(new SiteStatCategory {
+            foreach(KeyValuePair<string, PropertyInfo> prop in _xAxisSiteStatusCategoryProps) {
+                categories.Add(new GraphCategory {
                     Group = prop.Key,
-                    Value = siteStatus.Sum(stat => (int)prop.Value.GetValue(stat))
+                    Value = chartData.Sum(data => (int)prop.Value.GetValue(data))
                 });
             }
 
-            return siteCats;
+            return categories;
         }
+
+        public static List<GraphCategory> GetSubjectStatusChartCategories(IList<SubjectStats> chartData) {
+            List<GraphCategory> categories = new List<GraphCategory>();
+
+            foreach(KeyValuePair<string, PropertyInfo> prop in _xAxisSubjectStatusCategoryProps) {
+                categories.Add(new GraphCategory {
+                    Group = prop.Key,
+                    Value = chartData.Sum(data => (int)prop.Value.GetValue(data))
+                });
+            }
+
+            return categories;
+        }
+
+        //public static List<GraphCategory> GetVisitStatusChartCategories(IList<VisitStats> chartData) {
+        //    List<GraphCategory> categories = new List<GraphCategory>();
+
+        //    foreach(KeyValuePair<string, PropertyInfo> prop in _xAxisVisitStatusCategoryProps) {
+        //        categories.Add(new GraphCategory {
+        //            Group = prop.Key,
+        //            Value = chartData.Sum(data => (int)prop.Value.GetValue(data))
+        //        });
+        //    }
+
+        //    return categories;
+        //}
 
         /// <summary>
         /// Returns a resource dictionary item from <c>Application.Current.Resources</c>.
@@ -108,6 +126,108 @@ namespace Connect.Helpers {
             }
 
             return JsonConvert.DeserializeObject<T>(jsonResponse);
+        }
+
+        /// <summary>
+        /// Initializes the X Axis Site Status Categories list with the priority, display name, and property object for each property in the <see cref="SiteStats"/> model with the <see cref="ChartXAxisAttribute"/>.
+        /// </summary>
+        private static void InitXAxisSiteStatusCategory() {
+            _xAxisSiteStatusCategoryProps = new Dictionary<string, PropertyInfo>();
+
+            IEnumerable<PropertyInfo> propertyInfos = typeof(SiteStats).GetRuntimeProperties()?.Where(p => p != null && p.GetCustomAttributes(false).Any(a => a?.GetType() == typeof(ChartXAxisAttribute))); //Gets all properties in the SiteStats class with the ChartXAxisAttribute attribute
+
+            if(propertyInfos == null) {
+                return;
+            }
+
+            List<PropertyInfo> propertyInfosList = propertyInfos.ToList();
+
+            List<ChartPropertyInfo> chartInfos = new List<ChartPropertyInfo>();
+
+            foreach(PropertyInfo propertyInfo in propertyInfosList) {   //Go through each ChartXAxisAttribute property and save the ChartXAxisAttribute.Priority, ChartXAxisAttribute.DisplayName, and the PropertyInfo itself into our chartInfos collection
+                ChartXAxisAttribute attr = propertyInfo.GetCustomAttributes(typeof(ChartXAxisAttribute), true).Cast<ChartXAxisAttribute>().Single();
+
+                chartInfos.Add(new ChartPropertyInfo(attr.Priority, attr.DisplayName, propertyInfo));
+            }
+
+            chartInfos = chartInfos.OrderBy(attr => attr.Priority).ToList();    //Order by priority so the Insert()s below start at 0
+
+            foreach(ChartPropertyInfo chartInfo in chartInfos) {    //Create static list of the display names and property so values can be pulled from the properties of the passed in classes in other Utility methods
+                _xAxisSiteStatusCategoryProps[chartInfo.DisplayName] = chartInfo.PropInfo;
+            }
+        }
+
+        /// <summary>
+        /// Initializes the X Axis Subject Status Categories list with the priority, display name, and property object for each property in the <see cref="SubjectStats"/> model with the <see cref="ChartXAxisAttribute"/>.
+        /// </summary>
+        private static void InitXAxisSubjectStatusCategory() {
+            _xAxisSubjectStatusCategoryProps = new Dictionary<string, PropertyInfo>();
+
+            IEnumerable<PropertyInfo> propertyInfos = typeof(SubjectStats).GetRuntimeProperties()?.Where(p => p != null && p.GetCustomAttributes(false).Any(a => a?.GetType() == typeof(ChartXAxisAttribute))); //Gets all properties in the SubjectStats class with the ChartXAxisAttribute attribute
+
+            if(propertyInfos == null) {
+                return;
+            }
+
+            List<PropertyInfo> propertyInfosList = propertyInfos.ToList();
+
+            List<ChartPropertyInfo> chartInfos = new List<ChartPropertyInfo>();
+
+            foreach(PropertyInfo propertyInfo in propertyInfosList) {   //Go through each ChartXAxisAttribute property and save the ChartXAxisAttribute.Priority, ChartXAxisAttribute.DisplayName, and the PropertyInfo itself into our chartInfos collection
+                ChartXAxisAttribute attr = propertyInfo.GetCustomAttributes(typeof(ChartXAxisAttribute), true).Cast<ChartXAxisAttribute>().Single();
+
+                chartInfos.Add(new ChartPropertyInfo(attr.Priority, attr.DisplayName, propertyInfo));
+            }
+
+            chartInfos = chartInfos.OrderBy(attr => attr.Priority).ToList();    //Order by priority so the Insert()s below start at 0
+
+            foreach(ChartPropertyInfo chartInfo in chartInfos) {    //Create static list of the display names and property so values can be pulled from the properties of the passed in classes in other Utility methods
+                _xAxisSubjectStatusCategoryProps[chartInfo.DisplayName] = chartInfo.PropInfo;
+            }
+        }
+
+        ///// <summary>
+        ///// Initializes the X Axis Site Visit Status Categories list with the priority, display name, and property object for each property in the <see cref="VisitStats"/> model with the <see cref="ChartXAxisAttribute"/>.
+        ///// </summary>
+        //private static void InitXAxisVisitStatusCategory() {
+        //    _xAxisVisitStatusCategoryProps = new Dictionary<string, PropertyInfo>();
+
+        //    IEnumerable<PropertyInfo> propertyInfos = typeof(VisitStats).GetRuntimeProperties()?.Where(p => p != null && p.GetCustomAttributes(false).Any(a => a?.GetType() == typeof(ChartXAxisAttribute))); //Gets all properties in the VisitStats class with the ChartXAxisAttribute attribute
+
+        //    if(propertyInfos == null) {
+        //        return;
+        //    }
+
+        //    List<PropertyInfo> propertyInfosList = propertyInfos.ToList();
+
+        //    List<ChartPropertyInfo> chartInfos = new List<ChartPropertyInfo>();
+
+        //    foreach(PropertyInfo propertyInfo in propertyInfosList) {   //Go through each ChartXAxisAttribute property and save the ChartXAxisAttribute.Priority, ChartXAxisAttribute.DisplayName, and the PropertyInfo itself into our chartInfos collection
+        //        ChartXAxisAttribute attr = propertyInfo.GetCustomAttributes(typeof(ChartXAxisAttribute), true).Cast<ChartXAxisAttribute>().Single();
+
+        //        chartInfos.Add(new ChartPropertyInfo(attr.Priority, attr.DisplayName, propertyInfo));
+        //    }
+
+        //    chartInfos = chartInfos.OrderBy(attr => attr.Priority).ToList();    //Order by priority so the Insert()s below start at 0
+
+        //    foreach(ChartPropertyInfo chartInfo in chartInfos) {    //Create static list of the display names and property so values can be pulled from the properties of the passed in classes in other Utility methods
+        //        _xAxisVisitStatusCategoryProps[chartInfo.DisplayName] = chartInfo.PropInfo;
+        //    }
+        //}
+
+        private class ChartPropertyInfo {
+
+            public int Priority { get; set; }
+
+            public string DisplayName { get; set; }
+
+            public PropertyInfo PropInfo { get; set; }
+
+            public ChartPropertyInfo(int priority, string displayName, PropertyInfo propInfo) {
+                Priority    = priority;
+                DisplayName = displayName;
+                PropInfo    = propInfo;
+            }
         }
     }
 }

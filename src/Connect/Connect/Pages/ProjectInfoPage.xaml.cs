@@ -4,22 +4,63 @@ using Connect.Helpers;
 using Xamarin.Forms;
 using Connect.ViewModels;
 using Connect.Views;
+using Rg.Plugins.Popup.Extensions;
 
 namespace Connect.Pages {
 
     public partial class ProjectInfoPage : ContentPage {
 
+        private bool _isCommentsOpen;
+
         private readonly ProjectInfoViewModel _viewModel;
+
+        private readonly ProjectCommentsPopup _commentsPopup;
 
         public ProjectInfoPage() {
 
             BindingContext = _viewModel = new ProjectInfoViewModel(App.SelectedProject);
 
             InitializeComponent();
+
+            _commentsPopup = new ProjectCommentsPopup();
+
+            #region Gesture Recognizers
+
+            ProjectCommentBackgroundBoxView.GestureRecognizers.Add(new TapGestureRecognizer {
+                Command = new Command(async () => {
+                    ContactInfoBackgroundBoxView.BackgroundColor    = Color.Default;
+                    ProjectCommentBackgroundBoxView.BackgroundColor = Utility.GetResource<Color>("OrangeYellow");
+
+                    if(_isCommentsOpen) {
+                        return;
+                    }
+
+                    _isCommentsOpen = true;
+
+                    await Navigation.PushPopupAsync(_commentsPopup);    //TODO: Set project comment data
+                })
+            });
+
+            ContactInfoBackgroundBoxView.GestureRecognizers.Add(new TapGestureRecognizer {
+                Command = new Command(() => {
+                    ProjectCommentBackgroundBoxView.BackgroundColor = Color.Default;
+                    ContactInfoBackgroundBoxView.BackgroundColor    = Utility.GetResource<Color>("OrangeYellow");
+                })
+            });
+
+            #endregion
         }
+
+        #region Event Handler Overrides
 
         protected override async void OnAppearing() {
             base.OnAppearing();
+
+            OnSizeChanged(null, null);
+            SizeChanged += OnSizeChanged;
+
+            _commentsPopup.Disappearing -= OnCommentsPopupDisappearing;
+            _commentsPopup.Disappearing += OnCommentsPopupDisappearing;
 
             if(App.LoggedIn) {
                 if(_viewModel.IsInitialized) {
@@ -31,6 +72,29 @@ namespace Connect.Pages {
                 await _viewModel.ExecuteLoadProjectDetailsCommand();
                 await _viewModel.ExecuteLoadMilestonesCommand();
             }
+        }
+
+        private void OnSizeChanged(object sender, EventArgs eventArgs) {
+            double width  = (Width  - Width  * 0.7) / 2;
+            double height = (Height - Height * 0.7) / 2;
+
+            _commentsPopup.Padding = new Thickness(width, height);
+        }
+
+        protected override void OnDisappearing() {
+            base.OnDisappearing();
+
+            SizeChanged -= OnSizeChanged;
+
+            _commentsPopup.Disappearing -= OnCommentsPopupDisappearing;
+        }
+
+        #endregion
+
+        private void OnCommentsPopupDisappearing(object sender, EventArgs eventArgs) {
+            _isCommentsOpen = false;
+
+            ProjectCommentBackgroundBoxView.BackgroundColor = Color.Default;
         }
 
         private void OnShowMoreTapped(object sender, EventArgs e) {
@@ -47,24 +111,6 @@ namespace Connect.Pages {
             if(_viewModel.DisplayMilestones != null && _viewModel.DisplayMilestones.Count > 0) {
                 MilestoneListView.ScrollTo(_viewModel.DisplayMilestones.Last(), ScrollToPosition.End, true);
             }
-        }
-
-        private void OnProjectCommentExecuteTapped(object sender, EventArgs e) {
-
-        }
-
-        private void OnProjectCommentAnimateTapped(object sender, EventArgs e) {
-            ContactInfoBackgroundBoxView.BackgroundColor    = Color.Default;
-            ProjectCommentBackgroundBoxView.BackgroundColor = Utility.GetResource<Color>("OrangeYellow");
-        }
-
-        private void OnContactInfoExecuteTapped(object sender, EventArgs e) {
-
-        }
-
-        private void OnContactInfoAnimateTapped(object sender, EventArgs e) {
-            ProjectCommentBackgroundBoxView.BackgroundColor = Color.Default;
-            ContactInfoBackgroundBoxView.BackgroundColor    = Utility.GetResource<Color>("OrangeYellow");
         }
 
         private void OnVarianceFilterExecuteTapped(object sender, EventArgs e) {
