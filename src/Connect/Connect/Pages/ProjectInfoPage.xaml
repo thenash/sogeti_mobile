@@ -130,7 +130,7 @@
                                                 Variance="White">
                         <myViews:VarianceViewCard.GestureRecognizers>
                           <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
-                          <TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>
+                          <!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/> --> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780-->
                         </myViews:VarianceViewCard.GestureRecognizers>
                       </myViews:VarianceViewCard>
                       <myViews:VarianceViewCard IndicatorColor="{StaticResource Red}"
@@ -138,7 +138,7 @@
                                                 Variance="Red">
                         <myViews:VarianceViewCard.GestureRecognizers>
                           <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
-                          <TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>
+                          <!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780-->
                         </myViews:VarianceViewCard.GestureRecognizers>
                       </myViews:VarianceViewCard>
                       <myViews:VarianceViewCard IndicatorColor="{StaticResource Yellow}"
@@ -146,7 +146,7 @@
                                                 Variance="Yellow">
                         <myViews:VarianceViewCard.GestureRecognizers>
                           <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
-                          <TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>
+                          <!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780-->
                         </myViews:VarianceViewCard.GestureRecognizers>
                       </myViews:VarianceViewCard>
                       <myViews:VarianceViewCard IndicatorColor="{StaticResource Green}"
@@ -154,7 +154,7 @@
                                                 Variance="Green">
                         <myViews:VarianceViewCard.GestureRecognizers>
                           <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
-                          <TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>
+                          <!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780-->
                         </myViews:VarianceViewCard.GestureRecognizers>
                       </myViews:VarianceViewCard>
                       <myViews:VarianceViewCard IndicatorColor="{StaticResource Gray}"
@@ -162,7 +162,7 @@
                                                 Variance="Gray">
                         <myViews:VarianceViewCard.GestureRecognizers>
                           <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
-                          <TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>
+                          <!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780-->
                         </myViews:VarianceViewCard.GestureRecognizers>
                       </myViews:VarianceViewCard>
                     </StackLayout>

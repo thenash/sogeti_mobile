@@ -120,18 +120,22 @@ namespace Connect.Pages {
 
             ResetVarianceFilterButtons();
 
-            _viewModel.FilterMilestonesByVariance(card.Variance);
-        }
-
-        private void OnVarianceFilterAnimateTapped(object sender, EventArgs e) {
-            if(!(sender is VarianceViewCard card)) {
-                return;
-            }
-
             Device.BeginInvokeOnMainThread(() => {
                 card.BackgroundColor = Utility.GetResource<Color>("SkyBlue");
             });
+
+            _viewModel.FilterMilestonesByVariance(card.Variance);
         }
+
+        //private void OnVarianceFilterAnimateTapped(object sender, EventArgs e) {
+        //    if(!(sender is VarianceViewCard card)) {
+        //        return;
+        //    }
+
+        //    Device.BeginInvokeOnMainThread(() => {
+        //        card.BackgroundColor = Utility.GetResource<Color>("SkyBlue");
+        //    });
+        //}
 
         private void ResetVarianceFilterButtons() {
 
