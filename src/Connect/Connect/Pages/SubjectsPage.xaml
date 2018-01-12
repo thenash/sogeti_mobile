@@ -107,8 +107,9 @@
                 <telerikChart:NumericalAxis x:Name="SubjectStatusVerticalAxis"
                                             MajorStep="5"
                                             LabelFitMode="MultiLine"
+                                            LabelFontSize="1"
                                             LineColor="Transparent"
-                                            Maximum="24"/>
+                                            Maximum="54"/>
               </telerikChart:RadCartesianChart.VerticalAxis>
 
               <telerikChart:RadCartesianChart.Series>
@@ -332,12 +333,12 @@
 
               <!-- BUG: The first series could be completely covered by the second series if all of the numbers are higher in the second series -->
 
-              <telerikChart:AreaSeries ItemsSource="{Binding PlannedBottomChartSubjectStats}"
+              <telerikChart:AreaSeries ItemsSource="{Binding ActualBottomChartSubjectStats}"
                                        ShowLabels="True"
-                                       Fill="{StaticResource DarkBlue}"
-                                       Stroke="{StaticResource DarkBlue}"
+                                       Fill="{StaticResource Orange}"
+                                       Stroke="{StaticResource Orange}"
                                        StrokeThickness="1"
-                                       DisplayName="Planned to Date"
+                                       DisplayName="Actual to Date"
                                        CombineMode="Stack">
                 <telerikChart:AreaSeries.ValueBinding>
                   <telerikChart:PropertyNameDataPointBinding PropertyName="Value"/>
@@ -347,12 +348,12 @@
                 </telerikChart:AreaSeries.CategoryBinding>
               </telerikChart:AreaSeries>
 
-              <telerikChart:AreaSeries ItemsSource="{Binding ActualBottomChartSubjectStats}"
+              <telerikChart:AreaSeries ItemsSource="{Binding PlannedBottomChartSubjectStats}"
                                        ShowLabels="True"
-                                       Fill="{StaticResource Orange}"
-                                       Stroke="{StaticResource Orange}"
+                                       Fill="{StaticResource DarkBlue}"
+                                       Stroke="{StaticResource DarkBlue}"
                                        StrokeThickness="1"
-                                       DisplayName="Actual to Date"
+                                       DisplayName="Planned to Date"
                                        CombineMode="Stack">
                 <telerikChart:AreaSeries.ValueBinding>
                   <telerikChart:PropertyNameDataPointBinding PropertyName="Value"/>

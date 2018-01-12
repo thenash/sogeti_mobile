@@ -140,7 +140,7 @@ namespace Connect.Pages {
         private void ResetVarianceFilterButtons() {
 
             //_viewModel.BackgroundColorReset = Color.Default;
-            //OnPropertyChanged(nameof(_viewModel.BackgroundColorReset));//BUG: The VarianceViewCard.BackgroundColorReset binding is not working, so using this workaround instead
+            //OnPropertyChanged(nameof(_viewModel.BackgroundColorReset));//BUG: The VarianceViewCard.BackgroundColorReset binding is not working, so using the workaround below instead
 
             MessagingCenter.Send(this, ConstantKeys.ChangeBackground);
         }

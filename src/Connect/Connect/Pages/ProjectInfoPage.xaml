@@ -19,12 +19,143 @@
                  HorizontalOptions="Center"
                  Spacing="10">
       <StackLayout Padding="0"
-                   Spacing="3">
+                   Spacing="0">
+
+        <Grid ColumnSpacing="3"
+              Margin="0,0,0,10">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <myViews:CardCellView Title="Project Code"
+                                Description="{Binding Project.projectId}"
+                                TextAlignment="StartAndExpand"
+                                Grid.Row="0"
+                                Grid.Column="0" />
+          <myViews:CardCellView Title="Customer"
+                                Description="{Binding Project.customerName}"
+                                Grid.Row="0"
+                                Grid.Column="1"/>
+          <myViews:CardCellView Title="Protocol ID"
+                                Description="{Binding Project.protocolId}"
+                                TextAlignment="EndAndExpand"
+                                Grid.Row="0"
+                                Grid.Column="2" />
+        </Grid>
+
+        <Frame Padding="5"
+               BackgroundColor="White"
+               OutlineColor="{StaticResource Gray}"
+               CornerRadius="0"
+               HasShadow="False"
+               Margin="0,0,0,10">
+          <Grid ColumnSpacing="3"
+                RowSpacing="0">
+
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <myViews:CardCellView Title="Protocol Title"
+                                  Description="{Binding ProjectDetails.protocolDesc}"
+                                  TextAlignment="StartAndExpand"
+                                  Grid.Row="0"
+                                  Grid.Column="0" />
+
+            <myViews:CardCellView Title="Therapeautic Area"
+                                  Description="{Binding ProjectDetails.primaryTherapeuticArea}"
+                                  TextAlignment="EndAndExpand"
+                                  Grid.Row="0"
+                                  Grid.Column="1"/>
+
+            <myViews:CardCellView Title="Study Phase"
+                                  Description="{Binding ProjectDetails.phase}"
+                                  TextAlignment="StartAndExpand"
+                                  Grid.Row="1"
+                                  Grid.Column="0"/>
+
+            <myViews:CardCellView Title="Indication"
+                                  Description="{Binding ProjectDetails.primaryIndication}"
+                                  TextAlignment="EndAndExpand"
+                                  Grid.Row="1"
+                                  Grid.Column="1"/>
+          </Grid>
+        </Frame>
+
+        <Frame CornerRadius="0"
+               Padding="0,0,0,5"
+               HasShadow="False"
+               BackgroundColor="White"
+               OutlineColor="{StaticResource Gray}">
+          <StackLayout Padding="0"
+                       Spacing="3">
+
+            <Label Text="Project Milestones"
+                   HorizontalTextAlignment="Center"
+                   FontAttributes="Bold"/>
+            <Label Text="Display by Variance:"
+                   HorizontalTextAlignment="Center"
+                   FontSize="Small"/>
+
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="Center">
+              <myViews:VarianceViewCard IndicatorColor="White"
+                                        Description="ALL"
+                                        BackgroundColor="{StaticResource SkyBlue}"
+                                        Variance="White">
+                <myViews:VarianceViewCard.GestureRecognizers>
+                  <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
+                  <!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/> --> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780-->
+                </myViews:VarianceViewCard.GestureRecognizers>
+              </myViews:VarianceViewCard>
+              <myViews:VarianceViewCard IndicatorColor="{StaticResource Red}"
+                                        Description="&#x2265; 15"
+                                        Variance="Red">
+                <myViews:VarianceViewCard.GestureRecognizers>
+                  <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
+                  <!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780-->
+                </myViews:VarianceViewCard.GestureRecognizers>
+              </myViews:VarianceViewCard>
+              <myViews:VarianceViewCard IndicatorColor="{StaticResource Yellow}"
+                                        Description="1 &#x2264; V &#x2265; 14"
+                                        Variance="Yellow">
+                <myViews:VarianceViewCard.GestureRecognizers>
+                  <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
+                  <!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780-->
+                </myViews:VarianceViewCard.GestureRecognizers>
+              </myViews:VarianceViewCard>
+              <myViews:VarianceViewCard IndicatorColor="{StaticResource Green}"
+                                        Description="&#x2264; 0"
+                                        Variance="Green">
+                <myViews:VarianceViewCard.GestureRecognizers>
+                  <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
+                  <!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780-->
+                </myViews:VarianceViewCard.GestureRecognizers>
+              </myViews:VarianceViewCard>
+              <myViews:VarianceViewCard IndicatorColor="{StaticResource Gray}"
+                                        Description="Missing Date"
+                                        Variance="Gray">
+                <myViews:VarianceViewCard.GestureRecognizers>
+                  <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
+                  <!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780-->
+                </myViews:VarianceViewCard.GestureRecognizers>
+              </myViews:VarianceViewCard>
+            </StackLayout>
+          </StackLayout>
+        </Frame>
 
         <ListView x:Name="MilestoneListView"
                   SeparatorColor="{StaticResource DarkGray}"
                   BackgroundColor="Transparent"
-                  Header="{Binding .}"
                   Footer="{Binding .}"
                   HasUnevenRows="True"
                   ItemsSource="{Binding DisplayMilestones}">
@@ -36,7 +167,7 @@
                   Value="Default"/>
             </OnPlatform>
           </ListView.SeparatorVisibility>
-          <ListView.HeaderTemplate>
+          <!--<ListView.HeaderTemplate>
             <DataTemplate>
               <StackLayout>
                 <Grid ColumnSpacing="3">
@@ -130,7 +261,7 @@
                                                 Variance="White">
                         <myViews:VarianceViewCard.GestureRecognizers>
                           <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
-                          <!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/> --> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780-->
+                          --><!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/> --> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780--><!--
                         </myViews:VarianceViewCard.GestureRecognizers>
                       </myViews:VarianceViewCard>
                       <myViews:VarianceViewCard IndicatorColor="{StaticResource Red}"
@@ -138,7 +269,7 @@
                                                 Variance="Red">
                         <myViews:VarianceViewCard.GestureRecognizers>
                           <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
-                          <!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780-->
+                          --><!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780--><!--
                         </myViews:VarianceViewCard.GestureRecognizers>
                       </myViews:VarianceViewCard>
                       <myViews:VarianceViewCard IndicatorColor="{StaticResource Yellow}"
@@ -146,7 +277,7 @@
                                                 Variance="Yellow">
                         <myViews:VarianceViewCard.GestureRecognizers>
                           <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
-                          <!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780-->
+                          --><!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780--><!--
                         </myViews:VarianceViewCard.GestureRecognizers>
                       </myViews:VarianceViewCard>
                       <myViews:VarianceViewCard IndicatorColor="{StaticResource Green}"
@@ -154,7 +285,7 @@
                                                 Variance="Green">
                         <myViews:VarianceViewCard.GestureRecognizers>
                           <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
-                          <!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780-->
+                          --><!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780--><!--
                         </myViews:VarianceViewCard.GestureRecognizers>
                       </myViews:VarianceViewCard>
                       <myViews:VarianceViewCard IndicatorColor="{StaticResource Gray}"
@@ -162,7 +293,7 @@
                                                 Variance="Gray">
                         <myViews:VarianceViewCard.GestureRecognizers>
                           <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
-                          <!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780-->
+                          --><!--<TapGestureRecognizer Tapped="OnVarianceFilterAnimateTapped"/>--> <!--BUG: With XF 2.3.4, iOS only recognizes the last tap gesture: https://bugzilla.xamarin.com/show_bug.cgi?id=36780--><!--
                         </myViews:VarianceViewCard.GestureRecognizers>
                       </myViews:VarianceViewCard>
                     </StackLayout>
@@ -170,7 +301,7 @@
                 </Frame>
               </StackLayout>
             </DataTemplate>
-          </ListView.HeaderTemplate>
+          </ListView.HeaderTemplate>-->
           <ListView.ItemTemplate>
             <DataTemplate>
               <myViews:MilestoneCellView ActualDate="{Binding actualDateTime, StringFormat='{0:ddMMMyyyy}'}"

@@ -63,16 +63,16 @@ namespace Connect.Pages {
 
         private void OnSizeChanged(object sender, EventArgs eventArgs) {
 
-            if(App.IsAndroid) { //BUG: On Android, the chart height is not being calculated correctly
+            //if(App.IsAndroid) { //BUG: On Android, the chart height is not being calculated correctly
 
-                if(TopChart.Height < 250) {
-                    TopChart.HeightRequest = 250;
+                if(TopChart.Height < 225) {
+                    TopChart.HeightRequest = 225;
                 }
 
-                if(BottomChart.Height < 250) {
-                    BottomChart.HeightRequest = 250;
+                if(BottomChart.Height < 225) {
+                    BottomChart.HeightRequest = 225;
                 }
-            }
+            //}
         }
 
         private void OnGridViewTapped(object sender, EventArgs e) {
@@ -133,6 +133,7 @@ namespace Connect.Pages {
             double size = Device.GetNamedSize(NamedSize.Micro, typeof(Label));
             const double margin = 3;
 
+            Color black     = Color.Black;
             Color darkGray  = Utility.GetResource<Color>("DarkGray");
             Color lightGray = Utility.GetResource<Color>("LightGray");
 
@@ -142,7 +143,7 @@ namespace Connect.Pages {
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Status",
-                TextColor             = darkGray,
+                TextColor             = black,
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 0, 0);
@@ -155,7 +156,7 @@ namespace Connect.Pages {
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Planned to Date",
-                TextColor             = darkGray,
+                TextColor             = black,
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 2, 0);
@@ -168,7 +169,7 @@ namespace Connect.Pages {
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Actual to Date",
-                TextColor             = darkGray,
+                TextColor             = black,
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 4, 0);
@@ -181,7 +182,7 @@ namespace Connect.Pages {
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Total Contracted",
-                TextColor             = darkGray,
+                TextColor             = black,
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 6, 0);
@@ -193,8 +194,8 @@ namespace Connect.Pages {
 
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
-                Text                  = "MonthlyRate",
-                TextColor             = darkGray,
+                Text                  = "Monthly Rate",
+                TextColor             = black,
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 8, 0);
@@ -202,7 +203,7 @@ namespace Connect.Pages {
             BottomGrid.Children.Add(new BoxView {
                 Style           = horizontalSeparatorStyle,
                 BackgroundColor = darkGray
-            }, 0, 8, 1, 2);
+            }, 0, 9, 1, 2);
 
             int rowSeparatorCount = 0;
 
@@ -230,7 +231,7 @@ namespace Connect.Pages {
                     BottomGrid.Children.Add(new BoxView {
                         Style           = horizontalSeparatorStyle,
                         BackgroundColor = darkGray
-                    }, 0, 8, separatorRow + 1, separatorRow + 2);
+                    }, 0, 9, separatorRow + 1, separatorRow + 2);
 
                     rowSeparatorCount++;
                 }
@@ -284,6 +285,11 @@ namespace Connect.Pages {
                     VerticalTextAlignment   = TextAlignment.Center
                 }, 6, separatorRow);
 
+                BottomGrid.Children.Add(new BoxView {
+                    Style           = vertSeparatorStyle,
+                    BackgroundColor = darkGray
+                }, 7, separatorRow);
+
                 #endregion
 
                 #region Monthly Rate Column
@@ -295,7 +301,7 @@ namespace Connect.Pages {
                     BackgroundColor         = backgroundColor,
                     HorizontalTextAlignment = TextAlignment.Center,
                     VerticalTextAlignment   = TextAlignment.Center
-                }, 7, separatorRow);
+                }, 8, separatorRow);
 
                 #endregion
             }

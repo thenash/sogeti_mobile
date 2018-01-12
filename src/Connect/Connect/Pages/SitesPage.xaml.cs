@@ -133,6 +133,7 @@ namespace Connect.Pages {
             double size = Device.GetNamedSize(NamedSize.Micro, typeof(Label));
             const double margin = 3;
 
+            Color black     = Color.Black;
             Color darkGray  = Utility.GetResource<Color>("DarkGray");
             Color lightGray = Utility.GetResource<Color>("LightGray");
 
@@ -142,7 +143,7 @@ namespace Connect.Pages {
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Status",
-                TextColor             = darkGray,
+                TextColor             = black,
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 0, 0);
@@ -155,7 +156,7 @@ namespace Connect.Pages {
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Planned to Date",
-                TextColor             = darkGray,
+                TextColor             = black,
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 2, 0);
@@ -168,7 +169,7 @@ namespace Connect.Pages {
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Actual to Date",
-                TextColor             = darkGray,
+                TextColor             = black,
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 4, 0);
@@ -181,7 +182,7 @@ namespace Connect.Pages {
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Total Contracted",
-                TextColor             = darkGray,
+                TextColor             = black,
                 FontSize              = size,
                 VerticalTextAlignment = TextAlignment.Center
             }, 6, 0);

@@ -15,10 +15,10 @@
       <Grid RowSpacing="3">
         <Grid.RowDefinitions>
           <RowDefinition Height="10" />
-          <RowDefinition Height="*" />
+          <RowDefinition Height="30" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="50" />
+          <ColumnDefinition Width="63" />
         </Grid.ColumnDefinitions>
 
         <BoxView x:Name="StatusIndicator"

@@ -12,7 +12,7 @@
       <Color x:Key="SkyBlue">#CCEAFD</Color>
       <Color x:Key="LightGray">#EEEEEE</Color>
       <Color x:Key="Gray">#BABABA</Color>
-      <Color x:Key="DarkGray">#878787</Color>
+      <Color x:Key="DarkGray">#6E6E6E</Color>
       <Color x:Key="Green">#139F15</Color>
       <Color x:Key="Red">#FF3B3C</Color>
       <Color x:Key="Yellow">#FCEA0F</Color>
