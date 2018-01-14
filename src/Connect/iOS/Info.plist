@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>INC Connect</string>
+	<string>Syneos Health</string>
 	<key>CFBundleName</key>
-	<string>INC Connect</string>
+	<string>Syneos Health</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.inc-research.inc-connect</string>
+	<string>com.syneos-health.syneos-health</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
