@@ -194,15 +194,16 @@ namespace Connect.Views {
                 await ChevronImage.RotateXTo(180, 400, Easing.CubicInOut);
             } else {
                 Device.BeginInvokeOnMainThread(() => ShowDetailsLabel.Text = ShowMoreDetailLabel);
-                await ChevronImage.RotateXTo(-360, 400, Easing.CubicInOut);
+                await ChevronImage.RotateXTo(0, 400, Easing.CubicInOut);
             }
 
-            Device.BeginInvokeOnMainThread(() => {  //This will be run almost at the same time as ForceUpdateSize() below to minimize sizing irregularities while expanding/contracting the cell
+            Device.BeginInvokeOnMainThread(async () => {  //This will be run almost at the same time as ForceUpdateSize() below to minimize sizing irregularities while expanding/contracting the cell
                 TherapeuticAreaCell.IsVisible = willBeSelected;
                 StudyPhaseCell.IsVisible      = willBeSelected;
                 IndicationsCell.IsVisible     = willBeSelected;
                 ProjDirectorCell.IsVisible    = willBeSelected;
-
+                ForceUpdateSize();
+                await Task.Delay(400);  //BUG: On iOS, when the ListView is not very full, animating the show more button can cause the bottom part of the ViewCell to become unclickable (seemingly being covered by something) until you scroll or expand another ViewCell. Forceing the second size update after the layout cycle is over works around this
                 ForceUpdateSize();
             });
 
