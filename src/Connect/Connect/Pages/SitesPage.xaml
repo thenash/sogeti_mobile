@@ -29,20 +29,17 @@
 
           <myViews:CardCellView Title="Project Code"
                                 LabelFontSize="Micro"
-                                DescriptionFontAttributes="None"
                                 Description="{Binding Project.projectId}"
                                 TextAlignment="StartAndExpand"
                                 Grid.Row="0"
                                 Grid.Column="0"/>
           <myViews:CardCellView Title="Customer"
                                 LabelFontSize="Micro"
-                                DescriptionFontAttributes="None"
                                 Description="{Binding Project.customerName}"
                                 Grid.Row="0"
                                 Grid.Column="1" />
           <myViews:CardCellView Title="Protocol ID"
                                 LabelFontSize="Micro"
-                                DescriptionFontAttributes="None"
                                 Description="{Binding Project.protocolId}"
                                 TextAlignment="EndAndExpand"
                                 Grid.Row="0"
@@ -50,7 +47,7 @@
         </Grid>
 
         <Frame BackgroundColor="White"
-               HasShadow="True"
+               HasShadow="False"
                CornerRadius="1"
                Padding="3">
           <Grid RowSpacing="0">

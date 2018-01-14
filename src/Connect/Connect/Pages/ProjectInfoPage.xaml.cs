@@ -75,8 +75,8 @@ namespace Connect.Pages {
         }
 
         private void OnSizeChanged(object sender, EventArgs eventArgs) {
-            double width  = (Width  - Width  * 0.7) / 2;
-            double height = (Height - Height * 0.7) / 2;
+            double width  = (Width  - Width  * 0.8) / 2;
+            double height = (Height - Height * 0.8) / 2;
 
             _commentsPopup.Padding = new Thickness(width, height);
         }

@@ -145,6 +145,7 @@ namespace Connect.Pages {
                 Text                  = "Status",
                 TextColor             = black,
                 FontSize              = size,
+                FontAttributes        = FontAttributes.Bold,
                 VerticalTextAlignment = TextAlignment.Center
             }, 0, 0);
 
@@ -158,6 +159,7 @@ namespace Connect.Pages {
                 Text                  = "Planned to Date",
                 TextColor             = black,
                 FontSize              = size,
+                FontAttributes        = FontAttributes.Bold,
                 VerticalTextAlignment = TextAlignment.Center
             }, 2, 0);
 
@@ -171,6 +173,7 @@ namespace Connect.Pages {
                 Text                  = "Actual to Date",
                 TextColor             = black,
                 FontSize              = size,
+                FontAttributes        = FontAttributes.Bold,
                 VerticalTextAlignment = TextAlignment.Center
             }, 4, 0);
 
@@ -184,6 +187,7 @@ namespace Connect.Pages {
                 Text                  = "Total Contracted",
                 TextColor             = black,
                 FontSize              = size,
+                FontAttributes        = FontAttributes.Bold,
                 VerticalTextAlignment = TextAlignment.Center
             }, 6, 0);
 

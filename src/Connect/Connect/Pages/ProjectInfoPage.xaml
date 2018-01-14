@@ -99,7 +99,7 @@
           <StackLayout Padding="0"
                        Spacing="3">
 
-            <Label Text="Project Milestones"
+            <Label Text="Milestones"
                    HorizontalTextAlignment="Center"
                    FontAttributes="Bold"/>
             <Label Text="Display by Variance:"

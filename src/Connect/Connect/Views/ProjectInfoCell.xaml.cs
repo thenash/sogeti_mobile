@@ -203,8 +203,11 @@ namespace Connect.Views {
                 IndicationsCell.IsVisible     = willBeSelected;
                 ProjDirectorCell.IsVisible    = willBeSelected;
                 ForceUpdateSize();
-                await Task.Delay(400);  //BUG: On iOS, when the ListView is not very full, animating the show more button can cause the bottom part of the ViewCell to become unclickable (seemingly being covered by something) until you scroll or expand another ViewCell. Forceing the second size update after the layout cycle is over works around this
-                ForceUpdateSize();
+
+                if(!App.IsAndroid) {
+                    await Task.Delay(400);  //BUG: On iOS, when the ListView is not very full, animating the show more button can cause the bottom part of the ViewCell to become unclickable (seemingly being covered by something) until you scroll or expand another ViewCell. Forceing the second size update after the layout cycle is over works around this
+                    ForceUpdateSize();
+                }
             });
 
             _isSelected = willBeSelected;

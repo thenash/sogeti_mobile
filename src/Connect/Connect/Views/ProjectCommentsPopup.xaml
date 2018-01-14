@@ -18,7 +18,7 @@
                 HasBackgroundAnimation="True"/>
   </pages:PopupPage.Animation>
   <pages:PopupPage.Content>
-    <!--<ContentView Padding="5">-->
+    <!--<ScrollView>-->
       <Grid BackgroundColor="White"
             Padding="5">
         <Grid.RowDefinitions>
@@ -39,20 +39,22 @@
                 Grid.Row="0"
                 Grid.Column="0"/>
 
-        <!--<Label x:Name="CommentLabel"
-             HorizontalOptions="Fill"
-             Grid.Row="1"
-             Grid.Column="0"/>-->
+        <ScrollView HorizontalOptions="Fill"
+                    Grid.Row="1"
+                    Grid.Column="0">
+          <Label x:Name="CommentLabel"
+                 HorizontalOptions="Fill"/>
+        </ScrollView>
 
-        <Editor x:Name="CommentEditor"
+        <!--<Editor x:Name="CommentEditor"
                 HorizontalOptions="Fill"
                 IsEnabled="False"
                 VerticalOptions="Start"
                 TextColor="{StaticResource DarkGray}"
                 Grid.Row="1"
-                Grid.Column="0"/>
+                Grid.Column="0"/>-->
 
-        <Button x:Name="CommentEditButton"
+        <!--<Button x:Name="CommentEditButton"
                 Text="Edit"
                 TextColor="Black"
                 FontAttributes="Bold"
@@ -60,9 +62,9 @@
                 HorizontalOptions="End"
                 Clicked="OnCommentEditButtonClicked"
                 Grid.Row="2"
-                Grid.Column="0"/>
+                Grid.Column="0"/>-->
       </Grid>
-    <!--</ContentView>-->
+    <!--</ScrollView>-->
   </pages:PopupPage.Content>
 </pages:PopupPage>
 
