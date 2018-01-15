@@ -29,20 +29,17 @@
 
           <myViews:CardCellView Title="Project Code"
                                 LabelFontSize="Micro"
-                                DescriptionFontAttributes="None"
                                 Description="{Binding Project.projectId}"
                                 TextAlignment="StartAndExpand"
                                 Grid.Row="0"
                                 Grid.Column="0"/>
           <myViews:CardCellView Title="Customer"
                                 LabelFontSize="Micro"
-                                DescriptionFontAttributes="None"
                                 Description="{Binding Project.customerName}"
                                 Grid.Row="0"
                                 Grid.Column="1" />
           <myViews:CardCellView Title="Protocol ID"
                                 LabelFontSize="Micro"
-                                DescriptionFontAttributes="None"
                                 Description="{Binding Project.protocolId}"
                                 TextAlignment="EndAndExpand"
                                 Grid.Row="0"
@@ -50,7 +47,7 @@
         </Grid>
 
         <Frame BackgroundColor="White"
-               HasShadow="True"
+               HasShadow="False"
                CornerRadius="1"
                Padding="3">
           <Grid RowSpacing="0">
@@ -58,7 +55,6 @@
             <Grid.RowDefinitions>
               <RowDefinition Height="Auto"/>
               <RowDefinition Height="*"/>
-              <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -67,7 +63,7 @@
               <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Label Text="Site Status"
+            <Label Text="Report Completion Compliance"
                    TextColor="Black"
                    FontSize="Small"
                    HorizontalTextAlignment="Center"
@@ -89,7 +85,7 @@
               </telerikChart:RadCartesianChart.Grid>
 
               <telerikChart:RadCartesianChart.HorizontalAxis>
-                <telerikChart:DateTimeContinuousAxis x:Name="SiteStatusHorizontalAxis"
+                <telerikChart:DateTimeContinuousAxis x:Name="ReportCompletionHorizontalAxis"
                                                      LabelFormat="MMM-yy"
                                                      MajorStep="2"
                                                      MajorStepUnit="Month"
@@ -104,98 +100,29 @@
                 </telerikChart:DateTimeContinuousAxis>
               </telerikChart:RadCartesianChart.HorizontalAxis>
               <telerikChart:RadCartesianChart.VerticalAxis>
-                <telerikChart:NumericalAxis x:Name="SiteStatusVerticalAxis"
-                                            MajorStep="5"
+                <telerikChart:NumericalAxis x:Name="ReportCompletionVerticalAxis"
+                                            MajorStep="0.2"
                                             LabelFitMode="MultiLine"
+                                            LabelFontSize="1"
                                             LineColor="Transparent"
-                                            Maximum="24"/>
+                                            Minimum="0"
+                                            Maximum="1.1"
+                                            LabelFormat="P0"/>
               </telerikChart:RadCartesianChart.VerticalAxis>
 
               <telerikChart:RadCartesianChart.Series>
-                <telerikChart:LineSeries ItemsSource="{Binding PlannedSiteStats}"
+                <telerikChart:LineSeries ItemsSource="{Binding CompletionCompliance}"
                                          Stroke="{StaticResource DarkBlue}"
-                                         StrokeThickness="2"
-                                         DisplayName="Planned">
+                                         StrokeThickness="2">
                   <telerikChart:LineSeries.ValueBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="pssv"/>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="CompliancePercent"/>
                   </telerikChart:LineSeries.ValueBinding>
                   <telerikChart:LineSeries.CategoryBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
-                  </telerikChart:LineSeries.CategoryBinding>
-                </telerikChart:LineSeries>
-
-                <telerikChart:LineSeries ItemsSource="{Binding ActualSiteStats}"
-                                         Stroke="{StaticResource Orange}"
-                                         StrokeThickness="2"
-                                         DisplayName="Actual">
-                  <telerikChart:LineSeries.ValueBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="pssv"/>
-                  </telerikChart:LineSeries.ValueBinding>
-                  <telerikChart:LineSeries.CategoryBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
-                  </telerikChart:LineSeries.CategoryBinding>
-                </telerikChart:LineSeries>
-
-                <telerikChart:LineSeries ItemsSource="{Binding TotalSiteStats}"
-                                         Stroke="{StaticResource DarkGray}"
-                                         StrokeThickness="2"
-                                         DisplayName="Total">
-                  <telerikChart:LineSeries.ValueBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="activated"/>
-                  </telerikChart:LineSeries.ValueBinding>
-                  <telerikChart:LineSeries.CategoryBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="EventMonthDateTime"/>
                   </telerikChart:LineSeries.CategoryBinding>
                 </telerikChart:LineSeries>
               </telerikChart:RadCartesianChart.Series>
             </telerikChart:RadCartesianChart>
-
-            <!--<telerikChart:RadLegend LegendProvider="{x:Reference siteStatusChart}"
-                                    LegendItemFontColor="{StaticResource Gray}"
-                                    Orientation="Horizontal"
-                                    HorizontalOptions="CenterAndExpand"
-
-                                    Grid.Row="2"
-                                    Grid.Column="0"/>-->
-
-            <StackLayout Orientation="Horizontal"
-                         HorizontalOptions="Center"
-                         Grid.Row="2"
-                         Grid.Column="0">
-              <BoxView BackgroundColor="{StaticResource DarkBlue}"
-                       WidthRequest="20"
-                       HeightRequest="2"/>
-              <Label Text="Planned"
-                     TextColor="{StaticResource DarkGray}"
-                     FontSize="Small"
-                     VerticalTextAlignment="Center"/>
-            </StackLayout>
-
-            <StackLayout Orientation="Horizontal"
-                         HorizontalOptions="Center"
-                         Grid.Row="2"
-                         Grid.Column="1">
-              <BoxView BackgroundColor="{StaticResource Orange}"
-                       WidthRequest="20"
-                       HeightRequest="2"/>
-              <Label Text="Actual"
-                     TextColor="{StaticResource DarkGray}"
-                     FontSize="Small"
-                     VerticalTextAlignment="Center"/>
-            </StackLayout>
-
-            <StackLayout Orientation="Horizontal"
-                         HorizontalOptions="Center"
-                         Grid.Row="2"
-                         Grid.Column="2">
-              <BoxView BackgroundColor="{StaticResource DarkGray}"
-                       WidthRequest="20"
-                       HeightRequest="2"/>
-              <Label Text="Total"
-                     TextColor="{StaticResource DarkGray}"
-                     FontSize="Small"
-                     VerticalTextAlignment="Center"/>
-            </StackLayout>
           </Grid>
         </Frame>
 
@@ -221,7 +148,7 @@
                        Grid.Row="0"
                        Grid.Column="0"
                        Grid.ColumnSpan="3">
-            <Label Text="Site Status"
+            <Label Text="Site Visit Status"
                    TextColor="Black"
                    FontSize="Small"
                    VerticalTextAlignment="End"
@@ -332,12 +259,12 @@
 
               <!-- BUG: The first series could be completely covered by the second series if all of the numbers are higher in the second series -->
 
-              <telerikChart:AreaSeries ItemsSource="{Binding PlannedBottomChartSiteStats}"
+              <telerikChart:AreaSeries ItemsSource="{Binding ActualBottomChartSubjectStats}"
                                        ShowLabels="True"
-                                       Fill="{StaticResource DarkBlue}"
-                                       Stroke="{StaticResource DarkBlue}"
+                                       Fill="{StaticResource Orange}"
+                                       Stroke="{StaticResource Orange}"
                                        StrokeThickness="1"
-                                       DisplayName="Planned to Date"
+                                       DisplayName="Total Number of Visits"
                                        CombineMode="Stack">
                 <telerikChart:AreaSeries.ValueBinding>
                   <telerikChart:PropertyNameDataPointBinding PropertyName="Value"/>
@@ -347,12 +274,12 @@
                 </telerikChart:AreaSeries.CategoryBinding>
               </telerikChart:AreaSeries>
 
-              <telerikChart:AreaSeries ItemsSource="{Binding ActualBottomChartSiteStats}"
+              <telerikChart:AreaSeries ItemsSource="{Binding PlannedBottomChartSubjectStats}"
                                        ShowLabels="True"
-                                       Fill="{StaticResource Orange}"
-                                       Stroke="{StaticResource Orange}"
+                                       Fill="{StaticResource DarkBlue}"
+                                       Stroke="{StaticResource DarkBlue}"
                                        StrokeThickness="1"
-                                       DisplayName="Actual to Date"
+                                       DisplayName="Actual Number of Sites"
                                        CombineMode="Stack">
                 <telerikChart:AreaSeries.ValueBinding>
                   <telerikChart:PropertyNameDataPointBinding PropertyName="Value"/>
@@ -382,6 +309,8 @@
               <ColumnDefinition Width="*"/>
               <ColumnDefinition Width="1"/>
               <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="1"/>
+              <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
           </Grid>
@@ -394,7 +323,7 @@
             <BoxView BackgroundColor="{StaticResource DarkBlue}"
                      WidthRequest="20"
                      HeightRequest="2"/>
-            <Label Text="Planned"
+            <Label Text="Actual Number of Sites"
                    TextColor="{StaticResource DarkGray}"
                    FontSize="Small"
                    VerticalTextAlignment="Center"/>
@@ -408,7 +337,7 @@
             <BoxView BackgroundColor="{StaticResource Orange}"
                      WidthRequest="20"
                      HeightRequest="2"/>
-            <Label Text="Actual"
+            <Label Text="Total Number of Visits"
                    TextColor="{StaticResource DarkGray}"
                    FontSize="Small"
                    VerticalTextAlignment="Center"/>

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Connect.Models {
 
-    public class VisitDetails {
+    public class SubjectVisits {
 
         [JsonProperty("siteId")]
         public string SiteId {
@@ -83,6 +83,6 @@ namespace Connect.Models {
             set;
         }
 
-        public VisitDetails() { }
+        public SubjectVisits() { }
     }
 }

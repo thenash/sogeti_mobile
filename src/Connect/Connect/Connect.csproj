@@ -75,6 +75,8 @@
     <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Interfaces\INavigationService.cs" />
     <Compile Include="Models\GraphCategory.cs" />
+    <Compile Include="Models\ReportCompliance.cs" />
+    <Compile Include="Models\SubjectVisits.cs" />
     <Compile Include="Pages\MonitoringPage.xaml.cs">
       <DependentUpon>MonitoringPage.xaml</DependentUpon>
     </Compile>

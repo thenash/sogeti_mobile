@@ -28,8 +28,8 @@ namespace Connect.Pages {
 
             double finalAxisFontSize = App.IsAndroid ? microAmount : microAmount - smallToMicroAmount;
 
-            SiteStatusHorizontalAxis.LabelFontSize = finalAxisFontSize;
-            SiteStatusVerticalAxis.LabelFontSize   = finalAxisFontSize;
+            ReportCompletionHorizontalAxis.LabelFontSize = finalAxisFontSize;
+            ReportCompletionVerticalAxis.LabelFontSize   = finalAxisFontSize;
 
             if(!App.IsAndroid && finalAxisFontSize > 9.8 && finalAxisFontSize <= 11) {    //BUG: Telerik Charts will not appear to overlap properly if the LabelFontSize is between these values, they have been notified about the issue
                 finalAxisFontSize = 9.8;
@@ -63,16 +63,16 @@ namespace Connect.Pages {
 
         private void OnSizeChanged(object sender, EventArgs eventArgs) {
 
-            if(App.IsAndroid) { //BUG: On Android, the chart height is not being calculated correctly
+            //if(App.IsAndroid) { //BUG: On Android, the chart height is not being calculated correctly
 
-                if(TopChart.Height < 250) {
-                    TopChart.HeightRequest = 250;
+                if(TopChart.Height < 225) {
+                    TopChart.HeightRequest = 225;
                 }
 
-                if(BottomChart.Height < 250) {
-                    BottomChart.HeightRequest = 250;
+                if(BottomChart.Height < 225) {
+                    BottomChart.HeightRequest = 225;
                 }
-            }
+            //}
         }
 
         private void OnGridViewTapped(object sender, EventArgs e) {
@@ -112,7 +112,7 @@ namespace Connect.Pages {
                 }
             };
 
-            int plannedCount = _viewModel.PlannedBottomChartSiteStats.Count;
+            int plannedCount = _viewModel.ActualBottomChartSiteStats.Count;
 
             for(int i = 0; i < plannedCount; i++) {
                 BottomGrid.RowDefinitions.Add(new RowDefinition {
@@ -133,70 +133,94 @@ namespace Connect.Pages {
             double size = Device.GetNamedSize(NamedSize.Micro, typeof(Label));
             const double margin = 3;
 
+            Color black     = Color.Black;
+            Color darkGray  = Utility.GetResource<Color>("DarkGray");
+            Color lightGray = Utility.GetResource<Color>("LightGray");
+
+            Style horizontalSeparatorStyle = Utility.GetResource<Style>("HorizontalSeparatorStyle");
+            Style vertSeparatorStyle       = Utility.GetResource<Style>("VerticalSeparatorStyle");
+
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Status",
-                TextColor             = Utility.GetResource<Color>("DarkGray"),
+                TextColor             = black,
                 FontSize              = size,
+                FontAttributes        = FontAttributes.Bold,
                 VerticalTextAlignment = TextAlignment.Center
             }, 0, 0);
 
             BottomGrid.Children.Add(new BoxView {
-                Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
-                BackgroundColor = Utility.GetResource<Color>("DarkGray")
+                Style           = vertSeparatorStyle,
+                BackgroundColor = darkGray
             }, 1, 0);
 
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Planned to Date",
-                TextColor             = Utility.GetResource<Color>("DarkGray"),
+                TextColor             = black,
                 FontSize              = size,
+                FontAttributes        = FontAttributes.Bold,
                 VerticalTextAlignment = TextAlignment.Center
             }, 2, 0);
 
             BottomGrid.Children.Add(new BoxView {
-                Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
-                BackgroundColor = Utility.GetResource<Color>("DarkGray")
+                Style           = vertSeparatorStyle,
+                BackgroundColor = darkGray
             }, 3, 0);
 
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Actual to Date",
-                TextColor             = Utility.GetResource<Color>("DarkGray"),
+                TextColor             = black,
                 FontSize              = size,
+                FontAttributes        = FontAttributes.Bold,
                 VerticalTextAlignment = TextAlignment.Center
             }, 4, 0);
 
             BottomGrid.Children.Add(new BoxView {
-                Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
-                BackgroundColor = Utility.GetResource<Color>("DarkGray")
+                Style           = vertSeparatorStyle,
+                BackgroundColor = darkGray
             }, 5, 0);
 
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
                 Text                  = "Total Contracted",
-                TextColor             = Utility.GetResource<Color>("DarkGray"),
+                TextColor             = black,
                 FontSize              = size,
+                FontAttributes        = FontAttributes.Bold,
                 VerticalTextAlignment = TextAlignment.Center
             }, 6, 0);
 
             BottomGrid.Children.Add(new BoxView {
-                Style           = Utility.GetResource<Style>("HorizontalSeparatorStyle"),
-                BackgroundColor = Utility.GetResource<Color>("DarkGray")
-            }, 0, 7, 1, 2);
+                Style           = vertSeparatorStyle,
+                BackgroundColor = darkGray
+            }, 7, 0);
+
+            BottomGrid.Children.Add(new Label {
+                Margin                = margin,
+                Text                  = "Monthly Rate",
+                TextColor             = black,
+                FontSize              = size,
+                FontAttributes        = FontAttributes.Bold,
+                VerticalTextAlignment = TextAlignment.Center
+            }, 8, 0);
+
+            BottomGrid.Children.Add(new BoxView {
+                Style           = horizontalSeparatorStyle,
+                BackgroundColor = darkGray
+            }, 0, 9, 1, 2);
 
             int rowSeparatorCount = 0;
 
             for(int index = 0; index < plannedCount; index++) {     //Create headers
                 int separatorRow = index + rowSeparatorCount + 2;   //Add 2 for the header row and the header separator row
 
-                Color backgroundColor = index % 2 == 0 ? Color.White : Utility.GetResource<Color>("LightGray");
-                Color darkGray        = Utility.GetResource<Color>("DarkGray");
+                Color backgroundColor = index % 2 == 0 ? Color.White : lightGray;
 
                 #region Label Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                  = "  " + _viewModel.PlannedBottomChartSiteStats[index].Group,
+                    Text                  = "  " + _viewModel.ActualBottomChartSiteStats[index].Group,
                     TextColor             = darkGray,
                     FontSize              = size,
                     BackgroundColor       = backgroundColor,
@@ -204,25 +228,25 @@ namespace Connect.Pages {
                 }, 0, separatorRow);
 
                 BottomGrid.Children.Add(new BoxView {
-                    Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
+                    Style           = vertSeparatorStyle,
                     BackgroundColor = darkGray
                 }, 1, separatorRow);
 
                 if(index != plannedCount - 1) {
                     BottomGrid.Children.Add(new BoxView {
-                        Style           = Utility.GetResource<Style>("HorizontalSeparatorStyle"),
+                        Style           = horizontalSeparatorStyle,
                         BackgroundColor = darkGray
-                    }, 0, 7, separatorRow + 1, separatorRow + 2);
+                    }, 0, 9, separatorRow + 1, separatorRow + 2);
 
                     rowSeparatorCount++;
                 }
 
                 #endregion
 
-                #region Planned To Date Column
+                #region Actual To Date Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                    = _viewModel.PlannedBottomChartSiteStats[index].Value.ToString(),
+                    Text                    = _viewModel.ActualBottomChartSiteStats[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
                     BackgroundColor         = backgroundColor,
@@ -231,27 +255,9 @@ namespace Connect.Pages {
                 }, 2, separatorRow);
 
                 BottomGrid.Children.Add(new BoxView {
-                    Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
+                    Style           = vertSeparatorStyle,
                     BackgroundColor = darkGray
                 }, 3, separatorRow);
-
-                #endregion
-
-                #region Actual To Date Column
-
-                BottomGrid.Children.Add(new Label {
-                    Text                    = _viewModel.PlannedBottomChartSiteStats[index].Value.ToString(),
-                    TextColor               = darkGray,
-                    FontSize                = size,
-                    BackgroundColor         = backgroundColor,
-                    HorizontalTextAlignment = TextAlignment.Center,
-                    VerticalTextAlignment   = TextAlignment.Center
-                }, 4, separatorRow);
-
-                BottomGrid.Children.Add(new BoxView {
-                    Style           = Utility.GetResource<Style>("VerticalSeparatorStyle"),
-                    BackgroundColor = darkGray
-                }, 5, separatorRow);
 
                 #endregion
 
@@ -264,7 +270,12 @@ namespace Connect.Pages {
                     BackgroundColor         = backgroundColor,
                     HorizontalTextAlignment = TextAlignment.Center,
                     VerticalTextAlignment   = TextAlignment.Center
-                }, 6, separatorRow);
+                }, 4, separatorRow);
+
+                BottomGrid.Children.Add(new BoxView {
+                    Style           = vertSeparatorStyle,
+                    BackgroundColor = darkGray
+                }, 5, separatorRow);
 
                 #endregion
             }

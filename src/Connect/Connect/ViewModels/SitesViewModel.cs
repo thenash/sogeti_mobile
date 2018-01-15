@@ -88,6 +88,7 @@ namespace Connect.ViewModels {
                 if(_totalSiteStats != value) {
                     _totalSiteStats = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(TotalBottomChartSiteStats));
                 }
             }
         }

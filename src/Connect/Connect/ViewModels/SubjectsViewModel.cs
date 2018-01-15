@@ -93,6 +93,7 @@ namespace Connect.ViewModels {
                 if(_totalSubjectStats != value) {
                     _totalSubjectStats = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(TotalBottomChartSubjectStats));
                 }
             }
         }

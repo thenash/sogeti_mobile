@@ -1,47 +1,45 @@
-﻿using System;
-namespace Connect.Models
-{
-    public class VisitMetrics
-    {
-		public string projectId
-        {
+﻿using Newtonsoft.Json;
+
+namespace Connect.Models {
+
+    public class VisitMetrics {
+
+        [JsonProperty("projectId")]
+        public string ProjectId {
             get;
             set;
         }
 
-        public int numSites
-        {
+        [JsonProperty("numSites")]
+        public int NumSites {
             get;
             set;
         }
 
-        public int numVisits
-        {
+        [JsonProperty("numVisits")]
+        public int NumVisits {
             get;
             set;
         }
 
-        public int reportsCompleted
-        {
+        [JsonProperty("reportsCompleted")]
+        public int ReportsCompleted {
             get;
             set;
         }
 
-        public string compliance
-        {
+        [JsonProperty("compliance")]
+        public string Compliance {
             get;
             set;
         }
 
-        public string eventType
-        {
+        [JsonProperty("eventType")]
+        public string EventType {
             get;
             set;
         }
 
-
-		public VisitMetrics()
-        {
-        }
+        public VisitMetrics() { }
     }
 }
