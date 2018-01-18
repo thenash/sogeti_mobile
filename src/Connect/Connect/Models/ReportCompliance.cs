@@ -21,15 +21,7 @@ namespace Connect.Models {
         /// <summary>
         /// <see cref="Compliance"/> is being returned as a <c>string</c> so, for now, it must be parsed.
         /// </summary>
-        public double CompliancePercent {
-            get {
-                double val = string.IsNullOrEmpty(Compliance) || !double.TryParse(Compliance, out double number) ? 0 : number / 100;
-
-                System.Diagnostics.Debug.WriteLine("\nVal: " + val);
-
-                return val;
-            }
-        }
+        public double CompliancePercent => string.IsNullOrEmpty(Compliance) || !double.TryParse(Compliance, out double number) ? 0 : number / 100;
 
         /// <summary>
         /// <see cref="EventMonth"/> is being returned as a <c>string</c> so, for now, it must be parsed.
