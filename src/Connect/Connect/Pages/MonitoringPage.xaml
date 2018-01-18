@@ -259,7 +259,7 @@
 
               <!-- BUG: The first series could be completely covered by the second series if all of the numbers are higher in the second series -->
 
-              <telerikChart:AreaSeries ItemsSource="{Binding ActualBottomChartSubjectStats}"
+              <telerikChart:AreaSeries ItemsSource="{Binding ActualBottomChartVisitMetrics}"
                                        ShowLabels="True"
                                        Fill="{StaticResource Orange}"
                                        Stroke="{StaticResource Orange}"
@@ -274,7 +274,7 @@
                 </telerikChart:AreaSeries.CategoryBinding>
               </telerikChart:AreaSeries>
 
-              <telerikChart:AreaSeries ItemsSource="{Binding PlannedBottomChartSubjectStats}"
+              <telerikChart:AreaSeries ItemsSource="{Binding TotalBottomChartVisitMetrics}"
                                        ShowLabels="True"
                                        Fill="{StaticResource DarkBlue}"
                                        Stroke="{StaticResource DarkBlue}"

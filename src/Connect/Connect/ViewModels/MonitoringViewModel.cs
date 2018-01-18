@@ -8,12 +8,6 @@ using Connect.Models;
 using Xamarin.Forms;
 using Connect.Helpers;
 
-#if !DEBUG
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Net.Http;
-#endif
-
 namespace Connect.ViewModels {
 
     public class MonitoringViewModel : BaseViewModel {
@@ -41,12 +35,12 @@ namespace Connect.ViewModels {
         /// <summary>
         /// gets or sets the actual bottom chart site stats.
         /// </summary>
-        public ObservableCollection<GraphCategory> ActualBottomChartSiteStats => new ObservableCollection<GraphCategory>(Utility.GetSiteStatusChartCategories(ActualSiteStats));
+        public ObservableCollection<GraphCategory> ActualBottomChartVisitMetrics => new ObservableCollection<GraphCategory>(Utility.GetVisitMetricNumberOfSites(VisitMetrics));
 
         /// <summary>
         /// gets or sets the total bottom chart site stats.
         /// </summary>
-        public ObservableCollection<GraphCategory> TotalBottomChartSiteStats => new ObservableCollection<GraphCategory>(Utility.GetSiteStatusChartCategories(TotalSiteStats));
+        public ObservableCollection<GraphCategory> TotalBottomChartVisitMetrics => new ObservableCollection<GraphCategory>(Utility.GetVisitMetricNumberOfVisits(VisitMetrics));
 
   //      private ObservableCollection<SiteStats> _plannedSiteStats;
 
@@ -79,48 +73,16 @@ namespace Connect.ViewModels {
             }
         }
 
-        private ObservableCollection<SiteStats> _actualSiteStats;
-
-        /// <summary>
-        /// gets or sets the report completion compliance.
-        /// </summary>
-        public ObservableCollection<SiteStats> ActualSiteStats {
-            get => _actualSiteStats ?? (_actualSiteStats = new ObservableCollection<SiteStats>());
-            set {
-                if(_actualSiteStats != value) {
-                    _actualSiteStats = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(ActualBottomChartSiteStats));
-                }
-            }
-        }
-
-        private ObservableCollection<SiteStats> _totalSiteStats;
-
-        /// <summary>
-        /// gets or sets the planned site stats.
-        /// </summary>
-        public ObservableCollection<SiteStats> TotalSiteStats {
-            get => _totalSiteStats ?? (_totalSiteStats = new ObservableCollection<SiteStats>());
-            set {
-                if(_totalSiteStats != value) {
-                    _totalSiteStats = value;
-                    OnPropertyChanged();
-                    OnPropertyChanged(nameof(TotalBottomChartSiteStats));
-                }
-            }
-        }
-
-        private ObservableCollection<SiteTrends> _siteTrends;
+        private ObservableCollection<VisitMetrics> _visitMetrics;
 
         /// <summary>
         /// gets or sets the feed items
         /// </summary>
-        public ObservableCollection<SiteTrends> SiteTrends {
-            get => _siteTrends ?? (_siteTrends = new ObservableCollection<SiteTrends>());
+        public ObservableCollection<VisitMetrics> VisitMetrics {
+            get => _visitMetrics ?? (_visitMetrics = new ObservableCollection<VisitMetrics>());
             set {
-                if(_siteTrends != value) {
-                    _siteTrends = value;
+                if(_visitMetrics != value) {
+                    _visitMetrics = value;
                     OnPropertyChanged();
                 }
             }
@@ -153,17 +115,16 @@ namespace Connect.ViewModels {
 
             _projectId = projectId;
 
-            //PlannedSiteStats = new ObservableCollection<SiteStats>();
             CompletionCompliance = new ObservableCollection<ReportCompliance>();
 
-            TotalSiteStats = new ObservableCollection<SiteStats>();
-            SiteTrends     = new ObservableCollection<SiteTrends>();
-            VisitDetails   = new ObservableCollection<VisitDetails>();
+            VisitMetrics = new ObservableCollection<VisitMetrics>();
+            VisitDetails = new ObservableCollection<VisitDetails>();
         }
 
         public async Task RefreshData(string projectId) {
             await ExecuteLoadProjectCommand(projectId);
             await ExecuteLoadReportCompletionsCommand(projectId);
+            await ExecuteLoadVisitMetricsCommand(projectId);
         }
 
         private Command _oadReportCompletionsCommand;
@@ -216,76 +177,24 @@ namespace Connect.ViewModels {
         }
 
 
-        private Command _loadSiteVisitsCommand;
+        private Command _loadVisitMetricsCommand;
         /// <summary>
-        /// Command to load/refresh site visit collection.
+        /// Command to load/refresh visit metrics collection.
         /// </summary>
-        public Command LoadSiteVisitsCommand => _loadSiteVisitsCommand ?? (_loadSiteVisitsCommand = new Command(async () => await ExecuteLoadSiteVisitsCommand(_projectId)));
+        public Command LoadVisitMetricsCommand => _loadVisitMetricsCommand ?? (_loadVisitMetricsCommand = new Command(async () => await ExecuteLoadVisitMetricsCommand(_projectId)));
 
-        private async Task ExecuteLoadSiteVisitsCommand(string projectId) {
+        private async Task ExecuteLoadVisitMetricsCommand(string projectId) {
             if(IsBusy) {
                 return;
             }
 
             IsBusy = true;
 
-#if DEBUG
-            int year = await Task.FromResult(2016); //Getting rid of compiler warnings
-
-            SiteTrends = new ObservableCollection<SiteTrends> {
-                new SiteTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSitesColumn",
-                    high      = "0",
-                    low       = "0",
-                    month     = Utility.GetDateString(new DateTime(year, 4, 1)),
-                }, new SiteTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSitesColumn",
-                    high      = "1",
-                    low       = "1",
-                    month     = Utility.GetDateString(new DateTime(year, 5, 1)),
-                }, new SiteTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSitesColumn",
-                    high      = "1",
-                    low       = "1",
-                    month     = Utility.GetDateString(new DateTime(year, 6, 1)),
-                }, new SiteTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSitesColumn",
-                    high      = "2",
-                    low       = "2",
-                    month     = Utility.GetDateString(new DateTime(year, 7, 1)),
-                }, new SiteTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSitesColumn",
-                    high      = "3",
-                    low       = "3",
-                    month     = Utility.GetDateString(new DateTime(year, 8, 1)),
-                }, new SiteTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSitesColumn",
-                    high      = "4",
-                    low       = "4",
-                    month     = Utility.GetDateString(new DateTime(year, 9, 1))
-                }
-            };
-#else
+//#if DEBUG
+//            VisitMetrics = new ObservableCollection<VisitMetrics>(Newtonsoft.Json.JsonConvert.DeserializeObject<List<VisitMetrics>>("{\"data\":{\"project\":{\"visitmetrics\":[{\"projectId\":\"Project 1\",\"numSites\":\"16\",\"numVisits\":\"16\",\"reportsCompleted\":\"0\",\"compliance\":\"\",\"eventType\":\"Enrolling\"},{\"projectId\":\"Project 1\",\"numSites\":\"1\",\"numVisits\":\"1\",\"reportsCompleted\":\"0\",\"compliance\":\"\",\"eventType\":\"Non Enrolling\"},{\"projectId\":\"Project 1\",\"numSites\":\"25\",\"numVisits\":\"25\",\"reportsCompleted\":\"25\",\"compliance\":\"96\",\"eventType\":\"PSSV\"},{\"projectId\":\"Project 1\",\"numSites\":\"20\",\"numVisits\":\"20\",\"reportsCompleted\":\"0\",\"compliance\":\"\",\"eventType\":\"Activated\"},{\"projectId\":\"Project 1\",\"numSites\":\"16\",\"numVisits\":\"98\",\"reportsCompleted\":\"96\",\"compliance\":\"84\",\"eventType\":\"IMV\"},{\"projectId\":\"Project 1\",\"numSites\":\"2\",\"numVisits\":\"2\",\"reportsCompleted\":\"0\",\"compliance\":\"\",\"eventType\":\"Inactive\"},{\"projectId\":\"Project 1\",\"numSites\":\"3\",\"numVisits\":\"3\",\"reportsCompleted\":\"0\",\"compliance\":\"\",\"eventType\":\"Closed\"},{\"projectId\":\"Project 1\",\"numSites\":\"4\",\"numVisits\":\"4\",\"reportsCompleted\":\"4\",\"compliance\":\"100\",\"eventType\":\"COV\"},{\"projectId\":\"Project 1\",\"numSites\":\"21\",\"numVisits\":\"21\",\"reportsCompleted\":\"0\",\"compliance\":\"\",\"eventType\":\"Selected\"},{\"projectId\":\"Project 1\",\"numSites\":\"20\",\"numVisits\":\"20\",\"reportsCompleted\":\"20\",\"compliance\":\"95\",\"eventType\":\"SIV\"}]},\"summary\":{\"recordCount\":10,\"status\":0,\"statusMessage\":\"SUCCESS\",\"startTime\":\"2018-01-11T23:17:28.239-05:00\",\"endTime\":\"2018-01-11T23:17:28.395-05:00\",\"copyright\":\"Copyright INC Research Inc \\ufffd 2016\",\"disclaimer\":\"Contents of this data are provided for information purposes only. The data represented should not be used to satisfy a GxP regulation or be used in submission to a regulatory agency.\"}}}"));
+//#else
             try {
-                string url = "https://ecs.incresearch.com/ECS/mobile/sitetrends/projectId/" + projectId;
+                string url = "https://ecs.incresearch.com/ECS/mobile/visitmetrics/projectId/" + projectId;
 
                 HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
@@ -295,19 +204,19 @@ namespace Connect.ViewModels {
                 if(response.IsSuccessStatusCode) {
                     string content = await response.Content.ReadAsStringAsync();
 
-                    List<SiteTrends> siteTrends = Utility.DeserializeResponse<List<SiteTrends>>(content, "data/project/siteTrends");
+                    List<VisitMetrics> metrics = Utility.DeserializeResponse<List<VisitMetrics>>(content, "data/project/visitmetrics");
 
-                    SiteTrends.Clear();
+                    VisitMetrics.Clear();
 
-                    foreach(SiteTrends siteTrend in siteTrends) {
-                        SiteTrends.Add(siteTrend);
+                    foreach(VisitMetrics metric in metrics) {
+                        VisitMetrics.Add(metric);
                     }
                 }
             } catch(Exception ex) {
                 ContentPage page = new ContentPage();
-                await page.DisplayAlert("Error", "Unable to load projects.", "OK");
+                await page.DisplayAlert("Error", "Unable to load visit metrics.", "OK");
             }
-#endif
+//#endif
 
             IsBusy = false;
         }
@@ -715,8 +624,9 @@ namespace Connect.ViewModels {
 //        }
 
         private Command _loadProjectCommand;
+
         /// <summary>
-        /// Command to load/refresh artitists
+        /// Command to load/refresh project info.
         /// </summary>
         public Command LoadProjectCommand => _loadProjectCommand ?? (_loadProjectCommand = new Command(async () => await ExecuteLoadProjectCommand(_projectId)));
 

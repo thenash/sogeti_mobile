@@ -112,7 +112,7 @@ namespace Connect.Pages {
                 }
             };
 
-            int plannedCount = _viewModel.ActualBottomChartSiteStats.Count;
+            int plannedCount = _viewModel.ActualBottomChartVisitMetrics.Count;
 
             for(int i = 0; i < plannedCount; i++) {
                 BottomGrid.RowDefinitions.Add(new RowDefinition {
@@ -220,7 +220,7 @@ namespace Connect.Pages {
                 #region Label Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                  = "  " + _viewModel.ActualBottomChartSiteStats[index].Group,
+                    Text                  = "  " + _viewModel.ActualBottomChartVisitMetrics[index].Group,
                     TextColor             = darkGray,
                     FontSize              = size,
                     BackgroundColor       = backgroundColor,
@@ -246,7 +246,7 @@ namespace Connect.Pages {
                 #region Actual To Date Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                    = _viewModel.ActualBottomChartSiteStats[index].Value.ToString(),
+                    Text                    = _viewModel.ActualBottomChartVisitMetrics[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
                     BackgroundColor         = backgroundColor,
@@ -264,7 +264,7 @@ namespace Connect.Pages {
                 #region Total Contracted Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                    = _viewModel.TotalBottomChartSiteStats[index].Value.ToString(),
+                    Text                    = _viewModel.TotalBottomChartVisitMetrics[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
                     BackgroundColor         = backgroundColor,

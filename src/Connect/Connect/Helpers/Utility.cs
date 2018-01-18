@@ -66,6 +66,32 @@ namespace Connect.Helpers {
             return categories;
         }
 
+        public static List<GraphCategory> GetVisitMetricNumberOfSites(IList<VisitMetrics> chartData) {
+            List<GraphCategory> categories = new List<GraphCategory>();
+
+            foreach(IGrouping<string, VisitMetrics> prop in chartData.GroupBy(dt => dt.EventType)) {
+                categories.Add(new GraphCategory {
+                    Group = prop.Key,
+                    Value = prop.Sum(data => data.NumSites)
+                });
+            }
+
+            return categories;
+        }
+
+        public static List<GraphCategory> GetVisitMetricNumberOfVisits(IList<VisitMetrics> chartData) {
+            List<GraphCategory> categories = new List<GraphCategory>();
+
+            foreach(IGrouping<string, VisitMetrics> prop in chartData.GroupBy(dt => dt.EventType)) {
+                categories.Add(new GraphCategory {
+                    Group = prop.Key,
+                    Value = prop.Sum(data => data.NumVisits)
+                });
+            }
+
+            return categories;
+        }
+
         //public static List<GraphCategory> GetVisitStatusChartCategories(IList<VisitStats> chartData) {
         //    List<GraphCategory> categories = new List<GraphCategory>();
 
