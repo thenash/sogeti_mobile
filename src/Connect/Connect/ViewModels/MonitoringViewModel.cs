@@ -27,36 +27,50 @@ namespace Connect.ViewModels {
             }
         }
 
-        ///// <summary>
-        ///// gets or sets the planned bottom chart site stats.
-        ///// </summary>
-        //public ObservableCollection<GraphCategory> PlannedBottomChartSiteStats => new ObservableCollection<GraphCategory>(Utility.GetSiteStatusChartCategories(PlannedSiteStats));
+        private ObservableCollection<GraphCategory> _actualBottomChartVisitMetrics;
 
         /// <summary>
-        /// gets or sets the actual bottom chart site stats.
+        /// gets or sets the actual bottom chart visit metrics.
         /// </summary>
-        public ObservableCollection<GraphCategory> ActualBottomChartVisitMetrics => new ObservableCollection<GraphCategory>(Utility.GetVisitMetricNumberOfSites(VisitMetrics));
+        public ObservableCollection<GraphCategory> ActualBottomChartVisitMetrics {
+            get => _actualBottomChartVisitMetrics ?? (_actualBottomChartVisitMetrics = new ObservableCollection<GraphCategory>());
+            set {
+                if(_actualBottomChartVisitMetrics != value) {
+                    _actualBottomChartVisitMetrics = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<GraphCategory> _totalBottomChartVisitMetrics;
 
         /// <summary>
-        /// gets or sets the total bottom chart site stats.
+        /// gets or sets the total bottom chart visit metrics.
         /// </summary>
-        public ObservableCollection<GraphCategory> TotalBottomChartVisitMetrics => new ObservableCollection<GraphCategory>(Utility.GetVisitMetricNumberOfVisits(VisitMetrics));
+        public ObservableCollection<GraphCategory> TotalBottomChartVisitMetrics {
+            get => _totalBottomChartVisitMetrics ?? (_totalBottomChartVisitMetrics = new ObservableCollection<GraphCategory>());
+            set {
+                if(_totalBottomChartVisitMetrics != value) {
+                    _totalBottomChartVisitMetrics = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
-  //      private ObservableCollection<SiteStats> _plannedSiteStats;
+        private ObservableCollection<GraphCategory> _reportsCompletedBottomChartVisitMetrics;
 
-  //      /// <summary>
-	 //   /// gets or sets the planned site stats.
-	 //   /// </summary>
-		//public ObservableCollection<SiteStats> PlannedSiteStats {
-  //          get => _plannedSiteStats ?? (_plannedSiteStats = new ObservableCollection<SiteStats>());
-  //          set {
-  //              if(_plannedSiteStats != value) {
-  //                  _plannedSiteStats = value;
-  //                  OnPropertyChanged();
-  //                  OnPropertyChanged(nameof(PlannedBottomChartSiteStats));
-  //              }
-  //          }
-  //      }
+        /// <summary>
+        /// gets or sets the report completed chart visit metrics.
+        /// </summary>
+        public ObservableCollection<GraphCategory> ReportsCompletedBottomChartVisitMetrics {
+            get => _reportsCompletedBottomChartVisitMetrics ?? (_reportsCompletedBottomChartVisitMetrics = new ObservableCollection<GraphCategory>());
+            set {
+                if(_reportsCompletedBottomChartVisitMetrics != value) {
+                    _reportsCompletedBottomChartVisitMetrics = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private ObservableCollection<ReportCompliance> _completionCompliance;
 
@@ -84,6 +98,8 @@ namespace Connect.ViewModels {
                 if(_visitMetrics != value) {
                     _visitMetrics = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(ActualBottomChartVisitMetrics));
+                    OnPropertyChanged(nameof(TotalBottomChartVisitMetrics));
                 }
             }
         }
@@ -211,6 +227,12 @@ namespace Connect.ViewModels {
                     foreach(VisitMetrics metric in metrics) {
                         VisitMetrics.Add(metric);
                     }
+
+                    if(VisitMetrics.Count > 0) {
+                        ActualBottomChartVisitMetrics           = new ObservableCollection<GraphCategory>(Utility.GetVisitMetricNumberOfSites(VisitMetrics));
+                        TotalBottomChartVisitMetrics            = new ObservableCollection<GraphCategory>(Utility.GetVisitMetricNumberOfVisits(VisitMetrics));
+                        ReportsCompletedBottomChartVisitMetrics = new ObservableCollection<GraphCategory>(Utility.GetVisitMetricReportsCompleted(VisitMetrics));
+                    }
                 }
             } catch(Exception ex) {
                 ContentPage page = new ContentPage();
@@ -220,408 +242,6 @@ namespace Connect.ViewModels {
 
             IsBusy = false;
         }
-
-
-//        private Command _loadSiteStatsCommand;
-
-//        /// <summary>
-//        /// Command to load/refresh artitists
-//        /// </summary>
-//        public Command LoadSiteStatsCommand  => _loadSiteStatsCommand ?? (_loadSiteStatsCommand = new Command(async () => await ExecuteLoadSiteStatsCommand(_projectId)));
-
-//        private async Task ExecuteLoadSiteStatsCommand(string projectId) {
-//            if(IsBusy) {
-//                return;
-//            }
-
-//            IsBusy = true;
-
-//#if DEBUG
-//            await Task.FromResult(0);
-
-//            ActualSiteVisits = new ObservableCollection<SiteStats> {
-//                new SiteStats {
-//                    projectId = projectId,
-//                    activated = 4,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(2),
-//                    isoDate = DateTime.UtcNow.AddMonths(2).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 2,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 2,
-//                    closed = 3,
-//                    enrolling = 16,
-//                    inactive = 2,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(3),
-//                    isoDate = DateTime.UtcNow.AddMonths(3).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 10,
-//                    selected = 1,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 1,
-//                    closed = 10,
-//                    enrolling = 18,
-//                    inactive = 3,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(4),
-//                    isoDate = DateTime.UtcNow.AddMonths(4).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 4,
-//                    pssv = 10,
-//                    selected = 2,
-//                    siv = 1
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 0,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(5),
-//                    isoDate = DateTime.UtcNow.AddMonths(5).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 11,
-//                    selected = 3,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 2,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(6),
-//                    isoDate = DateTime.UtcNow.AddMonths(6).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 11,
-//                    selected = 2,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 1,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(7),
-//                    isoDate = DateTime.UtcNow.AddMonths(7).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 12,
-//                    selected = 1,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 3,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(8),
-//                    isoDate = DateTime.UtcNow.AddMonths(8).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 12,
-//                    selected = 2,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 2,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(9),
-//                    isoDate = DateTime.UtcNow.AddMonths(9).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 12,
-//                    selected = 1,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 1,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(10),
-//                    isoDate = DateTime.UtcNow.AddMonths(10).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 12,
-//                    selected = 2,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 0,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(11),
-//                    isoDate = DateTime.UtcNow.AddMonths(11).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 12,
-//                    selected = 1,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 1,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(12),
-//                    isoDate = DateTime.UtcNow.AddMonths(12).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 13,
-//                    selected = 2,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 3,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(13),
-//                    isoDate = DateTime.UtcNow.AddMonths(13).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 20,
-//                    selected = 3,
-//                    siv = 0
-//                }
-//            };
-
-//            TotalSiteStats = new ObservableCollection<SiteStats> {
-//                new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(1),
-//                    isoDate = DateTime.UtcNow.AddMonths(1).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 0,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(2),
-//                    isoDate = DateTime.UtcNow.AddMonths(2).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 0,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 3,
-//                    enrolling = 16,
-//                    inactive = 2,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(3),
-//                    isoDate = DateTime.UtcNow.AddMonths(3).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 21,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 10,
-//                    enrolling = 18,
-//                    inactive = 3,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(4),
-//                    isoDate = DateTime.UtcNow.AddMonths(4).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 4,
-//                    pssv = 5,
-//                    selected = 24,
-//                    siv = 1
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(5),
-//                    isoDate = DateTime.UtcNow.AddMonths(5).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 0,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(6),
-//                    isoDate = DateTime.UtcNow.AddMonths(6).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 0,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(7),
-//                    isoDate = DateTime.UtcNow.AddMonths(7).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 0,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(8),
-//                    isoDate = DateTime.UtcNow.AddMonths(8).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 0,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(9),
-//                    isoDate = DateTime.UtcNow.AddMonths(9).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 0,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(10),
-//                    isoDate = DateTime.UtcNow.AddMonths(10).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 0,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(11),
-//                    isoDate = DateTime.UtcNow.AddMonths(11).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 0,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(12),
-//                    isoDate = DateTime.UtcNow.AddMonths(12).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 0,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(13),
-//                    isoDate = DateTime.UtcNow.AddMonths(13).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 0,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(14),
-//                    isoDate = DateTime.UtcNow.AddMonths(14).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 0,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(15),
-//                    isoDate = DateTime.UtcNow.AddMonths(15).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 0,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(16),
-//                    isoDate = DateTime.UtcNow.AddMonths(16).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 0,
-//                    siv = 0
-//                }, new SiteStats {
-//                    projectId = projectId,
-//                    activated = 20,
-//                    closed = 0,
-//                    enrolling = 0,
-//                    inactive = 0,
-//                    isoDateTime = DateTime.UtcNow.AddMonths(17),
-//                    isoDate = DateTime.UtcNow.AddMonths(17).ToString("ddMMMyyyy"),
-//                    nonEnrolling = 0,
-//                    pssv = 4,
-//                    selected = 0,
-//                    siv = 0
-//                }
-//            };
-//#else
-//            try {
-//                string url = "https://ecs.incresearch.com/ECS/mobile/sitestats/projectId/" + projectId;
-
-//                HttpClient client = new HttpClient();
-//                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
-
-//                HttpResponseMessage response = await client.GetAsync(url);
-
-//                if(response.IsSuccessStatusCode) {
-//                    string content = await response.Content.ReadAsStringAsync();
-
-//                    List<SiteStats> siteStats = Utility.DeserializeResponse<List<SiteStats>>(content, "data/project/siteStats");
-
-//                    PlannedSiteStats.Clear();
-
-//                    foreach(SiteStats siteStat in siteStats) {
-//                        PlannedSiteStats.Add(siteStat);
-//                    }
-//                }
-//            } catch(Exception ex) {
-//                ContentPage page = new ContentPage();
-//                await page.DisplayAlert("Error", "Unable to load projects.", "OK");
-//            }
-//#endif
-
-//            IsBusy = false;
-//        }
 
         private Command _loadProjectCommand;
 

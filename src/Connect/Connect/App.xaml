@@ -6,6 +6,7 @@
     <ResourceDictionary>
 
       <!-- Color -->
+      <Color x:Key="PaleBlue">#CCEAFD</Color>
       <Color x:Key="LightBlue">#75A8D7</Color>
       <Color x:Key="DarkBlue">#395E84</Color>
       <Color x:Key="OpaqueDarkBlue">#99395E84</Color>

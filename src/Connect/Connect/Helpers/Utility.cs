@@ -21,10 +21,10 @@ namespace Connect.Helpers {
         /// </summary>
         private static Dictionary<string, PropertyInfo> _xAxisSubjectStatusCategoryProps;
 
-        ///// <summary>
-        ///// Grouping of property info for Site Visit Status properties with the <see cref="ChartXAxisAttribute"/>.
-        ///// </summary>
-        //private static Dictionary<string, PropertyInfo> _xAxisVisitStatusCategoryProps;
+        /// <summary>
+        /// Currently the mockups only show the Event Types contained in this list but the API sends over more. Nash said to just filter out the ones we want for now.
+        /// </summary>
+        private static readonly List<string> ValidVisitMetricEventTypes;
 
         #region Constructors
 
@@ -32,6 +32,14 @@ namespace Connect.Helpers {
             InitXAxisSiteStatusCategory();
             InitXAxisSubjectStatusCategory();
             //InitXAxisVisitStatusCategory();
+
+            ValidVisitMetricEventTypes = new List<string> { //The string checks are done in lowercase
+                "pssv",
+                "siv",
+                "imv",
+                "cov",
+                "total"
+            };
         }
 
         public Utility() { }
@@ -40,7 +48,7 @@ namespace Connect.Helpers {
 
         public static string GetDateString(DateTime dateTime) => dateTime.ToString("mM/d/YY h:mm");
 
-        public static List<GraphCategory> GetSiteStatusChartCategories(IList<SiteStats> chartData) {
+        public static IEnumerable<GraphCategory> GetSiteStatusChartCategories(IList<SiteStats> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();
 
             foreach(KeyValuePair<string, PropertyInfo> prop in _xAxisSiteStatusCategoryProps) {
@@ -53,7 +61,7 @@ namespace Connect.Helpers {
             return categories;
         }
 
-        public static List<GraphCategory> GetSubjectStatusChartCategories(IList<SubjectStats> chartData) {
+        public static IEnumerable<GraphCategory> GetSubjectStatusChartCategories(IList<SubjectStats> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();
 
             foreach(KeyValuePair<string, PropertyInfo> prop in _xAxisSubjectStatusCategoryProps) {
@@ -66,10 +74,16 @@ namespace Connect.Helpers {
             return categories;
         }
 
-        public static List<GraphCategory> GetVisitMetricNumberOfSites(IList<VisitMetrics> chartData) {
+        public static IEnumerable<GraphCategory> GetVisitMetricNumberOfSites(IList<VisitMetrics> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();
 
-            foreach(IGrouping<string, VisitMetrics> prop in chartData.GroupBy(dt => dt.EventType)) {
+            List<VisitMetrics> filterMetrics = CreateTotalVisitMetric(chartData.Where(dt => ValidVisitMetricEventTypes.Contains(dt.EventType.ToLowerInvariant())).ToList());    //Filter EventType and insert Total model
+
+            List<IGrouping<string, VisitMetrics>> groupedCats = filterMetrics.GroupBy(dt => dt.EventType).ToList(); //Group by EventType
+
+            List<IGrouping<string, VisitMetrics>> sortedGroupedCats = SortGroupedVisitMetrics(groupedCats); //Sort groups
+
+            foreach(IGrouping<string, VisitMetrics> prop in sortedGroupedCats) {
                 categories.Add(new GraphCategory {
                     Group = prop.Key,
                     Value = prop.Sum(data => data.NumSites)
@@ -79,13 +93,38 @@ namespace Connect.Helpers {
             return categories;
         }
 
-        public static List<GraphCategory> GetVisitMetricNumberOfVisits(IList<VisitMetrics> chartData) {
+        public static IEnumerable<GraphCategory> GetVisitMetricNumberOfVisits(IList<VisitMetrics> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();
 
-            foreach(IGrouping<string, VisitMetrics> prop in chartData.GroupBy(dt => dt.EventType)) {
+            List<VisitMetrics> filterMetrics = CreateTotalVisitMetric(chartData.Where(dt => ValidVisitMetricEventTypes.Contains(dt.EventType.ToLowerInvariant())).ToList());    //Filter EventType and insert Total model
+
+            List<IGrouping<string, VisitMetrics>> groupedCats = filterMetrics.GroupBy(dt => dt.EventType).ToList(); //Group by EventType
+
+            List<IGrouping<string, VisitMetrics>> sortedGroupedCats = SortGroupedVisitMetrics(groupedCats); //Sort groups
+
+            foreach(IGrouping<string, VisitMetrics> prop in sortedGroupedCats) {
                 categories.Add(new GraphCategory {
                     Group = prop.Key,
                     Value = prop.Sum(data => data.NumVisits)
+                });
+            }
+
+            return categories;
+        }
+
+        public static IEnumerable<GraphCategory> GetVisitMetricReportsCompleted(IList<VisitMetrics> chartData) {
+            List<GraphCategory> categories = new List<GraphCategory>();
+
+            List<VisitMetrics> filterMetrics = CreateTotalVisitMetric(chartData.Where(dt => ValidVisitMetricEventTypes.Contains(dt.EventType.ToLowerInvariant())).ToList());    //Filter EventType and insert Total model
+
+            List<IGrouping<string, VisitMetrics>> groupedCats = filterMetrics.GroupBy(dt => dt.EventType).ToList(); //Group by EventType
+
+            List<IGrouping<string, VisitMetrics>> sortedGroupedCats = SortGroupedVisitMetrics(groupedCats); //Sort groups
+
+            foreach(IGrouping<string, VisitMetrics> prop in sortedGroupedCats) {
+                categories.Add(new GraphCategory {
+                    Group = prop.Key,
+                    Value = prop.Sum(data => data.ReportsCompleted)
                 });
             }
 
@@ -240,6 +279,57 @@ namespace Connect.Helpers {
         //        _xAxisVisitStatusCategoryProps[chartInfo.DisplayName] = chartInfo.PropInfo;
         //    }
         //}
+
+        private static List<IGrouping<string, VisitMetrics>> SortGroupedVisitMetrics(List<IGrouping<string, VisitMetrics>> groupedMetrics) {
+            List<IGrouping<string, VisitMetrics>> sortedGroupedCats = new List<IGrouping<string, VisitMetrics>>();
+
+            IGrouping<string, VisitMetrics> pssv = groupedMetrics.FirstOrDefault(cat => cat.Key.ToLower() == "pssv");
+
+            if(pssv != null) {
+                sortedGroupedCats.Add(pssv);
+            }
+
+            IGrouping<string, VisitMetrics> siv = groupedMetrics.FirstOrDefault(cat => cat.Key.ToLower() == "siv");
+
+            if(siv != null) {
+                sortedGroupedCats.Add(siv);
+            }
+
+            IGrouping<string, VisitMetrics> imv = groupedMetrics.FirstOrDefault(cat => cat.Key.ToLower() == "imv");
+
+            if(imv != null) {
+                sortedGroupedCats.Add(imv);
+            }
+
+            IGrouping<string, VisitMetrics> cov = groupedMetrics.FirstOrDefault(cat => cat.Key.ToLower() == "cov");
+
+            if(cov != null) {
+                sortedGroupedCats.Add(cov);
+            }
+
+            IGrouping<string, VisitMetrics> total = groupedMetrics.FirstOrDefault(cat => cat.Key.ToLower() == "total");
+
+            if(total != null) {
+                sortedGroupedCats.Add(total);
+            }
+
+            return sortedGroupedCats;
+        }
+
+        private static List<VisitMetrics> CreateTotalVisitMetric(List<VisitMetrics> visitMetrics) {
+            if(visitMetrics.FirstOrDefault(v => v.EventType.ToLower() == "total") != null) {
+                return visitMetrics;
+            }
+
+            visitMetrics.Add(new VisitMetrics {
+                EventType        = "Total",
+                NumVisits        = visitMetrics.Sum(v => v.NumVisits),
+                NumSites         = visitMetrics.Sum(v => v.NumSites),
+                ReportsCompleted =  visitMetrics.Sum(v => v.ReportsCompleted)
+            });
+
+            return visitMetrics;
+        }
 
         private class ChartPropertyInfo {
 

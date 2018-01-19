@@ -157,14 +157,19 @@
 
             <Frame x:Name="ChartViewButtonFrame"
                    OutlineColor="{StaticResource DarkGray}"
-                   Padding="0"
+                   Padding="3"
                    HasShadow="False"
                    CornerRadius="1"
                    HorizontalOptions="End"
                    HeightRequest="25"
                    WidthRequest="25">
-              <Label Text="C"
+              <!--<Label Text="C"
                      FontSize="Small"
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                     InputTransparent="True"/>-->
+
+              <Image Source="graph.png"
                      HorizontalOptions="Center"
                      VerticalOptions="Center"
                      InputTransparent="True"/>
@@ -176,15 +181,20 @@
 
             <Frame x:Name="GridViewButtonFrame"
                    OutlineColor="{StaticResource DarkGray}"
-                   Padding="0"
+                   Padding="3"
                    HasShadow="False"
                    CornerRadius="1"
                    HorizontalOptions="End"
                    HeightRequest="25"
                    WidthRequest="25"
                    BackgroundColor="{StaticResource Gray}">
-              <Label Text="G"
+              <!--<Label Text="G"
                      FontSize="Small"
+                     HorizontalOptions="Center"
+                     VerticalOptions="Center"
+                     InputTransparent="True"/>-->
+
+              <Image Source="grid.png"
                      HorizontalOptions="Center"
                      VerticalOptions="Center"
                      InputTransparent="True"/>
@@ -302,8 +312,6 @@
                 Grid.ColumnSpan="3">
 
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="*"/>
-              <ColumnDefinition Width="1"/>
               <ColumnDefinition Width="*"/>
               <ColumnDefinition Width="1"/>
               <ColumnDefinition Width="*"/>

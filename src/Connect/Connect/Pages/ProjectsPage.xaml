@@ -4,7 +4,8 @@
              x:Class="Connect.Pages.ProjectsPage"
              xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect"
              x:Name="ProjectsPageItem"
-             BackgroundColor="{StaticResource LightGray}">
+             BackgroundColor="{StaticResource LightGray}"
+             Title="{Binding Title}">
   <ContentPage.ToolbarItems>
     <ToolbarItem Text="LOGOUT" />
   </ContentPage.ToolbarItems>

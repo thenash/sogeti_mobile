@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Connect.Helpers;
 using Connect.ViewModels;
 using Xamarin.Forms;
@@ -102,6 +103,15 @@ namespace Connect.Pages {
         }
 
         private void InitGrid() {
+            int actualCount         = _viewModel.ActualBottomChartVisitMetrics.Count;
+            int totalCount          = _viewModel.TotalBottomChartVisitMetrics.Count;
+            int reportCompleteCount = _viewModel.ReportsCompletedBottomChartVisitMetrics.Count;
+
+            if(actualCount < 1 || totalCount < 1 || reportCompleteCount < 1 || actualCount != totalCount || actualCount != reportCompleteCount || totalCount != reportCompleteCount) {  //Make sure all collections have data and they are of equal length
+                Debug.WriteLine("\nIn MonitoringPage.InitGrid() - Collections are empty or do not have the same lengths.\n");
+                return;
+            }
+
             BottomGrid.Children.Clear();
 
             BottomGrid.RowDefinitions = new RowDefinitionCollection {
@@ -142,7 +152,7 @@ namespace Connect.Pages {
 
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
-                Text                  = "Status",
+                Text                  = "Visit Type",
                 TextColor             = black,
                 FontSize              = size,
                 FontAttributes        = FontAttributes.Bold,
@@ -156,7 +166,7 @@ namespace Connect.Pages {
 
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
-                Text                  = "Planned to Date",
+                Text                  = "Actual # of Sites",
                 TextColor             = black,
                 FontSize              = size,
                 FontAttributes        = FontAttributes.Bold,
@@ -170,7 +180,7 @@ namespace Connect.Pages {
 
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
-                Text                  = "Actual to Date",
+                Text                  = "Total # of Visits",
                 TextColor             = black,
                 FontSize              = size,
                 FontAttributes        = FontAttributes.Bold,
@@ -184,7 +194,7 @@ namespace Connect.Pages {
 
             BottomGrid.Children.Add(new Label {
                 Margin                = margin,
-                Text                  = "Total Contracted",
+                Text                  = "Reports Completed",
                 TextColor             = black,
                 FontSize              = size,
                 FontAttributes        = FontAttributes.Bold,
@@ -192,35 +202,31 @@ namespace Connect.Pages {
             }, 6, 0);
 
             BottomGrid.Children.Add(new BoxView {
-                Style           = vertSeparatorStyle,
-                BackgroundColor = darkGray
-            }, 7, 0);
-
-            BottomGrid.Children.Add(new Label {
-                Margin                = margin,
-                Text                  = "Monthly Rate",
-                TextColor             = black,
-                FontSize              = size,
-                FontAttributes        = FontAttributes.Bold,
-                VerticalTextAlignment = TextAlignment.Center
-            }, 8, 0);
-
-            BottomGrid.Children.Add(new BoxView {
                 Style           = horizontalSeparatorStyle,
                 BackgroundColor = darkGray
-            }, 0, 9, 1, 2);
+            }, 0, 7, 1, 2);
 
             int rowSeparatorCount = 0;
 
             for(int index = 0; index < plannedCount; index++) {     //Create headers
+                string groupName = _viewModel.ActualBottomChartVisitMetrics[index].Group;
+
                 int separatorRow = index + rowSeparatorCount + 2;   //Add 2 for the header row and the header separator row
 
-                Color backgroundColor = index % 2 == 0 ? Color.White : lightGray;
+                Color backgroundColor;
+
+                if(groupName.ToLowerInvariant() == "total") {
+                    backgroundColor = Utility.GetResource<Color>("PaleBlue");
+                } else if(index % 2 == 0) {
+                    backgroundColor = Color.White;
+                } else {
+                    backgroundColor = lightGray;
+                }
 
                 #region Label Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                  = "  " + _viewModel.ActualBottomChartVisitMetrics[index].Group,
+                    Text                  = "  " + groupName,
                     TextColor             = darkGray,
                     FontSize              = size,
                     BackgroundColor       = backgroundColor,
@@ -236,14 +242,14 @@ namespace Connect.Pages {
                     BottomGrid.Children.Add(new BoxView {
                         Style           = horizontalSeparatorStyle,
                         BackgroundColor = darkGray
-                    }, 0, 9, separatorRow + 1, separatorRow + 2);
+                    }, 0, 7, separatorRow + 1, separatorRow + 2);
 
                     rowSeparatorCount++;
                 }
 
                 #endregion
 
-                #region Actual To Date Column
+                #region Actual # of Sites Column
 
                 BottomGrid.Children.Add(new Label {
                     Text                    = _viewModel.ActualBottomChartVisitMetrics[index].Value.ToString(),
@@ -261,7 +267,7 @@ namespace Connect.Pages {
 
                 #endregion
 
-                #region Total Contracted Column
+                #region Total # of Visits Column
 
                 BottomGrid.Children.Add(new Label {
                     Text                    = _viewModel.TotalBottomChartVisitMetrics[index].Value.ToString(),
@@ -276,6 +282,19 @@ namespace Connect.Pages {
                     Style           = vertSeparatorStyle,
                     BackgroundColor = darkGray
                 }, 5, separatorRow);
+
+                #endregion
+
+                #region Reports Completed Column
+
+                BottomGrid.Children.Add(new Label {
+                    Text                    = _viewModel.ReportsCompletedBottomChartVisitMetrics[index].Value.ToString(),
+                    TextColor               = darkGray,
+                    FontSize                = size,
+                    BackgroundColor         = backgroundColor,
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    VerticalTextAlignment   = TextAlignment.Center
+                }, 6, separatorRow);
 
                 #endregion
             }
