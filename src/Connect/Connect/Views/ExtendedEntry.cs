@@ -35,10 +35,9 @@ namespace Connect.Views {
         protected override void OnParentSet() {
             base.OnParentSet();
 
-            if(Parent == null) {
-                Completed -= OnNextEntryCompletedGoto;
-            } else {
-                Completed -= OnNextEntryCompletedGoto;
+            Completed -= OnNextEntryCompletedGoto;  //Always unsubscribe just in case
+
+            if(Parent != null) {
                 Completed += OnNextEntryCompletedGoto;
             }
         }
@@ -46,8 +45,6 @@ namespace Connect.Views {
         /// <summary>
         /// When <see cref="NextEntry"/> is not null, forces focus onto <see cref="NextEntry"/>. Currently attached to the <see cref="Entry.Completed"/> event.
         /// </summary>
-        private static void OnNextEntryCompletedGoto(object sender, EventArgs e) {
-            ((ExtendedEntry)sender)?.NextEntry?.Focus();
-        }
+        private static void OnNextEntryCompletedGoto(object sender, EventArgs e) => (sender as ExtendedEntry)?.NextEntry?.Focus();
     }
 }

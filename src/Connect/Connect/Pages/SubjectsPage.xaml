@@ -156,7 +156,7 @@
                                     Grid.Row="2"
                                     Grid.Column="0"/>-->
 
-            <StackLayout Orientation="Horizontal"
+            <!--<StackLayout Orientation="Horizontal"
                          HorizontalOptions="Center"
                          Grid.Row="2"
                          Grid.Column="0">
@@ -193,7 +193,22 @@
                      TextColor="{StaticResource DarkGray}"
                      FontSize="Small"
                      VerticalTextAlignment="Center"/>
-            </StackLayout>
+            </StackLayout>-->
+
+            <myViews:ChartLegendItem LabelText="Planned"
+                                     ItemColor="{StaticResource DarkBlue}"
+                                     Grid.Row="2"
+                                     Grid.Column="0"/>
+
+            <myViews:ChartLegendItem LabelText="Actual"
+                                     ItemColor="{StaticResource Orange}"
+                                     Grid.Row="2"
+                                     Grid.Column="1"/>
+
+            <myViews:ChartLegendItem LabelText="Total"
+                                     ItemColor="{StaticResource DarkGray}"
+                                     Grid.Row="2"
+                                     Grid.Column="2"/>
           </Grid>
         </Frame>
 
@@ -396,7 +411,7 @@
 
           </Grid>
 
-          <StackLayout x:Name="PlannedBottomLegendStackLayout"
+          <!--<StackLayout x:Name="PlannedBottomLegendStackLayout"
                        Orientation="Horizontal"
                        Padding="10,5,0,5"
                        Grid.Row="2"
@@ -422,7 +437,19 @@
                    TextColor="{StaticResource DarkGray}"
                    FontSize="Small"
                    VerticalTextAlignment="Center"/>
-          </StackLayout>
+          </StackLayout>-->
+
+          <myViews:ChartLegendItem x:Name="PlannedBottomLegendStackLayout"
+                                   LabelText="Planned"
+                                   ItemColor="{StaticResource DarkBlue}"
+                                   Grid.Row="2"
+                                   Grid.Column="0"/>
+
+          <myViews:ChartLegendItem x:Name="ActualBottomLegendStackLayout"
+                                   LabelText="Actual"
+                                   ItemColor="{StaticResource Orange}"
+                                   Grid.Row="2"
+                                   Grid.Column="2"/>
         </Grid>
       </StackLayout>
     </ScrollView>

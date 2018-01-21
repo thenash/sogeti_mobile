@@ -107,6 +107,7 @@
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="ViewModels\MonitoringViewModel.cs" />
     <Compile Include="ViewModels\SubjectsViewModel.cs" />
+    <Compile Include="Views\ChartLegendItem.cs" />
     <Compile Include="Views\ExtendedEntry.cs" />
     <Compile Include="Views\ButtonLabelContentView.cs" />
     <Compile Include="Views\CardCellView.xaml.cs">

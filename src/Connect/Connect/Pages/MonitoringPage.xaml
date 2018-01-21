@@ -327,29 +327,41 @@
                        Grid.Row="2"
                        Grid.Column="0"
                        Grid.ColumnSpan="3">
-            <StackLayout x:Name="PlannedBottomLegendStackLayout"
+            <!--<StackLayout x:Name="PlannedBottomLegendStackLayout"
                          Orientation="Horizontal"
                          Padding="10,5,0,5">
               <BoxView BackgroundColor="{StaticResource DarkBlue}"
                        WidthRequest="20"
-                       HeightRequest="2"/>
+                       HeightRequest="10"
+                       VerticalOptions="Center"/>
               <Label Text="Actual Number of Sites"
                      TextColor="{StaticResource DarkGray}"
                      FontSize="Micro"
                      VerticalTextAlignment="Center"/>
-            </StackLayout>
+            </StackLayout>-->
 
-            <StackLayout x:Name="ActualBottomLegendStackLayout"
+            <!--<StackLayout x:Name="ActualBottomLegendStackLayout"
                          Orientation="Horizontal"
                          Padding="10,5,0,5">
               <BoxView BackgroundColor="{StaticResource Orange}"
                        WidthRequest="20"
-                       HeightRequest="2"/>
+                       HeightRequest="10"
+                       VerticalOptions="Center"/>
               <Label Text="Total Number of Visits"
                      TextColor="{StaticResource DarkGray}"
                      FontSize="Micro"
                      VerticalTextAlignment="Center"/>
-            </StackLayout>
+            </StackLayout>-->
+
+            <myViews:ChartLegendItem x:Name="ActualBottomLegendItem"
+                                     LabelText="Actual Number of Sites"
+                                     ItemColor="{StaticResource DarkBlue}"
+                                     LabelTextSize="Micro"/>
+
+            <myViews:ChartLegendItem x:Name="TotalBottomLegendItem"
+                                     LabelText="Total Number of Visits"
+                                     ItemColor="{StaticResource Orange}"
+                                     LabelTextSize="Micro"/>
           </StackLayout>
 
           <!--<StackLayout x:Name="PlannedBottomLegendStackLayout"

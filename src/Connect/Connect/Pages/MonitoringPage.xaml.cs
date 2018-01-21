@@ -80,8 +80,8 @@ namespace Connect.Pages {
             ChartViewButtonFrame.BackgroundColor = Utility.GetResource<Color>("Gray");
             GridViewButtonFrame.BackgroundColor  = Color.White;
 
-            PlannedBottomLegendStackLayout.IsVisible = false;
-            ActualBottomLegendStackLayout.IsVisible  = false;
+            ActualBottomLegendItem.IsVisible = false;
+            TotalBottomLegendItem.IsVisible  = false;
 
             BottomChart.IsVisible = false;
             BottomGrid.IsVisible  = true;
@@ -93,8 +93,8 @@ namespace Connect.Pages {
             GridViewButtonFrame.BackgroundColor  = Utility.GetResource<Color>("Gray");
             ChartViewButtonFrame.BackgroundColor = Color.White;
 
-            PlannedBottomLegendStackLayout.IsVisible = true;
-            ActualBottomLegendStackLayout.IsVisible  = true;
+            ActualBottomLegendItem.IsVisible = true;
+            TotalBottomLegendItem.IsVisible  = true;
 
             BottomGrid.IsVisible  = false;
             BottomChart.IsVisible = true;
