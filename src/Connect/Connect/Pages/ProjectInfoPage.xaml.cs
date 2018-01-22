@@ -11,10 +11,12 @@ namespace Connect.Pages {
     public partial class ProjectInfoPage : ContentPage {
 
         private bool _isCommentsOpen;
+        private bool _isContactOpen;
 
         private readonly ProjectInfoViewModel _viewModel;
 
         private readonly ProjectCommentsPopup _commentsPopup;
+        private readonly ContactInfoPopup     _contactInfoPopup;
 
         public ProjectInfoPage() {
 
@@ -22,7 +24,8 @@ namespace Connect.Pages {
 
             InitializeComponent();
 
-            _commentsPopup = new ProjectCommentsPopup();
+            _commentsPopup    = new ProjectCommentsPopup();
+            _contactInfoPopup = new ContactInfoPopup();
 
             #region Gesture Recognizers
 
@@ -42,9 +45,17 @@ namespace Connect.Pages {
             });
 
             ContactInfoBackgroundBoxView.GestureRecognizers.Add(new TapGestureRecognizer {
-                Command = new Command(() => {
+                Command = new Command(async () => {
                     ProjectCommentBackgroundBoxView.BackgroundColor = Color.Default;
                     ContactInfoBackgroundBoxView.BackgroundColor    = Utility.GetResource<Color>("OrangeYellow");
+
+                    if(_isContactOpen) {
+                        return;
+                    }
+
+                    _isContactOpen = true;
+
+                    await Navigation.PushPopupAsync(_contactInfoPopup);    //TODO: Set contact info data
                 })
             });
 
@@ -62,6 +73,9 @@ namespace Connect.Pages {
             _commentsPopup.Disappearing -= OnCommentsPopupDisappearing;
             _commentsPopup.Disappearing += OnCommentsPopupDisappearing;
 
+            _contactInfoPopup.Disappearing -= OnContactInfoPopupDisappearing;
+            _contactInfoPopup.Disappearing += OnContactInfoPopupDisappearing;
+
             if(App.LoggedIn) {
                 if(_viewModel.IsInitialized) {
                     return;
@@ -78,7 +92,8 @@ namespace Connect.Pages {
             double width  = (Width  - Width  * 0.8) / 2;
             double height = (Height - Height * 0.8) / 2;
 
-            _commentsPopup.Padding = new Thickness(width, height);
+            _commentsPopup.Padding    = new Thickness(width, height);
+            _contactInfoPopup.Padding = new Thickness(width, height);
         }
 
         protected override void OnDisappearing() {
@@ -86,7 +101,8 @@ namespace Connect.Pages {
 
             SizeChanged -= OnSizeChanged;
 
-            _commentsPopup.Disappearing -= OnCommentsPopupDisappearing;
+            _commentsPopup.Disappearing    -= OnCommentsPopupDisappearing;
+            _contactInfoPopup.Disappearing -= OnContactInfoPopupDisappearing;
         }
 
         #endregion
@@ -95,6 +111,12 @@ namespace Connect.Pages {
             _isCommentsOpen = false;
 
             ProjectCommentBackgroundBoxView.BackgroundColor = Color.Default;
+        }
+
+        private void OnContactInfoPopupDisappearing(object sender, EventArgs eventArgs) {
+            _isContactOpen = false;
+
+            ContactInfoBackgroundBoxView.BackgroundColor = Color.Default;
         }
 
         private void OnShowMoreTapped(object sender, EventArgs e) {

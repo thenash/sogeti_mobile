@@ -1,10 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
-             x:Class="Connect.Views.ContactInfoPopup"
-             HasSystemPadding="False">
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:views="clr-namespace:Connect.Views;assembly=Connect"
+                 x:Class="Connect.Views.ContactInfoPopup"
+                 x:Name="ContactInfoPopupPage"
+                 HasSystemPadding="False"
+                 CloseWhenBackgroundIsClicked="True">
+
   <pages:PopupPage.Animation>
     <animations:ScaleAnimation
                 PositionIn="Center"
@@ -17,25 +21,103 @@
                 EasingOut="SinIn"
                 HasBackgroundAnimation="True"/>
   </pages:PopupPage.Animation>
+
   <pages:PopupPage.Content>
-    <ListView HasUnevenRows="True">
+    <ListView x:Name="ContactsListView"
+              HasUnevenRows="True"
+              BackgroundColor="Transparent"
+              SeparatorVisibility="None">
       <ListView.ItemTemplate>
         <DataTemplate>
-          <Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="Auto"/>
-              <RowDefinition Height="Auto"/>
-              <RowDefinition Height="Auto"/>
-              <RowDefinition Height="Auto"/>
-              <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="*"/>
-              <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+          <ViewCell>
 
-            <BoxView BackgroundColor="White"/>
-          </Grid>
+            <Grid BackgroundColor="{StaticResource LightGray}"
+                  Padding="5"
+                  RowSpacing="0">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
+
+              <BoxView BackgroundColor="White"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="2"/>
+
+              <views:CardCellView Title="Project Role"
+                                  Description="{Binding Title}"
+                                  TextAlignment="Start"
+                                  Grid.Row="0"
+                                  Grid.Column="0"/>
+
+              <views:CardCellView Title="Full Name"
+                                  Description="{Binding Name}"
+                                  TextAlignment="End"
+                                  Grid.Row="0"
+                                  Grid.Column="1"/>
+
+              <BoxView Style="{StaticResource HorizontalSeparatorStyle}"
+                       BackgroundColor="{StaticResource LightGray}"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="2"/>
+
+              <StackLayout BackgroundColor="White"
+                           Orientation="Horizontal"
+                           Padding="10,5"
+                           Grid.Row="2"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2">
+                <Label Text="P"
+                       TextColor="{StaticResource DarkBlue}"
+                       FontSize="Large"/>
+
+                <Label Text="{Binding Phone}"
+                       Style="{StaticResource BaseLabelStyle}"
+                       HorizontalOptions="EndAndExpand"
+                       VerticalTextAlignment="Center"/>
+
+                <StackLayout.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding Source={x:Reference ContactInfoPopupPage}, Path=BindingContext.PhoneTappedCommand}"
+                                        CommandParameter="{Binding Phone}"/>
+                </StackLayout.GestureRecognizers>
+              </StackLayout>
+
+              <BoxView Style="{StaticResource HorizontalSeparatorStyle}"
+                       BackgroundColor="{StaticResource LightGray}"
+                       Grid.Row="3"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="2"/>
+
+              <StackLayout BackgroundColor="White"
+                           Orientation="Horizontal"
+                           Padding="10,5"
+                           Grid.Row="4"
+                           Grid.Column="0"
+                           Grid.ColumnSpan="2">
+                <Label Text="E"
+                       TextColor="{StaticResource DarkBlue}"
+                       FontSize="Large"/>
+
+                <Label Text="{Binding Email}"
+                       Style="{StaticResource BaseLabelStyle}"
+                       HorizontalOptions="EndAndExpand"
+                       VerticalTextAlignment="Center"/>
+
+                <StackLayout.GestureRecognizers>
+                  <TapGestureRecognizer Command="{Binding Source={x:Reference ContactInfoPopupPage}, Path=BindingContext.EmailTappedCommand}"
+                                        CommandParameter="{Binding Email}"/>
+                </StackLayout.GestureRecognizers>
+              </StackLayout>
+            </Grid>
+          </ViewCell>
         </DataTemplate>
       </ListView.ItemTemplate>
     </ListView>
