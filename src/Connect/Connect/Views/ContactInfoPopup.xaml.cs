@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Input;
+using Connect.Helpers;
+using Connect.Interfaces;
 using Connect.Models;
+using Plugin.Permissions.Abstractions;
 using Rg.Plugins.Popup.Pages;
-using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 
 namespace Connect.Views {
@@ -11,6 +13,8 @@ namespace Connect.Views {
     public partial class ContactInfoPopup : PopupPage {
 
         #region Properties
+
+        private readonly INativeCommunication _nativeComm;
 
         public ICommand PhoneTappedCommand { get; }
         public ICommand EmailTappedCommand { get; }
@@ -26,9 +30,25 @@ namespace Connect.Views {
 
         #region Constructors
 
-        public ContactInfoPopup() {
-            PhoneTappedCommand = new Command<string>(phoneNum  => Device.OpenUri(new Uri("tel:"    + phoneNum)));
-            EmailTappedCommand = new Command<string>(emailAddr => Device.OpenUri(new Uri("mailto:" + emailAddr)));
+        public ContactInfoPopup() : this(DependencyService.Get<INativeCommunication>()) { }
+
+        public ContactInfoPopup(INativeCommunication nativeComm) {
+
+            _nativeComm = nativeComm;
+
+            PhoneTappedCommand = new Command<string>(async phoneNum  => {
+                if(await PermissionsInstance.HasOrGetsPermissionAsync(Permission.Phone)) {
+                    Device.OpenUri(new Uri("tel:" + phoneNum));
+                }
+            });
+
+            EmailTappedCommand = new Command<string>(async emailAddr => {
+                string error = _nativeComm.ShowEmailDraft(emailAddr);
+
+                if(!string.IsNullOrEmpty(error)) {
+                    await DisplayAlert("ERROR", error, "OK");
+                }
+            });
 
             BindingContext = this;
 
@@ -46,6 +66,16 @@ namespace Connect.Views {
         #endregion
 
         #region Event Handler Overrides
+
+        protected override void OnParentSet() {
+            base.OnParentSet();
+
+            ContactsListView.ItemSelected -= OnContactSelected;
+
+            if(Parent != null) {
+                ContactsListView.ItemSelected += OnContactSelected;
+            }
+        }
 
         protected override void OnPropertyChanged(string propertyName = null) {
             base.OnPropertyChanged(propertyName);
@@ -65,7 +95,7 @@ namespace Connect.Views {
 
         #region Event Handlers
 
-        private void OnClose(object sender, EventArgs e) => PopupNavigation.PopAsync();
+        private void OnContactSelected(object sender, SelectedItemChangedEventArgs selectedItemChangedEventArgs) => ContactsListView.SelectedItem = null;
 
         #endregion
     }

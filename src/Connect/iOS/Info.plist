@@ -43,5 +43,9 @@
 	<true/>
 	<key>CFBundleIconName</key>
 	<string>AppIcons</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>The app requires calendar functionality</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>The app requires photo library functionality</string>
 </dict>
 </plist>

@@ -2,4 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.syneos_health.syneos_health" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="16" android:targetSdkVersion="26" />
 	<application android:label="Syneos Health" android:icon="@drawable/icon"></application>
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+  <uses-feature android:name="android.hardware.screen.portrait" android:required="false" />
+  <!--<uses-feature android:name="android.hardware.screen.landscape" android:required="false" />-->
+  <uses-feature android:name="android.hardware.touchscreen" android:required="false" />
+  <uses-feature android:name="android.hardware.faketouch" />
+  <uses-feature android:name="android.hardware.wifi" android:required="false" />
+  <uses-feature android:name="android.hardware.telephony" android:required="false" />
+  <uses-feature android:name="android.hardware.telephony.cdma" android:required="false" />
+  <uses-feature android:name="android.hardware.telephony.gsm" android:required="false" />
 </manifest>
