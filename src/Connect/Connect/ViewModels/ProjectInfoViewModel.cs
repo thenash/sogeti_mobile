@@ -64,6 +64,17 @@ namespace Connect.ViewModels {
             }
         }
 
+        private List<ContactInfo> _contacts;
+        public List<ContactInfo> Contacts {
+            get => _contacts ?? (_contacts = new List<ContactInfo>());
+            set {
+                if(_contacts != value) {
+                    _contacts = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         private ObservableCollection<Milestone> _milestones;
         public ObservableCollection<Milestone> Milestones {
             get => _milestones ?? (_milestones = new ObservableCollection<Milestone>());
@@ -142,6 +153,10 @@ namespace Connect.ViewModels {
 
                             List<ProjectDetails> projectDetails = Utility.DeserializeResponse<List<ProjectDetails>>(content, "data/projects/project");
                             ProjectDetails = projectDetails[0];
+
+                            if(ProjectDetails != null) {
+                                Contacts = ContactInfo.GetContacts(ProjectDetails);
+                            }
                         }
                     }
                 }

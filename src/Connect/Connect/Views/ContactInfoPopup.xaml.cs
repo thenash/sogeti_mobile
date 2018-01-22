@@ -37,12 +37,20 @@ namespace Connect.Views {
             _nativeComm = nativeComm;
 
             PhoneTappedCommand = new Command<string>(async phoneNum  => {
+                if(string.IsNullOrEmpty(phoneNum)) {
+                    return;
+                }
+
                 if(await PermissionsInstance.HasOrGetsPermissionAsync(Permission.Phone)) {
                     Device.OpenUri(new Uri("tel:" + phoneNum));
                 }
             });
 
             EmailTappedCommand = new Command<string>(async emailAddr => {
+                if(string.IsNullOrEmpty(emailAddr)) {
+                    return;
+                }
+
                 string error = _nativeComm.ShowEmailDraft(emailAddr);
 
                 if(!string.IsNullOrEmpty(error)) {
@@ -54,13 +62,13 @@ namespace Connect.Views {
 
             InitializeComponent();
 
-#if DEBUG
-            Contacts = new List<ContactInfo> {
-                new ContactInfo("Project Director", "Sally Smith", "555-555-5555", "genericemail@email.com"),
-                new ContactInfo("Project Director", "Sally Smith", "555-555-5555", "genericemail@email.com"),
-                new ContactInfo("Project Director", "Sally Smith", "555-555-5555", "genericemail@email.com")
-            };
-#endif
+//#if DEBUG
+//            Contacts = new List<ContactInfo> {
+//                new ContactInfo("Project Director", "Sally Smith", "555-555-5555", "genericemail@email.com"),
+//                new ContactInfo("Project Director", "Sally Smith", "555-555-5555", "genericemail@email.com"),
+//                new ContactInfo("Project Director", "Sally Smith", "555-555-5555", "genericemail@email.com")
+//            };
+//#endif
         }
 
         #endregion

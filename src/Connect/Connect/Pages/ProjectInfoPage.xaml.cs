@@ -55,6 +55,8 @@ namespace Connect.Pages {
 
                     _isContactOpen = true;
 
+                    _contactInfoPopup.Contacts = _viewModel.Contacts;
+
                     await Navigation.PushPopupAsync(_contactInfoPopup);    //TODO: Set contact info data
                 })
             });
