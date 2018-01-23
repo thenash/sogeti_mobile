@@ -6,6 +6,7 @@ using Connect.Interfaces;
 using Connect.Models;
 using Plugin.Permissions.Abstractions;
 using Rg.Plugins.Popup.Pages;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 
 namespace Connect.Views {
@@ -104,6 +105,8 @@ namespace Connect.Views {
         #region Event Handlers
 
         private void OnContactSelected(object sender, SelectedItemChangedEventArgs selectedItemChangedEventArgs) => ContactsListView.SelectedItem = null;
+
+        private void OnClose(object sender, EventArgs e) => PopupNavigation.PopAsync();
 
         #endregion
     }
