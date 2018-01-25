@@ -36,7 +36,7 @@
                                FontSize="20"
                                NextEntry="{x:Reference PasswordEntry}">
             <Entry.Effects>
-              <effects:BorderlessEntryEffect/>
+              <effects:BorderlessViewEffect/>
             </Entry.Effects>
           </views:ExtendedEntry>
         </Frame>
@@ -52,16 +52,16 @@
                  FontSize="20"
                  IsPassword="True">
             <Entry.Effects>
-              <effects:BorderlessEntryEffect/>
+              <effects:BorderlessViewEffect/>
             </Entry.Effects>
           </Entry>
         </Frame>
 
         <views:ButtonLabelContentView LabelText="LOGIN"
                                       AutomationId="ProjectsPageLoginButtonLabelContentView"
-                                      Tapped="login_Clicked"
                                       WidthRequest="100"
-                                      HeightRequest="40" />
+                                      HeightRequest="40"
+                                      Tapped="login_Clicked" />
 
         <Label Text="Forgot Password"
                AutomationId="ProjectsPageForgotPasswordButtonLabel"

@@ -76,6 +76,8 @@
     <Compile Include="Helpers\PermissionsInstance.cs" />
     <Compile Include="Interfaces\INativeCommunication.cs" />
     <Compile Include="Interfaces\INavigationService.cs" />
+    <Compile Include="Models\BusinessUnitFilterItem.cs" />
+    <Compile Include="Models\FilterSearchItem.cs" />
     <Compile Include="Models\GraphCategory.cs" />
     <Compile Include="Models\ContactInfo.cs" />
     <Compile Include="Models\ReportCompliance.cs" />
@@ -111,6 +113,9 @@
     <Compile Include="ViewModels\MonitoringViewModel.cs" />
     <Compile Include="ViewModels\SubjectsViewModel.cs" />
     <Compile Include="Views\ChartLegendItem.cs" />
+    <Compile Include="Views\FilterSearchPopup.xaml.cs">
+      <DependentUpon>FilterSearchPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ExtendedEntry.cs" />
     <Compile Include="Views\ButtonLabelContentView.cs" />
     <Compile Include="Views\CardCellView.xaml.cs">
@@ -151,7 +156,7 @@
     <Compile Include="Views\VarianceViewCard.xaml.cs">
       <DependentUpon>VarianceViewCard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Effects\BorderlessEntryEffect.cs" />
+    <Compile Include="Effects\BorderlessViewEffect.cs" />
     <Compile Include="Effects\DropShadowEffect.cs" />
     <Compile Include="ViewModels\ProjectInfoViewModel.cs" />
     <Compile Include="ViewModels\SitesViewModel.cs" />
@@ -219,6 +224,12 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>
       </SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\FilterSearchPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

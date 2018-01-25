@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:views="clr-namespace:Connect.Views;assembly=Connect"
+                 xmlns:effects="clr-namespace:Connect.Effects;assembly=Connect"
+                 x:Class="Connect.Views.FilterSearchPopup"
+                 HasSystemPadding="False"
+                 CloseWhenBackgroundIsClicked="True">
+
+  <pages:PopupPage.Animation>
+    <animations:ScaleAnimation
+                PositionIn="Center"
+                PositionOut="Center"
+                ScaleIn="1.2"
+                ScaleOut="0.8"
+                DurationIn="400"
+                DurationOut="300"
+                EasingIn="SinOut"
+                EasingOut="SinIn"
+                HasBackgroundAnimation="True"/>
+  </pages:PopupPage.Animation>
+
+  <pages:PopupPage.Content>
+    <Grid Padding="10,10,10,10"
+          BackgroundColor="White"
+          RowSpacing="0"
+          ColumnSpacing="0">
+
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="1"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="1"/>
+        <RowDefinition Height="11"/> <!-- Setting this to 11 to allow 10 points of margin -->
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="1"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="1"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="1"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="1"/>
+      </Grid.ColumnDefinitions>
+
+      <Label Text="Filter / Search"
+             FontAttributes="Bold"
+             FontSize="Medium"
+             Style="{StaticResource BaseLabelStyle}"
+             HorizontalTextAlignment="Center"
+             Grid.Row="0"
+             Grid.Column="0"
+             Grid.ColumnSpan="3"/>
+
+      <Label Text="&#x2715;"
+             FontAttributes="Bold"
+             FontSize="Large"
+             Style="{StaticResource BaseLabelStyle}"
+             HorizontalTextAlignment="End"
+             Grid.Row="0"
+             Grid.Column="0"
+             Grid.ColumnSpan="3">
+        <Label.GestureRecognizers>
+          <TapGestureRecognizer Tapped="OnClose"/>
+        </Label.GestureRecognizers>
+      </Label>
+
+      <Label Text="Business Unit"
+             FontAttributes="Bold"
+             FontSize="Small"
+             Style="{StaticResource BaseLabelStyle}"
+             Grid.Row="1"
+             Grid.Column="0"
+             Grid.ColumnSpan="3"/>
+
+      <BoxView Style="{StaticResource HorizontalSeparatorStyle}"
+               Grid.Row="2"
+               Grid.Column="0"
+               Grid.ColumnSpan="3"/>
+
+      <BoxView Style="{StaticResource VerticalSeparatorStyle}"
+               Grid.Row="3"
+               Grid.Column="0"/>
+
+      <BoxView BackgroundColor="{StaticResource Gray}"
+               Grid.Row="3"
+               Grid.Column="1"/>
+
+      <Picker x:Name="BusinessUnitPicker"
+              AutomationId="FilterSearchPopupBuisnessUnitPicker"
+              Title="Business Unit"
+              TextColor="Black"
+              Margin="5,0,0,0"
+              ItemDisplayBinding="{Binding IdAndName}"
+              SelectedIndexChanged="OnSelectedBusinessUnitChanged"
+              Grid.Row="3"
+              Grid.Column="1">
+        <Picker.Effects>
+          <effects:BorderlessViewEffect/>
+        </Picker.Effects>
+      </Picker>
+
+      <BoxView Style="{StaticResource VerticalSeparatorStyle}"
+               Grid.Row="3"
+               Grid.Column="2"/>
+
+      <BoxView Style="{StaticResource HorizontalSeparatorStyle}"
+               Grid.Row="4"
+               Grid.Column="0"
+               Grid.ColumnSpan="3"/>
+
+      <BoxView Style="{StaticResource HorizontalSeparatorStyle}"
+               Margin="0,10,0,0"
+               Grid.Row="5"
+               Grid.Column="0"
+               Grid.ColumnSpan="3"/>
+
+      <BoxView Style="{StaticResource VerticalSeparatorStyle}"
+               Grid.Row="6"
+               Grid.Column="0"/>
+
+      <Entry Placeholder="Search (eg: 100234 or 234D51-4P3)"
+             Margin="5,0,0,0"
+             TextChanged="OnSearchTextChanged"
+             Grid.Row="6"
+             Grid.Column="1">
+        <Entry.Effects>
+          <effects:BorderlessViewEffect/>
+        </Entry.Effects>
+      </Entry>
+
+      <BoxView Style="{StaticResource VerticalSeparatorStyle}"
+               Grid.Row="6"
+               Grid.Column="2"/>
+
+      <BoxView Style="{StaticResource HorizontalSeparatorStyle}"
+               Grid.Row="7"
+               Grid.Column="0"
+               Grid.ColumnSpan="3"/>
+
+      <BoxView Style="{StaticResource VerticalSeparatorStyle}"
+               Grid.Row="8"
+               Grid.Column="0">
+        <BoxView.Triggers>
+          <DataTrigger TargetType="BoxView"
+                       Binding="{Binding Source={x:Reference ItemsListView},
+                                         Path=IsVisible}"
+                       Value="False">
+            <Setter Property="IsVisible"
+                    Value="False"/>
+          </DataTrigger>
+        </BoxView.Triggers>
+      </BoxView>
+
+      <ListView x:Name="ItemsListView"
+                IsVisible="False"
+                HasUnevenRows="True"
+                BackgroundColor="Transparent"
+                SeparatorVisibility="None"
+                VerticalOptions="Start"
+                Grid.Row="8"
+                Grid.Column="1">
+        <ListView.Triggers>
+          <DataTrigger TargetType="ListView"
+                       Binding="{Binding Items.Count}"
+                       Value="0">
+            <Setter Property="IsVisible"
+                    Value="False"/>
+          </DataTrigger>
+        </ListView.Triggers>
+
+        <ListView.ItemTemplate>
+          <DataTemplate>
+            <TextCell Text="{Binding ItemText}"
+                      TextColor="Black"/>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+      <BoxView Style="{StaticResource VerticalSeparatorStyle}"
+               Grid.Row="8"
+               Grid.Column="2">
+        <BoxView.Triggers>
+          <DataTrigger TargetType="BoxView"
+                       Binding="{Binding Source={x:Reference ItemsListView},
+                                         Path=IsVisible}"
+                       Value="False">
+            <Setter Property="IsVisible"
+                    Value="False"/>
+          </DataTrigger>
+        </BoxView.Triggers>
+      </BoxView>
+
+      <BoxView Style="{StaticResource HorizontalSeparatorStyle}"
+               Grid.Row="9"
+               Grid.Column="0"
+               Grid.ColumnSpan="3">
+        <BoxView.Triggers>
+          <DataTrigger TargetType="BoxView"
+                       Binding="{Binding Source={x:Reference ItemsListView},
+                                         Path=IsVisible}"
+                       Value="False">
+            <Setter Property="IsVisible"
+                    Value="False"/>
+          </DataTrigger>
+        </BoxView.Triggers>
+      </BoxView>
+
+      <views:ButtonLabelContentView LabelText="APPLY FILTERS"
+                                    AutomationId="FilterSearchPopupAppleFilterButtonLabelContentView"
+                                    WidthRequest="200"
+                                    HeightRequest="40"
+                                    Margin="0,10,0,0"
+                                    Tapped="OnApplyFilterTapped"
+                                    Grid.Row="10"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="3" />
+    </Grid>
+  </pages:PopupPage.Content>
+</pages:PopupPage>
+

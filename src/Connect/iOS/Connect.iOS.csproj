@@ -211,7 +211,7 @@
     <Compile Include="Implementations\NativeCommunication.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Effects\BorderlessEntryEffect.cs" />
+    <Compile Include="Effects\BorderlessViewEffect.cs" />
     <Compile Include="Effects\DropShadowEffect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderers\MenuViewCellRenderer.cs" />

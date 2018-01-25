@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Connect.Models;
@@ -10,25 +11,39 @@ namespace Connect.ViewModels {
 
         public ProjectsViewModel() {
 			Title    = "Project Selection";
-			Projects = new ObservableCollection<Project>();
+			Projects = new List<Project>();
         }
 
-        private ObservableCollection<Project> _projects;
+        private List<Project> _projects;
         /// <summary>
         /// gets or sets the feed items.
         /// </summary>
-        public ObservableCollection<Project> Projects {
+        public List<Project> Projects {
             get => _projects;
             private set {
                 if(_projects != value) {
                     _projects = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<Project> _displayProjects;
+        /// <summary>
+        /// gets or sets the feed items.
+        /// </summary>
+        public ObservableCollection<Project> DisplayProjects {
+            get => _displayProjects;
+            set {
+                if(_displayProjects != value) {
+                    _displayProjects = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(ProjectCount));
                 }
             }
         }
 
-        public int ProjectCount => Projects.Count;
+        public int ProjectCount => DisplayProjects?.Count ?? 0;
 
         private Command _loadCommand;
 		/// <summary>
@@ -49,13 +64,13 @@ namespace Connect.ViewModels {
                 return;
             }
 
-            Project selectedProject = Projects.FirstOrDefault(proj => proj.IsSelected);
+            Project selectedProject = DisplayProjects.FirstOrDefault(proj => proj.IsSelected);
 
             if(selectedProject != null) {
                 selectedProject.IsSelected = false;
             }
 
-            Project projectToSelect = Projects.FirstOrDefault(proj => proj.projectId == project.projectId && proj.protocolId == project.protocolId);
+            Project projectToSelect = DisplayProjects.FirstOrDefault(proj => proj.projectId == project.projectId && proj.protocolId == project.protocolId);
 
             if(projectToSelect != null) {
                 projectToSelect.IsSelected = true;
@@ -63,7 +78,7 @@ namespace Connect.ViewModels {
 
             App.SelectedProject = projectToSelect;
 
-            OnPropertyChanged(nameof(Projects));
+            OnPropertyChanged(nameof(DisplayProjects));
 
             MessagingCenter.Send(this, ConstantKeys.ProjectSelected, project);
         }
@@ -108,7 +123,7 @@ namespace Connect.ViewModels {
                 primaryIndication = "Acne",
                 primaryTherapeuticArea = "Dermatology",
                 projectDirector = "James White",
-                projectId = "200008",
+                projectId = "Project 3",
                 protocolId = "5404-Y5TT-U1"
             });
 
@@ -119,11 +134,13 @@ namespace Connect.ViewModels {
                 primaryIndication = "Eyelid Spasms",
                 primaryTherapeuticArea = "Neurology",
                 projectDirector = "Tom Johnson",
-                projectId = "0963801",
+                projectId = "Project 4",
                 protocolId = "8008-1GG6-P3"
             });
 #endif
-            OnPropertyChanged(nameof(Projects));
+		    DisplayProjects = new ObservableCollection<Project>(Projects);
+
+            OnPropertyChanged(nameof(DisplayProjects));
 		    OnPropertyChanged(nameof(ProjectCount));
 
             //         try {
@@ -157,7 +174,7 @@ namespace Connect.ViewModels {
 		            selectedProject.IsSelected = true;
 		        }
 
-		        Projects = new ObservableCollection<Project>(Projects);
+		        DisplayProjects = new ObservableCollection<Project>(Projects);
             }
 
             IsBusy = false;

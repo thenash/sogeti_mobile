@@ -10,9 +10,6 @@ namespace Connect.Views {
         private readonly Label _label;
         private readonly Frame _frame;
 
-        /// <summary>
-        /// Attached to the <c>InputFieldContentView</c>'s <c>ExtendedEntryOnTextChanged()</c> event, but returns the <c>sender</c> as <c>InputFieldContentView</c>.
-        /// </summary>
         public event EventHandler<EventArgs> Tapped;
 
         public static readonly BindableProperty LabelTextProperty = BindableProperty.Create(nameof(LabelText), typeof(string), typeof(ButtonLabelContentView), string.Empty);
