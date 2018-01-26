@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Connect.Models;
 using Xamarin.Forms;
 using Connect.ViewModels;
@@ -34,7 +36,7 @@ namespace Connect.Pages {
 
         #region Event Handler Overrides
 
-        protected override void OnAppearing() {
+        protected override async void OnAppearing() {
             base.OnAppearing();
 
             OnSizeChanged(null, null);
@@ -48,7 +50,16 @@ namespace Connect.Pages {
                 }
 
                 _viewModel.IsInitialized = true;
-                LoadProjects();
+                await LoadProjectsAsync();
+
+                _filterSearchPopup.BusinessUnits = _viewModel.BusinessUnits;
+
+                _filterSearchPopup.Items = _filterSearchPopup.Items ?? new List<FilterSearchItem>();
+
+                _filterSearchPopup.Items.Clear();
+
+                _filterSearchPopup.Items.AddRange(_viewModel.FilterSearchProjectItems);
+                _filterSearchPopup.Items.AddRange(_viewModel.FilterSearchProrocolItems);
             }
         }
 
@@ -80,19 +91,22 @@ namespace Connect.Pages {
                 return;
             }
 
-            if(itemTappedEventArgs.Item != null) {
-                FilterSearchItem item = (FilterSearchItem)itemTappedEventArgs.Item;
+            if(itemTappedEventArgs.Item == null) {  //Clear filter if null
+                _viewModel.DisplayProjects = new ObservableCollection<Project>(_viewModel.Projects);
+                return;
+            }
 
-                if(!string.IsNullOrEmpty(item.ProjectId)) {
-                    _viewModel.DisplayProjects = new ObservableCollection<Project>(_viewModel.Projects.Where(p => p.projectId.Equals(item.ProjectId, StringComparison.OrdinalIgnoreCase)));
-                } else if(!string.IsNullOrEmpty(item.ProtocolId)) {
-                    _viewModel.DisplayProjects = new ObservableCollection<Project>(_viewModel.Projects.Where(p => p.protocolId.Equals(item.ProtocolId, StringComparison.OrdinalIgnoreCase)));
-                }
+            FilterSearchItem item = (FilterSearchItem)itemTappedEventArgs.Item;
+
+            if(!string.IsNullOrEmpty(item.ProjectId)) {
+                _viewModel.DisplayProjects = new ObservableCollection<Project>(_viewModel.Projects.Where(p => p.projectId.Equals(item.ProjectId, StringComparison.OrdinalIgnoreCase)));
+            } else if(!string.IsNullOrEmpty(item.ProtocolId)) {
+                _viewModel.DisplayProjects = new ObservableCollection<Project>(_viewModel.Projects.Where(p => p.protocolId.Equals(item.ProtocolId, StringComparison.OrdinalIgnoreCase)));
             }
         }
 
         #endregion
 
-        public void LoadProjects() => _viewModel.LoadCommand?.Execute(null);
+        public async Task LoadProjectsAsync() => await _viewModel.ExecuteLoadCommand();
     }
 }

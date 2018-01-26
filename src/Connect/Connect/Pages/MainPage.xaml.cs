@@ -55,16 +55,14 @@ namespace Connect.Pages {
 
         #region Event Handlers
 
-        private void OnPageNavigated(object o, PageNavigationEventArgs e) {
-            SetDetailPage(e.PageItem);
-        }
+        private void OnPageNavigated(object o, PageNavigationEventArgs e) => SetDetailPage(e.PageItem);
 
-        private void OnLoginDisappearing(object sender, EventArgs eventArgs) {
+        private async void OnLoginDisappearing(object sender, EventArgs eventArgs) {
             if(App.IsAndroid) {
                 _login.Disappearing -= OnLoginDisappearing;
 
                 if(((NavigationPage)Detail).CurrentPage is ProjectsPage projPage) {
-                    projPage.LoadProjects();
+                    await projPage.LoadProjectsAsync();
                 }
             }
         }

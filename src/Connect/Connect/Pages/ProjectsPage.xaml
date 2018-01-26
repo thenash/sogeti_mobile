@@ -41,7 +41,7 @@
                                      ProtocolId="{Binding protocolId}"
                                      ProjectCode="{Binding projectId}"
                                      TherapeuticArea="{Binding primaryTherapeuticArea}"
-                                     StudyPhase="{Binding phase, StringFormat='Phase {0}'}"
+                                     StudyPhase="{Binding PhaseString, StringFormat='Phase {0}'}"
                                      Indications="{Binding primaryIndication}"
                                      ProjDirector="{Binding projectDirector}"
                                      IsSelected="{Binding IsSelected}"

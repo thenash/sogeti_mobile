@@ -22,8 +22,8 @@
 
   <pages:PopupPage.Content>
     <!--<ScrollView>-->
-      <Grid BackgroundColor="White"
-            Padding="5">
+      <Grid Padding="10,10,10,10"
+            BackgroundColor="White">
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto" />
           <RowDefinition Height="Auto" />
@@ -33,14 +33,26 @@
           <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Button Text="Close"
+        <!--<Button Text="Close"
                 TextColor="Black"
                 FontAttributes="Bold"
                 FontSize="Small"
                 HorizontalOptions="End"
                 Clicked="OnClose"
                 Grid.Row="0"
-                Grid.Column="0"/>
+                Grid.Column="0"/>-->
+
+        <Label Text="&#x2715;"
+               FontAttributes="Bold"
+               FontSize="Large"
+               Style="{StaticResource BaseLabelStyle}"
+               HorizontalTextAlignment="End"
+               Grid.Row="0"
+               Grid.Column="0">
+          <Label.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnClose"/>
+          </Label.GestureRecognizers>
+        </Label>
 
         <ScrollView HorizontalOptions="Fill"
                     Grid.Row="1"

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,6 +28,38 @@ namespace Connect.ViewModels {
                 }
             }
         }
+
+        public List<BusinessUnitFilterItem> BusinessUnits => Projects?.Select(proj =>{
+
+            string[] owningByArray = proj.owningBu.Split(new [] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+            return new BusinessUnitFilterItem { //HACK: This is not a good way to split the name, would be best if these were separate properties
+                BusinessUnitId   = int.Parse(owningByArray[0]),
+                BusinessUnitName = owningByArray[1]
+            };
+        }).GroupBy(bu => bu.BusinessUnitId).Select(items => items.FirstOrDefault()).ToList();
+
+        public List<FilterSearchItem> FilterSearchProjectItems => Projects?.Select(proj =>{
+
+            string[] owningByArray = proj.owningBu.Split(new [] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+            return new FilterSearchItem { //HACK: This is not a good way to split the name, would be best if these were separate properties
+                BusinessUnitId = int.Parse(owningByArray[0]),
+                ProjectId      = proj.projectId,
+                CustomerName   = proj.customerName
+            };
+        }).GroupBy(bu => bu.ItemText).Select(items => items.FirstOrDefault()).ToList();
+
+        public List<FilterSearchItem> FilterSearchProrocolItems => Projects?.Select(proj =>{
+
+            string[] owningByArray = proj.owningBu.Split(new [] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+            return new FilterSearchItem { //HACK: This is not a good way to split the name, would be best if these were separate properties
+                BusinessUnitId = int.Parse(owningByArray[0]),
+                ProtocolId     = proj.protocolId,
+                CustomerName   = proj.customerName
+            };
+        }).GroupBy(bu => bu.ItemText).Select(items => items.FirstOrDefault()).ToList();
 
         private ObservableCollection<Project> _displayProjects;
         /// <summary>
@@ -83,7 +116,7 @@ namespace Connect.ViewModels {
             MessagingCenter.Send(this, ConstantKeys.ProjectSelected, project);
         }
 
-		private async Task ExecuteLoadCommand() {
+		public async Task ExecuteLoadCommand() {
 
             if(IsBusy) {
 		        return;

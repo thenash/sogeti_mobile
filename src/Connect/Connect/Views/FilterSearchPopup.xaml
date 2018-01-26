@@ -123,7 +123,8 @@
                Grid.Row="6"
                Grid.Column="0"/>
 
-      <Entry Placeholder="Search (eg: 100234 or 234D51-4P3)"
+      <Entry x:Name="SearchEntry"
+             Placeholder="Search (eg: 100234 or 234D51-4P3)"
              Margin="5,0,0,0"
              TextChanged="OnSearchTextChanged"
              Grid.Row="6"
@@ -162,6 +163,7 @@
                 BackgroundColor="Transparent"
                 SeparatorVisibility="None"
                 VerticalOptions="Start"
+                ItemTapped="OnItemTapped"
                 Grid.Row="8"
                 Grid.Column="1">
         <ListView.Triggers>
@@ -210,12 +212,12 @@
         </BoxView.Triggers>
       </BoxView>
 
-      <views:ButtonLabelContentView LabelText="APPLY FILTERS"
-                                    AutomationId="FilterSearchPopupAppleFilterButtonLabelContentView"
+      <views:ButtonLabelContentView LabelText="CLEAR FILTERS"
+                                    AutomationId="FilterSearchPopupClearFilterButtonLabelContentView"
                                     WidthRequest="200"
                                     HeightRequest="40"
                                     Margin="0,10,0,0"
-                                    Tapped="OnApplyFilterTapped"
+                                    Tapped="OnClearFilterTapped"
                                     Grid.Row="10"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="3" />

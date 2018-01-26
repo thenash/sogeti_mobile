@@ -91,11 +91,10 @@ namespace Connect.Pages {
         }
 
         private void OnSizeChanged(object sender, EventArgs eventArgs) {
-            double width  = (Width  - Width  * 0.8) / 2;
             double height = (Height - Height * 0.8) / 2;
 
-            _commentsPopup.Padding    = new Thickness(width, height);
-            _contactInfoPopup.Padding = new Thickness(width, height);
+            _commentsPopup.Padding    = new Thickness(0, height);
+            _contactInfoPopup.Padding = new Thickness(0, height);
         }
 
         protected override void OnDisappearing() {
@@ -146,6 +145,7 @@ namespace Connect.Pages {
 
             Device.BeginInvokeOnMainThread(() => {
                 card.BackgroundColor = Utility.GetResource<Color>("SkyBlue");
+                card.ForceLayout();
             });
 
             _viewModel.FilterMilestonesByVariance(card.Variance);

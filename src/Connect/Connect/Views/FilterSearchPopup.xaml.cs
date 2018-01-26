@@ -13,11 +13,6 @@ namespace Connect.Views {
 
         #region Properties
 
-        /// <summary>
-        /// Used to skip the initial selection of the All Business Unit category which would normally trigger a picker selection and load all items.
-        /// </summary>
-        private bool _skipBusinessUnitSelected;
-
         public event EventHandler<ItemTappedEventArgs> Filtered;
 
         public static readonly BindableProperty BusinessUnitsProperty = BindableProperty.Create(nameof(BusinessUnits), typeof(List<BusinessUnitFilterItem>), typeof(FilterSearchPopup));
@@ -43,54 +38,53 @@ namespace Connect.Views {
 
             InitializeComponent();
 
-#if DEBUG
-            BusinessUnits = new List<BusinessUnitFilterItem> {
-                new BusinessUnitFilterItem {
-                    BusinessUnitId   = -1,
-                    BusinessUnitName = "All"
-                }, new BusinessUnitFilterItem {
-                    BusinessUnitId   = 1000,
-                    BusinessUnitName = "Central Nervous System (CNS)"
-                }, new BusinessUnitFilterItem {
-                    BusinessUnitId   = 2000,
-                    BusinessUnitName = "Oncology"
-                }, new BusinessUnitFilterItem {
-                    BusinessUnitId   = 4000,
-                    BusinessUnitName = "General Medicine"
-                }, new BusinessUnitFilterItem {
-                    BusinessUnitId   = 9000,
-                    BusinessUnitName = "Study Start Up"
-                }, new BusinessUnitFilterItem {
-                    BusinessUnitId   = 9500,
-                    BusinessUnitName = "Biometrics"
-                }
-            };
+//#if DEBUG
+//            BusinessUnits = new List<BusinessUnitFilterItem> {
+//                new BusinessUnitFilterItem {
+//                    BusinessUnitId   = -1,
+//                    BusinessUnitName = "All"
+//                }, new BusinessUnitFilterItem {
+//                    BusinessUnitId   = 1000,
+//                    BusinessUnitName = "Central Nervous System (CNS)"
+//                }, new BusinessUnitFilterItem {
+//                    BusinessUnitId   = 2000,
+//                    BusinessUnitName = "Oncology"
+//                }, new BusinessUnitFilterItem {
+//                    BusinessUnitId   = 4000,
+//                    BusinessUnitName = "General Medicine"
+//                }, new BusinessUnitFilterItem {
+//                    BusinessUnitId   = 9000,
+//                    BusinessUnitName = "Study Start Up"
+//                }, new BusinessUnitFilterItem {
+//                    BusinessUnitId   = 9500,
+//                    BusinessUnitName = "Biometrics"
+//                }
+//            };
 
-            Items = new List<FilterSearchItem> {
-                new FilterSearchItem {
-                    ItemText  = "Project 1 - Customer Name",
-                    ProjectId = "Project 1"
-                }, new FilterSearchItem {
-                    ItemText  = "Project 2 - Customer Name",
-                    ProjectId = "Project 2"
-                }, new FilterSearchItem {
-                    ItemText  = "Project 3 - Customer Name",
-                    ProjectId = "Project 3"
-                }, new FilterSearchItem {
-                    ItemText   = "9083-E1-ES3 - Customer Name",
-                    ProtocolId = "9083-E1-ES3"
-                }, new FilterSearchItem {
-                    ItemText   = "7710-TM89-Y0 - Customer Name",
-                    ProtocolId = "7710-TM89-Y0"
-                }, new FilterSearchItem {
-                    ItemText   = "5404-Y5TT-U1 - Customer Name",
-                    ProtocolId = "5404-Y5TT-U1"
-                }
-            };
-#endif
-            _skipBusinessUnitSelected = true;
+//            Items = new List<FilterSearchItem> {
+//                new FilterSearchItem {
+//                    ItemText  = "Project 1 - Customer Name",
+//                    ProjectId = "Project 1"
+//                }, new FilterSearchItem {
+//                    ItemText  = "Project 2 - Customer Name",
+//                    ProjectId = "Project 2"
+//                }, new FilterSearchItem {
+//                    ItemText  = "Project 3 - Customer Name",
+//                    ProjectId = "Project 3"
+//                }, new FilterSearchItem {
+//                    ItemText   = "9083-E1-ES3 - Customer Name",
+//                    ProtocolId = "9083-E1-ES3"
+//                }, new FilterSearchItem {
+//                    ItemText   = "7710-TM89-Y0 - Customer Name",
+//                    ProtocolId = "7710-TM89-Y0"
+//                }, new FilterSearchItem {
+//                    ItemText   = "5404-Y5TT-U1 - Customer Name",
+//                    ProtocolId = "5404-Y5TT-U1"
+//                }
+//            };
 
-            BusinessUnitPicker.SelectedItem = BusinessUnits[0];
+//            BusinessUnitPicker.SelectedItem = BusinessUnits[0];
+//#endif
         }
 
         #endregion
@@ -106,7 +100,37 @@ namespace Connect.Views {
 
             switch(propertyName) {
                 case nameof(BusinessUnits):
-                    BusinessUnitPicker.ItemsSource = BusinessUnits?.OrderBy(bu => bu.BusinessUnitId).ToList();
+                    if(BusinessUnits != null && BusinessUnits.Count > 0) {
+                        List<BusinessUnitFilterItem> items = BusinessUnits.OrderBy(bu => bu.BusinessUnitId).ToList();
+
+                        items.Insert(0, new BusinessUnitFilterItem {
+                            BusinessUnitId   = -1,
+                            BusinessUnitName = "All"
+                        });
+
+                        BusinessUnitPicker.ItemsSource  = items;
+                        BusinessUnitPicker.SelectedItem = items[0];
+                    } else {
+                        BusinessUnitPicker.ItemsSource = null;
+                    }
+                    break;
+            }
+
+            switch(propertyName) {
+                case nameof(Items):
+                    if(BusinessUnits != null && BusinessUnits.Count > 0) {
+                        List<BusinessUnitFilterItem> items = BusinessUnits.OrderBy(bu => bu.BusinessUnitId).ToList();
+
+                        items.Insert(0, new BusinessUnitFilterItem {
+                            BusinessUnitId   = -1,
+                            BusinessUnitName = "All"
+                        });
+
+                        BusinessUnitPicker.ItemsSource  = items;
+                        BusinessUnitPicker.SelectedItem = items[0];
+                    } else {
+                        BusinessUnitPicker.ItemsSource = null;
+                    }
                     break;
             }
         }
@@ -118,42 +142,36 @@ namespace Connect.Views {
         private void OnClose(object sender, EventArgs e) => PopupNavigation.PopAsync();
 
         private void OnSelectedBusinessUnitChanged(object sender, EventArgs e) {
-            if(_skipBusinessUnitSelected) {
-                _skipBusinessUnitSelected = false;
-                return;
-            }
 
-            //TODO: Do something
-
-            //var items = Items.Where(itm => itm.BusinessUnitId == ((BusinessUnitFilterItem)BusinessUnitPicker.SelectedItem).BusinessUnitId).ToList();
-#if DEBUG
-            List<FilterSearchItem> items = Items;
-#endif
-            SetItemListViewItems(items);
-        }
-
-        private void OnSearchTextChanged(object sender, TextChangedEventArgs e) {
-
-            string searchTerm = e.NewTextValue;
+            BusinessUnitFilterItem bu = (BusinessUnitFilterItem)BusinessUnitPicker.SelectedItem;
 
             List<FilterSearchItem> items;
 
-            if(string.IsNullOrWhiteSpace(searchTerm)) {
+            if(bu == null || bu.BusinessUnitId == -1) {
                 items = Items;
             } else {
-                items = Items.Where(itm => itm.ItemText.ToLowerInvariant().Contains(e.NewTextValue.TrimStart().ToLowerInvariant())).ToList();
+                items = Items.Where(itm => itm.BusinessUnitId == ((BusinessUnitFilterItem)BusinessUnitPicker.SelectedItem).BusinessUnitId).ToList();
             }
 
-            SetItemListViewItems(items);
+//#if DEBUG
+//            List<FilterSearchItem> items = Items;
+//#endif
+
+            FilterViewItems(SearchEntry.Text, items);
         }
 
-        private async void OnApplyFilterTapped(object sender, EventArgs e) {
-            if(ItemsListView.SelectedItem == null) {
-                await DisplayAlert("Error", "You forgot to select an item from the list.", "OK");
-                return;
-            }
+        private void OnSearchTextChanged(object sender, TextChangedEventArgs e) => FilterViewItems(e.NewTextValue, Items);
 
-            Filtered?.Invoke(sender, new ItemTappedEventArgs(null, ItemsListView.SelectedItem));
+        private async void OnItemTapped(object sender, ItemTappedEventArgs e) {
+            Filtered?.Invoke(sender, new ItemTappedEventArgs(null, e.Item));
+
+            await Navigation.PopPopupAsync();
+        }
+
+        private async void OnClearFilterTapped(object sender, EventArgs e) {
+            ItemsListView.SelectedItem = null;
+
+            Filtered?.Invoke(sender, new ItemTappedEventArgs(null, null));
 
             await Navigation.PopPopupAsync();
         }
@@ -162,7 +180,19 @@ namespace Connect.Views {
 
         private void SetItemListViewItems(ICollection<FilterSearchItem> items) {
             ItemsListView.ItemsSource = items;
-            ItemsListView.IsVisible   = items != null && items.Count > 1;
+            ItemsListView.IsVisible   = items != null && items.Count > 0;
+        }
+
+        private void FilterViewItems(string filterTerm, List<FilterSearchItem> items) {
+            List<FilterSearchItem> filteredItems;
+
+            if(string.IsNullOrWhiteSpace(filterTerm)) {
+                filteredItems = items;
+            } else {
+                filteredItems = items.Where(itm => itm.ItemText.ToLowerInvariant().Contains(filterTerm.ToLowerInvariant())).ToList();
+            }
+
+            SetItemListViewItems(filteredItems);
         }
     }
 }

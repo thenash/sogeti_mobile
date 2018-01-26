@@ -28,56 +28,56 @@ namespace Connect.Views {
         public static readonly BindableProperty ProjectCodeProperty = BindableProperty.Create(nameof(ProjectCode), typeof(string), typeof(ProjectInfoCell), string.Empty, BindingMode.TwoWay);
 
         public string ProjectCode {
-            get => GetValue(ProjectCodeProperty).ToString();
+            get => (string)GetValue(ProjectCodeProperty);
             set => SetValue(ProjectCodeProperty, value);
         }
 
         public static readonly BindableProperty ProtocolIdProperty = BindableProperty.Create(nameof(ProtocolId), typeof(string), typeof(ProjectInfoCell), string.Empty, BindingMode.TwoWay);
 
         public string ProtocolId {
-            get => GetValue(ProtocolIdProperty).ToString();
+            get => (string)GetValue(ProtocolIdProperty);
             set => SetValue(ProtocolIdProperty, value);
         }
 
         public static readonly BindableProperty CustomerNameProperty = BindableProperty.Create(nameof(CustomerName), typeof(string), typeof(ProjectInfoCell), string.Empty, BindingMode.TwoWay);
 
         public string CustomerName {
-            get => GetValue(CustomerNameProperty).ToString();
+            get => (string)GetValue(CustomerNameProperty);
             set => SetValue(CustomerNameProperty, value);
         }
 
         public static readonly BindableProperty BusinessUnitProperty = BindableProperty.Create(nameof(BusinessUnit), typeof(string), typeof(ProjectInfoCell), string.Empty, BindingMode.TwoWay);
 
         public string BusinessUnit {
-            get => GetValue(BusinessUnitProperty).ToString();
+            get => (string)GetValue(BusinessUnitProperty);
             set => SetValue(BusinessUnitProperty, value);
         }
 
         public static readonly BindableProperty TherapeuticAreaProperty = BindableProperty.Create(nameof(TherapeuticArea), typeof(string), typeof(ProjectInfoCell), string.Empty, BindingMode.TwoWay);
 
         public string TherapeuticArea {
-            get => GetValue(TherapeuticAreaProperty).ToString();
+            get => (string)GetValue(TherapeuticAreaProperty);
             set => SetValue(TherapeuticAreaProperty, value);
         }
 
         public static readonly BindableProperty StudyPhaseProperty = BindableProperty.Create(nameof(StudyPhase), typeof(string), typeof(ProjectInfoCell), string.Empty, BindingMode.TwoWay);
 
         public string StudyPhase {
-            get => GetValue(StudyPhaseProperty).ToString();
+            get => (string)GetValue(StudyPhaseProperty);
             set => SetValue(StudyPhaseProperty, value);
         }
 
         public static readonly BindableProperty IndicationsProperty = BindableProperty.Create(nameof(Indications), typeof(string), typeof(ProjectInfoCell), string.Empty, BindingMode.TwoWay);
 
         public string Indications {
-            get => GetValue(IndicationsProperty).ToString();
+            get => (string)GetValue(IndicationsProperty);
             set => SetValue(IndicationsProperty, value);
         }
 
         public static readonly BindableProperty ProjDirectorProperty = BindableProperty.Create(nameof(ProjDirector), typeof(string), typeof(ProjectInfoCell), string.Empty, BindingMode.TwoWay);
 
         public string ProjDirector {
-            get => GetValue(ProjDirectorProperty).ToString();
+            get => (string)GetValue(ProjDirectorProperty);
             set => SetValue(ProjDirectorProperty, value);
         }
 
@@ -120,35 +120,35 @@ namespace Connect.Views {
                     break;
 
                 case nameof(BusinessUnit):
-                    BusinessUnitCell.Description = GetValue(BusinessUnitProperty).ToString();
+                    BusinessUnitCell.Description = BusinessUnit;
                     break;
 
                 case nameof(ProtocolId):
-                    ProtocolIdCell.Description = GetValue(ProtocolIdProperty).ToString();
+                    ProtocolIdCell.Description = ProtocolId;
                     break;
 
                 case nameof(CustomerName):
-                    CustomerNameCell.Description = GetValue(CustomerNameProperty).ToString();
+                    CustomerNameCell.Description = CustomerName;
                     break;
 
                 case nameof(ProjectCode):
-                    ProjectCodeCell.Description = GetValue(ProjectCodeProperty).ToString();
+                    ProjectCodeCell.Description = ProjectCode;
                     break;
 
                 case nameof(TherapeuticArea):
-                    TherapeuticAreaCell.Description = GetValue(TherapeuticAreaProperty).ToString();
+                    TherapeuticAreaCell.Description = TherapeuticArea;
                     break;
 
                 case nameof(StudyPhase):
-                    StudyPhaseCell.Description = GetValue(StudyPhaseProperty).ToString();
+                    StudyPhaseCell.Description = StudyPhase;
                     break;
 
                 case nameof(Indications):
-                    IndicationsCell.Description = GetValue(IndicationsProperty).ToString();
+                    IndicationsCell.Description = Indications;
                     break;
 
                 case nameof(ProjDirector):
-                    ProjDirectorCell.Description = GetValue(ProjDirectorProperty).ToString();
+                    ProjDirectorCell.Description = ProjDirector;
                     break;
 
                 case nameof(ArrowTappedCommandParameter):

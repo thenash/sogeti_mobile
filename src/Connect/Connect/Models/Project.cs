@@ -49,6 +49,9 @@ namespace Connect.Models {
             get; set;
         }
 
+        [JsonIgnore]
+        public string PhaseString => phase.ToString();
+
         public Project() { }
     }
 }
