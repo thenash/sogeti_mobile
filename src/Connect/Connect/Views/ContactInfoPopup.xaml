@@ -113,9 +113,11 @@
                              Grid.Row="2"
                              Grid.Column="0"
                              Grid.ColumnSpan="2">
-                  <Label Text="P"
+                  <!--<Label Text="P"
                          TextColor="{StaticResource DarkBlue}"
-                         FontSize="Large"/>
+                         FontSize="Large"/>-->
+
+                  <Image Source="phone.png"/>
 
                   <Label Text="{Binding Phone}"
                          Style="{StaticResource BaseLabelStyle}"
@@ -140,9 +142,11 @@
                              Grid.Row="4"
                              Grid.Column="0"
                              Grid.ColumnSpan="2">
-                  <Label Text="E"
+                  <!--<Label Text="E"
                          TextColor="{StaticResource DarkBlue}"
-                         FontSize="Large"/>
+                         FontSize="Large"/>-->
+
+                  <Image Source="email.png"/>
 
                   <Label Text="{Binding Email}"
                          Style="{StaticResource BaseLabelStyle}"

@@ -44,6 +44,8 @@ namespace Connect.Views {
 
                 if(await PermissionsInstance.HasOrGetsPermissionAsync(Permission.Phone)) {
                     Device.OpenUri(new Uri("tel:" + phoneNum));
+                } else if(await DisplayAlert("ERROR", "Unable to make phone calls at this time.", "To Device Settings", "OK")) {
+                    PermissionsInstance.Instance.OpenAppSettings();
                 }
             });
 

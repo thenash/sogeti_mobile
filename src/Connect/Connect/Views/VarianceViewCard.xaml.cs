@@ -66,6 +66,7 @@ namespace Connect.Views {
 
             if(propertyName == nameof(BackgroundColor)) {
                 VarianceCardFrame.BackgroundColor = BackgroundColor;
+                ForceLayout();
                 return;
             }
 

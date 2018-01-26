@@ -8,6 +8,7 @@ namespace Connect.Views {
         private TapGestureRecognizer _tapGesture;
 
         private readonly Label _label;
+        private readonly Image _icon;
         private readonly Frame _frame;
 
         public event EventHandler<EventArgs> Tapped;
@@ -17,6 +18,13 @@ namespace Connect.Views {
         public string LabelText {
             get => (string)GetValue(LabelTextProperty);
             set => SetValue(LabelTextProperty, value);
+        }
+
+        public static readonly BindableProperty IconNameProperty = BindableProperty.Create(nameof(IconName), typeof(string), typeof(ButtonLabelContentView));
+
+        public string IconName {
+            get => (string)GetValue(IconNameProperty);
+            set => SetValue(IconNameProperty, value);
         }
 
         public new static readonly BindableProperty HeightRequestProperty = BindableProperty.Create(nameof(HeightRequest), typeof(double), typeof(ButtonLabelContentView), 0D);
@@ -45,10 +53,16 @@ namespace Connect.Views {
                 Style                   = Utility.GetResource<Style>("BaseLabelStyle")
             };
 
+            _icon = new Image {
+                Aspect            = Aspect.AspectFit,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions   = LayoutOptions.Center
+            };
+
             _frame = new Frame {
                 HasShadow         = false,
                 CornerRadius      = 2,
-                Padding           = 0,
+                Padding           = new Thickness(0, 3),
                 BackgroundColor   = Utility.GetResource<Color>("DarkBlue"),
                 HorizontalOptions = LayoutOptions.Center,
                 Content           = _label
@@ -82,6 +96,14 @@ namespace Connect.Views {
             switch(propertyName) {
                 case nameof(LabelText):
                     _label.Text = LabelText;
+
+                    _frame.Content = _label;
+                    break;
+
+                case nameof(IconName):
+                    _icon.Source = ImageSource.FromFile(IconName);
+
+                    _frame.Content = _icon;
                     break;
 
                 case nameof(WidthRequest):

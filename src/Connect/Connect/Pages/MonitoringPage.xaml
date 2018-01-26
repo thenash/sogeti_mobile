@@ -8,7 +8,7 @@
              Title="{Binding Title}">
 
   <ContentPage.ToolbarItems>
-    <ToolbarItem Text="LOGOUT"
+    <ToolbarItem Icon="logout.png"
                  Command=""/>
     <!-- TODO: Bind to Command in BaseViewModel -->
   </ContentPage.ToolbarItems>

@@ -7,7 +7,9 @@
              BackgroundColor="{StaticResource LightGray}"
              Title="{Binding Title}">
   <ContentPage.ToolbarItems>
-    <ToolbarItem Text="LOGOUT" />
+    <ToolbarItem Icon="logout.png"
+                 Command=""/>
+    <!-- TODO: Bind to Command in BaseViewModel -->
   </ContentPage.ToolbarItems>
 
 	<ContentPage.Content>
@@ -21,9 +23,9 @@
                FontSize="Small"
                FontAttributes="Bold"/>
 
-        <myViews:ButtonLabelContentView LabelText="FILTER / SEARCH"
+        <myViews:ButtonLabelContentView IconName="search.png"
                                         HorizontalOptions="End"
-                                        WidthRequest="180"
+                                        WidthRequest="120"
                                         HeightRequest="35"
                                         Tapped="OnFilterSearchTapped"/>
       </StackLayout>
