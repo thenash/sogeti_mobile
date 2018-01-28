@@ -1,7 +1,13 @@
-﻿using Connect.Models;
+﻿using System.Threading.Tasks;
+using Connect.Models;
 using Xamarin.Forms;
 using Connect.Pages;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Distribute;
 using Xamarin.Forms.Xaml;
+using Device = Xamarin.Forms.Device;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 
@@ -41,15 +47,7 @@ namespace Connect {
         }
 
         protected override void OnStart() {
-            // Handle when your app starts
-        }
-
-        protected override void OnSleep() {
-            // Handle when your app sleeps
-        }
-
-        protected override void OnResume() {
-            // Handle when your app resumes
+            AppCenter.Start("ios=77364ed3-f0b7-43d8-8492-fd0e97e1235b;" + "android=1321f962-11d2-4ac2-9abe-f9cb26fa580d;", typeof(Analytics), typeof(Crashes), typeof(Distribute));
         }
     }
 }

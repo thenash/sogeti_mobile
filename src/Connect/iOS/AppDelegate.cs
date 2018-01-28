@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using Microsoft.AppCenter.Distribute;
 using UIKit;
 using Xamarin.Forms;
 
@@ -17,6 +18,7 @@ namespace Connect.iOS {
 #if ENABLE_TEST_CLOUD
             Xamarin.Calabash.Start();
 #endif
+            Distribute.DontCheckForUpdatesInDebug();
 
             LoadApplication(new App());
 

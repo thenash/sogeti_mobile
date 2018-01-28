@@ -47,5 +47,14 @@
 	<string>The app requires calendar functionality</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>The app requires photo library functionality</string>
+  <key>CFBundleURLTypes</key>
+  <array>
+      <dict>
+          <key>CFBundleURLSchemes</key>
+          <array>
+              <string>appcenter-${APP_SECRET}</string>
+          </array>
+      </dict>
+  </array>
 </dict>
 </plist>
