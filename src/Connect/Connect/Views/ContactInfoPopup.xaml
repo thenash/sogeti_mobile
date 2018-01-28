@@ -32,15 +32,34 @@
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="Auto"/>
       </Grid.ColumnDefinitions>
+
+      <views:CardCellView x:Name="ProjectCodeCardCellView"
+                          Title="Project Code"
+                          TextAlignment="StartAndExpand"
+                          Grid.Row="0"
+                          Grid.Column="0" />
+
+      <views:CardCellView x:Name="CustomerNameCardCellView"
+                          Title="Customer"
+                          Grid.Row="0"
+                          Grid.Column="1"/>
+
+      <views:CardCellView x:Name="ProtocolIdCardCellView"
+                          Title="Protocol ID"
+                          TextAlignment="EndAndExpand"
+                          Grid.Row="0"
+                          Grid.Column="2" />
 
       <Label Text="&#x2715;"
              FontAttributes="Bold"
              FontSize="Large"
              Style="{StaticResource BaseLabelStyle}"
-             HorizontalTextAlignment="End"
              Grid.Row="0"
-             Grid.Column="0">
+             Grid.Column="3">
         <Label.GestureRecognizers>
           <TapGestureRecognizer Tapped="OnClose"/>
         </Label.GestureRecognizers>
@@ -51,7 +70,8 @@
                 BackgroundColor="Transparent"
                 SeparatorVisibility="None"
                 Grid.Row="1"
-                Grid.Column="0">
+                Grid.Column="0"
+                Grid.ColumnSpan="4">
         <!--<ListView.Header>
           <Label Text="Close"
                  FontAttributes="Bold"

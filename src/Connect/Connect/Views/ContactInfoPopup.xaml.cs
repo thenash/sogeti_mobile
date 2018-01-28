@@ -20,6 +20,27 @@ namespace Connect.Views {
         public ICommand PhoneTappedCommand { get; }
         public ICommand EmailTappedCommand { get; }
 
+        public static readonly BindableProperty ProjectCodeProperty = BindableProperty.Create(nameof(ProjectCode), typeof(string), typeof(ContactInfoPopup));
+
+        public string ProjectCode {
+            get => (string)GetValue(ProjectCodeProperty);
+            set => SetValue(ProjectCodeProperty, value);
+        }
+
+        public static readonly BindableProperty CustomerNameProperty = BindableProperty.Create(nameof(CustomerName), typeof(string), typeof(ContactInfoPopup));
+
+        public string CustomerName {
+            get => (string)GetValue(CustomerNameProperty);
+            set => SetValue(CustomerNameProperty, value);
+        }
+
+        public static readonly BindableProperty ProtocolIdProperty = BindableProperty.Create(nameof(ProtocolId), typeof(string), typeof(ContactInfoPopup));
+
+        public string ProtocolId {
+            get => (string)GetValue(ProtocolIdProperty);
+            set => SetValue(ProtocolIdProperty, value);
+        }
+
         public static readonly BindableProperty ContactsProperty = BindableProperty.Create(nameof(Contacts), typeof(List<ContactInfo>), typeof(ContactInfoPopup));
 
         public List<ContactInfo> Contacts {
@@ -98,6 +119,18 @@ namespace Connect.Views {
             switch(propertyName) {
                 case nameof(Contacts):
                     ContactsListView.ItemsSource = Contacts;
+                    break;
+
+                case nameof(ProjectCode):
+                    ProjectCodeCardCellView.Description = ProjectCode;
+                    break;
+
+                case nameof(CustomerName):
+                    CustomerNameCardCellView.Description = CustomerName;
+                    break;
+
+                case nameof(ProtocolId):
+                    ProtocolIdCardCellView.Description = ProtocolId;
                     break;
             }
         }

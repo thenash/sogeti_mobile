@@ -3,6 +3,7 @@
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
                  xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:views="clr-namespace:Connect.Views;assembly=Connect"
                  x:Class="Connect.Views.ProjectCommentsPopup"
                  HasSystemPadding="False"
                  CloseWhenBackgroundIsClicked="True">
@@ -31,6 +32,9 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
         <!--<Button Text="Close"
@@ -42,13 +46,29 @@
                 Grid.Row="0"
                 Grid.Column="0"/>-->
 
+        <views:CardCellView x:Name="ProjectCodeCardCellView"
+                            Title="Project Code"
+                            TextAlignment="StartAndExpand"
+                            Grid.Row="0"
+                            Grid.Column="0" />
+
+        <views:CardCellView x:Name="CustomerNameCardCellView"
+                            Title="Customer"
+                            Grid.Row="0"
+                            Grid.Column="1"/>
+
+        <views:CardCellView x:Name="ProtocolIdCardCellView"
+                            Title="Protocol ID"
+                            TextAlignment="EndAndExpand"
+                            Grid.Row="0"
+                            Grid.Column="2" />
+
         <Label Text="&#x2715;"
                FontAttributes="Bold"
                FontSize="Large"
                Style="{StaticResource BaseLabelStyle}"
-               HorizontalTextAlignment="End"
                Grid.Row="0"
-               Grid.Column="0">
+               Grid.Column="3">
           <Label.GestureRecognizers>
             <TapGestureRecognizer Tapped="OnClose"/>
           </Label.GestureRecognizers>
@@ -56,7 +76,8 @@
 
         <ScrollView HorizontalOptions="Fill"
                     Grid.Row="1"
-                    Grid.Column="0">
+                    Grid.Column="0"
+                    Grid.ColumnSpan="4">
           <Label x:Name="CommentLabel"
                  HorizontalOptions="Fill"/>
         </ScrollView>

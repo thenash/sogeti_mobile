@@ -1,12 +1,34 @@
 ﻿using System;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
 
 namespace Connect.Views {
 
     public partial class ProjectCommentsPopup : PopupPage {
 
         //private bool _isEditing;
+
+        public static readonly BindableProperty ProjectCodeProperty = BindableProperty.Create(nameof(ProjectCode), typeof(string), typeof(ProjectCommentsPopup));
+
+        public string ProjectCode {
+            get => (string)GetValue(ProjectCodeProperty);
+            set => SetValue(ProjectCodeProperty, value);
+        }
+
+        public static readonly BindableProperty CustomerNameProperty = BindableProperty.Create(nameof(CustomerName), typeof(string), typeof(ProjectCommentsPopup));
+
+        public string CustomerName {
+            get => (string)GetValue(CustomerNameProperty);
+            set => SetValue(CustomerNameProperty, value);
+        }
+
+        public static readonly BindableProperty ProtocolIdProperty = BindableProperty.Create(nameof(ProtocolId), typeof(string), typeof(ProjectCommentsPopup));
+
+        public string ProtocolId {
+            get => (string)GetValue(ProtocolIdProperty);
+            set => SetValue(ProtocolIdProperty, value);
+        }
 
         public ProjectCommentsPopup() {
             InitializeComponent();
@@ -21,6 +43,28 @@ namespace Connect.Views {
         //    CommentEditor.WidthRequest  = Width  * 0.8;
         //    CommentEditor.HeightRequest = Height * 0.5;
         //}
+
+        protected override void OnPropertyChanged(string propertyName = null) {
+            base.OnPropertyChanged(propertyName);
+
+            if(propertyName == null) {
+                return;
+            }
+
+            switch(propertyName) {
+                case nameof(ProjectCode):
+                    ProjectCodeCardCellView.Description = ProjectCode;
+                    break;
+
+                case nameof(CustomerName):
+                    CustomerNameCardCellView.Description = CustomerName;
+                    break;
+
+                case nameof(ProtocolId):
+                    ProtocolIdCardCellView.Description = ProtocolId;
+                    break;
+            }
+        }
 
         private void OnClose(object sender, EventArgs e) => PopupNavigation.PopAsync();
 

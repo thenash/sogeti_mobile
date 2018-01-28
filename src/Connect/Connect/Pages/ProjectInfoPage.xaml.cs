@@ -40,7 +40,13 @@ namespace Connect.Pages {
 
                     _isCommentsOpen = true;
 
-                    await Navigation.PushPopupAsync(_commentsPopup);    //TODO: Set project comment data
+                    //_commentsPopup.Comments = //TODO: Set project comment data
+
+                    _commentsPopup.ProjectCode  = _viewModel.Project.projectId;
+                    _commentsPopup.CustomerName = _viewModel.Project.customerName;
+                    _commentsPopup.ProtocolId   = _viewModel.Project.protocolId;
+
+                    await Navigation.PushPopupAsync(_commentsPopup);
                 })
             });
 
@@ -55,9 +61,12 @@ namespace Connect.Pages {
 
                     _isContactOpen = true;
 
-                    _contactInfoPopup.Contacts = _viewModel.Contacts;
+                    _contactInfoPopup.Contacts     = _viewModel.Contacts;
+                    _contactInfoPopup.ProjectCode  = _viewModel.Project.projectId;
+                    _contactInfoPopup.CustomerName = _viewModel.Project.customerName;
+                    _contactInfoPopup.ProtocolId   = _viewModel.Project.protocolId;
 
-                    await Navigation.PushPopupAsync(_contactInfoPopup);    //TODO: Set contact info data
+                    await Navigation.PushPopupAsync(_contactInfoPopup);
                 })
             });
 
