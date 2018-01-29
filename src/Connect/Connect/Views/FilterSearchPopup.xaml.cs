@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Connect.Helpers;
 using Connect.Models;
 using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
@@ -12,6 +13,10 @@ namespace Connect.Views {
     public partial class FilterSearchPopup : PopupPage {
 
         #region Properties
+
+        private const string DefaultBusinessUnitName = "All";
+        private const string ButtonDefaultText       = "CLEAR FILTERS";
+        private const string ButtonBackText          = "BACK";
 
         public event EventHandler<ItemTappedEventArgs> Filtered;
 
@@ -27,6 +32,30 @@ namespace Connect.Views {
         public List<FilterSearchItem> Items {
             get => (List<FilterSearchItem>)GetValue(ItemsProperty);
             set => SetValue(ItemsProperty, value);
+        }
+
+        private string _buttonText = ButtonDefaultText;
+
+        public string ButtonText {
+            get => _buttonText;
+            set {
+                if(_buttonText != value) {
+                    _buttonText = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        private string _selectedBusinessUnitName = DefaultBusinessUnitName;
+
+        public string SelectedBusinessUnitName {
+            get => _selectedBusinessUnitName;
+            set {
+                if(_selectedBusinessUnitName != value) {
+                    _selectedBusinessUnitName = value;
+                    OnPropertyChanged();
+                }
+            }
         }
 
         #endregion
@@ -100,36 +129,36 @@ namespace Connect.Views {
 
             switch(propertyName) {
                 case nameof(BusinessUnits):
-                    if(BusinessUnits != null && BusinessUnits.Count > 0) {
+                    if(BusinessUnits.IsNotNullOrEmpty()) {
                         List<BusinessUnitFilterItem> items = BusinessUnits.OrderBy(bu => bu.BusinessUnitId).ToList();
 
                         items.Insert(0, new BusinessUnitFilterItem {
                             BusinessUnitId   = -1,
-                            BusinessUnitName = "All"
+                            BusinessUnitName = DefaultBusinessUnitName
                         });
 
-                        BusinessUnitPicker.ItemsSource  = items;
-                        BusinessUnitPicker.SelectedItem = items[0];
+                        BusinessUnitList.ItemsSource  = items;
+                        BusinessUnitList.SelectedItem = items[0];
                     } else {
-                        BusinessUnitPicker.ItemsSource = null;
+                        BusinessUnitList.ItemsSource = null;
                     }
                     break;
             }
 
             switch(propertyName) {
                 case nameof(Items):
-                    if(BusinessUnits != null && BusinessUnits.Count > 0) {
+                    if(BusinessUnits.IsNotNullOrEmpty()) {
                         List<BusinessUnitFilterItem> items = BusinessUnits.OrderBy(bu => bu.BusinessUnitId).ToList();
 
                         items.Insert(0, new BusinessUnitFilterItem {
                             BusinessUnitId   = -1,
-                            BusinessUnitName = "All"
+                            BusinessUnitName = DefaultBusinessUnitName
                         });
 
-                        BusinessUnitPicker.ItemsSource  = items;
-                        BusinessUnitPicker.SelectedItem = items[0];
+                        BusinessUnitList.ItemsSource  = items;
+                        BusinessUnitList.SelectedItem = items[0];
                     } else {
-                        BusinessUnitPicker.ItemsSource = null;
+                        BusinessUnitList.ItemsSource = null;
                     }
                     break;
             }
@@ -141,16 +170,43 @@ namespace Connect.Views {
 
         private void OnClose(object sender, EventArgs e) => PopupNavigation.PopAsync();
 
-        private void OnSelectedBusinessUnitChanged(object sender, EventArgs e) {
+        private void OnBusinessUnitValueTapped(object sender, EventArgs e) {
+            BusinessUnitList.IsVisible = true;
+            ButtonText = ButtonBackText;
+        }
 
-            BusinessUnitFilterItem bu = (BusinessUnitFilterItem)BusinessUnitPicker.SelectedItem;
+//        private void OnSelectedBusinessUnitChanged(object sender, EventArgs e) {
+
+//            BusinessUnitFilterItem bu = (BusinessUnitFilterItem)BusinessUnitList.SelectedItem;
+
+//            List<FilterSearchItem> items;
+
+//            if(bu == null || bu.BusinessUnitId == -1) {
+//                items = Items;
+//            } else {
+//                items = Items.Where(itm => itm.BusinessUnitId == ((BusinessUnitFilterItem)BusinessUnitList.SelectedItem).BusinessUnitId).ToList();
+//            }
+
+////#if DEBUG
+////            List<FilterSearchItem> items = Items;
+////#endif
+
+//            FilterViewItems(SearchEntry.Text, items);
+//        }
+
+        private void OnBusinessUnitTapped(object sender, ItemTappedEventArgs e) {
+            BusinessUnitFilterItem bu = (BusinessUnitFilterItem)e.Item;
+
+            BusinessUnitList.SelectedItem = null;
 
             List<FilterSearchItem> items;
 
             if(bu == null || bu.BusinessUnitId == -1) {
                 items = Items;
             } else {
-                items = Items.Where(itm => itm.BusinessUnitId == ((BusinessUnitFilterItem)BusinessUnitPicker.SelectedItem).BusinessUnitId).ToList();
+                SelectedBusinessUnitName = bu.IdAndName;
+
+                items = Items.Where(itm => itm.BusinessUnitId == ((BusinessUnitFilterItem)BusinessUnitList.SelectedItem).BusinessUnitId).ToList();
             }
 
 //#if DEBUG
@@ -168,7 +224,16 @@ namespace Connect.Views {
             await Navigation.PopPopupAsync();
         }
 
-        private async void OnClearFilterTapped(object sender, EventArgs e) {
+        private async void OnPopupButtonTapped(object sender, EventArgs e) {
+
+            if(ButtonText == ButtonBackText) {
+                BusinessUnitList.IsVisible = false;
+
+                ButtonText = ButtonDefaultText;
+
+                return;
+            }
+
             ItemsListView.SelectedItem = null;
 
             Filtered?.Invoke(sender, new ItemTappedEventArgs(null, null));
