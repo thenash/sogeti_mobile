@@ -30,6 +30,11 @@
                                         Tapped="OnFilterSearchTapped"/>
       </StackLayout>
 
+      <ActivityIndicator Style="{StaticResource BaseActivityIndicatorStyle}"
+                         IsVisible="{Binding IsBusy}"
+                         IsEnabled="{Binding IsBusy}"
+                         IsRunning="{Binding IsBusy}"/>
+
       <ListView x:Name="ProjectsList"
                 BackgroundColor="Transparent"
                 SeparatorVisibility="None"

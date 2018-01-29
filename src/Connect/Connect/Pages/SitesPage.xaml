@@ -20,6 +20,7 @@
         <Grid>
           <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -44,6 +45,14 @@
                                 TextAlignment="EndAndExpand"
                                 Grid.Row="0"
                                 Grid.Column="2"/>
+
+          <ActivityIndicator Style="{StaticResource BaseActivityIndicatorStyle}"
+                             IsVisible="{Binding IsBusy}"
+                             IsEnabled="{Binding IsBusy}"
+                             IsRunning="{Binding IsBusy}"
+                             Grid.Row="1"
+                             Grid.Column="0"
+                             Grid.ColumnSpan="3"/>
         </Grid>
 
         <Frame BackgroundColor="White"

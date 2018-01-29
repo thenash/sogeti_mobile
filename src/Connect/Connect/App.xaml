@@ -24,6 +24,17 @@
 
       <!-- ////////////////////////////// -->
 
+      <!-- Activity Indicator -->
+      <Style x:Key="BaseActivityIndicatorStyle"
+             TargetType="ActivityIndicator">
+        <Setter Property="Color"
+                Value="{StaticResource DarkBlue}" />
+        <Setter Property="HorizontalOptions"
+                Value="Center" />
+        <Setter Property="VerticalOptions"
+                Value="Center" />
+      </Style>
+
       <!-- BoxView -->
       <Style x:Key="BaseSeparatorStyle"
              TargetType="BoxView">

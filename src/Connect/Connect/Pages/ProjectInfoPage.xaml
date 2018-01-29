@@ -96,6 +96,7 @@
                HasShadow="False"
                BackgroundColor="White"
                OutlineColor="{StaticResource Gray}">
+
           <StackLayout Padding="0"
                        Spacing="3">
 
@@ -105,6 +106,11 @@
             <Label Text="Display by Variance:"
                    HorizontalTextAlignment="Center"
                    FontSize="Small"/>
+
+            <ActivityIndicator Style="{StaticResource BaseActivityIndicatorStyle}"
+                               IsVisible="{Binding IsBusy}"
+                               IsEnabled="{Binding IsBusy}"
+                               IsRunning="{Binding IsBusy}"/>
 
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="Center">
