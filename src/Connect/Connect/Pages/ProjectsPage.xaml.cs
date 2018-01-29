@@ -51,15 +51,6 @@ namespace Connect.Pages {
 
                 _viewModel.IsInitialized = true;
                 await LoadProjectsAsync();
-
-                _filterSearchPopup.BusinessUnits = _viewModel.BusinessUnits;
-
-                _filterSearchPopup.Items = _filterSearchPopup.Items ?? new List<FilterSearchItem>();
-
-                _filterSearchPopup.Items.Clear();
-
-                _filterSearchPopup.Items.AddRange(_viewModel.FilterSearchProjectItems);
-                _filterSearchPopup.Items.AddRange(_viewModel.FilterSearchProrocolItems);
             }
         }
 
@@ -107,6 +98,17 @@ namespace Connect.Pages {
 
         #endregion
 
-        public async Task LoadProjectsAsync() => await _viewModel.ExecuteLoadCommand();
+        public async Task LoadProjectsAsync() {
+            await _viewModel.ExecuteLoadCommand();
+
+            _filterSearchPopup.BusinessUnits = _viewModel.BusinessUnits;
+
+            _filterSearchPopup.Items = _filterSearchPopup.Items ?? new List<FilterSearchItem>();
+
+            _filterSearchPopup.Items.Clear();
+
+            _filterSearchPopup.Items.AddRange(_viewModel.FilterSearchProjectItems);
+            _filterSearchPopup.Items.AddRange(_viewModel.FilterSearchProrocolItems);
+        }
     }
 }
