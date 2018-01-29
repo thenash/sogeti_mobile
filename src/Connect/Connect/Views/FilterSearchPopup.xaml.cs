@@ -16,7 +16,7 @@ namespace Connect.Views {
 
         private const string DefaultBusinessUnitName = "All";
         private const string ButtonDefaultText       = "CLEAR FILTERS";
-        private const string ButtonBackText          = "BACK";
+        private const string ButtonBackText          = "DONE";
 
         public event EventHandler<ItemTappedEventArgs> Filtered;
 
@@ -120,6 +120,11 @@ namespace Connect.Views {
 
         #region Event Handler Overrides
 
+        protected override void OnAppearing() {
+            base.OnAppearing();
+            ChevronImage.Rotation = -90;
+        }
+
         protected override void OnPropertyChanged(string propertyName = null) {
             base.OnPropertyChanged(propertyName);
 
@@ -137,8 +142,7 @@ namespace Connect.Views {
                             BusinessUnitName = DefaultBusinessUnitName
                         });
 
-                        BusinessUnitList.ItemsSource  = items;
-                        BusinessUnitList.SelectedItem = items[0];
+                        BusinessUnitList.ItemsSource = items;
                     } else {
                         BusinessUnitList.ItemsSource = null;
                     }
@@ -155,8 +159,7 @@ namespace Connect.Views {
                             BusinessUnitName = DefaultBusinessUnitName
                         });
 
-                        BusinessUnitList.ItemsSource  = items;
-                        BusinessUnitList.SelectedItem = items[0];
+                        BusinessUnitList.ItemsSource = items;
                     } else {
                         BusinessUnitList.ItemsSource = null;
                     }
@@ -173,6 +176,7 @@ namespace Connect.Views {
         private void OnBusinessUnitValueTapped(object sender, EventArgs e) {
             BusinessUnitList.IsVisible = true;
             ButtonText = ButtonBackText;
+            ChevronImage.Rotation = 0;
         }
 
 //        private void OnSelectedBusinessUnitChanged(object sender, EventArgs e) {
@@ -201,12 +205,12 @@ namespace Connect.Views {
 
             List<FilterSearchItem> items;
 
+            SelectedBusinessUnitName = bu?.IdAndName;
+
             if(bu == null || bu.BusinessUnitId == -1) {
                 items = Items;
             } else {
-                SelectedBusinessUnitName = bu.IdAndName;
-
-                items = Items.Where(itm => itm.BusinessUnitId == ((BusinessUnitFilterItem)BusinessUnitList.SelectedItem).BusinessUnitId).ToList();
+                items = Items.Where(itm => itm.BusinessUnitId == bu.BusinessUnitId).ToList();
             }
 
 //#if DEBUG
@@ -231,6 +235,7 @@ namespace Connect.Views {
 
                 ButtonText = ButtonDefaultText;
 
+                ChevronImage.Rotation = -90;
                 return;
             }
 

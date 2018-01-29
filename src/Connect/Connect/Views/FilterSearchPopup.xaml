@@ -115,6 +115,16 @@
         </Label.GestureRecognizers>
       </Label>
 
+      <Image x:Name="ChevronImage"
+             Source="chev_down.png"
+             Aspect="AspectFit"
+             HorizontalOptions="End"
+             VerticalOptions="Center"
+             Margin="0,0,10,0"
+             InputTransparent="True"
+             Grid.Row="3"
+             Grid.Column="1"/>
+
       <BoxView Style="{StaticResource VerticalSeparatorStyle}"
                Grid.Row="3"
                Grid.Column="2"/>
