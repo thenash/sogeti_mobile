@@ -78,12 +78,6 @@ namespace Connect.ViewModels {
 
         public int ProjectCount => DisplayProjects?.Count ?? 0;
 
-        private Command _loadCommand;
-		/// <summary>
-		/// Command to load/refresh projects.
-		/// </summary>
-		public Command LoadCommand => _loadCommand ?? (_loadCommand = new Command(async () => await ExecuteLoadCommand()));
-
         private Command<Project> _projectSelectedCommand;
         /// <summary>
         /// Command to handle a project being selected.
@@ -129,9 +123,9 @@ namespace Connect.ViewModels {
 
             Projects.Add(new Project {
                 customerName = "Generic Customer",
-                owningBu = "9500 Biometrics",
-                phase = 4,
-                primaryIndication = "Dry Eye",
+                owningBu     = "9500 Biometrics",
+                phase                  = 4,
+                primaryIndication      = "Dry Eye",
                 primaryTherapeuticArea = "Psychiatry",
                 projectDirector = "Sally Smith",
                 projectId = "Project 2",

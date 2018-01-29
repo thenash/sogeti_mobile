@@ -116,8 +116,6 @@ namespace Connect.Views {
             }
         }
 
-        private void OnTapped(object sender, EventArgs eventArgs) {
-            Tapped?.Invoke(this, eventArgs);
-        }
+        private void OnTapped(object sender, EventArgs eventArgs) => Tapped?.Invoke(this, eventArgs);
     }
 }

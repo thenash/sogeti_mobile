@@ -30,7 +30,7 @@ namespace Connect.Pages {
 
             HttpClient client = new HttpClient();
 
-            string url = "https://ecs.incresearch.com/ECS/mobile/login";
+            const string url = "https://ecs.incresearch.com/ECS/mobile/login";
 
             //Login loginObj = new Login {
             //    uid = UsernameEntry.Text,
