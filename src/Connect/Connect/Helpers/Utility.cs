@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,7 +10,7 @@ using Xamarin.Forms;
 
 namespace Connect.Helpers {
 
-    public class Utility {
+    public static class Utility {
 
         /// <summary>
         /// Grouping of property info for Site Status properties with the <see cref="ChartXAxisAttribute"/>.
@@ -42,11 +43,13 @@ namespace Connect.Helpers {
             };
         }
 
-        public Utility() { }
-
         #endregion
 
         public static string GetDateString(DateTime dateTime) => dateTime.ToString("mM/d/YY h:mm");
+
+        public static bool IsNullOrEmpty<T>(this IList<T> list) => list == null || list.Count < 1;
+
+        public static bool IsNotNullOrEmpty(this IList list) => list != null && list.Count > 0;
 
         public static IEnumerable<GraphCategory> GetSiteStatusChartCategories(IList<SiteStats> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();

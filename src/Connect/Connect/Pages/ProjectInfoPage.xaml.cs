@@ -35,6 +35,7 @@ namespace Connect.Pages {
                     ProjectCommentBackgroundBoxView.BackgroundColor = Utility.GetResource<Color>("OrangeYellow");
 
                     if(_isCommentsOpen) {
+                        OnCommentsPopupDisappearing(null, null);
                         return;
                     }
 
@@ -56,6 +57,13 @@ namespace Connect.Pages {
                     ContactInfoBackgroundBoxView.BackgroundColor    = Utility.GetResource<Color>("OrangeYellow");
 
                     if(_isContactOpen) {
+                        OnContactInfoPopupDisappearing(null, null);
+                        return;
+                    }
+
+                    if(_viewModel.Contacts.IsNullOrEmpty()) {
+                        await DisplayAlert("", "No contact data available.", "OK");
+                        OnContactInfoPopupDisappearing(null, null);
                         return;
                     }
 
