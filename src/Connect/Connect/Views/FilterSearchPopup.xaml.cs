@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Connect.Helpers;
 using Connect.Models;
+using Microsoft.AppCenter.Analytics;
 using Rg.Plugins.Popup.Extensions;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
@@ -231,6 +232,12 @@ namespace Connect.Views {
         private async void OnPopupButtonTapped(object sender, EventArgs e) {
 
             if(ButtonText == ButtonBackText) {
+
+                Analytics.TrackEvent("Button Clicked", new Dictionary<string, string> {
+                    { "Page", nameof(FilterSearchPopup) },
+                    { "Button", "BackButton"}
+                });
+
                 BusinessUnitList.IsVisible = false;
 
                 ButtonText = ButtonDefaultText;
@@ -238,6 +245,11 @@ namespace Connect.Views {
                 ChevronImage.Rotation = -90;
                 return;
             }
+
+            Analytics.TrackEvent("Button Clicked", new Dictionary<string, string> {
+                { "Page", nameof(FilterSearchPopup) },
+                { "Button", "ClearFilterButton"}
+            });
 
             ItemsListView.SelectedItem = null;
 

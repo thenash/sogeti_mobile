@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using Microsoft.AppCenter.Analytics;
 using Xamarin.Forms;
 
 namespace Connect.Pages {
@@ -23,6 +24,11 @@ namespace Connect.Pages {
             if(!loginButton.IsEnabled) {
                 return;
             }
+
+            Analytics.TrackEvent("Button Clicked", new Dictionary<string, string> {
+                { "Page", nameof(LoginPage) },
+                { "Button", "LoginButton"}
+            });
 
             loginButton.IsEnabled = false;
 

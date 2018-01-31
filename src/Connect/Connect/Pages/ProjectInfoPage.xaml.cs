@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Connect.Helpers;
 using Xamarin.Forms;
 using Connect.ViewModels;
 using Connect.Views;
+using Microsoft.AppCenter.Analytics;
 using Rg.Plugins.Popup.Extensions;
 
 namespace Connect.Pages {
@@ -31,6 +33,11 @@ namespace Connect.Pages {
 
             ProjectCommentBackgroundBoxView.GestureRecognizers.Add(new TapGestureRecognizer {
                 Command = new Command(async () => {
+                    Analytics.TrackEvent("Button Clicked", new Dictionary<string, string> {
+                        { "Page", nameof(ProjectInfoPage) },
+                        { "Button", "ProjectCommentButton"}
+                    });
+
                     ContactInfoBackgroundBoxView.BackgroundColor    = Color.Default;
                     ProjectCommentBackgroundBoxView.BackgroundColor = Utility.GetResource<Color>("OrangeYellow");
 
@@ -53,6 +60,11 @@ namespace Connect.Pages {
 
             ContactInfoBackgroundBoxView.GestureRecognizers.Add(new TapGestureRecognizer {
                 Command = new Command(async () => {
+                    Analytics.TrackEvent("Button Clicked", new Dictionary<string, string> {
+                        { "Page", nameof(ProjectInfoPage) },
+                        { "Button", "ContactInfoButton"}
+                    });
+
                     ProjectCommentBackgroundBoxView.BackgroundColor = Color.Default;
                     ContactInfoBackgroundBoxView.BackgroundColor    = Utility.GetResource<Color>("OrangeYellow");
 
@@ -157,6 +169,11 @@ namespace Connect.Pages {
             if(!(sender is VarianceViewCard card)) {
                 return;
             }
+
+            Analytics.TrackEvent("Button Clicked", new Dictionary<string, string> {
+                { "Page", nameof(ProjectsPage) },
+                { "Button", "Variance" + Enum.GetName(typeof(Variances), card.Variance) + "Button"}
+            });
 
             ResetVarianceFilterButtons();
 

@@ -7,6 +7,7 @@ using Connect.Models;
 using Xamarin.Forms;
 using Connect.ViewModels;
 using Connect.Views;
+using Microsoft.AppCenter.Analytics;
 using Rg.Plugins.Popup.Extensions;
 
 namespace Connect.Pages {
@@ -74,6 +75,11 @@ namespace Connect.Pages {
         private void OnProjectSelected(object sender, SelectedItemChangedEventArgs e) => ProjectsList.SelectedItem = null;
 
         private async void OnFilterSearchTapped(object sender, EventArgs e) {
+            Analytics.TrackEvent("Button Clicked", new Dictionary<string, string> {
+                { "Page", nameof(ProjectsPage) },
+                { "Button", "FilterSearchButton"}
+            });
+
             await Navigation.PushPopupAsync(_filterSearchPopup);
         }
 
