@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-//using Newtonsoft.Json;
-//using Connect.Models;
 using Xamarin.Forms;
 
 namespace Connect.Pages {
@@ -41,7 +39,6 @@ namespace Connect.Pages {
             //var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             //IEnumerable<KeyValuePair<string, string>> formLogin;
-
 
             FormUrlEncodedContent content = new FormUrlEncodedContent(new[] {
                 new KeyValuePair<string, string>("uid", UsernameEntry.Text),
