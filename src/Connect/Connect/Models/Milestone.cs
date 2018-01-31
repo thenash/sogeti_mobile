@@ -72,7 +72,7 @@ namespace Connect.Models {
 #if DEBUG
                     throw new ArgumentOutOfRangeException(nameof(variance), variance, null);
 #else
-                    break;
+                    return null;
 #endif
             }
         }
