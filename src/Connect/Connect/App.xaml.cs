@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Connect.Models;
+﻿using Connect.Models;
 using Xamarin.Forms;
 using Connect.Pages;
 using Microsoft.AppCenter;
@@ -47,7 +46,7 @@ namespace Connect {
         }
 
         protected override void OnStart() {
-            AppCenter.Start("ios=77364ed3-f0b7-43d8-8492-fd0e97e1235b;" + "android=1321f962-11d2-4ac2-9abe-f9cb26fa580d;", typeof(Analytics), typeof(Crashes), typeof(Distribute));
+            AppCenter.Start("ios=b93096aa-e65b-4977-a7d0-c60a0a92d618;" + "android=041fa813-eecd-4350-8a5e-fe800b6913ed;", typeof(Analytics), typeof(Crashes), typeof(Distribute));
         }
     }
 }
