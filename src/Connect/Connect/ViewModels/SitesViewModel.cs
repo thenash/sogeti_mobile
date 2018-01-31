@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Connect.Models;
 using Xamarin.Forms;
@@ -163,93 +165,93 @@ namespace Connect.ViewModels {
 
             IsBusy = true;
 
-#if DEBUG
-            int year = await Task.FromResult(2015);  //Getting rid of compiler warnings
+//#if DEBUG
+//            int year = await Task.FromResult(2015);  //Getting rid of compiler warnings
 
-            SiteDetails = new ObservableCollection<SiteDetails> {
-                new SiteDetails {
-                    projectId      = projectId,
-                    eventType      = "PSSV",
-                    activationDate = Utility.GetDateString(new DateTime(year, 7, 30)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piId           = "Project 2",
-                    piName         = "{redacted}",
-                    siteId         = "100446452",
-                    siteName       = "{redacted}"
-                }, new SiteDetails {
-                    projectId      = projectId,
-                    eventType      = "PSSV",
-                    activationDate = Utility.GetDateString(new DateTime(year, 8, 17)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piId           = "Project 2",
-                    piName         = "{redacted}",
-                    siteId         = "109043379",
-                    siteName       = "{redacted}"
-                }, new SiteDetails {
-                    projectId      = projectId,
-                    eventType      = "PSSV",
-                    activationDate = Utility.GetDateString(new DateTime(year, 9, 21)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piId           = "Project 2",
-                    piName         = "{redacted}",
-                    siteId         = "115286140",
-                    siteName       = "{redacted}"
-                }, new SiteDetails {
-                    projectId      = projectId,
-                    eventType      = "Selected",
-                    activationDate = Utility.GetDateString(new DateTime(year, 9, 21)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piId           = "Project 2",
-                    piName         = "{redacted}",
-                    siteId         = "115286140",
-                    siteName       = "{redacted}"
-                }, new SiteDetails {
-                    projectId      = projectId,
-                    eventType      = "PSSV",
-                    activationDate = Utility.GetDateString(new DateTime(year, 9, 29)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piId           = "Project 2",
-                    piName         = "{redacted}",
-                    siteId         = "115391071",
-                    siteName       = "{redacted}"
-                }, new SiteDetails {
-                    projectId      = projectId,
-                    eventType      = "PSSV",
-                    activationDate = Utility.GetDateString(new DateTime(year, 10, 5)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piId           = "Project 2",
-                    piName         = "{redacted}",
-                    siteId         = "115391062",
-                    siteName       = "{redacted}"
-                }, new SiteDetails {
-                    projectId      = projectId,
-                    eventType      = "PSSV",
-                    activationDate = Utility.GetDateString(new DateTime(year, 10, 6)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piId           = "Project 2",
-                    piName         = "{redacted}",
-                    siteId         = "115391067",
-                    siteName       = "{redacted}"
-                }, new SiteDetails {
-                    projectId      = projectId,
-                    eventType      = "PSSV",
-                    activationDate = Utility.GetDateString(new DateTime(year, 10, 6)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piId           = "Project 2",
-                    piName         = "{redacted}",
-                    siteId         = "115391105",
-                    siteName       = "{redacted}"
-                }
-            };
-#else
+//            SiteDetails = new ObservableCollection<SiteDetails> {
+//                new SiteDetails {
+//                    projectId      = projectId,
+//                    eventType      = "PSSV",
+//                    activationDate = Utility.GetDateString(new DateTime(year, 7, 30)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piId           = "Project 2",
+//                    piName         = "{redacted}",
+//                    siteId         = "100446452",
+//                    siteName       = "{redacted}"
+//                }, new SiteDetails {
+//                    projectId      = projectId,
+//                    eventType      = "PSSV",
+//                    activationDate = Utility.GetDateString(new DateTime(year, 8, 17)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piId           = "Project 2",
+//                    piName         = "{redacted}",
+//                    siteId         = "109043379",
+//                    siteName       = "{redacted}"
+//                }, new SiteDetails {
+//                    projectId      = projectId,
+//                    eventType      = "PSSV",
+//                    activationDate = Utility.GetDateString(new DateTime(year, 9, 21)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piId           = "Project 2",
+//                    piName         = "{redacted}",
+//                    siteId         = "115286140",
+//                    siteName       = "{redacted}"
+//                }, new SiteDetails {
+//                    projectId      = projectId,
+//                    eventType      = "Selected",
+//                    activationDate = Utility.GetDateString(new DateTime(year, 9, 21)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piId           = "Project 2",
+//                    piName         = "{redacted}",
+//                    siteId         = "115286140",
+//                    siteName       = "{redacted}"
+//                }, new SiteDetails {
+//                    projectId      = projectId,
+//                    eventType      = "PSSV",
+//                    activationDate = Utility.GetDateString(new DateTime(year, 9, 29)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piId           = "Project 2",
+//                    piName         = "{redacted}",
+//                    siteId         = "115391071",
+//                    siteName       = "{redacted}"
+//                }, new SiteDetails {
+//                    projectId      = projectId,
+//                    eventType      = "PSSV",
+//                    activationDate = Utility.GetDateString(new DateTime(year, 10, 5)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piId           = "Project 2",
+//                    piName         = "{redacted}",
+//                    siteId         = "115391062",
+//                    siteName       = "{redacted}"
+//                }, new SiteDetails {
+//                    projectId      = projectId,
+//                    eventType      = "PSSV",
+//                    activationDate = Utility.GetDateString(new DateTime(year, 10, 6)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piId           = "Project 2",
+//                    piName         = "{redacted}",
+//                    siteId         = "115391067",
+//                    siteName       = "{redacted}"
+//                }, new SiteDetails {
+//                    projectId      = projectId,
+//                    eventType      = "PSSV",
+//                    activationDate = Utility.GetDateString(new DateTime(year, 10, 6)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piId           = "Project 2",
+//                    piName         = "{redacted}",
+//                    siteId         = "115391105",
+//                    siteName       = "{redacted}"
+//                }
+//            };
+//#else
             try {
                 string url = "https://ecs.incresearch.com/ECS/mobile/sitedetails/projectId/" + projectId;
 
@@ -273,7 +275,7 @@ namespace Connect.ViewModels {
                 ContentPage page = new ContentPage();
                 await page.DisplayAlert("Error", "Unable to load projects.", "OK");
             }
-#endif
+//#endif
 
             IsBusy = false;
         }
@@ -292,61 +294,61 @@ namespace Connect.ViewModels {
 
             IsBusy = true;
 
-#if DEBUG
-            int year = await Task.FromResult(2016); //Getting rid of compiler warnings
+//#if DEBUG
+//            int year = await Task.FromResult(2016); //Getting rid of compiler warnings
 
-            SiteTrends = new ObservableCollection<SiteTrends> {
-                new SiteTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSitesColumn",
-                    high      = "0",
-                    low       = "0",
-                    month     = Utility.GetDateString(new DateTime(year, 4, 1)),
-                }, new SiteTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSitesColumn",
-                    high      = "1",
-                    low       = "1",
-                    month     = Utility.GetDateString(new DateTime(year, 5, 1)),
-                }, new SiteTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSitesColumn",
-                    high      = "1",
-                    low       = "1",
-                    month     = Utility.GetDateString(new DateTime(year, 6, 1)),
-                }, new SiteTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSitesColumn",
-                    high      = "2",
-                    low       = "2",
-                    month     = Utility.GetDateString(new DateTime(year, 7, 1)),
-                }, new SiteTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSitesColumn",
-                    high      = "3",
-                    low       = "3",
-                    month     = Utility.GetDateString(new DateTime(year, 8, 1)),
-                }, new SiteTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSitesColumn",
-                    high      = "4",
-                    low       = "4",
-                    month     = Utility.GetDateString(new DateTime(year, 9, 1))
-                }
-            };
-#else
+//            SiteTrends = new ObservableCollection<SiteTrends> {
+//                new SiteTrends {
+//                    projectId = projectId,
+//                    actual    = "8",
+//                    ceiling   = "8",
+//                    eventType = "activeSitesColumn",
+//                    high      = "0",
+//                    low       = "0",
+//                    month     = Utility.GetDateString(new DateTime(year, 4, 1)),
+//                }, new SiteTrends {
+//                    projectId = projectId,
+//                    actual    = "8",
+//                    ceiling   = "8",
+//                    eventType = "activeSitesColumn",
+//                    high      = "1",
+//                    low       = "1",
+//                    month     = Utility.GetDateString(new DateTime(year, 5, 1)),
+//                }, new SiteTrends {
+//                    projectId = projectId,
+//                    actual    = "8",
+//                    ceiling   = "8",
+//                    eventType = "activeSitesColumn",
+//                    high      = "1",
+//                    low       = "1",
+//                    month     = Utility.GetDateString(new DateTime(year, 6, 1)),
+//                }, new SiteTrends {
+//                    projectId = projectId,
+//                    actual    = "8",
+//                    ceiling   = "8",
+//                    eventType = "activeSitesColumn",
+//                    high      = "2",
+//                    low       = "2",
+//                    month     = Utility.GetDateString(new DateTime(year, 7, 1)),
+//                }, new SiteTrends {
+//                    projectId = projectId,
+//                    actual    = "8",
+//                    ceiling   = "8",
+//                    eventType = "activeSitesColumn",
+//                    high      = "3",
+//                    low       = "3",
+//                    month     = Utility.GetDateString(new DateTime(year, 8, 1)),
+//                }, new SiteTrends {
+//                    projectId = projectId,
+//                    actual    = "8",
+//                    ceiling   = "8",
+//                    eventType = "activeSitesColumn",
+//                    high      = "4",
+//                    low       = "4",
+//                    month     = Utility.GetDateString(new DateTime(year, 9, 1))
+//                }
+//            };
+//#else
             try {
                 string url = "https://ecs.incresearch.com/ECS/mobile/sitetrends/projectId/" + projectId;
 
@@ -370,7 +372,7 @@ namespace Connect.ViewModels {
                 ContentPage page = new ContentPage();
                 await page.DisplayAlert("Error", "Unable to load projects.", "OK");
             }
-#endif
+//#endif
 
             IsBusy = false;
         }
@@ -389,7 +391,7 @@ namespace Connect.ViewModels {
 
             IsBusy = true;
 
-#if DEBUG
+//#if DEBUG
             await Task.FromResult(0);
 
             PlannedSiteStats = new ObservableCollection<SiteStats> {
@@ -895,31 +897,31 @@ namespace Connect.ViewModels {
                     siv = 0
                 }
             };
-#else
-            try {
-                string url = "https://ecs.incresearch.com/ECS/mobile/sitestats/projectId/" + projectId;
+//#else //TODO: Figure out how to separate out planned, actual and total site stats from each other
+//            try {
+//                string url = "https://ecs.incresearch.com/ECS/mobile/sitestats/projectId/" + projectId;
 
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
+//                HttpClient client = new HttpClient();
+//                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
-                HttpResponseMessage response = await client.GetAsync(url);
+//                HttpResponseMessage response = await client.GetAsync(url);
 
-                if(response.IsSuccessStatusCode) {
-                    string content = await response.Content.ReadAsStringAsync();
+//                if(response.IsSuccessStatusCode) {
+//                    string content = await response.Content.ReadAsStringAsync();
 
-                    List<SiteStats> siteStats = Utility.DeserializeResponse<List<SiteStats>>(content, "data/project/siteStats");
+//                    List<SiteStats> siteStats = Utility.DeserializeResponse<List<SiteStats>>(content, "data/project/siteStats");
 
-                    PlannedSiteStats.Clear();
+//                    PlannedSiteStats.Clear();
 
-                    foreach(SiteStats siteStat in siteStats) {
-                        PlannedSiteStats.Add(siteStat);
-                    }
-                }
-            } catch(Exception ex) {
-                ContentPage page = new ContentPage();
-                await page.DisplayAlert("Error", "Unable to load projects.", "OK");
-            }
-#endif
+//                    foreach(SiteStats siteStat in siteStats) {
+//                        PlannedSiteStats.Add(siteStat);
+//                    }
+//                }
+//            } catch(Exception ex) {
+//                ContentPage page = new ContentPage();
+//                await page.DisplayAlert("Error", "Unable to load projects.", "OK");
+//            }
+//#endif
 
             IsBusy = false;
         }
@@ -937,20 +939,20 @@ namespace Connect.ViewModels {
 
             IsBusy = true;
 
-#if DEBUG
-            await Task.FromResult(0);
+//#if DEBUG
+//            await Task.FromResult(0);
 
-            Project = new Project {
-                customerName           = "Generic Customer",
-                owningBu               = "9500 Biometrics",
-                phase                  = 4,
-                primaryIndication      = "Dry Eye",
-                primaryTherapeuticArea = "Psychiatry",
-                projectDirector        = "Sally Smith",
-                projectId              = projectId,
-                protocolId             = "9083-E1-ES3"
-            };
-#else
+//            Project = new Project {
+//                customerName           = "Generic Customer",
+//                owningBu               = "9500 Biometrics",
+//                phase                  = 4,
+//                primaryIndication      = "Dry Eye",
+//                primaryTherapeuticArea = "Psychiatry",
+//                projectDirector        = "Sally Smith",
+//                projectId              = projectId,
+//                protocolId             = "9083-E1-ES3"
+//            };
+//#else
             try {
                 string url = "https://ecs.incresearch.com/ECS/mobile/project/projectId/" + projectId;
 
@@ -969,7 +971,7 @@ namespace Connect.ViewModels {
                 ContentPage page = new ContentPage();
                 await page.DisplayAlert("Error", "Unable to load projects.", "OK");
             }
-#endif
+//#endif
 
             IsBusy = false;
         }

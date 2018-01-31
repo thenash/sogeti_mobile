@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Connect.Models;
 using Xamarin.Forms;
@@ -184,94 +186,94 @@ namespace Connect.ViewModels {
 
             IsBusy = true;
 
-#if DEBUG
-            int year = await Task.FromResult(2015);  //Getting rid of compiler warnings
+//#if DEBUG
+//            int year = await Task.FromResult(2015);  //Getting rid of compiler warnings
 
-            SubjectDetails = new ObservableCollection<SubjectDetails> {
-                new SubjectDetails {
-                    projectId      = projectId,
-                    subjectId      = "171608722",
-                    isoDate        = Utility.GetDateString(new DateTime(year, 1, 4)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piName         = "{redacted}",
-                    siteId         = "100446452",
-                    siteName       = "{redacted}",
-                    subjectStatus  = "Screened",
-                    siteStatus     = "Enrolling"
-                }, new SubjectDetails {
-                    projectId      = projectId,
-                    subjectId      = "171608722",
-                    isoDate        = Utility.GetDateString(new DateTime(year, 1, 15)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piName         = "{redacted}",
-                    siteId         = "109043379",
-                    siteName       = "{redacted}",
-                    subjectStatus  = "Enrolling"
-                }, new SubjectDetails {
-                    projectId      = projectId,
-                    subjectId      = "171608722",
-                    isoDate        = Utility.GetDateString(new DateTime(year, 1, 15)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piName         = "{redacted}",
-                    siteId         = "115286140",
-                    siteName       = "{redacted}",
-                    subjectStatus  = "Enrolling"
-                }, new SubjectDetails {
-                    projectId      = projectId,
-                    subjectId      = "Selected",
-                    isoDate        = Utility.GetDateString(new DateTime(year, 1, 28)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piName         = "{redacted}",
-                    siteId         = "115286140",
-                    siteName       = "{redacted}",
-                    subjectStatus  = "Enrolling"
-                }, new SubjectDetails {
-                    projectId      = projectId,
-                    subjectId      = "171608722",
-                    isoDate = Utility.GetDateString(new DateTime(year, 2, 1)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piName         = "{redacted}",
-                    siteId         = "115391071",
-                    siteName       = "{redacted}",
-                    subjectStatus  = "Enrolling"
-                }, new SubjectDetails {
-                    projectId      = projectId,
-                    subjectId      = "171608722",
-                    isoDate = Utility.GetDateString(new DateTime(year, 2, 3)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piName         = "{redacted}",
-                    siteId         = "115391062",
-                    siteName       = "{redacted}",
-                    subjectStatus  = "Enrolling"
-                }, new SubjectDetails {
-                    projectId      = projectId,
-                    subjectId      = "171608722",
-                    isoDate = Utility.GetDateString(new DateTime(year, 2, 11)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piName         = "{redacted}",
-                    siteId         = "115391067",
-                    siteName       = "{redacted}",
-                    subjectStatus  = "Inactive"
-                }, new SubjectDetails {
-                    projectId      = projectId,
-                    subjectId      = "171608722",
-                    isoDate = Utility.GetDateString(new DateTime(year, 2, 12)),
-                    country        = "USA",
-                    dataSource     = "Medidata CTMS",
-                    piName         = "{redacted}",
-                    siteId         = "115391105",
-                    siteName       = "{redacted}",
-                    subjectStatus  = "Activated"
-                }
-            };
-#else
+//            SubjectDetails = new ObservableCollection<SubjectDetails> {
+//                new SubjectDetails {
+//                    projectId      = projectId,
+//                    subjectId      = "171608722",
+//                    isoDate        = Utility.GetDateString(new DateTime(year, 1, 4)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piName         = "{redacted}",
+//                    siteId         = "100446452",
+//                    siteName       = "{redacted}",
+//                    subjectStatus  = "Screened",
+//                    siteStatus     = "Enrolling"
+//                }, new SubjectDetails {
+//                    projectId      = projectId,
+//                    subjectId      = "171608722",
+//                    isoDate        = Utility.GetDateString(new DateTime(year, 1, 15)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piName         = "{redacted}",
+//                    siteId         = "109043379",
+//                    siteName       = "{redacted}",
+//                    subjectStatus  = "Enrolling"
+//                }, new SubjectDetails {
+//                    projectId      = projectId,
+//                    subjectId      = "171608722",
+//                    isoDate        = Utility.GetDateString(new DateTime(year, 1, 15)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piName         = "{redacted}",
+//                    siteId         = "115286140",
+//                    siteName       = "{redacted}",
+//                    subjectStatus  = "Enrolling"
+//                }, new SubjectDetails {
+//                    projectId      = projectId,
+//                    subjectId      = "Selected",
+//                    isoDate        = Utility.GetDateString(new DateTime(year, 1, 28)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piName         = "{redacted}",
+//                    siteId         = "115286140",
+//                    siteName       = "{redacted}",
+//                    subjectStatus  = "Enrolling"
+//                }, new SubjectDetails {
+//                    projectId      = projectId,
+//                    subjectId      = "171608722",
+//                    isoDate = Utility.GetDateString(new DateTime(year, 2, 1)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piName         = "{redacted}",
+//                    siteId         = "115391071",
+//                    siteName       = "{redacted}",
+//                    subjectStatus  = "Enrolling"
+//                }, new SubjectDetails {
+//                    projectId      = projectId,
+//                    subjectId      = "171608722",
+//                    isoDate = Utility.GetDateString(new DateTime(year, 2, 3)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piName         = "{redacted}",
+//                    siteId         = "115391062",
+//                    siteName       = "{redacted}",
+//                    subjectStatus  = "Enrolling"
+//                }, new SubjectDetails {
+//                    projectId      = projectId,
+//                    subjectId      = "171608722",
+//                    isoDate = Utility.GetDateString(new DateTime(year, 2, 11)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piName         = "{redacted}",
+//                    siteId         = "115391067",
+//                    siteName       = "{redacted}",
+//                    subjectStatus  = "Inactive"
+//                }, new SubjectDetails {
+//                    projectId      = projectId,
+//                    subjectId      = "171608722",
+//                    isoDate = Utility.GetDateString(new DateTime(year, 2, 12)),
+//                    country        = "USA",
+//                    dataSource     = "Medidata CTMS",
+//                    piName         = "{redacted}",
+//                    siteId         = "115391105",
+//                    siteName       = "{redacted}",
+//                    subjectStatus  = "Activated"
+//                }
+//            };
+//#else
             try {
                 string url = "https://ecs.incresearch.com/ECS/mobile/subjectdetails/projectId/" + projectId;
 
@@ -295,7 +297,7 @@ namespace Connect.ViewModels {
                 ContentPage page = new ContentPage();
                 await page.DisplayAlert("Error", "Unable to load projects.", "OK");
             }
-#endif
+//#endif
 
             IsBusy = false;
         }
@@ -314,61 +316,61 @@ namespace Connect.ViewModels {
 
             IsBusy = true;
 
-#if DEBUG
-            int year = await Task.FromResult(2016); //Getting rid of compiler warnings
+//#if DEBUG
+//            int year = await Task.FromResult(2016); //Getting rid of compiler warnings
 
-            SubjectTrends = new ObservableCollection<SubjectTrends> {
-                new SubjectTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSubjectsColumn",
-                    high      = "0",
-                    low       = "0",
-                    month     = Utility.GetDateString(new DateTime(year, 4, 1)),
-                }, new SubjectTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSubjectsColumn",
-                    high      = "1",
-                    low       = "1",
-                    month     = Utility.GetDateString(new DateTime(year, 5, 1)),
-                }, new SubjectTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSubjectsColumn",
-                    high      = "1",
-                    low       = "1",
-                    month     = Utility.GetDateString(new DateTime(year, 6, 1)),
-                }, new SubjectTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSubjectsColumn",
-                    high      = "2",
-                    low       = "2",
-                    month     = Utility.GetDateString(new DateTime(year, 7, 1)),
-                }, new SubjectTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSubjectsColumn",
-                    high      = "3",
-                    low       = "3",
-                    month     = Utility.GetDateString(new DateTime(year, 8, 1)),
-                }, new SubjectTrends {
-                    projectId = projectId,
-                    actual    = "8",
-                    ceiling   = "8",
-                    eventType = "activeSubjectsColumn",
-                    high      = "4",
-                    low       = "4",
-                    month     = Utility.GetDateString(new DateTime(year, 9, 1))
-                }
-            };
-#else
+//            SubjectTrends = new ObservableCollection<SubjectTrends> {
+//                new SubjectTrends {
+//                    projectId = projectId,
+//                    actual    = "8",
+//                    ceiling   = "8",
+//                    eventType = "activeSubjectsColumn",
+//                    high      = "0",
+//                    low       = "0",
+//                    month     = Utility.GetDateString(new DateTime(year, 4, 1)),
+//                }, new SubjectTrends {
+//                    projectId = projectId,
+//                    actual    = "8",
+//                    ceiling   = "8",
+//                    eventType = "activeSubjectsColumn",
+//                    high      = "1",
+//                    low       = "1",
+//                    month     = Utility.GetDateString(new DateTime(year, 5, 1)),
+//                }, new SubjectTrends {
+//                    projectId = projectId,
+//                    actual    = "8",
+//                    ceiling   = "8",
+//                    eventType = "activeSubjectsColumn",
+//                    high      = "1",
+//                    low       = "1",
+//                    month     = Utility.GetDateString(new DateTime(year, 6, 1)),
+//                }, new SubjectTrends {
+//                    projectId = projectId,
+//                    actual    = "8",
+//                    ceiling   = "8",
+//                    eventType = "activeSubjectsColumn",
+//                    high      = "2",
+//                    low       = "2",
+//                    month     = Utility.GetDateString(new DateTime(year, 7, 1)),
+//                }, new SubjectTrends {
+//                    projectId = projectId,
+//                    actual    = "8",
+//                    ceiling   = "8",
+//                    eventType = "activeSubjectsColumn",
+//                    high      = "3",
+//                    low       = "3",
+//                    month     = Utility.GetDateString(new DateTime(year, 8, 1)),
+//                }, new SubjectTrends {
+//                    projectId = projectId,
+//                    actual    = "8",
+//                    ceiling   = "8",
+//                    eventType = "activeSubjectsColumn",
+//                    high      = "4",
+//                    low       = "4",
+//                    month     = Utility.GetDateString(new DateTime(year, 9, 1))
+//                }
+//            };
+//#else
             try {
                 string url = "https://ecs.incresearch.com/ECS/mobile/subjecttrends/projectId/" + projectId;
 
@@ -392,7 +394,7 @@ namespace Connect.ViewModels {
                 ContentPage page = new ContentPage();
                 await page.DisplayAlert("Error", "Unable to load projects.", "OK");
             }
-#endif
+//#endif
 
             IsBusy = false;
         }
@@ -411,7 +413,7 @@ namespace Connect.ViewModels {
 
             IsBusy = true;
 
-#if DEBUG
+//#if DEBUG
             await Task.FromResult(0);
 
             PlannedSubjectStats = new ObservableCollection<SubjectStats> {
@@ -990,31 +992,31 @@ namespace Connect.ViewModels {
                     safetySae   = 0
                 }
             };
-#else
-            try {
-                string url = "https://ecs.incresearch.com/ECS/mobile/subjectstats/projectId/" + projectId;
+//#else //TODO: Figure out how to separate out planned, actual and total subject stats from each other
+//            try {
+//                string url = "https://ecs.incresearch.com/ECS/mobile/subjectstats/projectId/" + projectId;
 
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
+//                HttpClient client = new HttpClient();
+//                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
 
-                HttpResponseMessage response = await client.GetAsync(url);
+//                HttpResponseMessage response = await client.GetAsync(url);
 
-                if(response.IsSuccessStatusCode) {
-                    string content = await response.Content.ReadAsStringAsync();
+//                if(response.IsSuccessStatusCode) {
+//                    string content = await response.Content.ReadAsStringAsync();
 
-                    List<SubjectStats> subjectStats = Utility.DeserializeResponse<List<SubjectStats>>(content, "data/project/subjectStats");
+//                    List<SubjectStats> subjectStats = Utility.DeserializeResponse<List<SubjectStats>>(content, "data/project/subjectStats");
 
-                    PlannedSubjectStats.Clear();
+//                    PlannedSubjectStats.Clear();
 
-                    foreach(SubjectStats subjectStat in subjectStats) {
-                        PlannedSubjectStats.Add(subjectStat);
-                    }
-                }
-            } catch(Exception ex) {
-                ContentPage page = new ContentPage();
-                await page.DisplayAlert("Error", "Unable to load projects.", "OK");
-            }
-#endif
+//                    foreach(SubjectStats subjectStat in subjectStats) {
+//                        PlannedSubjectStats.Add(subjectStat);
+//                    }
+//                }
+//            } catch(Exception ex) {
+//                ContentPage page = new ContentPage();
+//                await page.DisplayAlert("Error", "Unable to load projects.", "OK");
+//            }
+//#endif
 
             IsBusy = false;
         }
@@ -1032,20 +1034,20 @@ namespace Connect.ViewModels {
 
             IsBusy = true;
 
-#if DEBUG
-            await Task.FromResult(0);
+//#if DEBUG
+//            await Task.FromResult(0);
 
-            Project = new Project {
-                customerName = "Generic Customer",
-                owningBu = "9500 Biometrics",
-                phase = 4,
-                primaryIndication = "Dry Eye",
-                primaryTherapeuticArea = "Psychiatry",
-                projectDirector = "Sally Smith",
-                projectId = projectId,
-                protocolId = "9083-E1-ES3"
-            };
-#else
+//            Project = new Project {
+//                customerName = "Generic Customer",
+//                owningBu = "9500 Biometrics",
+//                phase = 4,
+//                primaryIndication = "Dry Eye",
+//                primaryTherapeuticArea = "Psychiatry",
+//                projectDirector = "Sally Smith",
+//                projectId = projectId,
+//                protocolId = "9083-E1-ES3"
+//            };
+//#else
             try {
                 string url = "https://ecs.incresearch.com/ECS/mobile/project/projectId/" + projectId;
 
@@ -1064,7 +1066,7 @@ namespace Connect.ViewModels {
                 ContentPage page = new ContentPage();
                 await page.DisplayAlert("Error", "Unable to load projects.", "OK");
             }
-#endif
+//#endif
 
             IsBusy = false;
         }
