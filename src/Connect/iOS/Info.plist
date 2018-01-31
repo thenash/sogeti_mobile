@@ -7,7 +7,7 @@
 	<key>CFBundleName</key>
 	<string>Syneos Health</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.syneos-health.syneos-health</string>
+	<string>com.syneos-health.tpdm-test</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
@@ -47,14 +47,29 @@
 	<string>The app requires calendar functionality</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>The app requires photo library functionality</string>
-  <key>CFBundleURLTypes</key>
-  <array>
-      <dict>
-          <key>CFBundleURLSchemes</key>
-          <array>
-              <string>appcenter-${APP_SECRET}</string>
-          </array>
-      </dict>
-  </array>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>appcenter-${APP_SECRET}</string>
+            </array>
+        </dict>
+    </array>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSExceptionDomains</key>
+        <dict>
+            <key>ecs.incresearch.com</key>
+            <dict>
+                <key>NSIncludesSubdomains</key>
+                <true/>
+                <key>NSExceptionAllowsInsecureHTTPLoads</key>
+                <true/>
+                <key>NSExceptionRequiresForwardSecrecy</key>
+                <false/>
+            </dict>
+        </dict>
+    </dict>
 </dict>
 </plist>
