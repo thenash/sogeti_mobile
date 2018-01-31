@@ -16,6 +16,9 @@ namespace Connect.Pages {
 
         #region Properties
 
+        private static string _projectIdSearch;
+        private static string _protocolIdSearch;
+
         private readonly FilterSearchPopup _filterSearchPopup;
 
         private readonly ProjectsViewModel _viewModel;
@@ -46,11 +49,6 @@ namespace Connect.Pages {
             _filterSearchPopup.Filtered += OnProjectsFiltered;
 
             if(App.LoggedIn) {
-                if(_viewModel.IsInitialized) {
-                    return;
-                }
-
-                _viewModel.IsInitialized = true;
                 await LoadProjectsAsync();
             }
         }
@@ -97,8 +95,14 @@ namespace Connect.Pages {
 
             if(!string.IsNullOrEmpty(item.ProjectId)) {
                 _viewModel.DisplayProjects = new ObservableCollection<Project>(_viewModel.Projects.Where(p => p.projectId.Equals(item.ProjectId, StringComparison.OrdinalIgnoreCase)));
+
+                _projectIdSearch  = item.ProjectId;
+                _protocolIdSearch = null;
             } else if(!string.IsNullOrEmpty(item.ProtocolId)) {
                 _viewModel.DisplayProjects = new ObservableCollection<Project>(_viewModel.Projects.Where(p => p.protocolId.Equals(item.ProtocolId, StringComparison.OrdinalIgnoreCase)));
+
+                _projectIdSearch  = null;
+                _protocolIdSearch = item.ProtocolId;
             }
         }
 
@@ -106,6 +110,8 @@ namespace Connect.Pages {
 
         public async Task LoadProjectsAsync() {
             await _viewModel.ExecuteLoadCommand();
+
+            FilterDisplayProjects(_projectIdSearch, _protocolIdSearch);//Filter projects if we are returning to the page from a previous page
 
             _filterSearchPopup.BusinessUnits = _viewModel.BusinessUnits;
 
@@ -115,6 +121,20 @@ namespace Connect.Pages {
 
             _filterSearchPopup.Items.AddRange(_viewModel.FilterSearchProjectItems);
             _filterSearchPopup.Items.AddRange(_viewModel.FilterSearchProrocolItems);
+        }
+
+        private void FilterDisplayProjects(string projectId, string protocolId) {
+            if(!string.IsNullOrEmpty(projectId)) {
+                _viewModel.DisplayProjects = new ObservableCollection<Project>(_viewModel.Projects.Where(p => p.projectId.Equals(projectId, StringComparison.OrdinalIgnoreCase)));
+
+                _projectIdSearch  = projectId;
+                _protocolIdSearch = null;
+            } else if(!string.IsNullOrEmpty(protocolId)) {
+                _viewModel.DisplayProjects = new ObservableCollection<Project>(_viewModel.Projects.Where(p => p.protocolId.Equals(protocolId, StringComparison.OrdinalIgnoreCase)));
+
+                _projectIdSearch  = null;
+                _protocolIdSearch = protocolId;
+            }
         }
     }
 }
