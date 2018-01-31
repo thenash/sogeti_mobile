@@ -1,6 +1,9 @@
 ﻿using System.ComponentModel;
+using System.Windows.Input;
 using Connect.Interfaces;
+using Connect.Pages;
 using Connect.Services;
+using Xamarin.Forms;
 
 namespace Connect.ViewModels {
 
@@ -26,6 +29,8 @@ namespace Connect.ViewModels {
             }
         }
 
+        public ICommand LogoutCommand { get; }
+
         //INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -35,6 +40,12 @@ namespace Connect.ViewModels {
 
         public BaseViewModel(INavigationService navigationService) {
             NavService = navigationService;
+
+            LogoutCommand = new Command(async () => {
+                App.LoggedIn = false;
+
+                await ((MainPage)Application.Current.MainPage).PresentLoginPage();
+            });
         }
 
         protected virtual void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Connect.Helpers;
 using Xamarin.Forms;
 
@@ -38,11 +39,7 @@ namespace Connect.Pages {
 
             if(!App.LoggedIn) {
 
-                if(App.IsAndroid && ((NavigationPage)Detail).CurrentPage is ProjectsPage) {
-                    _login.Disappearing += OnLoginDisappearing; //BUG: On Android, OnAppearing() does not get called when login page goes away because it is presented as a modal
-                }
-
-                await Navigation.PushModalAsync(_login, true);
+                await PresentLoginPage();
             }
         }
 
@@ -68,6 +65,14 @@ namespace Connect.Pages {
         }
 
         #endregion
+
+        public async Task PresentLoginPage() {
+            if(App.IsAndroid && ((NavigationPage)Detail).CurrentPage is ProjectsPage) {
+                _login.Disappearing += OnLoginDisappearing; //BUG: On Android, OnAppearing() does not get called when login page goes away because it is presented as a modal
+            }
+
+            await Navigation.PushModalAsync(_login, true);
+        }
 
         #region Private Methods
 

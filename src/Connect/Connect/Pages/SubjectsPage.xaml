@@ -9,8 +9,7 @@
 
   <ContentPage.ToolbarItems>
     <ToolbarItem Icon="logout.png"
-                 Command=""/>
-    <!-- TODO: Bind to Command in BaseViewModel -->
+                 Command="{Binding LogoutCommand}"/>
   </ContentPage.ToolbarItems>
 
   <ContentPage.Content>
