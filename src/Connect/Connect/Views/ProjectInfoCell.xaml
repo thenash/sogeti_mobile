@@ -121,7 +121,7 @@
              Grid.Column="0"/>
 
     <Grid x:Name="ArrowButtonGrid"
-          BackgroundColor="{StaticResource OrangeYellow}"
+          Style="{StaticResource ProjectSelectOuterGridStyle}"
           Grid.Row="0"
           Grid.RowSpan="3"
           Grid.Column="1">

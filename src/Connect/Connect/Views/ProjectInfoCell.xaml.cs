@@ -223,7 +223,7 @@ namespace Connect.Views {
                 TopSeparator.BackgroundColor    = color;
                 BottomSeparator.BackgroundColor = color;
             } else {
-                ArrowButtonGrid.BackgroundColor = Utility.GetResource<Color>("OrangeYellow");
+                ArrowButtonGrid.BackgroundColor = Utility.GetResource<Color>("Orange");
                 TopSeparator.BackgroundColor    = Color.White;
                 BottomSeparator.BackgroundColor = Color.White;
             }

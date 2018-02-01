@@ -39,7 +39,7 @@ namespace Connect.Pages {
                     });
 
                     ContactInfoBackgroundBoxView.BackgroundColor    = Color.Default;
-                    ProjectCommentBackgroundBoxView.BackgroundColor = Utility.GetResource<Color>("OrangeYellow");
+                    ProjectCommentBackgroundBoxView.BackgroundColor = Utility.GetResource<Color>("Orange");
 
                     if(_isCommentsOpen) {
                         OnCommentsPopupDisappearing(null, null);
@@ -66,7 +66,7 @@ namespace Connect.Pages {
                     });
 
                     ProjectCommentBackgroundBoxView.BackgroundColor = Color.Default;
-                    ContactInfoBackgroundBoxView.BackgroundColor    = Utility.GetResource<Color>("OrangeYellow");
+                    ContactInfoBackgroundBoxView.BackgroundColor    = Utility.GetResource<Color>("Orange");
 
                     if(_isContactOpen) {
                         OnContactInfoPopupDisappearing(null, null);

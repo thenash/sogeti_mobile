@@ -8,19 +8,18 @@
       <!-- Color -->
       <Color x:Key="PaleBlue">#CCEAFD</Color>
       <Color x:Key="LightBlue">#75A8D7</Color>
-      <Color x:Key="DarkBlue">#395E84</Color>
-      <Color x:Key="OpaqueDarkBlue">#99395E84</Color>
-      <Color x:Key="SkyBlue">#CCEAFD</Color>
+      <Color x:Key="DarkBlue">#002E5D</Color>
+      <Color x:Key="OpaqueDarkBlue">#99002E5D</Color>
+      <Color x:Key="SkyBlue">#0076A5</Color>
       <Color x:Key="LightGray">#EEEEEE</Color>
-      <Color x:Key="Gray">#BABABA</Color>
-      <Color x:Key="DarkGray">#6E6E6E</Color>
+      <Color x:Key="Gray">#BBBCBC</Color>
+      <Color x:Key="DarkGray">#63666A</Color>
       <Color x:Key="Green">#139F15</Color>
       <Color x:Key="Red">#FF3B3C</Color>
       <Color x:Key="Yellow">#FCEA0F</Color>
-      <Color x:Key="OrangeYellow">#FEC000</Color>
-      <Color x:Key="LightOrange">#E99059</Color>
-      <Color x:Key="Orange">#EE8741</Color>
-      <Color x:Key="OpaqueOrange">#99EE8741</Color>
+      <!--<Color x:Key="OrangeYellow">#FF9E1B</Color>-->
+      <Color x:Key="Orange">#FF671F</Color>
+      <Color x:Key="OpaqueOrange">#99FF671F</Color>
 
       <!-- ////////////////////////////// -->
 
@@ -61,7 +60,6 @@
       </Style>
 
       <!-- Button -->
-
       <Style x:Key="BaseButtonStyle"
              TargetType="Button">
         <Setter Property="BackgroundColor"
@@ -71,8 +69,14 @@
       <Style TargetType="Button"
              BasedOn="{StaticResource BaseButtonStyle}"/>
 
-      <!-- Label -->
+      <!-- Grid -->
+      <Style x:Key="ProjectSelectOuterGridStyle"
+             TargetType="Grid">
+        <Setter Property="BackgroundColor"
+                Value="{StaticResource Orange}" />
+      </Style>
 
+      <!-- Label -->
       <Style x:Key="BaseLabelStyle"
              TargetType="Label">
         <Setter Property="TextColor"
@@ -83,7 +87,6 @@
              BasedOn="{StaticResource BaseLabelStyle}"/>
 
       <!-- NavigationPage -->
-
       <Style x:Key="NavigationPageStyle"
              TargetType="NavigationPage">
         <Setter Property="BarBackgroundColor"
