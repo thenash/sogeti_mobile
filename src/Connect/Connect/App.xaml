@@ -20,6 +20,7 @@
       <!--<Color x:Key="OrangeYellow">#FF9E1B</Color>-->
       <Color x:Key="Orange">#FF671F</Color>
       <Color x:Key="OpaqueOrange">#99FF671F</Color>
+      <Color x:Key="White">#FFFFFF</Color>
 
       <!-- ////////////////////////////// -->
 

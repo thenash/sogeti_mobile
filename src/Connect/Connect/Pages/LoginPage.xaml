@@ -59,21 +59,23 @@
 
         <views:ButtonLabelContentView LabelText="LOGIN"
                                       AutomationId="ProjectsPageLoginButtonLabelContentView"
-                                      WidthRequest="100"
+                                      WidthRequest="350"
                                       HeightRequest="40"
                                       Tapped="login_Clicked" />
-
+        
         <Label Text="Forgot Password"
                AutomationId="ProjectsPageForgotPasswordButtonLabel"
                TextColor="{StaticResource DarkGray}"
                HorizontalTextAlignment="Center"/>
-
-        <Image Source="inc_logo.png"
-               HorizontalOptions="CenterAndExpand"
-               VerticalOptions="End"/>
         <Label Text="Customer Version"
                HorizontalTextAlignment="Center"
-               VerticalTextAlignment="End"/>
+               VerticalTextAlignment="End" 
+               TextColor="{StaticResource White}"/>
+         
+        <Image Source="SyneosHealth1200x564.png"
+               HorizontalOptions="CenterAndExpand"
+               VerticalOptions="End"/>
+
       </StackLayout>
     </ScrollView>
   </ContentPage.Content>
