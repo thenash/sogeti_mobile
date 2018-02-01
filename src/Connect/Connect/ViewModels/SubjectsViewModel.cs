@@ -32,25 +32,85 @@ namespace Connect.ViewModels {
             }
         }
 
+        ///// <summary>
+        ///// gets or sets the planned bottom chart subject stats.
+        ///// </summary>
+        //public ObservableCollection<GraphCategory> PlannedBottomChartSubjectStats => new ObservableCollection<GraphCategory>(Utility.GetSubjectStatusChartCategories(PlannedSubjectStats));
+
+        private ObservableCollection<GraphCategory> _plannedBottomChartSubjectStats;
+
         /// <summary>
         /// gets or sets the planned bottom chart subject stats.
         /// </summary>
-        public ObservableCollection<GraphCategory> PlannedBottomChartSubjectStats => new ObservableCollection<GraphCategory>(Utility.GetSubjectStatusChartCategories(PlannedSubjectStats));
+        public ObservableCollection<GraphCategory> PlannedBottomChartSubjectStats {
+            get => _plannedBottomChartSubjectStats ?? (_plannedBottomChartSubjectStats = new ObservableCollection<GraphCategory>());
+            set {
+                if(_plannedBottomChartSubjectStats != value) {
+                    _plannedBottomChartSubjectStats = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        ///// <summary>
+        ///// gets or sets the actual bottom chart subject stats.
+        ///// </summary>
+        //public ObservableCollection<GraphCategory> ActualBottomChartSubjectStats => new ObservableCollection<GraphCategory>(Utility.GetSubjectStatusChartCategories(ActualSubjectStats));
+
+        private ObservableCollection<GraphCategory> _actualBottomChartSubjectStats;
 
         /// <summary>
         /// gets or sets the actual bottom chart subject stats.
         /// </summary>
-        public ObservableCollection<GraphCategory> ActualBottomChartSubjectStats => new ObservableCollection<GraphCategory>(Utility.GetSubjectStatusChartCategories(ActualSubjectStats));
+        public ObservableCollection<GraphCategory> ActualBottomChartSubjectStats {
+            get => _actualBottomChartSubjectStats ?? (_actualBottomChartSubjectStats = new ObservableCollection<GraphCategory>());
+            set {
+                if(_actualBottomChartSubjectStats != value) {
+                    _actualBottomChartSubjectStats = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        ///// <summary>
+        ///// gets or sets the total bottom chart subject stats.
+        ///// </summary>
+        //public ObservableCollection<GraphCategory> TotalBottomChartSubjectStats => new ObservableCollection<GraphCategory>(Utility.GetSubjectStatusChartCategories(TotalSubjectStats));
+
+        private ObservableCollection<GraphCategory> _totalBottomChartSubjectStats;
 
         /// <summary>
         /// gets or sets the total bottom chart subject stats.
         /// </summary>
-        public ObservableCollection<GraphCategory> TotalBottomChartSubjectStats => new ObservableCollection<GraphCategory>(Utility.GetSubjectStatusChartCategories(TotalSubjectStats));
+        public ObservableCollection<GraphCategory> TotalBottomChartSubjectStats {
+            get => _totalBottomChartSubjectStats ?? (_totalBottomChartSubjectStats = new ObservableCollection<GraphCategory>());
+            set {
+                if(_totalBottomChartSubjectStats != value) {
+                    _totalBottomChartSubjectStats = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        ///// <summary>
+        ///// gets or sets the total bottom chart subject stats.
+        ///// </summary>
+        //public ObservableCollection<GraphCategory> MonthlyRateBottomChartSubjectStats => new ObservableCollection<GraphCategory>(Utility.GetSubjectStatusChartCategories(MonthlyRateSubjectStats));
+
+        private ObservableCollection<GraphCategory> _monthlyRateBottomChartSubjectStats;
 
         /// <summary>
-        /// gets or sets the total bottom chart subject stats.
+        /// gets or sets the monthly rate bottom chart subject stats.
         /// </summary>
-        public ObservableCollection<GraphCategory> MonthlyRateBottomChartSubjectStats => new ObservableCollection<GraphCategory>(Utility.GetSubjectStatusChartCategories(MonthlyRateSubjectStats));
+        public ObservableCollection<GraphCategory> MonthlyRateBottomChartSubjectStats {
+            get => _monthlyRateBottomChartSubjectStats ?? (_monthlyRateBottomChartSubjectStats = new ObservableCollection<GraphCategory>());
+            set {
+                if(_monthlyRateBottomChartSubjectStats != value) {
+                    _monthlyRateBottomChartSubjectStats = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private ObservableCollection<SubjectStats> _plannedSubjectStats;
 
@@ -372,7 +432,7 @@ namespace Connect.ViewModels {
 //            };
 //#else
             try {
-                string url = "https://ecs.incresearch.com/ECS/mobile/subjecttrends/projectId/" + projectId;
+                string url = "https://ecs.incresearch.com/ECS/mobile/subtrends/projectId/" + projectId;
 
                 HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
@@ -388,6 +448,13 @@ namespace Connect.ViewModels {
 
                     foreach(SubjectTrends subjectTrend in subjectTrends) {
                         SubjectTrends.Add(subjectTrend);
+                    }
+
+                    if(SubjectTrends.Count > 0) {
+                        PlannedBottomChartSubjectStats     = new ObservableCollection<GraphCategory>(Utility.GetSubjectTrendsNumberOfPlanned(SubjectTrends));
+                        ActualBottomChartSubjectStats      = new ObservableCollection<GraphCategory>(Utility.GetSubjectTrendsNumberOfActual(SubjectTrends));
+                        TotalBottomChartSubjectStats       = new ObservableCollection<GraphCategory>(Utility.GetSubjectTrendsNumberOfTotal(SubjectTrends));
+                        MonthlyRateBottomChartSubjectStats = new ObservableCollection<GraphCategory>(Utility.GetSubjectTrendsMonthlyRate(SubjectTrends));
                     }
                 }
             } catch(Exception ex) {
@@ -994,7 +1061,7 @@ namespace Connect.ViewModels {
             };
 //#else //TODO: Figure out how to separate out planned, actual and total subject stats from each other
 //            try {
-//                string url = "https://ecs.incresearch.com/ECS/mobile/subjectstats/projectId/" + projectId;
+//                string url = "https://ecs.incresearch.com/ECS/mobile/substats/projectId/" + projectId;
 
 //                HttpClient client = new HttpClient();
 //                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);

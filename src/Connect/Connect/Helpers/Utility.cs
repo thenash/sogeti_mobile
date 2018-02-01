@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Connect.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -12,41 +11,42 @@ namespace Connect.Helpers {
 
     public static class Utility {
 
-        public const string SiteTrendEventTypePostFix = "sitescolumn";
-
         /// <summary>
-        /// Grouping of property info for Site Status properties with the <see cref="ChartXAxisAttribute"/>.
+        /// Text
         /// </summary>
-        private static Dictionary<string, PropertyInfo> _xAxisSiteStatusCategoryProps;
-
-        /// <summary>
-        /// Grouping of property info for Subject Status properties with the <see cref="ChartXAxisAttribute"/>.
-        /// </summary>
-        private static Dictionary<string, PropertyInfo> _xAxisSubjectStatusCategoryProps;
-
-        /// <summary>
-        /// Currently the mockups only show the Event Types contained in this list but the API sends over more. Nash said to just filter out the ones we want for now.
-        /// </summary>
-        private static readonly List<string> ValidVisitMetricEventTypes;
+        private const string SiteTrendEventTypePostFix = "sitescolumn";
 
         /// <summary>
         /// Currently the mockups only show the Event Types contained in this list but the API sends over more. Nash said to just filter out the ones we want for now.
         /// </summary>
         private static readonly List<string> ValidSiteTrendEventTypes;
 
+        /// <summary>
+        /// Currently the mockups only show the Event Types contained in this list but the API sends over more. Nash said to just filter out the ones we want for now.
+        /// </summary>
+        private static readonly List<string> ValidSubjectTrendEventTypes;
+
+        /// <summary>
+        /// Currently the mockups only show the Event Types contained in this list but the API sends over more. Nash said to just filter out the ones we want for now.
+        /// </summary>
+        private static readonly List<string> ValidVisitMetricEventTypes;
+
         #region Constructors
 
         static Utility() {
-            InitXAxisSiteStatusCategory();
-            InitXAxisSubjectStatusCategory();
-            //InitXAxisVisitStatusCategory();
-
             ValidSiteTrendEventTypes = new List<string> { //The string checks are done in lowercase
                 "selected" + SiteTrendEventTypePostFix,
                 "active"   + SiteTrendEventTypePostFix,
-                "enroling" + SiteTrendEventTypePostFix,
+                "enroling" + SiteTrendEventTypePostFix, //The APIs have the word spelled wrong
                 "dormant"  + SiteTrendEventTypePostFix,
                 "closed"   + SiteTrendEventTypePostFix
+            };
+
+            ValidSubjectTrendEventTypes = new List<string> { //The string checks are done in lowercase
+                "screened",
+                "enrolled",
+                "early term",
+                "complete"
             };
 
             ValidVisitMetricEventTypes = new List<string> { //The string checks are done in lowercase
@@ -66,31 +66,7 @@ namespace Connect.Helpers {
 
         public static bool IsNotNullOrEmpty(this IList list) => list != null && list.Count > 0;
 
-        public static IEnumerable<GraphCategory> GetSiteStatusChartCategories(IList<SiteStats> chartData) {
-            List<GraphCategory> categories = new List<GraphCategory>();
-
-            foreach(KeyValuePair<string, PropertyInfo> prop in _xAxisSiteStatusCategoryProps) {
-                categories.Add(new GraphCategory {
-                    Group = prop.Key,
-                    Value = chartData.Sum(data => (int)prop.Value.GetValue(data))
-                });
-            }
-
-            return categories;
-        }
-
-        public static IEnumerable<GraphCategory> GetSubjectStatusChartCategories(IList<SubjectStats> chartData) {
-            List<GraphCategory> categories = new List<GraphCategory>();
-
-            foreach(KeyValuePair<string, PropertyInfo> prop in _xAxisSubjectStatusCategoryProps) {
-                categories.Add(new GraphCategory {
-                    Group = prop.Key,
-                    Value = chartData.Sum(data => (int)prop.Value.GetValue(data))
-                });
-            }
-
-            return categories;
-        }
+        #region Site Trends
 
         public static IEnumerable<GraphCategory> GetSiteTrendsNumberOfPlanned(IList<SiteTrends> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();
@@ -149,6 +125,90 @@ namespace Connect.Helpers {
             return categories;
         }
 
+        #endregion
+
+        #region Subject Trends
+
+        public static IEnumerable<GraphCategory> GetSubjectTrendsNumberOfPlanned(IList<SubjectTrends> chartData) {
+            List<GraphCategory> categories = new List<GraphCategory>();
+
+            IEnumerable<SubjectTrends> filteredTrends = chartData.Where(dt => ValidSubjectTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
+
+            List<IGrouping<string, SubjectTrends>> groupedCats = filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+
+            List<IGrouping<string, SubjectTrends>> sortedGroupedCats = SortGroupedSubjectTrends(groupedCats); //Sort groups
+
+            foreach(IGrouping<string, SubjectTrends> prop in sortedGroupedCats) {
+                categories.Add(new GraphCategory {
+                    Group = prop.Key.ToTitleCase(),
+                    Value = prop.Sum(data => string.IsNullOrEmpty(data.high) ? 0 : int.Parse(data.high))
+                });
+            }
+
+            return categories;
+        }
+
+        public static IEnumerable<GraphCategory> GetSubjectTrendsNumberOfActual(IList<SubjectTrends> chartData) {
+            List<GraphCategory> categories = new List<GraphCategory>();
+
+            IEnumerable<SubjectTrends> filteredTrends = chartData.Where(dt => ValidSubjectTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
+
+            List<IGrouping<string, SubjectTrends>> groupedCats = filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+
+            List<IGrouping<string, SubjectTrends>> sortedGroupedCats = SortGroupedSubjectTrends(groupedCats); //Sort groups
+
+            foreach(IGrouping<string, SubjectTrends> prop in sortedGroupedCats) {
+                categories.Add(new GraphCategory {
+                    Group = prop.Key.ToTitleCase(),
+                    Value = prop.Sum(data => string.IsNullOrEmpty(data.actual) ? 0 : int.Parse(data.actual))
+                });
+            }
+
+            return categories;
+        }
+
+        public static IEnumerable<GraphCategory> GetSubjectTrendsNumberOfTotal(IList<SubjectTrends> chartData) {
+            List<GraphCategory> categories = new List<GraphCategory>();
+
+            IEnumerable<SubjectTrends> filteredTrends = chartData.Where(dt => ValidSubjectTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
+
+            List<IGrouping<string, SubjectTrends>> groupedCats = filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+
+            List<IGrouping<string, SubjectTrends>> sortedGroupedCats = SortGroupedSubjectTrends(groupedCats); //Sort groups
+
+            foreach(IGrouping<string, SubjectTrends> prop in sortedGroupedCats) {
+                categories.Add(new GraphCategory {
+                    Group = prop.Key.ToTitleCase(),
+                    Value = prop.Sum(data => string.IsNullOrEmpty(data.ceiling) ? 0 : int.Parse(data.ceiling))
+                });
+            }
+
+            return categories;
+        }
+
+        public static IEnumerable<GraphCategory> GetSubjectTrendsMonthlyRate(IList<SubjectTrends> chartData) {
+            List<GraphCategory> categories = new List<GraphCategory>();
+
+            IEnumerable<SubjectTrends> filteredTrends = chartData.Where(dt => ValidSubjectTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
+
+            List<IGrouping<string, SubjectTrends>> groupedCats = filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+
+            List<IGrouping<string, SubjectTrends>> sortedGroupedCats = SortGroupedSubjectTrends(groupedCats); //Sort groups
+
+            foreach(IGrouping<string, SubjectTrends> prop in sortedGroupedCats) {
+                categories.Add(new GraphCategory {
+                    Group = prop.Key.ToTitleCase(),
+                    Value = prop.Sum(data => string.IsNullOrEmpty(data.low) ? 0 : int.Parse(data.low))  //TODO: Find out if low is the correct property for the Monthly Rate column or if there is a different property that needs to be used
+                });
+            }
+
+            return categories;
+        }
+
+        #endregion
+
+        #region Visit Metrics
+
         public static IEnumerable<GraphCategory> GetVisitMetricNumberOfSites(IList<VisitMetrics> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();
 
@@ -205,6 +265,8 @@ namespace Connect.Helpers {
 
             return categories;
         }
+
+        #endregion
 
         //public static List<GraphCategory> GetVisitStatusChartCategories(IList<VisitStats> chartData) {
         //    List<GraphCategory> categories = new List<GraphCategory>();
@@ -268,64 +330,6 @@ namespace Connect.Helpers {
             }
 
             return JsonConvert.DeserializeObject<T>(jsonResponse);
-        }
-
-        /// <summary>
-        /// Initializes the X Axis Site Status Categories list with the priority, display name, and property object for each property in the <see cref="SiteStats"/> model with the <see cref="ChartXAxisAttribute"/>.
-        /// </summary>
-        private static void InitXAxisSiteStatusCategory() {
-            _xAxisSiteStatusCategoryProps = new Dictionary<string, PropertyInfo>();
-
-            IEnumerable<PropertyInfo> propertyInfos = typeof(SiteStats).GetRuntimeProperties()?.Where(p => p != null && p.GetCustomAttributes(false).Any(a => a?.GetType() == typeof(ChartXAxisAttribute))); //Gets all properties in the SiteStats class with the ChartXAxisAttribute attribute
-
-            if(propertyInfos == null) {
-                return;
-            }
-
-            List<PropertyInfo> propertyInfosList = propertyInfos.ToList();
-
-            List<ChartPropertyInfo> chartInfos = new List<ChartPropertyInfo>();
-
-            foreach(PropertyInfo propertyInfo in propertyInfosList) {   //Go through each ChartXAxisAttribute property and save the ChartXAxisAttribute.Priority, ChartXAxisAttribute.DisplayName, and the PropertyInfo itself into our chartInfos collection
-                ChartXAxisAttribute attr = propertyInfo.GetCustomAttributes(typeof(ChartXAxisAttribute), true).Cast<ChartXAxisAttribute>().Single();
-
-                chartInfos.Add(new ChartPropertyInfo(attr.Priority, attr.DisplayName, propertyInfo));
-            }
-
-            chartInfos = chartInfos.OrderBy(attr => attr.Priority).ToList();    //Order by priority so the Insert()s below start at 0
-
-            foreach(ChartPropertyInfo chartInfo in chartInfos) {    //Create static list of the display names and property so values can be pulled from the properties of the passed in classes in other Utility methods
-                _xAxisSiteStatusCategoryProps[chartInfo.DisplayName] = chartInfo.PropInfo;
-            }
-        }
-
-        /// <summary>
-        /// Initializes the X Axis Subject Status Categories list with the priority, display name, and property object for each property in the <see cref="SubjectStats"/> model with the <see cref="ChartXAxisAttribute"/>.
-        /// </summary>
-        private static void InitXAxisSubjectStatusCategory() {
-            _xAxisSubjectStatusCategoryProps = new Dictionary<string, PropertyInfo>();
-
-            IEnumerable<PropertyInfo> propertyInfos = typeof(SubjectStats).GetRuntimeProperties()?.Where(p => p != null && p.GetCustomAttributes(false).Any(a => a?.GetType() == typeof(ChartXAxisAttribute))); //Gets all properties in the SubjectStats class with the ChartXAxisAttribute attribute
-
-            if(propertyInfos == null) {
-                return;
-            }
-
-            List<PropertyInfo> propertyInfosList = propertyInfos.ToList();
-
-            List<ChartPropertyInfo> chartInfos = new List<ChartPropertyInfo>();
-
-            foreach(PropertyInfo propertyInfo in propertyInfosList) {   //Go through each ChartXAxisAttribute property and save the ChartXAxisAttribute.Priority, ChartXAxisAttribute.DisplayName, and the PropertyInfo itself into our chartInfos collection
-                ChartXAxisAttribute attr = propertyInfo.GetCustomAttributes(typeof(ChartXAxisAttribute), true).Cast<ChartXAxisAttribute>().Single();
-
-                chartInfos.Add(new ChartPropertyInfo(attr.Priority, attr.DisplayName, propertyInfo));
-            }
-
-            chartInfos = chartInfos.OrderBy(attr => attr.Priority).ToList();    //Order by priority so the Insert()s below start at 0
-
-            foreach(ChartPropertyInfo chartInfo in chartInfos) {    //Create static list of the display names and property so values can be pulled from the properties of the passed in classes in other Utility methods
-                _xAxisSubjectStatusCategoryProps[chartInfo.DisplayName] = chartInfo.PropInfo;
-            }
         }
 
         ///// <summary>
@@ -393,6 +397,36 @@ namespace Connect.Helpers {
             return sortedGroupedCats;
         }
 
+        private static List<IGrouping<string, SubjectTrends>> SortGroupedSubjectTrends(List<IGrouping<string, SubjectTrends>> groupedTrends) {
+            List<IGrouping<string, SubjectTrends>> sortedGroupedCats = new List<IGrouping<string, SubjectTrends>>();
+
+            IGrouping<string, SubjectTrends> screened = groupedTrends.FirstOrDefault(cat => cat.Key.ToLowerInvariant() == ValidSubjectTrendEventTypes[0]);
+
+            if(screened != null) {
+                sortedGroupedCats.Add(screened);
+            }
+
+            IGrouping<string, SubjectTrends> enrolled = groupedTrends.FirstOrDefault(cat => cat.Key.ToLowerInvariant() == ValidSubjectTrendEventTypes[1]);
+
+            if(enrolled != null) {
+                sortedGroupedCats.Add(enrolled);
+            }
+
+            IGrouping<string, SubjectTrends> earlyTerm = groupedTrends.FirstOrDefault(cat => cat.Key.ToLowerInvariant() == ValidSubjectTrendEventTypes[2]);
+
+            if(earlyTerm != null) {
+                sortedGroupedCats.Add(earlyTerm);
+            }
+
+            IGrouping<string, SubjectTrends> complete = groupedTrends.FirstOrDefault(cat => cat.Key.ToLowerInvariant() == ValidSubjectTrendEventTypes[3]);
+
+            if(complete != null) {
+                sortedGroupedCats.Add(complete);
+            }
+
+            return sortedGroupedCats;
+        }
+
         private static List<IGrouping<string, VisitMetrics>> SortGroupedVisitMetrics(List<IGrouping<string, VisitMetrics>> groupedMetrics) {
             List<IGrouping<string, VisitMetrics>> sortedGroupedCats = new List<IGrouping<string, VisitMetrics>>();
 
@@ -442,21 +476,6 @@ namespace Connect.Helpers {
             });
 
             return visitMetrics;
-        }
-
-        private class ChartPropertyInfo {
-
-            public int Priority { get; set; }
-
-            public string DisplayName { get; set; }
-
-            public PropertyInfo PropInfo { get; set; }
-
-            public ChartPropertyInfo(int priority, string displayName, PropertyInfo propInfo) {
-                Priority    = priority;
-                DisplayName = displayName;
-                PropInfo    = propInfo;
-            }
         }
     }
 }
