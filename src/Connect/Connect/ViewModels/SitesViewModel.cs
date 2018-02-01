@@ -32,20 +32,65 @@ namespace Connect.ViewModels {
             }
         }
 
+        ///// <summary>
+        ///// gets or sets the planned bottom chart site stats.
+        ///// </summary>
+        //public ObservableCollection<GraphCategory> PlannedBottomChartSiteStats => new ObservableCollection<GraphCategory>(Utility.GetSiteStatusChartCategories(PlannedSiteStats));
+
+        private ObservableCollection<GraphCategory> _plannedBottomChartSiteStats;
+
         /// <summary>
         /// gets or sets the planned bottom chart site stats.
         /// </summary>
-        public ObservableCollection<GraphCategory> PlannedBottomChartSiteStats => new ObservableCollection<GraphCategory>(Utility.GetSiteStatusChartCategories(PlannedSiteStats));
+        public ObservableCollection<GraphCategory> PlannedBottomChartSiteStats {
+            get => _plannedBottomChartSiteStats ?? (_plannedBottomChartSiteStats = new ObservableCollection<GraphCategory>());
+            set {
+                if(_plannedBottomChartSiteStats != value) {
+                    _plannedBottomChartSiteStats = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        ///// <summary>
+        ///// gets or sets the actual bottom chart site stats.
+        ///// </summary>
+        //public ObservableCollection<GraphCategory> ActualBottomChartSiteStats => new ObservableCollection<GraphCategory>(Utility.GetSiteStatusChartCategories(ActualSiteStats));
+
+        private ObservableCollection<GraphCategory> _actualBottomChartSiteStats;
 
         /// <summary>
         /// gets or sets the actual bottom chart site stats.
         /// </summary>
-        public ObservableCollection<GraphCategory> ActualBottomChartSiteStats => new ObservableCollection<GraphCategory>(Utility.GetSiteStatusChartCategories(ActualSiteStats));
+        public ObservableCollection<GraphCategory> ActualBottomChartSiteStats {
+            get => _actualBottomChartSiteStats ?? (_actualBottomChartSiteStats = new ObservableCollection<GraphCategory>());
+            set {
+                if(_actualBottomChartSiteStats != value) {
+                    _actualBottomChartSiteStats = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        ///// <summary>
+        ///// gets or sets the total bottom chart site stats.
+        ///// </summary>
+        //public ObservableCollection<GraphCategory> TotalBottomChartSiteStats => new ObservableCollection<GraphCategory>(Utility.GetSiteStatusChartCategories(TotalSiteStats));
+
+        private ObservableCollection<GraphCategory> _totalBottomChartSiteStats;
 
         /// <summary>
         /// gets or sets the total bottom chart site stats.
         /// </summary>
-        public ObservableCollection<GraphCategory> TotalBottomChartSiteStats => new ObservableCollection<GraphCategory>(Utility.GetSiteStatusChartCategories(TotalSiteStats));
+        public ObservableCollection<GraphCategory> TotalBottomChartSiteStats {
+            get => _totalBottomChartSiteStats ?? (_totalBottomChartSiteStats = new ObservableCollection<GraphCategory>());
+            set {
+                if(_totalBottomChartSiteStats != value) {
+                    _totalBottomChartSiteStats = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         private ObservableCollection<SiteStats> _plannedSiteStats;
 
@@ -367,6 +412,12 @@ namespace Connect.ViewModels {
                     foreach(SiteTrends siteTrend in siteTrends) {
                         SiteTrends.Add(siteTrend);
                     }
+
+                    if(SiteTrends.Count > 0) {
+                        PlannedBottomChartSiteStats = new ObservableCollection<GraphCategory>(Utility.GetSiteTrendsNumberOfPlanned(SiteTrends));
+                        ActualBottomChartSiteStats  = new ObservableCollection<GraphCategory>(Utility.GetSiteTrendsNumberOfActual(SiteTrends));
+                        TotalBottomChartSiteStats   = new ObservableCollection<GraphCategory>(Utility.GetSiteTrendsNumberOfTotal(SiteTrends));
+                    }
                 }
             } catch(Exception ex) {
                 ContentPage page = new ContentPage();
@@ -380,7 +431,7 @@ namespace Connect.ViewModels {
 
         private Command _loadSiteStatsCommand;
         /// <summary>
-        /// Command to load/refresh artitists
+        /// Command to load/refresh site stats.
         /// </summary>
         public Command LoadSiteStatsCommand  => _loadSiteStatsCommand ?? (_loadSiteStatsCommand = new Command(async () => await ExecuteLoadSiteStatsCommand(_projectId)));
 

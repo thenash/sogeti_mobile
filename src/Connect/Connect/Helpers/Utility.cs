@@ -12,6 +12,8 @@ namespace Connect.Helpers {
 
     public static class Utility {
 
+        public const string SiteTrendEventTypePostFix = "sitescolumn";
+
         /// <summary>
         /// Grouping of property info for Site Status properties with the <see cref="ChartXAxisAttribute"/>.
         /// </summary>
@@ -27,12 +29,25 @@ namespace Connect.Helpers {
         /// </summary>
         private static readonly List<string> ValidVisitMetricEventTypes;
 
+        /// <summary>
+        /// Currently the mockups only show the Event Types contained in this list but the API sends over more. Nash said to just filter out the ones we want for now.
+        /// </summary>
+        private static readonly List<string> ValidSiteTrendEventTypes;
+
         #region Constructors
 
         static Utility() {
             InitXAxisSiteStatusCategory();
             InitXAxisSubjectStatusCategory();
             //InitXAxisVisitStatusCategory();
+
+            ValidSiteTrendEventTypes = new List<string> { //The string checks are done in lowercase
+                "selected" + SiteTrendEventTypePostFix,
+                "active"   + SiteTrendEventTypePostFix,
+                "enroling" + SiteTrendEventTypePostFix,
+                "dormant"  + SiteTrendEventTypePostFix,
+                "closed"   + SiteTrendEventTypePostFix
+            };
 
             ValidVisitMetricEventTypes = new List<string> { //The string checks are done in lowercase
                 "pssv",
@@ -71,6 +86,63 @@ namespace Connect.Helpers {
                 categories.Add(new GraphCategory {
                     Group = prop.Key,
                     Value = chartData.Sum(data => (int)prop.Value.GetValue(data))
+                });
+            }
+
+            return categories;
+        }
+
+        public static IEnumerable<GraphCategory> GetSiteTrendsNumberOfPlanned(IList<SiteTrends> chartData) {
+            List<GraphCategory> categories = new List<GraphCategory>();
+
+            IEnumerable<SiteTrends> filteredTrends = chartData.Where(dt => ValidSiteTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
+
+            List<IGrouping<string, SiteTrends>> groupedCats = filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+
+            List<IGrouping<string, SiteTrends>> sortedGroupedCats = SortGroupedSiteTrends(groupedCats); //Sort groups
+
+            foreach(IGrouping<string, SiteTrends> prop in sortedGroupedCats) {
+                categories.Add(new GraphCategory {
+                    Group = prop.Key.ToLowerInvariant().Replace(SiteTrendEventTypePostFix, string.Empty).ToTitleCase(),
+                    Value = prop.Sum(data => string.IsNullOrEmpty(data.high) ? 0 : int.Parse(data.high))
+                });
+            }
+
+            return categories;
+        }
+
+        public static IEnumerable<GraphCategory> GetSiteTrendsNumberOfActual(IList<SiteTrends> chartData) {
+            List<GraphCategory> categories = new List<GraphCategory>();
+
+            IEnumerable<SiteTrends> filteredTrends = chartData.Where(dt => ValidSiteTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
+
+            List<IGrouping<string, SiteTrends>> groupedCats = filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+
+            List<IGrouping<string, SiteTrends>> sortedGroupedCats = SortGroupedSiteTrends(groupedCats); //Sort groups
+
+            foreach(IGrouping<string, SiteTrends> prop in sortedGroupedCats) {
+                categories.Add(new GraphCategory {
+                    Group = prop.Key.ToLowerInvariant().Replace(SiteTrendEventTypePostFix, string.Empty).ToTitleCase(),
+                    Value = prop.Sum(data => string.IsNullOrEmpty(data.actual) ? 0 : int.Parse(data.actual))
+                });
+            }
+
+            return categories;
+        }
+
+        public static IEnumerable<GraphCategory> GetSiteTrendsNumberOfTotal(IList<SiteTrends> chartData) {
+            List<GraphCategory> categories = new List<GraphCategory>();
+
+            IEnumerable<SiteTrends> filteredTrends = chartData.Where(dt => ValidSiteTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
+
+            List<IGrouping<string, SiteTrends>> groupedCats = filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+
+            List<IGrouping<string, SiteTrends>> sortedGroupedCats = SortGroupedSiteTrends(groupedCats); //Sort groups
+
+            foreach(IGrouping<string, SiteTrends> prop in sortedGroupedCats) {
+                categories.Add(new GraphCategory {
+                    Group = prop.Key.ToLowerInvariant().Replace(SiteTrendEventTypePostFix, string.Empty).ToTitleCase(),
+                    Value = prop.Sum(data => string.IsNullOrEmpty(data.ceiling) ? 0 : int.Parse(data.ceiling))
                 });
             }
 
@@ -146,6 +218,8 @@ namespace Connect.Helpers {
 
         //    return categories;
         //}
+
+        public static string ToTitleCase(this string value) => value.Substring(0, 1).ToUpperInvariant() + value.Substring(1);
 
         /// <summary>
         /// Returns a resource dictionary item from <c>Application.Current.Resources</c>.
@@ -283,34 +357,70 @@ namespace Connect.Helpers {
         //    }
         //}
 
+        private static List<IGrouping<string, SiteTrends>> SortGroupedSiteTrends(List<IGrouping<string, SiteTrends>> groupedTrends) {
+            List<IGrouping<string, SiteTrends>> sortedGroupedCats = new List<IGrouping<string, SiteTrends>>();
+
+            IGrouping<string, SiteTrends> selected = groupedTrends.FirstOrDefault(cat => cat.Key.ToLowerInvariant() == ValidSiteTrendEventTypes[0]);
+
+            if(selected != null) {
+                sortedGroupedCats.Add(selected);
+            }
+
+            IGrouping<string, SiteTrends> activated = groupedTrends.FirstOrDefault(cat => cat.Key.ToLowerInvariant() == ValidSiteTrendEventTypes[1]);
+
+            if(activated != null) {
+                sortedGroupedCats.Add(activated);
+            }
+
+            IGrouping<string, SiteTrends> enrolling = groupedTrends.FirstOrDefault(cat => cat.Key.ToLowerInvariant() == ValidSiteTrendEventTypes[2]);
+
+            if(enrolling != null) {
+                sortedGroupedCats.Add(enrolling);
+            }
+
+            IGrouping<string, SiteTrends> dormant = groupedTrends.FirstOrDefault(cat => cat.Key.ToLowerInvariant() == ValidSiteTrendEventTypes[3]);
+
+            if(dormant != null) {
+                sortedGroupedCats.Add(dormant);
+            }
+
+            IGrouping<string, SiteTrends> closed = groupedTrends.FirstOrDefault(cat => cat.Key.ToLowerInvariant() == ValidSiteTrendEventTypes[4]);
+
+            if(closed != null) {
+                sortedGroupedCats.Add(closed);
+            }
+
+            return sortedGroupedCats;
+        }
+
         private static List<IGrouping<string, VisitMetrics>> SortGroupedVisitMetrics(List<IGrouping<string, VisitMetrics>> groupedMetrics) {
             List<IGrouping<string, VisitMetrics>> sortedGroupedCats = new List<IGrouping<string, VisitMetrics>>();
 
-            IGrouping<string, VisitMetrics> pssv = groupedMetrics.FirstOrDefault(cat => cat.Key.ToLower() == "pssv");
+            IGrouping<string, VisitMetrics> pssv = groupedMetrics.FirstOrDefault(cat => cat.Key.ToLowerInvariant() == "pssv");
 
             if(pssv != null) {
                 sortedGroupedCats.Add(pssv);
             }
 
-            IGrouping<string, VisitMetrics> siv = groupedMetrics.FirstOrDefault(cat => cat.Key.ToLower() == "siv");
+            IGrouping<string, VisitMetrics> siv = groupedMetrics.FirstOrDefault(cat => cat.Key.ToLowerInvariant() == "siv");
 
             if(siv != null) {
                 sortedGroupedCats.Add(siv);
             }
 
-            IGrouping<string, VisitMetrics> imv = groupedMetrics.FirstOrDefault(cat => cat.Key.ToLower() == "imv");
+            IGrouping<string, VisitMetrics> imv = groupedMetrics.FirstOrDefault(cat => cat.Key.ToLowerInvariant() == "imv");
 
             if(imv != null) {
                 sortedGroupedCats.Add(imv);
             }
 
-            IGrouping<string, VisitMetrics> cov = groupedMetrics.FirstOrDefault(cat => cat.Key.ToLower() == "cov");
+            IGrouping<string, VisitMetrics> cov = groupedMetrics.FirstOrDefault(cat => cat.Key.ToLowerInvariant() == "cov");
 
             if(cov != null) {
                 sortedGroupedCats.Add(cov);
             }
 
-            IGrouping<string, VisitMetrics> total = groupedMetrics.FirstOrDefault(cat => cat.Key.ToLower() == "total");
+            IGrouping<string, VisitMetrics> total = groupedMetrics.FirstOrDefault(cat => cat.Key.ToLowerInvariant() == "total");
 
             if(total != null) {
                 sortedGroupedCats.Add(total);
@@ -328,7 +438,7 @@ namespace Connect.Helpers {
                 EventType        = "Total",
                 NumVisits        = visitMetrics.Sum(v => v.NumVisits),
                 NumSites         = visitMetrics.Sum(v => v.NumSites),
-                ReportsCompleted =  visitMetrics.Sum(v => v.ReportsCompleted)
+                ReportsCompleted = visitMetrics.Sum(v => v.ReportsCompleted)
             });
 
             return visitMetrics;
