@@ -63,7 +63,7 @@
                                       HeightRequest="40"
                                       Tapped="login_Clicked" />
         
-        <Label Text="Forgot Password"
+        <Label Text="Forgot Password?"
                AutomationId="ProjectsPageForgotPasswordButtonLabel"
                TextColor="{StaticResource DarkGray}"
                HorizontalTextAlignment="Center"/>
