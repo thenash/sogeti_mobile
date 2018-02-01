@@ -47,7 +47,6 @@
 
           <ActivityIndicator Style="{StaticResource BaseActivityIndicatorStyle}"
                              IsVisible="{Binding IsBusy}"
-                             IsEnabled="{Binding IsBusy}"
                              IsRunning="{Binding IsBusy}"
                              Grid.Row="1"
                              Grid.Column="0"
