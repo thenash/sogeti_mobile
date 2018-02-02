@@ -39,28 +39,24 @@
 
         <myViews:CardCellView x:Name="milestoneCell"
                               Title="Milestone"
-                              Description="{Binding milestoneName}"
                               TextAlignment="StartAndExpand"
                               Grid.Row="0"
                               Grid.Column="0"/>
 
         <myViews:CardCellView x:Name="varianceCell"
                               Title="Variance"
-                              Description="{Binding status}"
                               TextAlignment="EndAndExpand"
                               Grid.Row="0"
                               Grid.Column="1" />
 
         <myViews:CardCellView x:Name="plannedDateCell"
                               Title="Planned Date"
-                              Description="{Binding plannedDate}"
                               TextAlignment="StartAndExpand"
                               Grid.Row="1"
                               Grid.Column="0" />
 
         <myViews:CardCellView x:Name="actualDateCell"
                               Title="Actual Date"
-                              Description="{Binding actualDate}"
                               TextAlignment="EndAndExpand"
                               Grid.Row="1"
                               Grid.Column="1" />

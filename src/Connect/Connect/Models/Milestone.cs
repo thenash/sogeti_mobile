@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Connect.Views;
 
@@ -17,20 +18,14 @@ namespace Connect.Models {
             set;
         }
 
-        public DateTime plannedDateTime {
-            get;
-            set;
-        }
+        public DateTime plannedDateTime { get; set; }
 
         public string plannedDate {
             get;
             set;
         }
 
-        public DateTime actualDateTime {
-            get;
-            set;
-        }
+        public DateTime actualDateTime { get; set; }
 
         public string actualDate {
             get;
