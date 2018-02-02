@@ -52,16 +52,16 @@ namespace Connect.Models {
                     return milestones.ToList();
 
                 case Variances.Red:
-                    return milestones.Where(mil => mil.variance >= 15).ToList();
+                    return milestones.Where(mil => mil.status.Equals("r", StringComparison.OrdinalIgnoreCase)).ToList();
 
                 case Variances.Yellow:
-                    return milestones.Where(mil => mil.variance >= 1 && mil.variance <= 14).ToList();
+                    return milestones.Where(mil => mil.status.Equals("a", StringComparison.OrdinalIgnoreCase)).ToList();
 
                 case Variances.Green:
-                    return milestones.Where(mil => mil.variance <= 0).ToList();
+                    return milestones.Where(mil => mil.status.Equals("g", StringComparison.OrdinalIgnoreCase)).ToList();
 
                 case Variances.Gray:
-                    return milestones.Where(mil => mil.plannedDateTime == DateTime.MinValue || mil.actualDateTime == DateTime.MinValue).ToList();   //TODO: Find out which date needs to be check for no value and what a no value date equals
+                    return milestones.Where(mil => mil.status.Equals("u", StringComparison.OrdinalIgnoreCase)).ToList();
 
                 default:
 #if DEBUG
