@@ -178,7 +178,7 @@ namespace Connect.Pages {
             ResetVarianceFilterButtons();
 
             Device.BeginInvokeOnMainThread(() => {
-                card.BackgroundColor = Utility.GetResource<Color>("SkyBlue");
+                card.BackgroundColor = Utility.GetResource<Color>("LightBlue");
                 card.ForceLayout();
             });
 

@@ -113,9 +113,9 @@
 
             <StackLayout Orientation="Horizontal"
                          HorizontalOptions="Center">
-              <myViews:VarianceViewCard IndicatorColor="White"
+              <myViews:VarianceViewCard IndicatorColor="WhiteSmoke"
                                         Description="ALL"
-                                        BackgroundColor="{StaticResource SkyBlue}"
+                                        BackgroundColor="{StaticResource LightBlue}"
                                         Variance="White">
                 <myViews:VarianceViewCard.GestureRecognizers>
                   <TapGestureRecognizer Tapped="OnVarianceFilterExecuteTapped"/>
@@ -312,7 +312,7 @@
               <myViews:MilestoneCellView ActualDate="{Binding actualDate}"
                                          PlannedDate="{Binding plannedDate}"
                                          ProjectCode="{Binding milestoneName}"
-                                         Variance="{Binding variance}"/> <!-- TODO: Find out where this comes from -->
+                                         Variance="{Binding status}"/> <!-- TODO: Find out where this comes from -->
             </DataTemplate>
           </ListView.ItemTemplate>
           <ListView.FooterTemplate>
