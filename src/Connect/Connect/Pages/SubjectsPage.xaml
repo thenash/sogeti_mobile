@@ -119,7 +119,7 @@
 
               <telerikChart:RadCartesianChart.Series>
                 <telerikChart:LineSeries ItemsSource="{Binding PlannedSubjectStats}"
-                                         Stroke="{StaticResource DarkBlue}"
+                                         Stroke="{StaticResource LightBlue}"
                                          StrokeThickness="2"
                                          DisplayName="Planned">
                   <telerikChart:LineSeries.ValueBinding>
@@ -204,7 +204,7 @@
             </StackLayout>-->
 
             <myViews:ChartLegendItem LabelText="Planned"
-                                     ItemColor="{StaticResource DarkBlue}"
+                                     ItemColor="{StaticResource LightBlue}"
                                      Grid.Row="2"
                                      Grid.Column="0"/>
 
@@ -380,8 +380,8 @@
 
               <telerikChart:AreaSeries ItemsSource="{Binding PlannedBottomChartSubjectStats}"
                                        ShowLabels="True"
-                                       Fill="{StaticResource DarkBlue}"
-                                       Stroke="{StaticResource DarkBlue}"
+                                       Fill="{StaticResource LightBlue}"
+                                       Stroke="{StaticResource LightBlue}"
                                        StrokeThickness="1"
                                        DisplayName="Planned to Date"
                                        CombineMode="Stack">
@@ -449,7 +449,7 @@
 
           <myViews:ChartLegendItem x:Name="PlannedBottomLegendStackLayout"
                                    LabelText="Planned"
-                                   ItemColor="{StaticResource DarkBlue}"
+                                   ItemColor="{StaticResource LightBlue}"
                                    Grid.Row="2"
                                    Grid.Column="0"/>
 

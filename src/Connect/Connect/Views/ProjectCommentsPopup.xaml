@@ -77,7 +77,7 @@
                 TextColor="Black"
                 FontAttributes="Bold"
                 FontSize="Small"
-                HorizontalOptions="End"
+                HorizontalOptions="CenterAndExpand"
                 Clicked="OnClose"
                 Grid.Row="2"
                 Grid.Column="0" Grid.ColumnSpan="4"/>
