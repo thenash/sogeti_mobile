@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
 using Connect.Helpers;
 using Connect.Models;
@@ -109,7 +110,11 @@ namespace Connect.ViewModels {
 
             OnPropertyChanged(nameof(DisplayProjects));
 
-            MessagingCenter.Send(this, ConstantKeys.ProjectSelected, project);
+            try {   //BUG: This line is throwing a TargetInvocationException for some reason, may be a Xamarin bug
+                MessagingCenter.Send(this, ConstantKeys.ProjectSelected, project);
+            } catch(TargetInvocationException e) {
+                System.Diagnostics.Debug.WriteLine("Exception: " + e);
+            }
         }
 
 		public async Task ExecuteLoadCommand() {

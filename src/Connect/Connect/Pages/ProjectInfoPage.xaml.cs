@@ -74,7 +74,7 @@ namespace Connect.Pages {
                     }
 
                     if(_viewModel.Contacts.IsNullOrEmpty()) {
-                        await DisplayAlert("", "No contact data available.", "OK");
+                        await DisplayAlert(string.Empty, "No contact data available.", "OK");
                         OnContactInfoPopupDisappearing(null, null);
                         return;
                     }
