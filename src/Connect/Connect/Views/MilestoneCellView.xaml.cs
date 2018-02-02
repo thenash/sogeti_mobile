@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using System.Globalization;
+using Xamarin.Forms;
 
 namespace Connect.Views {
 
@@ -7,28 +9,28 @@ namespace Connect.Views {
         public static readonly BindableProperty ProjectCodeProperty = BindableProperty.Create(nameof(ProjectCode), typeof(string), typeof(MilestoneCellView), string.Empty, BindingMode.TwoWay);
 
         public string ProjectCode {
-            get => GetValue(ProjectCodeProperty).ToString();
+            get => (string)GetValue(ProjectCodeProperty);
             set => SetValue(ProjectCodeProperty, value);
         }
 
         public static readonly BindableProperty VarianceProperty = BindableProperty.Create(nameof(Variance), typeof(string), typeof(MilestoneCellView), string.Empty, BindingMode.TwoWay);
 
         public string Variance {
-            get => GetValue(VarianceProperty).ToString();
+            get => (string)GetValue(VarianceProperty);
             set => SetValue(VarianceProperty, value);
         }
 
         public static readonly BindableProperty PlannedDateProperty = BindableProperty.Create(nameof(PlannedDate), typeof(string), typeof(MilestoneCellView), string.Empty, BindingMode.TwoWay);
 
         public string PlannedDate {
-            get => GetValue(PlannedDateProperty).ToString();
+            get => (string)GetValue(PlannedDateProperty);
             set => SetValue(PlannedDateProperty, value);
         }
 
         public static readonly BindableProperty ActualDateProperty = BindableProperty.Create(nameof(ActualDate), typeof(string), typeof(MilestoneCellView), string.Empty, BindingMode.TwoWay);
 
         public string ActualDate {
-            get => GetValue(ActualDateProperty).ToString();
+            get => (string)GetValue(ActualDateProperty);
             set => SetValue(ActualDateProperty, value);
         }
 
@@ -41,23 +43,23 @@ namespace Connect.Views {
 
             switch(propertyName) {
                 case nameof(ActualDate):
-                    actualDateCell.Description = GetValue(ActualDateProperty).ToString();
+                    actualDateCell.Description = ActualDate;
                     break;
 
                 case "ProtocolId":
-                    varianceCell.Description = GetValue(VarianceProperty).ToString();   //TODO: Fix this
+                    varianceCell.Description = Variance;   //TODO: Fix this
                     break;
 
                 case nameof(Variance):
-                    varianceCell.Description = GetValue(VarianceProperty).ToString();
+                    varianceCell.Description = Variance;
                     break;
 
                 case nameof(PlannedDate):
-                    plannedDateCell.Description = GetValue(PlannedDateProperty).ToString();
+                    plannedDateCell.Description = PlannedDate;
                     break;
 
                 case nameof(ProjectCode):
-                    milestoneCell.Description = GetValue(ProjectCodeProperty).ToString();
+                    milestoneCell.Description = ProjectCode;
                     break;
             }
         }

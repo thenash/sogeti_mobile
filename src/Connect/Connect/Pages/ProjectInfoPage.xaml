@@ -309,8 +309,8 @@
           </ListView.HeaderTemplate>-->
           <ListView.ItemTemplate>
             <DataTemplate>
-              <myViews:MilestoneCellView ActualDate="{Binding actualDateTime, StringFormat='{0:ddMMMyyyy}'}"
-                                         PlannedDate="{Binding plannedDateTime, StringFormat='{0:ddMMMyyyy}'}"
+              <myViews:MilestoneCellView ActualDate="{Binding actualDate}"
+                                         PlannedDate="{Binding plannedDate}"
                                          ProjectCode="{Binding milestoneName}"
                                          Variance="{Binding variance}"/> <!-- TODO: Find out where this comes from -->
             </DataTemplate>

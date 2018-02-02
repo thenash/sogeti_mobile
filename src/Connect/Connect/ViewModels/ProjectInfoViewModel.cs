@@ -170,7 +170,7 @@ namespace Connect.ViewModels {
 
         private Command _loadMilestones;
         /// <summary>
-        /// Command to load/refresh artitists
+        /// Command to load/refresh project milestones.
         /// </summary>
         public Command LoadMilestonesCommand => _loadMilestones ?? (_loadMilestones = new Command(async () => await ExecuteLoadMilestonesCommand()));
 
