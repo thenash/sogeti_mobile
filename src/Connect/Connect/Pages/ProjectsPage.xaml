@@ -24,7 +24,7 @@
 
         <myViews:ButtonLabelContentView IconName="search.png"
                                         HorizontalOptions="End"
-                                        WidthRequest="120"
+                                        WidthRequest="40"
                                         HeightRequest="35"
                                         Tapped="OnFilterSearchTapped"/>
       </StackLayout>
