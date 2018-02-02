@@ -13,7 +13,7 @@
                 <Setter Property="FontSize"
                         Value="Small" />
                 <Setter Property="HorizontalOptions"
-                        Value="Center" />
+                        Value="Start" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -40,7 +40,9 @@
 
             <Label Text="Selected:"
                    Style="{StaticResource SmallLabelStyle}"
-                   FontAttributes="Bold" VerticalOptions="StartAndExpand"/>
+                   FontAttributes="Bold"
+                   VerticalOptions="StartAndExpand"
+                   Margin="10,0,0,0"/>
             <Frame HasShadow="False"
                    OutlineColor="{StaticResource DarkGray}"
                    CornerRadius="3"
