@@ -120,7 +120,7 @@
 
               <telerikChart:RadCartesianChart.Series>
                 <telerikChart:LineSeries ItemsSource="{Binding CompletionCompliance}"
-                                         Stroke="{StaticResource DarkBlue}"
+                                         Stroke="{StaticResource SkyBlue}"
                                          StrokeThickness="2">
                   <telerikChart:LineSeries.ValueBinding>
                     <telerikChart:PropertyNameDataPointBinding PropertyName="CompliancePercent"/>
@@ -294,8 +294,8 @@
 
               <telerikChart:AreaSeries ItemsSource="{Binding TotalBottomChartVisitMetrics}"
                                        ShowLabels="True"
-                                       Fill="{StaticResource DarkBlue}"
-                                       Stroke="{StaticResource DarkBlue}"
+                                       Fill="{StaticResource LightBlue}"
+                                       Stroke="{StaticResource PaleBlue}"
                                        StrokeThickness="1"
                                        DisplayName="Actual Number of Sites"
                                        CombineMode="Stack">

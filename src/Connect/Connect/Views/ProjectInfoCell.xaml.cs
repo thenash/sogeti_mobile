@@ -217,7 +217,7 @@ namespace Connect.Views {
 
         private void ToggleIsSelected(bool isSelected) {
             if(isSelected) {
-                Color color = Utility.GetResource<Color>("DarkBlue");
+                Color color = Utility.GetResource<Color>("DarkGray");
 
                 ArrowButtonGrid.BackgroundColor = color;
                 TopSeparator.BackgroundColor    = color;

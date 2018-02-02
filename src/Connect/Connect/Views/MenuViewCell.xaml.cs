@@ -56,7 +56,7 @@ namespace Connect.Views {
                 MessagingCenter.Unsubscribe<MenuPage, string>(this, ConstantKeys.ChangeBackground);
                 MessagingCenter.Subscribe<MenuPage, string>(this, ConstantKeys.ChangeBackground, (page, selectedCellTitle) => {
                     if(selectedCellTitle == ((MasterPageItem)BindingContext).Title) {
-                        Device.BeginInvokeOnMainThread(() => TitleLabel.BackgroundColor = Color.White);
+                        Device.BeginInvokeOnMainThread(() => TitleLabel.BackgroundColor = Color.WhiteSmoke);
                     } else {
                         Device.BeginInvokeOnMainThread(() => TitleLabel.BackgroundColor = Color.Default);
                     }

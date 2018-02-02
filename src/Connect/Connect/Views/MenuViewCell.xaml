@@ -9,6 +9,6 @@
                VerticalTextAlignment="Center"
                BackgroundColor="{Binding IsFirst,
                                          Converter={x:Static helpers:BoolToColorConverter.Instance},
-                                         ConverterParameter={x:Static Color.White}}"/>
+                                         ConverterParameter={x:Static Color.WhiteSmoke}}"/>
     </ViewCell.View>
 </ViewCell>

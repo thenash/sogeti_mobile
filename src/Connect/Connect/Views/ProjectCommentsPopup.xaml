@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
@@ -37,14 +37,6 @@
           <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <!--<Button Text="Close"
-                TextColor="Black"
-                FontAttributes="Bold"
-                FontSize="Small"
-                HorizontalOptions="End"
-                Clicked="OnClose"
-                Grid.Row="0"
-                Grid.Column="0"/>-->
 
         <views:CardCellView x:Name="ProjectCodeCardCellView"
                             Title="Project Code"
@@ -77,10 +69,18 @@
         <ScrollView HorizontalOptions="Fill"
                     Grid.Row="1"
                     Grid.Column="0"
-                    Grid.ColumnSpan="4">
+                    Grid.ColumnSpan="4" BackgroundColor="{StaticResource LightGray}" Padding="5,5,5,0">
           <Label x:Name="CommentLabel"
                  HorizontalOptions="Fill"/>
         </ScrollView>
+        <Button Text="Close"
+                TextColor="Black"
+                FontAttributes="Bold"
+                FontSize="Small"
+                HorizontalOptions="End"
+                Clicked="OnClose"
+                Grid.Row="2"
+                Grid.Column="0" Grid.ColumnSpan="4"/>
 
         <!--<Editor x:Name="CommentEditor"
                 HorizontalOptions="Fill"
