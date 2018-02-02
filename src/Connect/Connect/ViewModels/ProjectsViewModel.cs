@@ -38,7 +38,7 @@ namespace Connect.ViewModels {
 
             return new BusinessUnitFilterItem { //HACK: This is not a good way to split the name, would be best if these were separate properties
                 BusinessUnitId   = int.Parse(owningByArray[0]),
-                BusinessUnitName = owningByArray[1]
+                BusinessUnitName = proj.owningBu.Replace(owningByArray[0] + " - ", string.Empty)
             };
         }).GroupBy(bu => bu.BusinessUnitId).Select(items => items.FirstOrDefault()).ToList();
 
