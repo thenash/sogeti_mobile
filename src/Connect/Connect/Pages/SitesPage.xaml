@@ -247,8 +247,13 @@
                    Margin="0,5,0,3"
                    HorizontalOptions="StartAndExpand"/>
 
+            <BoxView Style="{StaticResource VerticalSeparatorStyle}"
+                     WidthRequest="1"
+                     BackgroundColor="{StaticResource DarkGray}"
+                     HorizontalOptions="End"/>
+
             <Frame x:Name="ChartViewButtonFrame"
-                   OutlineColor="{StaticResource DarkGray}"
+                   OutlineColor="Transparent"
                    Padding="3"
                    HasShadow="False"
                    CornerRadius="1"
@@ -271,8 +276,13 @@
               </Frame.GestureRecognizers>
             </Frame>
 
+            <BoxView Style="{StaticResource VerticalSeparatorStyle}"
+                     WidthRequest="1"
+                     BackgroundColor="{StaticResource DarkGray}"
+                     HorizontalOptions="End"/>
+
             <Frame x:Name="GridViewButtonFrame"
-                   OutlineColor="{StaticResource DarkGray}"
+                   OutlineColor="Transparent"
                    Padding="3"
                    HasShadow="False"
                    CornerRadius="1"
@@ -295,6 +305,11 @@
                 <TapGestureRecognizer Tapped="OnGridViewTapped"/>
               </Frame.GestureRecognizers>
             </Frame>
+
+            <BoxView Style="{StaticResource VerticalSeparatorStyle}"
+                     WidthRequest="1"
+                     BackgroundColor="{StaticResource DarkGray}"
+                     HorizontalOptions="End"/>
           </StackLayout>
 
           <!--<StackLayout Orientation="Horizontal"

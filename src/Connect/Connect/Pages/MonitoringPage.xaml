@@ -164,7 +164,7 @@
                    HorizontalOptions="StartAndExpand"/>
 
             <Frame x:Name="ChartViewButtonFrame"
-                   OutlineColor="{StaticResource DarkGray}"
+                   OutlineColor="Transparent"
                    Padding="3"
                    HasShadow="False"
                    CornerRadius="1"
@@ -188,7 +188,7 @@
             </Frame>
 
             <Frame x:Name="GridViewButtonFrame"
-                   OutlineColor="{StaticResource DarkGray}"
+                   OutlineColor="Transparent"
                    Padding="3"
                    HasShadow="False"
                    CornerRadius="1"
