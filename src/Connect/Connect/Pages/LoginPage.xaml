@@ -23,7 +23,7 @@
                    Padding="25"
                    Spacing="20">
 
-        <Image Source="tpd_logo1024x244.png" />
+        <!--<Image Source="tpd_logo1024x244.png" />-->
 
         <Frame HasShadow="False"
                BackgroundColor="{StaticResource LightGray}"
@@ -62,19 +62,19 @@
                                       WidthRequest="350"
                                       HeightRequest="40"
                                       Tapped="login_Clicked" />
-        
+
         <Label Text="Forgot Password?"
                AutomationId="ProjectsPageForgotPasswordButtonLabel"
                TextColor="{StaticResource DarkGray}"
                HorizontalTextAlignment="Center"/>
         <Label Text="Customer Version"
                HorizontalTextAlignment="Center"
-               VerticalTextAlignment="End" 
+               VerticalTextAlignment="End"
                TextColor="{StaticResource White}"/>
-         
-        <Image Source="SyneosHealth1200x564.png"
+
+        <!--<Image Source="SyneosHealth1200x564.png"
                HorizontalOptions="CenterAndExpand"
-               VerticalOptions="End"/>
+               VerticalOptions="End"/>-->
 
       </StackLayout>
     </ScrollView>
