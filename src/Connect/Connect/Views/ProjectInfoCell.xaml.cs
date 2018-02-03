@@ -222,10 +222,14 @@ namespace Connect.Views {
                 ArrowButtonGrid.BackgroundColor = color;
                 TopSeparator.BackgroundColor    = color;
                 BottomSeparator.BackgroundColor = color;
+
+                ArrowButtonGridLabel.TextColor = Color.White;
             } else {
                 ArrowButtonGrid.BackgroundColor = Utility.GetResource<Color>("Orange");
                 TopSeparator.BackgroundColor    = Color.White;
                 BottomSeparator.BackgroundColor = Color.White;
+
+                ArrowButtonGridLabel.TextColor = Color.Black;
             }
         }
     }

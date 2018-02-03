@@ -132,7 +132,8 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <Label Text=">"
+      <Label x:Name="ArrowButtonGridLabel"
+             Text=">"
              HorizontalTextAlignment="Center"
              VerticalTextAlignment="Center"
              FontAttributes="Bold"
