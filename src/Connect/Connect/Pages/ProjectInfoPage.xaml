@@ -14,7 +14,7 @@
 
   <ContentPage.Content>
 
-    <StackLayout Padding="15,5,15,15"
+    <StackLayout Padding="10,5,10,10"
                  HorizontalOptions="Center"
                  Spacing="10">
       <StackLayout Padding="0"
@@ -112,7 +112,8 @@
                                IsRunning="{Binding IsBusy}"/>
 
             <StackLayout Orientation="Horizontal"
-                         HorizontalOptions="Center">
+                         HorizontalOptions="Center"
+                         Spacing="3">
               <myViews:VarianceViewCard IndicatorColor="WhiteSmoke"
                                         Description="ALL"
                                         BackgroundColor="{StaticResource LightBlue}"
