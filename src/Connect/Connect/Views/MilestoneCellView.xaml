@@ -19,9 +19,8 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <BoxView BackgroundColor="{StaticResource Green}"
-               Grid.Row="0"
-               Grid.Column="0" /> <!-- Change background color based on Variance -->
+      <BoxView Grid.Row="0"
+               Grid.Column="0" x:Name="varienceColor" /> <!-- Change background color based on Variance -->
 
       <Grid RowSpacing="1"
             ColumnSpacing="3"

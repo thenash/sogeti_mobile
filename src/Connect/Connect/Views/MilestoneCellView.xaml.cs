@@ -20,6 +20,13 @@ namespace Connect.Views {
             set => SetValue(VarianceProperty, value);
         }
 
+        public static BindableProperty VarianceColorProperty = BindableProperty.Create(nameof(Variance), typeof(string), typeof(MilestoneCellView), string.Empty, BindingMode.TwoWay);
+
+        public string VarianceColor {
+            get => (String)GetValue(VarianceColorProperty);
+            set => SetValue(VarianceColorProperty, value);
+        }
+
         public static readonly BindableProperty PlannedDateProperty = BindableProperty.Create(nameof(PlannedDate), typeof(string), typeof(MilestoneCellView), string.Empty, BindingMode.TwoWay);
 
         public string PlannedDate {
@@ -34,6 +41,28 @@ namespace Connect.Views {
             set => SetValue(ActualDateProperty, value);
         }
 
+        private Color GetVarianceColor(string variance = "G") {
+            if(variance == "U"){
+                return Xamarin.Forms.Color.Gray;
+            }
+
+            if (variance == "R")
+            {
+                return Xamarin.Forms.Color.Red;
+            }
+
+            if (variance == "A")
+            {
+                return Xamarin.Forms.Color.Yellow;
+            }
+
+            if (variance == "G")
+            {
+                return Xamarin.Forms.Color.Green;
+            }
+
+            return Xamarin.Forms.Color.WhiteSmoke;
+        }
         protected override void OnPropertyChanged(string propertyName = null) {
             base.OnPropertyChanged(propertyName);
 
@@ -52,8 +81,9 @@ namespace Connect.Views {
 
                 case nameof(Variance):
                     varianceCell.Description = Variance;
+                    varienceColor.BackgroundColor = GetVarianceColor(Variance);
                     break;
-
+                   
                 case nameof(PlannedDate):
                     plannedDateCell.Description = PlannedDate;
                     break;
