@@ -352,11 +352,8 @@
                              InputTransparent="True"
                              Grid.Row="0"
                              Grid.Column="1">
-                  <Image Source="chev_down.png"/>
-                  <Label Text="Show More"
-                         FontSize="Small"
-                         FontAttributes="Bold"
-                         VerticalTextAlignment="Center"/>
+                  <Image Source="chev_down.png" 
+                         HorizontalOptions="Center"/>
                 </StackLayout>
 
                 <BoxView Style="{StaticResource VerticalSeparatorStyle}"
@@ -380,10 +377,6 @@
                              Grid.Column="3">
                   <Image Source="chev_up.png"
                          HorizontalOptions="Center"/>
-                  <Label Text="Show Less"
-                         FontSize="Small"
-                         FontAttributes="Bold"
-                         VerticalTextAlignment="Center"/>
                 </StackLayout>
 
                 <BoxView Style="{StaticResource VerticalSeparatorStyle}"
@@ -435,25 +428,11 @@
                  Grid.Row="1"
                  Grid.Column="0"/>
 
-        <!--<StackLayout x:Name="ProjectCommentButtonStackLayout"
-                     AutomationId="ProjectInfoPageProjectCommentButtonStackLayout"
-                     HorizontalOptions="Center"
-                     Padding="0,7"
-                     Grid.Row="1"
-                     Grid.Column="1">
-          <Label Text="Project Comment"
-                 FontSize="Medium"
-                 FontAttributes="Bold"/>
-
-          <StackLayout.GestureRecognizers>
-            <TapGestureRecognizer Tapped="OnProjectCommentExecuteTapped"/>
-            <TapGestureRecognizer Tapped="OnProjectCommentAnimateTapped"/>
-          </StackLayout.GestureRecognizers>
-        </StackLayout>-->
 
         <BoxView x:Name="ProjectCommentBackgroundBoxView"
                  Grid.Row="1"
                  Grid.Column="1"/>
+          
 
         <Label AutomationId="ProjectInfoPageProjectCommentButtonLabel"
                Text="Project Comment"

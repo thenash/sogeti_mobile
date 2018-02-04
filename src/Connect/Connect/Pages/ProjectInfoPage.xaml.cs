@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using Connect.ViewModels;
 using Connect.Views;
 using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter;
 using Rg.Plugins.Popup.Extensions;
 
 namespace Connect.Pages {
@@ -177,10 +178,10 @@ namespace Connect.Pages {
 
             ResetVarianceFilterButtons();
 
-            Device.BeginInvokeOnMainThread(() => {
-                card.BackgroundColor = Utility.GetResource<Color>("LightBlue");
-                card.ForceLayout();
-            });
+            //Device.BeginInvokeOnMainThread(() => {
+            //    card.BackgroundColor = Utility.GetResource<Color>("LightBlue");
+            //    card.ForceLayout();
+            //});
 
             _viewModel.FilterMilestonesByVariance(card.Variance);
         }
