@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
@@ -98,8 +98,12 @@
                   <RowDefinition Height="Auto"/>
                   <RowDefinition Height="1"/>
                   <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="1"/>
+                  <RowDefinition Height="Auto"/>                                    
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*"/>
+                  <ColumnDefinition Width="*"/>
                   <ColumnDefinition Width="*"/>
                   <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -107,42 +111,51 @@
                 <BoxView BackgroundColor="White"
                          Grid.Row="0"
                          Grid.Column="0"
-                         Grid.ColumnSpan="2"/>
+                         Grid.ColumnSpan="5"/>
 
                 <views:CardCellView Title="Project Role"
                                     Description="{Binding Title}"
                                     TextAlignment="Start"
                                     Grid.Row="0"
-                                    Grid.Column="0"/>
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"/>
 
                 <views:CardCellView Title="Full Name"
                                     Description="{Binding Name}"
                                     TextAlignment="End"
                                     Grid.Row="0"
-                                    Grid.Column="1"/>
+                                    Grid.Column="3"
+                                    Grid.ColumnSpan="2"/>
 
                 <BoxView Style="{StaticResource HorizontalSeparatorStyle}"
                          BackgroundColor="{StaticResource LightGray}"
                          Grid.Row="1"
                          Grid.Column="0"
-                         Grid.ColumnSpan="2"/>
+                         Grid.ColumnSpan="5"/>
 
                 <StackLayout BackgroundColor="White"
                              Orientation="Horizontal"
                              Padding="10,5"
                              Grid.Row="2"
                              Grid.Column="0"
-                             Grid.ColumnSpan="2">
+                             Grid.ColumnSpan="5">
                   <!--<Label Text="P"
                          TextColor="{StaticResource DarkBlue}"
                          FontSize="Large"/>-->
 
-                  <Image Source="phone.png"/>
+                  <Image Source="phone.png" HeightRequest="24"/>
 
+                  <Button AutomationId="ProjectContactPushNotification"
+                   BorderRadius="10"
+                        BackgroundColor="WhiteSmoke"
+                        TextColor="Black"
+                        x:Name="Notify" FontSize="12"
+                        Text="N"/>
+                                    
                   <Label Text="{Binding Phone}"
                          Style="{StaticResource BaseLabelStyle}"
                          HorizontalOptions="EndAndExpand"
-                         VerticalTextAlignment="Center"/>
+                         VerticalTextAlignment="Center" FontSize="14"/>
 
                   <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding Source={x:Reference ContactInfoPopupPage}, Path=BindingContext.PhoneTappedCommand}"
@@ -150,40 +163,42 @@
                   </StackLayout.GestureRecognizers>
                 </StackLayout>
 
+
                 <BoxView Style="{StaticResource HorizontalSeparatorStyle}"
                          BackgroundColor="{StaticResource LightGray}"
                          Grid.Row="3"
                          Grid.Column="0"
-                         Grid.ColumnSpan="2"/>
+                         Grid.ColumnSpan="4"/>
 
                 <StackLayout BackgroundColor="White"
                              Orientation="Horizontal"
                              Padding="10,5"
                              Grid.Row="4"
                              Grid.Column="0"
-                             Grid.ColumnSpan="2">
+                             Grid.ColumnSpan="5">
                   <!--<Label Text="E"
                          TextColor="{StaticResource DarkBlue}"
                          FontSize="Large"/>-->
 
-                  <Image Source="email.png"/>
+                  <Image Source="email.png" HeightRequest="24"/>
 
                   <Label Text="{Binding Email}"
                          Style="{StaticResource BaseLabelStyle}"
                          HorizontalOptions="EndAndExpand"
-                         VerticalTextAlignment="Center"/>
+                         VerticalTextAlignment="Center" FontSize="14"/>
 
                   <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding Source={x:Reference ContactInfoPopupPage}, Path=BindingContext.EmailTappedCommand}"
                                           CommandParameter="{Binding Email}"/>
                   </StackLayout.GestureRecognizers>
-                </StackLayout>
+                </StackLayout>                              
               </Grid>
             </ViewCell>
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
     </Grid>
+        
   </pages:PopupPage.Content>
 </pages:PopupPage>
 
