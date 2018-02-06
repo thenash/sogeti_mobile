@@ -19,7 +19,7 @@ namespace Connect.Models {
 
         public DateTime plannedDateTime { get; set; }
 
-        public string plannedDate {
+        public DateTime plannedDate {
             get;
             set;
         }

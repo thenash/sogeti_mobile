@@ -311,7 +311,7 @@
           <ListView.ItemTemplate>
             <DataTemplate>
               <myViews:MilestoneCellView ActualDate="{Binding actualDate}"
-                                         PlannedDate="{Binding plannedDate}"
+                                         PlannedDate="{Binding plannedDate, StringFormat='{0:dd-MMM-yyyy}'}"
                                          ProjectCode="{Binding milestoneName}"
                                          Variance="{Binding status}"/> <!-- TODO: Find out where this comes from -->
             </DataTemplate>
@@ -353,7 +353,7 @@
                              InputTransparent="True"
                              Grid.Row="0"
                              Grid.Column="1">
-                  <Image Source="chev_down.png" 
+                  <Image Source="chev_down.png"
                          HorizontalOptions="Center"/>
                 </StackLayout>
 
@@ -429,11 +429,9 @@
                  Grid.Row="1"
                  Grid.Column="0"/>
 
-
         <BoxView x:Name="ProjectCommentBackgroundBoxView"
                  Grid.Row="1"
                  Grid.Column="1"/>
-          
 
         <Label AutomationId="ProjectInfoPageProjectCommentButtonLabel"
                Text="Project Comment"
