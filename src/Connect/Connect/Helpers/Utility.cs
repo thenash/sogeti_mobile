@@ -131,9 +131,11 @@ namespace Connect.Helpers {
 
         #region Subject Trends
 
+        public static IEnumerable<SubjectTrends> FilterSubjectTrends(IList<SubjectTrends> chartData) => chartData.Where(dt => ValidSubjectTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
+
         public static List<IGrouping<string, SubjectTrends>> GroupSubjectTrends(IList<SubjectTrends> chartData) {
 
-            IEnumerable<SubjectTrends> filteredTrends = chartData.Where(dt => ValidSubjectTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
+            IEnumerable<SubjectTrends> filteredTrends = FilterSubjectTrends(chartData);
 
             return filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
         }

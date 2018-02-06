@@ -217,8 +217,6 @@ namespace Connect.Pages {
 
                 #region Click-able Background
 
-                int index1 = index;
-
                 BoxView background = new BoxView {
                     BackgroundColor = Color.Transparent
                 };
@@ -236,7 +234,7 @@ namespace Connect.Pages {
                             box.BackgroundColor = Utility.GetResource<Color>("PaleBlue");
                         }
 
-                        _viewModel.SetTopChartData(_viewModel.PlannedBottomChartSiteStats[index1].Group);
+                        _viewModel.SetTopChartData(groupName);
 
                         _selectedGridBoxView = box;
                     }), CommandParameter = background

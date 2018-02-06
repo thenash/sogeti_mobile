@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Connect.Models;
@@ -16,6 +17,8 @@ using System.Net.Http;
 namespace Connect.ViewModels {
 
     public class SubjectsViewModel : BaseViewModel {
+
+        public const string DefaultSelectedGridStatus = "screened";
 
         private ObservableCollection<SubjectDetails> _sibjectDetails;
 
@@ -112,64 +115,61 @@ namespace Connect.ViewModels {
             }
         }
 
-        private ObservableCollection<SubjectStats> _plannedSubjectStats;
+        private ObservableCollection<SubjectTrends> _plannedTopChartSubjectTrends;
 
         /// <summary>
 	    /// gets or sets the planned subject stats.
 	    /// </summary>
-		public ObservableCollection<SubjectStats> PlannedSubjectStats {
-            get => _plannedSubjectStats ?? (_plannedSubjectStats = new ObservableCollection<SubjectStats>());
+		public ObservableCollection<SubjectTrends> PlannedTopChartSubjectTrends {
+            get => _plannedTopChartSubjectTrends ?? (_plannedTopChartSubjectTrends = new ObservableCollection<SubjectTrends>());
             set {
-                if(_plannedSubjectStats != value) {
-                    _plannedSubjectStats = value;
+                if(_plannedTopChartSubjectTrends != value) {
+                    _plannedTopChartSubjectTrends = value;
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(PlannedBottomChartSubjectStats));
                 }
             }
         }
 
-        private ObservableCollection<SubjectStats> _actualSubjectStats;
+        private ObservableCollection<SubjectTrends> _actualTopChartSubjectTrends;
 
         /// <summary>
         /// gets or sets the planned subject stats.
         /// </summary>
-        public ObservableCollection<SubjectStats> ActualSubjectStats {
-            get => _actualSubjectStats ?? (_actualSubjectStats = new ObservableCollection<SubjectStats>());
+        public ObservableCollection<SubjectTrends> ActualTopChartSubjectTrends {
+            get => _actualTopChartSubjectTrends ?? (_actualTopChartSubjectTrends = new ObservableCollection<SubjectTrends>());
             set {
-                if(_actualSubjectStats != value) {
-                    _actualSubjectStats = value;
+                if(_actualTopChartSubjectTrends != value) {
+                    _actualTopChartSubjectTrends = value;
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(ActualBottomChartSubjectStats));
                 }
             }
         }
 
-        private ObservableCollection<SubjectStats> _totalSubjectStats;
+        private ObservableCollection<SubjectTrends> _totalTopChartSubjectTrends;
 
         /// <summary>
         /// gets or sets the planned subject stats.
         /// </summary>
-        public ObservableCollection<SubjectStats> TotalSubjectStats {
-            get => _totalSubjectStats ?? (_totalSubjectStats = new ObservableCollection<SubjectStats>());
+        public ObservableCollection<SubjectTrends> TotalTopChartSubjectTrends {
+            get => _totalTopChartSubjectTrends ?? (_totalTopChartSubjectTrends = new ObservableCollection<SubjectTrends>());
             set {
-                if(_totalSubjectStats != value) {
-                    _totalSubjectStats = value;
+                if(_totalTopChartSubjectTrends != value) {
+                    _totalTopChartSubjectTrends = value;
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(TotalBottomChartSubjectStats));
                 }
             }
         }
 
-        private ObservableCollection<SubjectStats> _monthlyRateSubjectStats;
+        private ObservableCollection<SubjectTrends> _monthlyRateTopChartSubjectTrends;
 
         /// <summary>
         /// gets or sets the monthly rate subject stats.
         /// </summary>
-        public ObservableCollection<SubjectStats> MonthlyRateSubjectStats {
-            get => _monthlyRateSubjectStats ?? (_monthlyRateSubjectStats = new ObservableCollection<SubjectStats>());
+        public ObservableCollection<SubjectTrends> MonthlyRateTopChartSubjectTrends {
+            get => _monthlyRateTopChartSubjectTrends ?? (_monthlyRateTopChartSubjectTrends = new ObservableCollection<SubjectTrends>());
             set {
-                if(_monthlyRateSubjectStats != value) {
-                    _monthlyRateSubjectStats = value;
+                if(_monthlyRateTopChartSubjectTrends != value) {
+                    _monthlyRateTopChartSubjectTrends = value;
                     OnPropertyChanged();
                 }
             }
@@ -217,12 +217,8 @@ namespace Connect.ViewModels {
 
             _projectId = projectId;
 
-            PlannedSubjectStats     = new ObservableCollection<SubjectStats>();
-            ActualSubjectStats      = new ObservableCollection<SubjectStats>();
-            TotalSubjectStats       = new ObservableCollection<SubjectStats>();
-            MonthlyRateSubjectStats = new ObservableCollection<SubjectStats>();
-            SubjectTrends           = new ObservableCollection<SubjectTrends>();
-            SubjectDetails          = new ObservableCollection<SubjectDetails>();
+            SubjectTrends  = new ObservableCollection<SubjectTrends>();
+            SubjectDetails = new ObservableCollection<SubjectDetails>();
         }
 
         public async Task RefreshData(string projectId) {
@@ -231,6 +227,8 @@ namespace Connect.ViewModels {
             await ExecuteLoadSubjectDetailsCommand(projectId);
             //Big request... takes long to execute
             await ExecuteLoadSubjectTrendsCommand(projectId);
+
+            SetTopChartData(DefaultSelectedGridStatus);    //Defaulting to selected row
         }
 
         private Command _loadSubjectDetailsCommand;
@@ -481,584 +479,584 @@ namespace Connect.ViewModels {
             IsBusy = true;
 
 //#if DEBUG
-            await Task.FromResult(0);
+            //await Task.FromResult(0);
 
-            PlannedSubjectStats = new ObservableCollection<SubjectStats> {
-                new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 5,
-                    enrolled    = 1,
-                    early_Term  = 0,
-                    complete    = 3,
-                    isoDateTime = DateTime.UtcNow.AddMonths(1),
-                    isoDate     = DateTime.UtcNow.AddMonths(1).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 0,
-                    safetySae   = 5
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 3,
-                    enrolled    = 7,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(2),
-                    isoDate     = DateTime.UtcNow.AddMonths(2).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 5,
-                    safetySae   = 9
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 8,
-                    enrolled    = 6,
-                    early_Term  = 1,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(3),
-                    isoDate     = DateTime.UtcNow.AddMonths(3).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 14,
-                    safetySae   = 10
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 9,
-                    enrolled    = 5,
-                    early_Term  = 3,
-                    complete    = 2,
-                    isoDateTime = DateTime.UtcNow.AddMonths(4),
-                    isoDate     = DateTime.UtcNow.AddMonths(4).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 15,
-                    safetySae   = 13
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 7,
-                    enrolled    = 6,
-                    early_Term  = 1,
-                    complete    = 1,
-                    isoDateTime = DateTime.UtcNow.AddMonths(5),
-                    isoDate     = DateTime.UtcNow.AddMonths(5).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 15,
-                    safetySae   = 13
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 8,
-                    enrolled    = 8,
-                    early_Term  = 0,
-                    complete    = 3,
-                    isoDateTime = DateTime.UtcNow.AddMonths(6),
-                    isoDate     = DateTime.UtcNow.AddMonths(6).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 15,
-                    safetySae   = 15
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 10,
-                    enrolled    = 7,
-                    early_Term  = 2,
-                    complete    = 2,
-                    isoDateTime = DateTime.UtcNow.AddMonths(7),
-                    isoDate     = DateTime.UtcNow.AddMonths(7).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 16,
-                    safetySae   = 15
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 1,
-                    enrolled    = 3,
-                    early_Term  = 0,
-                    complete    = 2,
-                    isoDateTime = DateTime.UtcNow.AddMonths(8),
-                    isoDate     = DateTime.UtcNow.AddMonths(8).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 16,
-                    safetySae   = 15
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 4,
-                    enrolled    = 6,
-                    early_Term  = 2,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(9),
-                    isoDate     = DateTime.UtcNow.AddMonths(9).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 17,
-                    safetySae   = 20
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 6,
-                    enrolled    = 1,
-                    early_Term  = 1,
-                    complete    = 1,
-                    isoDateTime = DateTime.UtcNow.AddMonths(10),
-                    isoDate     = DateTime.UtcNow.AddMonths(10).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 17,
-                    safetySae   = 25
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 6,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 1,
-                    isoDateTime = DateTime.UtcNow.AddMonths(11),
-                    isoDate     = DateTime.UtcNow.AddMonths(11).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 19,
-                    safetySae   = 30
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 13,
-                    enrolled    = 1,
-                    early_Term  = 3,
-                    complete    = 4,
-                    isoDateTime = DateTime.UtcNow.AddMonths(12),
-                    isoDate     = DateTime.UtcNow.AddMonths(12).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 35
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(13),
-                    isoDate     = DateTime.UtcNow.AddMonths(13).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 35
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(14),
-                    isoDate     = DateTime.UtcNow.AddMonths(14).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 40
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(15),
-                    isoDate     = DateTime.UtcNow.AddMonths(15).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 50
-                }
-            };
+            //PlannedSubjectStats = new ObservableCollection<SubjectStats> {
+            //    new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 5,
+            //        enrolled    = 1,
+            //        early_Term  = 0,
+            //        complete    = 3,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(1),
+            //        isoDate     = DateTime.UtcNow.AddMonths(1).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 0,
+            //        safetySae   = 5
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 3,
+            //        enrolled    = 7,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(2),
+            //        isoDate     = DateTime.UtcNow.AddMonths(2).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 5,
+            //        safetySae   = 9
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 8,
+            //        enrolled    = 6,
+            //        early_Term  = 1,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(3),
+            //        isoDate     = DateTime.UtcNow.AddMonths(3).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 14,
+            //        safetySae   = 10
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 9,
+            //        enrolled    = 5,
+            //        early_Term  = 3,
+            //        complete    = 2,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(4),
+            //        isoDate     = DateTime.UtcNow.AddMonths(4).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 15,
+            //        safetySae   = 13
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 7,
+            //        enrolled    = 6,
+            //        early_Term  = 1,
+            //        complete    = 1,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(5),
+            //        isoDate     = DateTime.UtcNow.AddMonths(5).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 15,
+            //        safetySae   = 13
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 8,
+            //        enrolled    = 8,
+            //        early_Term  = 0,
+            //        complete    = 3,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(6),
+            //        isoDate     = DateTime.UtcNow.AddMonths(6).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 15,
+            //        safetySae   = 15
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 10,
+            //        enrolled    = 7,
+            //        early_Term  = 2,
+            //        complete    = 2,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(7),
+            //        isoDate     = DateTime.UtcNow.AddMonths(7).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 16,
+            //        safetySae   = 15
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 1,
+            //        enrolled    = 3,
+            //        early_Term  = 0,
+            //        complete    = 2,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(8),
+            //        isoDate     = DateTime.UtcNow.AddMonths(8).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 16,
+            //        safetySae   = 15
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 4,
+            //        enrolled    = 6,
+            //        early_Term  = 2,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(9),
+            //        isoDate     = DateTime.UtcNow.AddMonths(9).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 17,
+            //        safetySae   = 20
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 6,
+            //        enrolled    = 1,
+            //        early_Term  = 1,
+            //        complete    = 1,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(10),
+            //        isoDate     = DateTime.UtcNow.AddMonths(10).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 17,
+            //        safetySae   = 25
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 6,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 1,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(11),
+            //        isoDate     = DateTime.UtcNow.AddMonths(11).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 19,
+            //        safetySae   = 30
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 13,
+            //        enrolled    = 1,
+            //        early_Term  = 3,
+            //        complete    = 4,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(12),
+            //        isoDate     = DateTime.UtcNow.AddMonths(12).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 35
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(13),
+            //        isoDate     = DateTime.UtcNow.AddMonths(13).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 35
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(14),
+            //        isoDate     = DateTime.UtcNow.AddMonths(14).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 40
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(15),
+            //        isoDate     = DateTime.UtcNow.AddMonths(15).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 50
+            //    }
+            //};
 
-            ActualSubjectStats = new ObservableCollection<SubjectStats> {
-                new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 2,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(1),
-                    isoDate     = DateTime.UtcNow.AddMonths(1).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 0,
-                    safetySae   = 0
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 7,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(2),
-                    isoDate     = DateTime.UtcNow.AddMonths(2).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 5,
-                    safetySae   = 4
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 6,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(3),
-                    isoDate     = DateTime.UtcNow.AddMonths(3).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 14,
-                    safetySae   = 5
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 5,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(4),
-                    isoDate     = DateTime.UtcNow.AddMonths(4).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 15,
-                    safetySae   = 8
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 6,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(5),
-                    isoDate     = DateTime.UtcNow.AddMonths(5).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 15,
-                    safetySae   = 10
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 8,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(6),
-                    isoDate     = DateTime.UtcNow.AddMonths(6).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 15,
-                    safetySae   = 13
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 7,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(7),
-                    isoDate     = DateTime.UtcNow.AddMonths(7).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 16,
-                    safetySae   = 13
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 3,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(8),
-                    isoDate     = DateTime.UtcNow.AddMonths(8).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 16,
-                    safetySae   = 13
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 6,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(9),
-                    isoDate     = DateTime.UtcNow.AddMonths(9).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 17,
-                    safetySae   = 17
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 1,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(10),
-                    isoDate     = DateTime.UtcNow.AddMonths(10).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 17,
-                    safetySae   = 21
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(11),
-                    isoDate     = DateTime.UtcNow.AddMonths(11).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 19,
-                    safetySae   = 27
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 1,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(12),
-                    isoDate     = DateTime.UtcNow.AddMonths(12).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 31
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(13),
-                    isoDate     = DateTime.UtcNow.AddMonths(13).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 37
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(14),
-                    isoDate     = DateTime.UtcNow.AddMonths(14).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 37
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(15),
-                    isoDate     = DateTime.UtcNow.AddMonths(15).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 41
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(16),
-                    isoDate     = DateTime.UtcNow.AddMonths(16).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 49
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(17),
-                    isoDate     = DateTime.UtcNow.AddMonths(17).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 50
-                }
-            };
+            //ActualSubjectStats = new ObservableCollection<SubjectStats> {
+            //    new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 2,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(1),
+            //        isoDate     = DateTime.UtcNow.AddMonths(1).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 0,
+            //        safetySae   = 0
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 7,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(2),
+            //        isoDate     = DateTime.UtcNow.AddMonths(2).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 5,
+            //        safetySae   = 4
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 6,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(3),
+            //        isoDate     = DateTime.UtcNow.AddMonths(3).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 14,
+            //        safetySae   = 5
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 5,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(4),
+            //        isoDate     = DateTime.UtcNow.AddMonths(4).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 15,
+            //        safetySae   = 8
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 6,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(5),
+            //        isoDate     = DateTime.UtcNow.AddMonths(5).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 15,
+            //        safetySae   = 10
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 8,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(6),
+            //        isoDate     = DateTime.UtcNow.AddMonths(6).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 15,
+            //        safetySae   = 13
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 7,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(7),
+            //        isoDate     = DateTime.UtcNow.AddMonths(7).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 16,
+            //        safetySae   = 13
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 3,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(8),
+            //        isoDate     = DateTime.UtcNow.AddMonths(8).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 16,
+            //        safetySae   = 13
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 6,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(9),
+            //        isoDate     = DateTime.UtcNow.AddMonths(9).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 17,
+            //        safetySae   = 17
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 1,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(10),
+            //        isoDate     = DateTime.UtcNow.AddMonths(10).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 17,
+            //        safetySae   = 21
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(11),
+            //        isoDate     = DateTime.UtcNow.AddMonths(11).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 19,
+            //        safetySae   = 27
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 1,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(12),
+            //        isoDate     = DateTime.UtcNow.AddMonths(12).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 31
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(13),
+            //        isoDate     = DateTime.UtcNow.AddMonths(13).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 37
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(14),
+            //        isoDate     = DateTime.UtcNow.AddMonths(14).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 37
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(15),
+            //        isoDate     = DateTime.UtcNow.AddMonths(15).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 41
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(16),
+            //        isoDate     = DateTime.UtcNow.AddMonths(16).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 49
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(17),
+            //        isoDate     = DateTime.UtcNow.AddMonths(17).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 50
+            //    }
+            //};
 
-            TotalSubjectStats = new ObservableCollection<SubjectStats> {
-                new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 5,
-                    enrolled    = 1,
-                    early_Term  = 0,
-                    complete    = 3,
-                    isoDateTime = DateTime.UtcNow,
-                    isoDate     = DateTime.UtcNow.ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 0,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 5,
-                    enrolled    = 1,
-                    early_Term  = 0,
-                    complete    = 3,
-                    isoDateTime = DateTime.UtcNow.AddMonths(1),
-                    isoDate     = DateTime.UtcNow.AddMonths(1).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 0,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 7,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(2),
-                    isoDate     = DateTime.UtcNow.AddMonths(2).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 5,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 8,
-                    enrolled    = 6,
-                    early_Term  = 1,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(3),
-                    isoDate     = DateTime.UtcNow.AddMonths(3).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 14,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 5,
-                    early_Term  = 3,
-                    complete    = 2,
-                    isoDateTime = DateTime.UtcNow.AddMonths(4),
-                    isoDate     = DateTime.UtcNow.AddMonths(4).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 15,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 7,
-                    enrolled    = 6,
-                    early_Term  = 1,
-                    complete    = 1,
-                    isoDateTime = DateTime.UtcNow.AddMonths(5),
-                    isoDate     = DateTime.UtcNow.AddMonths(5).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 15,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 8,
-                    enrolled    = 8,
-                    early_Term  = 0,
-                    complete    = 3,
-                    isoDateTime = DateTime.UtcNow.AddMonths(6),
-                    isoDate     = DateTime.UtcNow.AddMonths(6).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 15,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 10,
-                    enrolled    = 7,
-                    early_Term  = 2,
-                    complete    = 2,
-                    isoDateTime = DateTime.UtcNow.AddMonths(7),
-                    isoDate     = DateTime.UtcNow.AddMonths(7).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 16,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 1,
-                    enrolled    = 3,
-                    early_Term  = 0,
-                    complete    = 2,
-                    isoDateTime = DateTime.UtcNow.AddMonths(8),
-                    isoDate     = DateTime.UtcNow.AddMonths(8).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 16,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 4,
-                    enrolled    = 6,
-                    early_Term  = 2,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(9),
-                    isoDate     = DateTime.UtcNow.AddMonths(9).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 17,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 6,
-                    enrolled    = 1,
-                    early_Term  = 1,
-                    complete    = 1,
-                    isoDateTime = DateTime.UtcNow.AddMonths(10),
-                    isoDate     = DateTime.UtcNow.AddMonths(10).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 17,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 6,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 1,
-                    isoDateTime = DateTime.UtcNow.AddMonths(11),
-                    isoDate     = DateTime.UtcNow.AddMonths(11).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 19,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 13,
-                    enrolled    = 1,
-                    early_Term  = 3,
-                    complete    = 4,
-                    isoDateTime = DateTime.UtcNow.AddMonths(12),
-                    isoDate     = DateTime.UtcNow.AddMonths(12).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(13),
-                    isoDate     = DateTime.UtcNow.AddMonths(13).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(14),
-                    isoDate     = DateTime.UtcNow.AddMonths(14).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(15),
-                    isoDate     = DateTime.UtcNow.AddMonths(15).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(16),
-                    isoDate     = DateTime.UtcNow.AddMonths(16).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 50
-                }, new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 0,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(17),
-                    isoDate     = DateTime.UtcNow.AddMonths(17).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 20,
-                    safetySae   = 50
-                }
-            };
+            //TotalSubjectStats = new ObservableCollection<SubjectStats> {
+            //    new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 5,
+            //        enrolled    = 1,
+            //        early_Term  = 0,
+            //        complete    = 3,
+            //        isoDateTime = DateTime.UtcNow,
+            //        isoDate     = DateTime.UtcNow.ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 0,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 5,
+            //        enrolled    = 1,
+            //        early_Term  = 0,
+            //        complete    = 3,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(1),
+            //        isoDate     = DateTime.UtcNow.AddMonths(1).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 0,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 7,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(2),
+            //        isoDate     = DateTime.UtcNow.AddMonths(2).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 5,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 8,
+            //        enrolled    = 6,
+            //        early_Term  = 1,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(3),
+            //        isoDate     = DateTime.UtcNow.AddMonths(3).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 14,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 5,
+            //        early_Term  = 3,
+            //        complete    = 2,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(4),
+            //        isoDate     = DateTime.UtcNow.AddMonths(4).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 15,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 7,
+            //        enrolled    = 6,
+            //        early_Term  = 1,
+            //        complete    = 1,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(5),
+            //        isoDate     = DateTime.UtcNow.AddMonths(5).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 15,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 8,
+            //        enrolled    = 8,
+            //        early_Term  = 0,
+            //        complete    = 3,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(6),
+            //        isoDate     = DateTime.UtcNow.AddMonths(6).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 15,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 10,
+            //        enrolled    = 7,
+            //        early_Term  = 2,
+            //        complete    = 2,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(7),
+            //        isoDate     = DateTime.UtcNow.AddMonths(7).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 16,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 1,
+            //        enrolled    = 3,
+            //        early_Term  = 0,
+            //        complete    = 2,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(8),
+            //        isoDate     = DateTime.UtcNow.AddMonths(8).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 16,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 4,
+            //        enrolled    = 6,
+            //        early_Term  = 2,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(9),
+            //        isoDate     = DateTime.UtcNow.AddMonths(9).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 17,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 6,
+            //        enrolled    = 1,
+            //        early_Term  = 1,
+            //        complete    = 1,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(10),
+            //        isoDate     = DateTime.UtcNow.AddMonths(10).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 17,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 6,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 1,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(11),
+            //        isoDate     = DateTime.UtcNow.AddMonths(11).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 19,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 13,
+            //        enrolled    = 1,
+            //        early_Term  = 3,
+            //        complete    = 4,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(12),
+            //        isoDate     = DateTime.UtcNow.AddMonths(12).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(13),
+            //        isoDate     = DateTime.UtcNow.AddMonths(13).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(14),
+            //        isoDate     = DateTime.UtcNow.AddMonths(14).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(15),
+            //        isoDate     = DateTime.UtcNow.AddMonths(15).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(16),
+            //        isoDate     = DateTime.UtcNow.AddMonths(16).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 50
+            //    }, new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 0,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(17),
+            //        isoDate     = DateTime.UtcNow.AddMonths(17).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 20,
+            //        safetySae   = 50
+            //    }
+            //};
 
-            MonthlyRateSubjectStats = new ObservableCollection<SubjectStats> {
-                new SubjectStats {
-                    projectId   = projectId,
-                    screened    = 0,
-                    enrolled    = 15,
-                    early_Term  = 0,
-                    complete    = 0,
-                    isoDateTime = DateTime.UtcNow.AddMonths(1),
-                    isoDate     = DateTime.UtcNow.AddMonths(1).ToString("ddMMMyyyy"),
-                    screenFail  = 0,
-                    safetyPd    = 0,
-                    safetySae   = 0
-                }
-            };
+            //MonthlyRateSubjectStats = new ObservableCollection<SubjectStats> {
+            //    new SubjectStats {
+            //        projectId   = projectId,
+            //        screened    = 0,
+            //        enrolled    = 15,
+            //        early_Term  = 0,
+            //        complete    = 0,
+            //        isoDateTime = DateTime.UtcNow.AddMonths(1),
+            //        isoDate     = DateTime.UtcNow.AddMonths(1).ToString("ddMMMyyyy"),
+            //        screenFail  = 0,
+            //        safetyPd    = 0,
+            //        safetySae   = 0
+            //    }
+            //};
 //#else //TODO: Figure out how to separate out planned, actual and total subject stats from each other
 //            try {
 //                string url = "https://ecs.incresearch.com/ECS/mobile/substats/projectId/" + projectId;
@@ -1136,6 +1134,31 @@ namespace Connect.ViewModels {
 //#endif
 
             IsBusy = false;
+        }
+
+        public void SetTopChartData(string status) {
+
+            status = status.ToLowerInvariant();
+
+            if(SubjectTrends.IsNullOrEmpty()) {
+                return;
+            }
+
+            List<SubjectTrends> groupedTrends = Utility.FilterSubjectTrends(SubjectTrends).Where(trend => trend.eventType.ToLowerInvariant() == status).OrderBy(trend => trend.MonthDateTime).ToList();
+
+            PlannedTopChartSubjectTrends = new ObservableCollection<SubjectTrends>(groupedTrends.Where(trend => !string.IsNullOrEmpty(trend.high)));
+            ActualTopChartSubjectTrends  = new ObservableCollection<SubjectTrends>(groupedTrends.Where(trend => !string.IsNullOrEmpty(trend.actual)));
+
+            List<SubjectTrends> totalSubjectTrends = groupedTrends.Where(trend => !string.IsNullOrEmpty(trend.ceiling)).ToList();
+
+            if(totalSubjectTrends.Count < 1) { //BUG: If the total collection is empty, neither of the other 2 collections displays properly
+                totalSubjectTrends.Add(new SubjectTrends {
+                    ceiling = "10",
+                    month   = "2016-01"
+                });
+            }
+
+            TotalTopChartSubjectTrends = new ObservableCollection<SubjectTrends>(totalSubjectTrends);
         }
     }
 }

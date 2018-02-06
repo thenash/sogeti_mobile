@@ -118,39 +118,39 @@
               </telerikChart:RadCartesianChart.VerticalAxis>
 
               <telerikChart:RadCartesianChart.Series>
-                <telerikChart:LineSeries ItemsSource="{Binding PlannedSubjectStats}"
+                <telerikChart:LineSeries ItemsSource="{Binding PlannedTopChartSubjectTrends}"
                                          Stroke="{StaticResource LightBlue}"
                                          StrokeThickness="2"
                                          DisplayName="Planned">
                   <telerikChart:LineSeries.ValueBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="safetySae"/>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="HighInt"/>
                   </telerikChart:LineSeries.ValueBinding>
                   <telerikChart:LineSeries.CategoryBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="MonthDateTime"/>
                   </telerikChart:LineSeries.CategoryBinding>
                 </telerikChart:LineSeries>
 
-                <telerikChart:LineSeries ItemsSource="{Binding ActualSubjectStats}"
+                <telerikChart:LineSeries ItemsSource="{Binding ActualTopChartSubjectTrends}"
                                          Stroke="{StaticResource Orange}"
                                          StrokeThickness="2"
                                          DisplayName="Actual">
                   <telerikChart:LineSeries.ValueBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="safetySae"/>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="ActualInt"/>
                   </telerikChart:LineSeries.ValueBinding>
                   <telerikChart:LineSeries.CategoryBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="MonthDateTime"/>
                   </telerikChart:LineSeries.CategoryBinding>
                 </telerikChart:LineSeries>
 
-                <telerikChart:LineSeries ItemsSource="{Binding TotalSubjectStats}"
+                <telerikChart:LineSeries ItemsSource="{Binding TotalTopChartSubjectTrends}"
                                          Stroke="{StaticResource DarkGray}"
                                          StrokeThickness="2"
                                          DisplayName="Total">
                   <telerikChart:LineSeries.ValueBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="safetySae"/>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="CeilingInt"/>
                   </telerikChart:LineSeries.ValueBinding>
                   <telerikChart:LineSeries.CategoryBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="MonthDateTime"/>
                   </telerikChart:LineSeries.CategoryBinding>
                 </telerikChart:LineSeries>
               </telerikChart:RadCartesianChart.Series>
