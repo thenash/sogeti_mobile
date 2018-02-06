@@ -109,46 +109,44 @@
               </telerikChart:RadCartesianChart.HorizontalAxis>
               <telerikChart:RadCartesianChart.VerticalAxis>
                 <telerikChart:NumericalAxis x:Name="SiteStatusVerticalAxis"
-                                            MajorStep="5"
                                             LabelFitMode="MultiLine"
-                                            LineColor="Transparent"
-                                            Maximum="24"/>
+                                            LineColor="Transparent"/>
               </telerikChart:RadCartesianChart.VerticalAxis>
 
               <telerikChart:RadCartesianChart.Series>
-                <telerikChart:LineSeries ItemsSource="{Binding PlannedSiteStats}"
+                <telerikChart:LineSeries ItemsSource="{Binding PlannedTopChartSiteTrends}"
                                          Stroke="{StaticResource LightBlue}"
                                          StrokeThickness="2"
                                          DisplayName="Planned">
                   <telerikChart:LineSeries.ValueBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="pssv"/>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="HighInt"/>
                   </telerikChart:LineSeries.ValueBinding>
                   <telerikChart:LineSeries.CategoryBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="MonthDateTime"/>
                   </telerikChart:LineSeries.CategoryBinding>
                 </telerikChart:LineSeries>
 
-                <telerikChart:LineSeries ItemsSource="{Binding ActualSiteStats}"
+                <telerikChart:LineSeries ItemsSource="{Binding ActualTopChartSiteTrends}"
                                          Stroke="{StaticResource Orange}"
                                          StrokeThickness="2"
                                          DisplayName="Actual">
                   <telerikChart:LineSeries.ValueBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="pssv"/>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="ActualInt"/>
                   </telerikChart:LineSeries.ValueBinding>
                   <telerikChart:LineSeries.CategoryBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="MonthDateTime"/>
                   </telerikChart:LineSeries.CategoryBinding>
                 </telerikChart:LineSeries>
 
-                <telerikChart:LineSeries ItemsSource="{Binding TotalSiteStats}"
+                <telerikChart:LineSeries ItemsSource="{Binding TotalTopChartSiteTrends}"
                                          Stroke="{StaticResource DarkGray}"
                                          StrokeThickness="2"
                                          DisplayName="Total">
                   <telerikChart:LineSeries.ValueBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="activated"/>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="CeilingInt"/>
                   </telerikChart:LineSeries.ValueBinding>
                   <telerikChart:LineSeries.CategoryBinding>
-                    <telerikChart:PropertyNameDataPointBinding PropertyName="isoDateTime"/>
+                    <telerikChart:PropertyNameDataPointBinding PropertyName="MonthDateTime"/>
                   </telerikChart:LineSeries.CategoryBinding>
                 </telerikChart:LineSeries>
               </telerikChart:RadCartesianChart.Series>

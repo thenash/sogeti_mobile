@@ -7,6 +7,8 @@ namespace Connect.Pages {
 
     public partial class SitesPage : ContentPage {
 
+        private BoxView _selectedGridBoxView;
+
         private readonly SitesViewModel _viewModel;
 
         private readonly string _projectId;
@@ -199,29 +201,72 @@ namespace Connect.Pages {
             int rowSeparatorCount = 0;
 
             for(int index = 0; index < plannedCount; index++) {     //Create headers
+                string groupName = _viewModel.PlannedBottomChartSiteStats[index].Group;
+
                 int separatorRow = index + rowSeparatorCount + 2;   //Add 2 for the header row and the header separator row
 
                 Color backgroundColor = index % 2 == 0 ? Color.White : lightGray;
 
+                #region Main Background
+
+                BottomGrid.Children.Add(new BoxView {
+                    BackgroundColor = backgroundColor
+                }, 0, 7, separatorRow, separatorRow + 1);
+
+                #endregion
+
+                #region Click-able Background
+
+                int index1 = index;
+
+                BoxView background = new BoxView {
+                    BackgroundColor = Color.Transparent
+                };
+
+                if(groupName.ToLowerInvariant() == SitesViewModel.DefaultSelectedGridStatus) {    //Default to selected
+                    background.BackgroundColor = Utility.GetResource<Color>("PaleBlue");
+                    _selectedGridBoxView = background;
+                }
+
+                background.GestureRecognizers.Add(new TapGestureRecognizer {
+                    Command = new Command<BoxView>(box => {
+                        _selectedGridBoxView.BackgroundColor = Color.Transparent;
+
+                        if(box != null) {
+                            box.BackgroundColor = Utility.GetResource<Color>("PaleBlue");
+                        }
+
+                        _viewModel.SetTopChartData(_viewModel.PlannedBottomChartSiteStats[index1].Group);
+
+                        _selectedGridBoxView = box;
+                    }), CommandParameter = background
+                });
+
+                BottomGrid.Children.Add(background, 0, 7, separatorRow, separatorRow + 1);
+
+                #endregion
+
                 #region Label Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                  = "  " + _viewModel.PlannedBottomChartSiteStats[index].Group,
+                    Text                  = "  " + groupName,
                     TextColor             = darkGray,
                     FontSize              = size,
-                    BackgroundColor       = backgroundColor,
-                    VerticalTextAlignment = TextAlignment.Center
+                    VerticalTextAlignment = TextAlignment.Center,
+                    InputTransparent      = true
                 }, 0, separatorRow);
 
                 BottomGrid.Children.Add(new BoxView {
-                    Style           = vertSeparatorStyle,
-                    BackgroundColor = darkGray
+                    Style            = vertSeparatorStyle,
+                    BackgroundColor  = darkGray,
+                    InputTransparent = true
                 }, 1, separatorRow);
 
                 if(index != plannedCount - 1) {
                     BottomGrid.Children.Add(new BoxView {
-                        Style           = horizontalSeparatorStyle,
-                        BackgroundColor = darkGray
+                        Style            = horizontalSeparatorStyle,
+                        BackgroundColor  = darkGray,
+                        InputTransparent = true
                     }, 0, 7, separatorRow + 1, separatorRow + 2);
 
                     rowSeparatorCount++;
@@ -235,14 +280,15 @@ namespace Connect.Pages {
                     Text                    = _viewModel.PlannedBottomChartSiteStats[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
-                    BackgroundColor         = backgroundColor,
                     HorizontalTextAlignment = TextAlignment.Center,
-                    VerticalTextAlignment   = TextAlignment.Center
+                    VerticalTextAlignment   = TextAlignment.Center,
+                    InputTransparent        = true
                 }, 2, separatorRow);
 
                 BottomGrid.Children.Add(new BoxView {
-                    Style           = vertSeparatorStyle,
-                    BackgroundColor = darkGray
+                    Style            = vertSeparatorStyle,
+                    BackgroundColor  = darkGray,
+                    InputTransparent = true
                 }, 3, separatorRow);
 
                 #endregion
@@ -253,14 +299,15 @@ namespace Connect.Pages {
                     Text                    = _viewModel.ActualBottomChartSiteStats[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
-                    BackgroundColor         = backgroundColor,
                     HorizontalTextAlignment = TextAlignment.Center,
-                    VerticalTextAlignment   = TextAlignment.Center
+                    VerticalTextAlignment   = TextAlignment.Center,
+                    InputTransparent        = true
                 }, 4, separatorRow);
 
                 BottomGrid.Children.Add(new BoxView {
-                    Style           = vertSeparatorStyle,
-                    BackgroundColor = darkGray
+                    Style            = vertSeparatorStyle,
+                    BackgroundColor  = darkGray,
+                    InputTransparent = true
                 }, 5, separatorRow);
 
                 #endregion
@@ -271,9 +318,9 @@ namespace Connect.Pages {
                     Text                    = _viewModel.TotalBottomChartSiteStats[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
-                    BackgroundColor         = backgroundColor,
                     HorizontalTextAlignment = TextAlignment.Center,
-                    VerticalTextAlignment   = TextAlignment.Center
+                    VerticalTextAlignment   = TextAlignment.Center,
+                    InputTransparent        = true
                 }, 6, separatorRow);
 
                 #endregion
