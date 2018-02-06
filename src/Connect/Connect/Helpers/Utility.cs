@@ -14,7 +14,7 @@ namespace Connect.Helpers {
         /// <summary>
         /// Text
         /// </summary>
-        private const string SiteTrendEventTypePostFix = "sitescolumn";
+        public const string SiteTrendEventTypePostFix = "sitescolumn";
 
         /// <summary>
         /// Currently the mockups only show the Event Types contained in this list but the API sends over more. Nash said to just filter out the ones we want for now.
@@ -68,12 +68,18 @@ namespace Connect.Helpers {
 
         #region Site Trends
 
+        public static IEnumerable<SiteTrends> FilterSiteTrends(IList<SiteTrends> chartData) => chartData.Where(dt => ValidSiteTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
+
+        public static List<IGrouping<string, SiteTrends>> GroupSiteTrends(IList<SiteTrends> chartData) {
+            IEnumerable<SiteTrends> filteredTrends = FilterSiteTrends(chartData);
+
+            return filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+        }
+
         public static IEnumerable<GraphCategory> GetSiteTrendsNumberOfPlanned(IList<SiteTrends> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();
 
-            IEnumerable<SiteTrends> filteredTrends = chartData.Where(dt => ValidSiteTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
-
-            List<IGrouping<string, SiteTrends>> groupedCats = filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+            List<IGrouping<string, SiteTrends>> groupedCats = GroupSiteTrends(chartData); //Group by EventType
 
             List<IGrouping<string, SiteTrends>> sortedGroupedCats = SortGroupedSiteTrends(groupedCats); //Sort groups
 
@@ -90,9 +96,7 @@ namespace Connect.Helpers {
         public static IEnumerable<GraphCategory> GetSiteTrendsNumberOfActual(IList<SiteTrends> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();
 
-            IEnumerable<SiteTrends> filteredTrends = chartData.Where(dt => ValidSiteTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
-
-            List<IGrouping<string, SiteTrends>> groupedCats = filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+            List<IGrouping<string, SiteTrends>> groupedCats = GroupSiteTrends(chartData); //Group by EventType
 
             List<IGrouping<string, SiteTrends>> sortedGroupedCats = SortGroupedSiteTrends(groupedCats); //Sort groups
 
@@ -109,9 +113,7 @@ namespace Connect.Helpers {
         public static IEnumerable<GraphCategory> GetSiteTrendsNumberOfTotal(IList<SiteTrends> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();
 
-            IEnumerable<SiteTrends> filteredTrends = chartData.Where(dt => ValidSiteTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
-
-            List<IGrouping<string, SiteTrends>> groupedCats = filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+            List<IGrouping<string, SiteTrends>> groupedCats = GroupSiteTrends(chartData); //Group by EventType
 
             List<IGrouping<string, SiteTrends>> sortedGroupedCats = SortGroupedSiteTrends(groupedCats); //Sort groups
 
@@ -129,12 +131,17 @@ namespace Connect.Helpers {
 
         #region Subject Trends
 
-        public static IEnumerable<GraphCategory> GetSubjectTrendsNumberOfPlanned(IList<SubjectTrends> chartData) {
-            List<GraphCategory> categories = new List<GraphCategory>();
+        public static List<IGrouping<string, SubjectTrends>> GroupSubjectTrends(IList<SubjectTrends> chartData) {
 
             IEnumerable<SubjectTrends> filteredTrends = chartData.Where(dt => ValidSubjectTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
 
-            List<IGrouping<string, SubjectTrends>> groupedCats = filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+            return filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+        }
+
+        public static IEnumerable<GraphCategory> GetSubjectTrendsNumberOfPlanned(IList<SubjectTrends> chartData) {
+            List<GraphCategory> categories = new List<GraphCategory>();
+
+            List<IGrouping<string, SubjectTrends>> groupedCats = GroupSubjectTrends(chartData); //Group by EventType
 
             List<IGrouping<string, SubjectTrends>> sortedGroupedCats = SortGroupedSubjectTrends(groupedCats); //Sort groups
 
@@ -151,9 +158,7 @@ namespace Connect.Helpers {
         public static IEnumerable<GraphCategory> GetSubjectTrendsNumberOfActual(IList<SubjectTrends> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();
 
-            IEnumerable<SubjectTrends> filteredTrends = chartData.Where(dt => ValidSubjectTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
-
-            List<IGrouping<string, SubjectTrends>> groupedCats = filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+            List<IGrouping<string, SubjectTrends>> groupedCats = GroupSubjectTrends(chartData); //Group by EventType
 
             List<IGrouping<string, SubjectTrends>> sortedGroupedCats = SortGroupedSubjectTrends(groupedCats); //Sort groups
 
@@ -170,9 +175,7 @@ namespace Connect.Helpers {
         public static IEnumerable<GraphCategory> GetSubjectTrendsNumberOfTotal(IList<SubjectTrends> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();
 
-            IEnumerable<SubjectTrends> filteredTrends = chartData.Where(dt => ValidSubjectTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
-
-            List<IGrouping<string, SubjectTrends>> groupedCats = filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+            List<IGrouping<string, SubjectTrends>> groupedCats = GroupSubjectTrends(chartData); //Group by EventType
 
             List<IGrouping<string, SubjectTrends>> sortedGroupedCats = SortGroupedSubjectTrends(groupedCats); //Sort groups
 
@@ -189,9 +192,7 @@ namespace Connect.Helpers {
         public static IEnumerable<GraphCategory> GetSubjectTrendsMonthlyRate(IList<SubjectTrends> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();
 
-            IEnumerable<SubjectTrends> filteredTrends = chartData.Where(dt => ValidSubjectTrendEventTypes.Contains(dt.eventType.ToLowerInvariant()));
-
-            List<IGrouping<string, SubjectTrends>> groupedCats = filteredTrends.GroupBy(dt => dt.eventType).ToList(); //Group by EventType
+            List<IGrouping<string, SubjectTrends>> groupedCats = GroupSubjectTrends(chartData); //Group by EventType
 
             List<IGrouping<string, SubjectTrends>> sortedGroupedCats = SortGroupedSubjectTrends(groupedCats); //Sort groups
 
@@ -209,12 +210,16 @@ namespace Connect.Helpers {
 
         #region Visit Metrics
 
+        public static List<IGrouping<string, VisitMetrics>> GroupVisitMetrics(IList<VisitMetrics> chartData) {
+            List<VisitMetrics> filterMetrics = CreateTotalVisitMetric(chartData.Where(dt => ValidVisitMetricEventTypes.Contains(dt.EventType.ToLowerInvariant())).ToList());    //Filter EventType and insert Total model
+
+            return filterMetrics.GroupBy(dt => dt.EventType).ToList(); //Group by EventType
+        }
+
         public static IEnumerable<GraphCategory> GetVisitMetricNumberOfSites(IList<VisitMetrics> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();
 
-            List<VisitMetrics> filterMetrics = CreateTotalVisitMetric(chartData.Where(dt => ValidVisitMetricEventTypes.Contains(dt.EventType.ToLowerInvariant())).ToList());    //Filter EventType and insert Total model
-
-            List<IGrouping<string, VisitMetrics>> groupedCats = filterMetrics.GroupBy(dt => dt.EventType).ToList(); //Group by EventType
+            List<IGrouping<string, VisitMetrics>> groupedCats = GroupVisitMetrics(chartData); //Group by EventType
 
             List<IGrouping<string, VisitMetrics>> sortedGroupedCats = SortGroupedVisitMetrics(groupedCats); //Sort groups
 
@@ -231,9 +236,7 @@ namespace Connect.Helpers {
         public static IEnumerable<GraphCategory> GetVisitMetricNumberOfVisits(IList<VisitMetrics> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();
 
-            List<VisitMetrics> filterMetrics = CreateTotalVisitMetric(chartData.Where(dt => ValidVisitMetricEventTypes.Contains(dt.EventType.ToLowerInvariant())).ToList());    //Filter EventType and insert Total model
-
-            List<IGrouping<string, VisitMetrics>> groupedCats = filterMetrics.GroupBy(dt => dt.EventType).ToList(); //Group by EventType
+            List<IGrouping<string, VisitMetrics>> groupedCats = GroupVisitMetrics(chartData); //Group by EventType
 
             List<IGrouping<string, VisitMetrics>> sortedGroupedCats = SortGroupedVisitMetrics(groupedCats); //Sort groups
 
@@ -250,9 +253,7 @@ namespace Connect.Helpers {
         public static IEnumerable<GraphCategory> GetVisitMetricReportsCompleted(IList<VisitMetrics> chartData) {
             List<GraphCategory> categories = new List<GraphCategory>();
 
-            List<VisitMetrics> filterMetrics = CreateTotalVisitMetric(chartData.Where(dt => ValidVisitMetricEventTypes.Contains(dt.EventType.ToLowerInvariant())).ToList());    //Filter EventType and insert Total model
-
-            List<IGrouping<string, VisitMetrics>> groupedCats = filterMetrics.GroupBy(dt => dt.EventType).ToList(); //Group by EventType
+            List<IGrouping<string, VisitMetrics>> groupedCats = GroupVisitMetrics(chartData); //Group by EventType
 
             List<IGrouping<string, VisitMetrics>> sortedGroupedCats = SortGroupedVisitMetrics(groupedCats); //Sort groups
 
