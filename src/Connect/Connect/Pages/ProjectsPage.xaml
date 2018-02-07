@@ -23,6 +23,7 @@
                FontAttributes="Bold"/>
 
         <myViews:ButtonLabelContentView IconName="search.png"
+                                        InnerBackgroundColor="{StaticResource LightGray}"
                                         HorizontalOptions="End"
                                         WidthRequest="40"
                                         HeightRequest="35"

@@ -41,6 +41,13 @@ namespace Connect.Views {
             set => SetValue(WidthRequestProperty, value);
         }
 
+        public static readonly BindableProperty InnerBackgroundColorProperty = BindableProperty.Create(nameof(InnerBackgroundColor), typeof(Color), typeof(ButtonLabelContentView), Utility.GetResource<Color>("DarkBlue"));
+
+        public Color InnerBackgroundColor {
+            get => (Color)GetValue(InnerBackgroundColorProperty);
+            set => SetValue(InnerBackgroundColorProperty, value);
+        }
+
         public ButtonLabelContentView() {
 
             _label = new Label {
@@ -112,6 +119,10 @@ namespace Connect.Views {
 
                 case nameof(HeightRequest):
                     _frame.HeightRequest = HeightRequest;
+                    break;
+
+                case nameof(InnerBackgroundColor):
+                    _frame.BackgroundColor = InnerBackgroundColor;
                     break;
             }
         }
