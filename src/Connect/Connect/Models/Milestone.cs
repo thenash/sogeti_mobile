@@ -17,16 +17,16 @@ namespace Connect.Models {
             set;
         }
 
-        public DateTime plannedDateTime { get; set; }
+        public DateTime? plannedDateTime { get; set; }
 
-        public DateTime plannedDate {
+        public DateTime? plannedDate {
             get;
             set;
         }
 
-        public DateTime actualDateTime { get; set; }
+        public DateTime? actualDateTime { get; set; }
 
-        public string actualDate {
+        public DateTime? actualDate {
             get;
             set;
         }

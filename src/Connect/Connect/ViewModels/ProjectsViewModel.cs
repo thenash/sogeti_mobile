@@ -9,6 +9,8 @@ using Connect.Helpers;
 using Connect.Models;
 using Xamarin.Forms;
 
+using Microsoft.AppCenter.Crashes;
+
 namespace Connect.ViewModels {
 
     public class ProjectsViewModel : BaseViewModel {
@@ -173,6 +175,8 @@ namespace Connect.ViewModels {
 //            });
 //#else
             try {
+                Projects.Clear();
+
                 string url = "https://ecs.incresearch.com/ECS/mobile/project";
 
                 HttpClient client = new HttpClient();
@@ -184,14 +188,13 @@ namespace Connect.ViewModels {
                     string content = await response.Content.ReadAsStringAsync();
                     List<Project> projects = Utility.DeserializeResponse<List<Project>>(content, "data/projects/projectinfo");
 
-                    Projects.Clear();
-
                     foreach(Project project in projects) {
                         Projects.Add(project);
                     }
                 }
 
             } catch(Exception ex) {
+                
                 ContentPage page = new ContentPage();
                 await page.DisplayAlert("Error", "Unable to load projects.", "OK");
             }

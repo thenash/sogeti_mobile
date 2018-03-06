@@ -184,6 +184,9 @@ namespace Connect.ViewModels {
             try {
                 string url = $"https://ecs.incresearch.com/ECS/mobile/milestones/projectId/{Project.projectId}";
 
+                Milestones.Clear();
+                DisplayMilestones.Clear();
+
                 using(HttpClient client = new HttpClient { Timeout = TimeSpan.FromSeconds(60) }) {
 
                     client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Authorization", App.AuthKey);
@@ -192,9 +195,6 @@ namespace Connect.ViewModels {
                         if(response.IsSuccessStatusCode) {
                             string content = await response.Content.ReadAsStringAsync();
                             List<Milestone> miletones = Utility.DeserializeResponse<List<Milestone>>(content, "data/project/milestone");
-
-                            Milestones.Clear();
-                            DisplayMilestones.Clear();
 
                             foreach(Milestone milestone in miletones) {
                                 Milestones.Add(milestone);

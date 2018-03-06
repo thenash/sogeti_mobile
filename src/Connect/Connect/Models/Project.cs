@@ -24,7 +24,7 @@ namespace Connect.Models {
             set;
         }
 
-        public int phase {
+        public string phase {
             get;
             set;
         }

@@ -257,13 +257,14 @@ namespace Connect.ViewModels {
 
             IsBusy = true;
 
+/*
 #if DEBUG
             await Task.FromResult(0);
 
             Project = new Project {
                 customerName           = "Generic Customer",
                 owningBu               = "9500 Biometrics",
-                phase                  = 4,
+                phase                  = "4",
                 primaryIndication      = "Dry Eye",
                 primaryTherapeuticArea = "Psychiatry",
                 projectDirector        = "Sally Smith",
@@ -271,6 +272,7 @@ namespace Connect.ViewModels {
                 protocolId             = "9083-E1-ES3"
             };
 #else
+*/
             try {
                 string url = "https://ecs.incresearch.com/ECS/mobile/project/projectId/" + projectId;
 
@@ -289,7 +291,7 @@ namespace Connect.ViewModels {
                 ContentPage page = new ContentPage();
                 await page.DisplayAlert("Error", "Unable to load projects.", "OK");
             }
-#endif
+//#endif
 
             IsBusy = false;
         }

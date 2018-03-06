@@ -112,8 +112,8 @@ namespace Connect.Pages {
             Device.BeginInvokeOnMainThread(() => {
                 ProjectCodeLabel.Text  = "Project Code: " + project.projectId;
                 ProtocolIdLabel.Text   = "Protocol ID: " + project.protocolId;
-                CustomerLabel.Text     = project.customerName;
-                BusinessUnitLabel.Text = project.owningBu;
+                CustomerLabel.Text     = "Customer: " + project.customerName;
+                BusinessUnitLabel.Text = "BU: " + project.owningBu;
             });
         }
     }

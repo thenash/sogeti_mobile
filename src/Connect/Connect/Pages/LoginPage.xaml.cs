@@ -15,6 +15,8 @@ namespace Connect.Pages {
 #if DEBUG
             UsernameEntry.Text = "tpdmdev2";
             PasswordEntry.Text = "kL11179%";
+            //UsernameEntry.Text = "amittapalli";
+            //PasswordEntry.Text = "NAsh1234";
 #endif
         }
 
@@ -47,7 +49,7 @@ namespace Connect.Pages {
             //IEnumerable<KeyValuePair<string, string>> formLogin;
 
             FormUrlEncodedContent content = new FormUrlEncodedContent(new[] {
-                new KeyValuePair<string, string>("uid", UsernameEntry.Text),
+                new KeyValuePair<string, string>("uid", UsernameEntry.Text.ToLower()),
                 new KeyValuePair<string, string>("pw", PasswordEntry.Text)
             });
 

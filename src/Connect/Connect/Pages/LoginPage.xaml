@@ -22,7 +22,7 @@
       <StackLayout VerticalOptions="FillAndExpand"
                    Padding="25"
                    Spacing="20">
-
+        
         <Image Source="tpd_logo1024x244.png" />
 
         <Frame HasShadow="False"
