@@ -124,12 +124,10 @@ namespace Connect.ViewModels {
             }
         }
 
-        private readonly string _projectId;
+        public string ProjectId;
 
-        public MonitoringViewModel(string projectId) {
+        public MonitoringViewModel() {
             Title = "Monitoring";
-
-            _projectId = projectId;
 
             CompletionCompliance = new ObservableCollection<ReportCompliance>();
 
@@ -147,7 +145,7 @@ namespace Connect.ViewModels {
         /// <summary>
         /// Command to load/refresh report compliance data.
         /// </summary>
-        public Command LoadReportCompletionsCommand => _oadReportCompletionsCommand ?? (_oadReportCompletionsCommand = new Command(async () => await ExecuteLoadReportCompletionsCommand(_projectId)));
+        public Command LoadReportCompletionsCommand => _oadReportCompletionsCommand ?? (_oadReportCompletionsCommand = new Command(async () => await ExecuteLoadReportCompletionsCommand(ProjectId)));
 
         private async Task ExecuteLoadReportCompletionsCommand(string projectId) {
             if(IsBusy) {
@@ -197,7 +195,7 @@ namespace Connect.ViewModels {
         /// <summary>
         /// Command to load/refresh visit metrics collection.
         /// </summary>
-        public Command LoadVisitMetricsCommand => _loadVisitMetricsCommand ?? (_loadVisitMetricsCommand = new Command(async () => await ExecuteLoadVisitMetricsCommand(_projectId)));
+        public Command LoadVisitMetricsCommand => _loadVisitMetricsCommand ?? (_loadVisitMetricsCommand = new Command(async () => await ExecuteLoadVisitMetricsCommand(ProjectId)));
 
         private async Task ExecuteLoadVisitMetricsCommand(string projectId) {
             if(IsBusy) {
@@ -248,7 +246,7 @@ namespace Connect.ViewModels {
         /// <summary>
         /// Command to load/refresh project info.
         /// </summary>
-        public Command LoadProjectCommand => _loadProjectCommand ?? (_loadProjectCommand = new Command(async () => await ExecuteLoadProjectCommand(_projectId)));
+        public Command LoadProjectCommand => _loadProjectCommand ?? (_loadProjectCommand = new Command(async () => await ExecuteLoadProjectCommand(ProjectId)));
 
         private async Task ExecuteLoadProjectCommand(string projectId) {
             if(IsBusy) {

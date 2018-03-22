@@ -6,24 +6,21 @@ using Xamarin.Forms;
 using Connect.ViewModels;
 using Connect.Views;
 using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter;
 using Rg.Plugins.Popup.Extensions;
 
 namespace Connect.Pages {
 
-    public partial class ProjectInfoPage : ContentPage {
+    public partial class ProjectInfoPage : ProjectInfoPageXaml {
 
         private bool _isCommentsOpen;
         private bool _isContactOpen;
-
-        private readonly ProjectInfoViewModel _viewModel;
 
         private readonly ProjectCommentsPopup _commentsPopup;
         private readonly ContactInfoPopup     _contactInfoPopup;
 
         public ProjectInfoPage() {
 
-            BindingContext = _viewModel = new ProjectInfoViewModel(App.SelectedProject);
+            ViewModel.Project = App.SelectedProject;
 
             InitializeComponent();
 
@@ -51,9 +48,9 @@ namespace Connect.Pages {
 
                     //_commentsPopup.Comments = //TODO: Set project comment data
 
-                    _commentsPopup.ProjectCode  = _viewModel.Project.projectId;
-                    _commentsPopup.CustomerName = _viewModel.Project.customerName;
-                    _commentsPopup.ProtocolId   = _viewModel.Project.protocolId;
+                    _commentsPopup.ProjectCode  = ViewModel.Project.projectId;
+                    _commentsPopup.CustomerName = ViewModel.Project.customerName;
+                    _commentsPopup.ProtocolId   = ViewModel.Project.protocolId;
 
                     await Navigation.PushPopupAsync(_commentsPopup);
                 })
@@ -74,7 +71,7 @@ namespace Connect.Pages {
                         return;
                     }
 
-                    if(_viewModel.Contacts.IsNullOrEmpty()) {
+                    if(ViewModel.Contacts.IsNullOrEmpty()) {
                         await DisplayAlert(string.Empty, "No contact data available.", "OK");
                         OnContactInfoPopupDisappearing(null, null);
                         return;
@@ -82,10 +79,10 @@ namespace Connect.Pages {
 
                     _isContactOpen = true;
 
-                    _contactInfoPopup.Contacts     = _viewModel.Contacts;
-                    _contactInfoPopup.ProjectCode  = _viewModel.Project.projectId;
-                    _contactInfoPopup.CustomerName = _viewModel.Project.customerName;
-                    _contactInfoPopup.ProtocolId   = _viewModel.Project.protocolId;
+                    _contactInfoPopup.Contacts     = ViewModel.Contacts;
+                    _contactInfoPopup.ProjectCode  = ViewModel.Project.projectId;
+                    _contactInfoPopup.CustomerName = ViewModel.Project.customerName;
+                    _contactInfoPopup.ProtocolId   = ViewModel.Project.protocolId;
 
                     await Navigation.PushPopupAsync(_contactInfoPopup);
                 })
@@ -109,14 +106,14 @@ namespace Connect.Pages {
             _contactInfoPopup.Disappearing += OnContactInfoPopupDisappearing;
 
             if(App.LoggedIn) {
-                if(_viewModel.IsInitialized) {
+                if(ViewModel.IsInitialized) {
                     return;
                 }
 
-                _viewModel.IsInitialized = true;
+                ViewModel.IsInitialized = true;
 
-                await _viewModel.ExecuteLoadProjectDetailsCommand();
-                await _viewModel.ExecuteLoadMilestonesCommand();
+                await ViewModel.ExecuteLoadProjectDetailsCommand();
+                await ViewModel.ExecuteLoadMilestonesCommand();
             }
         }
 
@@ -151,18 +148,18 @@ namespace Connect.Pages {
         }
 
         private void OnShowMoreTapped(object sender, EventArgs e) {
-            _viewModel.ExecuteShowMoreMilestones();
+            ViewModel.ExecuteShowMoreMilestones();
 
-            if(_viewModel.DisplayMilestones != null && _viewModel.DisplayMilestones.Count > 0) {
-                MilestoneListView.ScrollTo(_viewModel.DisplayMilestones.Last(), ScrollToPosition.End, true);
+            if(ViewModel.DisplayMilestones != null && ViewModel.DisplayMilestones.Count > 0) {
+                MilestoneListView.ScrollTo(ViewModel.DisplayMilestones.Last(), ScrollToPosition.End, true);
             }
         }
 
         private void OnShowLessTapped(object sender, EventArgs e) {
-            _viewModel.ExecuteShowLessMilestones();
+            ViewModel.ExecuteShowLessMilestones();
 
-            if(_viewModel.DisplayMilestones != null && _viewModel.DisplayMilestones.Count > 0) {
-                MilestoneListView.ScrollTo(_viewModel.DisplayMilestones.Last(), ScrollToPosition.End, true);
+            if(ViewModel.DisplayMilestones != null && ViewModel.DisplayMilestones.Count > 0) {
+                MilestoneListView.ScrollTo(ViewModel.DisplayMilestones.Last(), ScrollToPosition.End, true);
             }
         }
 
@@ -183,7 +180,7 @@ namespace Connect.Pages {
             //    card.ForceLayout();
             //});
 
-            _viewModel.FilterMilestonesByVariance(card.Variance);
+            ViewModel.FilterMilestonesByVariance(card.Variance);
         }
 
         //private void OnVarianceFilterAnimateTapped(object sender, EventArgs e) {
@@ -198,10 +195,12 @@ namespace Connect.Pages {
 
         private void ResetVarianceFilterButtons() {
 
-            //_viewModel.BackgroundColorReset = Color.Default;
-            //OnPropertyChanged(nameof(_viewModel.BackgroundColorReset));//BUG: The VarianceViewCard.BackgroundColorReset binding is not working, so using the workaround below instead
+            //ViewModel.BackgroundColorReset = Color.Default;
+            //OnPropertyChanged(nameof(ViewModel.BackgroundColorReset));//BUG: The VarianceViewCard.BackgroundColorReset binding is not working, so using the workaround below instead
 
             MessagingCenter.Send(this, ConstantKeys.ChangeBackground);
         }
     }
+
+    public class ProjectInfoPageXaml : BaseDetailPage<ProjectInfoViewModel> { }
 }

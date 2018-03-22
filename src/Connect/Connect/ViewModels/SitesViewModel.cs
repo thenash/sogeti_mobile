@@ -175,12 +175,10 @@ namespace Connect.ViewModels {
             }
         }
 
-        private readonly string _projectId;
+        public string ProjectId;
 
-        public SitesViewModel(string projectId) {
+        public SitesViewModel() {
             Title = "Sites";
-
-            _projectId = projectId;
 
             SiteTrends  = new ObservableCollection<SiteTrends>();
             SiteDetails = new ObservableCollection<SiteDetails>();
@@ -200,7 +198,7 @@ namespace Connect.ViewModels {
         /// <summary>
         /// Command to load/refresh site details.
         /// </summary>
-        public Command LoadSiteDetailsCommand => _loadSiteDetailsCommand ?? (_loadSiteDetailsCommand = new Command(async () => await ExecuteLoadSiteDetailsCommand(_projectId)));
+        public Command LoadSiteDetailsCommand => _loadSiteDetailsCommand ?? (_loadSiteDetailsCommand = new Command(async () => await ExecuteLoadSiteDetailsCommand(ProjectId)));
 
         private async Task ExecuteLoadSiteDetailsCommand(string projectId) {
             if(IsBusy) {
@@ -329,7 +327,7 @@ namespace Connect.ViewModels {
         /// <summary>
         /// Command to load/refresh site trends.
         /// </summary>
-        public Command LoadSiteTrendsCommand => _loadSiteTrendsCommand ?? (_loadSiteTrendsCommand = new Command(async () => await ExecuteLoadSiteTrendsCommand(_projectId)));
+        public Command LoadSiteTrendsCommand => _loadSiteTrendsCommand ?? (_loadSiteTrendsCommand = new Command(async () => await ExecuteLoadSiteTrendsCommand(ProjectId)));
 
         private async Task ExecuteLoadSiteTrendsCommand(string projectId) {
             if(IsBusy) {
@@ -432,7 +430,7 @@ namespace Connect.ViewModels {
         /// <summary>
         /// Command to load/refresh site stats.
         /// </summary>
-        public Command LoadSiteStatsCommand  => _loadSiteStatsCommand ?? (_loadSiteStatsCommand = new Command(async () => await ExecuteLoadSiteStatsCommand(_projectId)));
+        public Command LoadSiteStatsCommand  => _loadSiteStatsCommand ?? (_loadSiteStatsCommand = new Command(async () => await ExecuteLoadSiteStatsCommand(ProjectId)));
 
         private async Task ExecuteLoadSiteStatsCommand(string projectId) {
             if(IsBusy) {
@@ -980,7 +978,7 @@ namespace Connect.ViewModels {
         /// <summary>
         /// Command to load/refresh project info.
         /// </summary>
-        public Command LoadProjectCommand => _loadProjectCommand ?? (_loadProjectCommand = new Command(async () => await ExecuteLoadProjectCommand(_projectId)));
+        public Command LoadProjectCommand => _loadProjectCommand ?? (_loadProjectCommand = new Command(async () => await ExecuteLoadProjectCommand(ProjectId)));
 
         private async Task ExecuteLoadProjectCommand(string projectId) {
             if(IsBusy) {

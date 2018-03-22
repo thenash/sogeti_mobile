@@ -5,11 +5,9 @@ using Xamarin.Forms;
 
 namespace Connect.Pages {
 
-    public partial class SubjectsPage : ContentPage {
+    public partial class SubjectsPage : SubjectsPageXaml {
 
         private BoxView _selectedGridBoxView;
-
-        private readonly SubjectsViewModel _viewModel;
 
         private readonly string _projectId;
 
@@ -17,7 +15,7 @@ namespace Connect.Pages {
 
         public SubjectsPage(string projectId) {
 
-            BindingContext = _viewModel = new SubjectsViewModel(_projectId);
+            ViewModel.ProjectId = projectId;
 
             InitializeComponent();
 
@@ -46,13 +44,13 @@ namespace Connect.Pages {
             SizeChanged += OnSizeChanged;
 
             if(App.LoggedIn) {
-                if(_viewModel.IsInitialized) {
+                if(ViewModel.IsInitialized) {
                     return;
                 }
 
-                _viewModel.IsInitialized = true;
+                ViewModel.IsInitialized = true;
 
-                await _viewModel.RefreshData(_projectId);
+                await ViewModel.RefreshData(_projectId);
                 InitGrid();
             }
         }
@@ -114,7 +112,7 @@ namespace Connect.Pages {
                 }
             };
 
-            int plannedCount = _viewModel.PlannedBottomChartSubjectStats.Count;
+            int plannedCount = ViewModel.PlannedBottomChartSubjectStats.Count;
 
             for(int i = 0; i < plannedCount; i++) {
                 BottomGrid.RowDefinitions.Add(new RowDefinition {
@@ -215,7 +213,7 @@ namespace Connect.Pages {
             int rowSeparatorCount = 0;
 
             for(int index = 0; index < plannedCount; index++) {     //Create headers
-                string groupName = _viewModel.PlannedBottomChartSubjectStats[index].Group;
+                string groupName = ViewModel.PlannedBottomChartSubjectStats[index].Group;
 
                 int separatorRow = index + rowSeparatorCount + 2;   //Add 2 for the header row and the header separator row
 
@@ -248,7 +246,7 @@ namespace Connect.Pages {
                             box.BackgroundColor = Utility.GetResource<Color>("PaleBlue");
                         }
 
-                        _viewModel.SetTopChartData(groupName);
+                        ViewModel.SetTopChartData(groupName);
 
                         _selectedGridBoxView = box;
                     }), CommandParameter = background
@@ -287,7 +285,7 @@ namespace Connect.Pages {
                 #region Planned To Date Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                    = _viewModel.PlannedBottomChartSubjectStats[index].Value.ToString(),
+                    Text                    = ViewModel.PlannedBottomChartSubjectStats[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
                     HorizontalTextAlignment = TextAlignment.Center,
@@ -305,7 +303,7 @@ namespace Connect.Pages {
                 #region Actual To Date Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                    = _viewModel.ActualBottomChartSubjectStats[index].Value.ToString(),
+                    Text                    = ViewModel.ActualBottomChartSubjectStats[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
                     HorizontalTextAlignment = TextAlignment.Center,
@@ -323,7 +321,7 @@ namespace Connect.Pages {
                 #region Total Contracted Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                    = _viewModel.TotalBottomChartSubjectStats[index].Value.ToString(),
+                    Text                    = ViewModel.TotalBottomChartSubjectStats[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
                     HorizontalTextAlignment = TextAlignment.Center,
@@ -341,7 +339,7 @@ namespace Connect.Pages {
                 #region Monthly Rate Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                    = _viewModel.MonthlyRateBottomChartSubjectStats[index].Value.ToString(),
+                    Text                    = ViewModel.MonthlyRateBottomChartSubjectStats[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
                     HorizontalTextAlignment = TextAlignment.Center,
@@ -355,4 +353,6 @@ namespace Connect.Pages {
             BottomGrid.ForceLayout();
         }
     }
+
+    public class SubjectsPageXaml : BaseDetailPage<SubjectsViewModel> { }
 }

@@ -6,9 +6,7 @@ using Xamarin.Forms;
 
 namespace Connect.Pages {
 
-    public partial class MonitoringPage : ContentPage {
-
-        private readonly MonitoringViewModel _viewModel;
+    public partial class MonitoringPage : MonitoringPageXaml {
 
         private readonly string _projectId;
 
@@ -16,7 +14,7 @@ namespace Connect.Pages {
 
         public MonitoringPage(string projectId) {
 
-            BindingContext = _viewModel = new MonitoringViewModel(_projectId);
+            ViewModel.ProjectId = projectId;
 
             InitializeComponent();
 
@@ -45,13 +43,13 @@ namespace Connect.Pages {
             SizeChanged += OnSizeChanged;
 
             if(App.LoggedIn) {
-                if(_viewModel.IsInitialized) {
+                if(ViewModel.IsInitialized) {
                     return;
                 }
 
-                _viewModel.IsInitialized = true;
+                ViewModel.IsInitialized = true;
 
-                await _viewModel.RefreshData(_projectId);
+                await ViewModel.RefreshData(_projectId);
                 InitGrid();
             }
         }
@@ -103,9 +101,9 @@ namespace Connect.Pages {
         }
 
         private void InitGrid() {
-            int actualCount         = _viewModel.ActualBottomChartVisitMetrics.Count;
-            int totalCount          = _viewModel.TotalBottomChartVisitMetrics.Count;
-            int reportCompleteCount = _viewModel.ReportsCompletedBottomChartVisitMetrics.Count;
+            int actualCount         = ViewModel.ActualBottomChartVisitMetrics.Count;
+            int totalCount          = ViewModel.TotalBottomChartVisitMetrics.Count;
+            int reportCompleteCount = ViewModel.ReportsCompletedBottomChartVisitMetrics.Count;
 
             if(actualCount < 1 || totalCount < 1 || reportCompleteCount < 1 || actualCount != totalCount || actualCount != reportCompleteCount || totalCount != reportCompleteCount) {  //Make sure all collections have data and they are of equal length
                 Debug.WriteLine("\nIn MonitoringPage.InitGrid() - Collections are empty or do not have the same lengths.\n");
@@ -122,7 +120,7 @@ namespace Connect.Pages {
                 }
             };
 
-            int plannedCount = _viewModel.ActualBottomChartVisitMetrics.Count;
+            int plannedCount = ViewModel.ActualBottomChartVisitMetrics.Count;
 
             for(int i = 0; i < plannedCount; i++) {
                 BottomGrid.RowDefinitions.Add(new RowDefinition {
@@ -209,7 +207,7 @@ namespace Connect.Pages {
             int rowSeparatorCount = 0;
 
             for(int index = 0; index < plannedCount; index++) {     //Create headers
-                string groupName = _viewModel.ActualBottomChartVisitMetrics[index].Group;
+                string groupName = ViewModel.ActualBottomChartVisitMetrics[index].Group;
 
                 int separatorRow = index + rowSeparatorCount + 2;   //Add 2 for the header row and the header separator row
 
@@ -252,7 +250,7 @@ namespace Connect.Pages {
                 #region Actual # of Sites Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                    = _viewModel.ActualBottomChartVisitMetrics[index].Value.ToString(),
+                    Text                    = ViewModel.ActualBottomChartVisitMetrics[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
                     BackgroundColor         = backgroundColor,
@@ -270,7 +268,7 @@ namespace Connect.Pages {
                 #region Total # of Visits Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                    = _viewModel.TotalBottomChartVisitMetrics[index].Value.ToString(),
+                    Text                    = ViewModel.TotalBottomChartVisitMetrics[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
                     BackgroundColor         = backgroundColor,
@@ -288,7 +286,7 @@ namespace Connect.Pages {
                 #region Reports Completed Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                    = _viewModel.ReportsCompletedBottomChartVisitMetrics[index].Value.ToString(),
+                    Text                    = ViewModel.ReportsCompletedBottomChartVisitMetrics[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
                     BackgroundColor         = backgroundColor,
@@ -302,4 +300,6 @@ namespace Connect.Pages {
             BottomGrid.ForceLayout();
         }
     }
+
+    public class MonitoringPageXaml : BaseDetailPage<MonitoringViewModel> { }
 }

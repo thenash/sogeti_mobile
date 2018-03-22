@@ -19,9 +19,8 @@ namespace Connect.ViewModels {
 
         private Variances _selectedVariance = Variances.White;
 
-        public ProjectInfoViewModel(Project project) {
+        public ProjectInfoViewModel() {
             Title      = "Project Information";
-            Project    = project;
             Milestones = new ObservableCollection<Milestone>();
         }
 
