@@ -9,5 +9,6 @@
 
         public const string ChangeBackground = "ChangeBackground";
         public const string ProjectSelected  = "ProjectSelected";
+        public const string SwipePage = "SwipePage";
     }
 }
