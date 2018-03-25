@@ -1,5 +1,6 @@
 ﻿using Foundation;
 using Microsoft.AppCenter.Distribute;
+using SuaveControls.FloatingActionButton.iOS.Renderers;
 using UIKit;
 using Xamarin.Forms;
 
@@ -8,11 +9,13 @@ using Xamarin.Forms;
 
 namespace Connect.iOS {
 
-    [Register("AppDelegate")]
+    [Register(nameof(AppDelegate))]
     public partial class AppDelegate : Xamarin.Forms.Platform.iOS.FormsApplicationDelegate {
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options) {
             Forms.Init();
+
+            FloatingActionButtonRenderer.InitRenderer();
 
             // Code for starting up the Xamarin Test Cloud Agent
 #if ENABLE_TEST_CLOUD
