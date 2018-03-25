@@ -26,69 +26,6 @@ namespace Connect.Pages {
 
             _commentsPopup    = new ProjectCommentsPopup();
             _contactInfoPopup = new ContactInfoPopup();
-
-            #region Gesture Recognizers
-
-            ProjectCommentBackgroundBoxView.GestureRecognizers.Add(new TapGestureRecognizer {
-                Command = new Command(async () => {
-                    Analytics.TrackEvent("Button Clicked", new Dictionary<string, string> {
-                        { "Page", nameof(ProjectInfoPage) },
-                        { "Button", "ProjectCommentButton"}
-                    });
-
-                    ContactInfoBackgroundBoxView.BackgroundColor    = Color.Default;
-                    ProjectCommentBackgroundBoxView.BackgroundColor = Utility.GetResource<Color>("Orange");
-
-                    if(_isCommentsOpen) {
-                        OnCommentsPopupDisappearing(null, null);
-                        return;
-                    }
-
-                    _isCommentsOpen = true;
-
-                    //_commentsPopup.Comments = //TODO: Set project comment data
-
-                    _commentsPopup.ProjectCode  = ViewModel.Project.projectId;
-                    _commentsPopup.CustomerName = ViewModel.Project.customerName;
-                    _commentsPopup.ProtocolId   = ViewModel.Project.protocolId;
-
-                    await Navigation.PushPopupAsync(_commentsPopup);
-                })
-            });
-
-            ContactInfoBackgroundBoxView.GestureRecognizers.Add(new TapGestureRecognizer {
-                Command = new Command(async () => {
-                    Analytics.TrackEvent("Button Clicked", new Dictionary<string, string> {
-                        { "Page", nameof(ProjectInfoPage) },
-                        { "Button", "ContactInfoButton"}
-                    });
-
-                    ProjectCommentBackgroundBoxView.BackgroundColor = Color.Default;
-                    ContactInfoBackgroundBoxView.BackgroundColor    = Utility.GetResource<Color>("Orange");
-
-                    if(_isContactOpen) {
-                        OnContactInfoPopupDisappearing(null, null);
-                        return;
-                    }
-
-                    if(ViewModel.Contacts.IsNullOrEmpty()) {
-                        await DisplayAlert(string.Empty, "No contact data available.", "OK");
-                        OnContactInfoPopupDisappearing(null, null);
-                        return;
-                    }
-
-                    _isContactOpen = true;
-
-                    _contactInfoPopup.Contacts     = ViewModel.Contacts;
-                    _contactInfoPopup.ProjectCode  = ViewModel.Project.projectId;
-                    _contactInfoPopup.CustomerName = ViewModel.Project.customerName;
-                    _contactInfoPopup.ProtocolId   = ViewModel.Project.protocolId;
-
-                    await Navigation.PushPopupAsync(_contactInfoPopup);
-                })
-            });
-
-            #endregion
         }
 
         #region Event Handler Overrides
@@ -135,16 +72,71 @@ namespace Connect.Pages {
 
         #endregion
 
+        private async void OnCommentsClicked(object sender, EventArgs e) {
+            Analytics.TrackEvent("Button Clicked", new Dictionary<string, string> {
+                { "Page", nameof(ProjectInfoPage) },
+                { "Button", "ProjectCommentButton"}
+            });
+
+            //ContactInfoBackgroundBoxView.BackgroundColor = Color.Default;
+            //ProjectCommentBackgroundBoxView.BackgroundColor = Utility.GetResource<Color>("Orange");
+
+            if(_isCommentsOpen) {
+                OnCommentsPopupDisappearing(null, null);
+                return;
+            }
+
+            _isCommentsOpen = true;
+
+            //_commentsPopup.Comments = //TODO: Set project comment data
+
+            _commentsPopup.ProjectCode = ViewModel.Project.projectId;
+            _commentsPopup.CustomerName = ViewModel.Project.customerName;
+            _commentsPopup.ProtocolId = ViewModel.Project.protocolId;
+
+            await Navigation.PushPopupAsync(_commentsPopup);
+        }
+
+        private async void OnContactsClicked(object sender, EventArgs e) {
+            Analytics.TrackEvent("Button Clicked", new Dictionary<string, string> {
+                { "Page", nameof(ProjectInfoPage) },
+                { "Button", "ContactInfoButton"}
+            });
+
+            //ProjectCommentBackgroundBoxView.BackgroundColor = Color.Default;
+            //ContactInfoBackgroundBoxView.BackgroundColor = Utility.GetResource<Color>("Orange");
+
+            if(_isContactOpen) {
+                OnContactInfoPopupDisappearing(null, null);
+                return;
+            }
+
+            if(ViewModel.Contacts.IsNullOrEmpty()) {
+                await DisplayAlert(string.Empty, "No contact data available.", "OK");
+                OnContactInfoPopupDisappearing(null, null);
+                return;
+            }
+
+            _isContactOpen = true;
+
+            _contactInfoPopup.Contacts = ViewModel.Contacts;
+            _contactInfoPopup.ProjectCode = ViewModel.Project.projectId;
+            _contactInfoPopup.CustomerName = ViewModel.Project.customerName;
+            _contactInfoPopup.ProtocolId = ViewModel.Project.protocolId;
+
+            await Navigation.PushPopupAsync(_contactInfoPopup);
+        }
+
         private void OnCommentsPopupDisappearing(object sender, EventArgs eventArgs) {
             _isCommentsOpen = false;
 
-            ProjectCommentBackgroundBoxView.BackgroundColor = Color.Default;
+            //ProjectCommentBackgroundBoxView.BackgroundColor = Color.Default;
         }
 
         private void OnContactInfoPopupDisappearing(object sender, EventArgs eventArgs) {
             _isContactOpen = false;
 
-            ContactInfoBackgroundBoxView.BackgroundColor = Color.Default;
+            //ContactInfoBackgroundBoxView.BackgroundColor = Color.Default;
         }
 
         private void OnShowMoreTapped(object sender, EventArgs e) {
