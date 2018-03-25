@@ -16,9 +16,6 @@ namespace Connect.Pages {
 
         #region Properties
 
-        private double _swipeDistance;
-        private const int MinSwipeDistance = 120;
-
         private static string _projectIdSearch;
         private static string _protocolIdSearch;
 
@@ -132,29 +129,6 @@ namespace Connect.Pages {
 
                 _projectIdSearch  = null;
                 _protocolIdSearch = protocolId;
-            }
-        }
-
-        private void OnPanUpdated(object sender, PanUpdatedEventArgs e) {
-            switch(e.StatusType) {
-                case GestureStatus.Running:
-                    _swipeDistance = e.TotalX;
-                    break;
-
-                case GestureStatus.Completed:
-                    HandleSwiped();
-                    break;
-
-                case GestureStatus.Started:
-                case GestureStatus.Canceled:
-                    _swipeDistance = 0;
-                    break;
-            }
-        }
-
-        private void HandleSwiped() {
-            if(_swipeDistance < 0 && Math.Abs((int)_swipeDistance) > MinSwipeDistance) {  //Pan was from left to right and was long enough to register as a swipe TODO: Add edge swipe detection
-                MessagingCenter.Send<ProjectsPage, ContentPage>(this, ConstantKeys.SwipePage, new ProjectInfoPage());
             }
         }
     }

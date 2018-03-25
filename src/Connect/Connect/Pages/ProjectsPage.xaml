@@ -16,11 +16,6 @@
     <StackLayout Padding="0,10,0,0"
                  HorizontalOptions="Center">
 
-      <StackLayout.GestureRecognizers>
-        <PanGestureRecognizer PanUpdated="OnPanUpdated"
-                               TouchPoints="2"/>
-      </StackLayout.GestureRecognizers>
-
       <StackLayout Orientation="Horizontal"
                    Padding="10,0">
         <Label Text="{Binding ProjectCount, StringFormat='Results ({0})'}"
