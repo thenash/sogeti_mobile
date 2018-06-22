@@ -5,11 +5,9 @@ using Xamarin.Forms;
 
 namespace Connect.Pages {
 
-    public partial class SitesPage : ContentPage {
+    public partial class SitesPage : SitesPageXaml {
 
         private BoxView _selectedGridBoxView;
-
-        private readonly SitesViewModel _viewModel;
 
         private readonly string _projectId;
 
@@ -17,7 +15,7 @@ namespace Connect.Pages {
 
         public SitesPage(string projectId) {
 
-            BindingContext = _viewModel = new SitesViewModel(_projectId);
+            ViewModel.ProjectId = projectId;
 
             InitializeComponent();
 
@@ -46,13 +44,13 @@ namespace Connect.Pages {
             SizeChanged += OnSizeChanged;
 
             if(App.LoggedIn) {
-                if(_viewModel.IsInitialized) {
+                if(ViewModel.IsInitialized) {
                     return;
                 }
 
-                _viewModel.IsInitialized = true;
+                ViewModel.IsInitialized = true;
 
-                await _viewModel.RefreshData(_projectId);
+                await ViewModel.RefreshData(_projectId);
                 InitGrid();
             }
         }
@@ -114,7 +112,7 @@ namespace Connect.Pages {
                 }
             };
 
-            int plannedCount = _viewModel.PlannedBottomChartSiteStats.Count;
+            int plannedCount = ViewModel.PlannedBottomChartSiteStats.Count;
 
             for(int i = 0; i < plannedCount; i++) {
                 BottomGrid.RowDefinitions.Add(new RowDefinition {
@@ -201,7 +199,7 @@ namespace Connect.Pages {
             int rowSeparatorCount = 0;
 
             for(int index = 0; index < plannedCount; index++) {     //Create headers
-                string groupName = _viewModel.PlannedBottomChartSiteStats[index].Group;
+                string groupName = ViewModel.PlannedBottomChartSiteStats[index].Group;
 
                 int separatorRow = index + rowSeparatorCount + 2;   //Add 2 for the header row and the header separator row
 
@@ -234,7 +232,7 @@ namespace Connect.Pages {
                             box.BackgroundColor = Utility.GetResource<Color>("PaleBlue");
                         }
 
-                        _viewModel.SetTopChartData(groupName);
+                        ViewModel.SetTopChartData(groupName);
 
                         _selectedGridBoxView = box;
                     }), CommandParameter = background
@@ -275,7 +273,7 @@ namespace Connect.Pages {
                 #region Planned To Date Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                    = _viewModel.PlannedBottomChartSiteStats[index].Value.ToString(),
+                    Text                    = ViewModel.PlannedBottomChartSiteStats[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
                     HorizontalTextAlignment = TextAlignment.Center,
@@ -294,7 +292,7 @@ namespace Connect.Pages {
                 #region Actual To Date Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                    = _viewModel.ActualBottomChartSiteStats[index].Value.ToString(),
+                    Text                    = ViewModel.ActualBottomChartSiteStats[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
                     HorizontalTextAlignment = TextAlignment.Center,
@@ -313,7 +311,7 @@ namespace Connect.Pages {
                 #region Total Contracted Column
 
                 BottomGrid.Children.Add(new Label {
-                    Text                    = _viewModel.TotalBottomChartSiteStats[index].Value.ToString(),
+                    Text                    = ViewModel.TotalBottomChartSiteStats[index].Value.ToString(),
                     TextColor               = darkGray,
                     FontSize                = size,
                     HorizontalTextAlignment = TextAlignment.Center,
@@ -327,4 +325,6 @@ namespace Connect.Pages {
             BottomGrid.ForceLayout();
         }
     }
+
+    public class SitesPageXaml : BaseDetailPage<SitesViewModel> { }
 }

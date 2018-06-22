@@ -12,7 +12,7 @@ using Rg.Plugins.Popup.Extensions;
 
 namespace Connect.Pages {
 
-    public partial class ProjectsPage : ContentPage {
+    public partial class ProjectsPage : ProjectsPageXaml {
 
         #region Properties
 
@@ -21,16 +21,11 @@ namespace Connect.Pages {
 
         private readonly FilterSearchPopup _filterSearchPopup;
 
-        private readonly ProjectsViewModel _viewModel;
-
         #endregion
 
         #region Constructors
 
         public ProjectsPage() {
-
-            BindingContext = _viewModel = new ProjectsViewModel();
-
             InitializeComponent();
 
             _filterSearchPopup = new FilterSearchPopup();
@@ -82,24 +77,24 @@ namespace Connect.Pages {
         }
 
         private void OnProjectsFiltered(object sender, ItemTappedEventArgs itemTappedEventArgs) {
-            if(_viewModel.Projects == null) {
+            if(ViewModel.Projects == null) {
                 return;
             }
 
             if(itemTappedEventArgs.Item == null) {  //Clear filter if null
-                _viewModel.DisplayProjects = new ObservableCollection<Project>(_viewModel.Projects);
+                ViewModel.DisplayProjects = new ObservableCollection<Project>(ViewModel.Projects);
                 return;
             }
 
             FilterSearchItem item = (FilterSearchItem)itemTappedEventArgs.Item;
 
             if(!string.IsNullOrEmpty(item.ProjectId)) {
-                _viewModel.DisplayProjects = new ObservableCollection<Project>(_viewModel.Projects.Where(p => p.projectId.Equals(item.ProjectId, StringComparison.OrdinalIgnoreCase)));
+                ViewModel.DisplayProjects = new ObservableCollection<Project>(ViewModel.Projects.Where(p => p.projectId.Equals(item.ProjectId, StringComparison.OrdinalIgnoreCase)));
 
                 _projectIdSearch  = item.ProjectId;
                 _protocolIdSearch = null;
             } else if(!string.IsNullOrEmpty(item.ProtocolId)) {
-                _viewModel.DisplayProjects = new ObservableCollection<Project>(_viewModel.Projects.Where(p => p.protocolId.Equals(item.ProtocolId, StringComparison.OrdinalIgnoreCase)));
+                ViewModel.DisplayProjects = new ObservableCollection<Project>(ViewModel.Projects.Where(p => p.protocolId.Equals(item.ProtocolId, StringComparison.OrdinalIgnoreCase)));
 
                 _projectIdSearch  = null;
                 _protocolIdSearch = item.ProtocolId;
@@ -109,32 +104,34 @@ namespace Connect.Pages {
         #endregion
 
         public async Task LoadProjectsAsync() {
-            await _viewModel.ExecuteLoadCommand();
+            await ViewModel.ExecuteLoadCommand();
 
             FilterDisplayProjects(_projectIdSearch, _protocolIdSearch);//Filter projects if we are returning to the page from a previous page
 
-            _filterSearchPopup.BusinessUnits = _viewModel.BusinessUnits;
+            _filterSearchPopup.BusinessUnits = ViewModel.BusinessUnits;
 
             _filterSearchPopup.Items = _filterSearchPopup.Items ?? new List<FilterSearchItem>();
 
             _filterSearchPopup.Items.Clear();
 
-            _filterSearchPopup.Items.AddRange(_viewModel.FilterSearchProjectItems);
-            _filterSearchPopup.Items.AddRange(_viewModel.FilterSearchProrocolItems);
+            _filterSearchPopup.Items.AddRange(ViewModel.FilterSearchProjectItems);
+            _filterSearchPopup.Items.AddRange(ViewModel.FilterSearchProrocolItems);
         }
 
         private void FilterDisplayProjects(string projectId, string protocolId) {
             if(!string.IsNullOrEmpty(projectId)) {
-                _viewModel.DisplayProjects = new ObservableCollection<Project>(_viewModel.Projects.Where(p => p.projectId.Equals(projectId, StringComparison.OrdinalIgnoreCase)));
+                ViewModel.DisplayProjects = new ObservableCollection<Project>(ViewModel.Projects.Where(p => p.projectId.Equals(projectId, StringComparison.OrdinalIgnoreCase)));
 
                 _projectIdSearch  = projectId;
                 _protocolIdSearch = null;
             } else if(!string.IsNullOrEmpty(protocolId)) {
-                _viewModel.DisplayProjects = new ObservableCollection<Project>(_viewModel.Projects.Where(p => p.protocolId.Equals(protocolId, StringComparison.OrdinalIgnoreCase)));
+                ViewModel.DisplayProjects = new ObservableCollection<Project>(ViewModel.Projects.Where(p => p.protocolId.Equals(protocolId, StringComparison.OrdinalIgnoreCase)));
 
                 _projectIdSearch  = null;
                 _protocolIdSearch = protocolId;
             }
         }
     }
+
+    public class ProjectsPageXaml : BaseDetailPage<ProjectsViewModel> { }
 }

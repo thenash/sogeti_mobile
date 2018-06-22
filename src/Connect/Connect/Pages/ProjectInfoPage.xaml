@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect"
-             x:Class="Connect.Pages.ProjectInfoPage"
-             x:Name="ProjectInfoContentPage"
-             BackgroundColor="{StaticResource LightGray}"
-             Title="{Binding Title}">
+<pages:ProjectInfoPageXaml xmlns="http://xamarin.com/schemas/2014/forms"
+                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                           xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect"
+                           xmlns:pages="clr-namespace:Connect.Pages;assembly=Connect"
+                           xmlns:views="clr-namespace:SuaveControls.Views;assembly=SuaveControls.FloatingActionButton"
+                           x:Class="Connect.Pages.ProjectInfoPage"
+                           x:Name="ProjectInfoContentPage"
+                           BackgroundColor="{StaticResource LightGray}"
+                           Title="{Binding Title}">
 
   <ContentPage.ToolbarItems>
     <ToolbarItem Icon="logout.png"
@@ -14,10 +16,10 @@
 
   <ContentPage.Content>
 
-    <StackLayout Padding="10,5,10,10"
+    <StackLayout Padding="0"
                  HorizontalOptions="Center"
-                 Spacing="10">
-      <StackLayout Padding="0"
+                 Spacing="0">
+      <StackLayout Padding="10,5,10,10"
                    Spacing="0">
 
         <Grid ColumnSpacing="3"
@@ -164,7 +166,8 @@
                   BackgroundColor="Transparent"
                   Footer="{Binding .}"
                   HasUnevenRows="True"
-                  ItemsSource="{Binding DisplayMilestones}">
+                  ItemsSource="{Binding DisplayMilestones}"
+                  VerticalOptions="FillAndExpand">
           <ListView.SeparatorVisibility>
             <OnPlatform x:TypeArguments="SeparatorVisibility">
               <On Platform="iOS"
@@ -374,9 +377,10 @@
                              HorizontalOptions="Center"
                              Padding="0,5"
                              InputTransparent="True"
+                             RotationX="180"
                              Grid.Row="0"
                              Grid.Column="3">
-                  <Image Source="chev_up.png"
+                  <Image Source="chev_down.png"
                          HorizontalOptions="Center"/>
                 </StackLayout>
 
@@ -398,25 +402,20 @@
         </ListView>
       </StackLayout>
 
-      <Grid BackgroundColor="White"
-            RowSpacing="0"
-            ColumnSpacing="0"
-            HorizontalOptions="End">
+      <Grid HorizontalOptions="End"
+            Padding="0,0,0,10">
         <Grid.RowDefinitions>
-          <RowDefinition Height="1"/>
-          <RowDefinition Height="Auto"/>
-          <RowDefinition Height="1"/>
+          <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="1"/>
           <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="1"/>
           <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="1"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <BoxView Style="{StaticResource HorizontalSeparatorStyle}"
+        <!--<BoxView Style="{StaticResource HorizontalSeparatorStyle}"
                  HeightRequest="1"
                  BackgroundColor="{StaticResource DarkGray}"
                  Grid.Row="0"
@@ -461,20 +460,7 @@
                VerticalTextAlignment="Center"
                InputTransparent="True"
                Grid.Row="1"
-               Grid.Column="3"/> <!-- TODO: Dynamically set number of contacts in label text -->
-
-        <!--<StackLayout x:Name="ContactInfoButtonStackLayout"
-                     AutomationId="ProjectInfoContactInfoButtonStackLayout"
-                     HorizontalOptions="Center"
-                     Padding="0,7"
-                     Grid.Row="1"
-                     Grid.Column="3">
-
-          <StackLayout.GestureRecognizers>
-            <TapGestureRecognizer Tapped="OnContactInfoExecuteTapped"/>
-            <TapGestureRecognizer Tapped="OnContactInfoAnimateTapped"/>
-          </StackLayout.GestureRecognizers>
-        </StackLayout>-->
+               Grid.Column="3"/>
 
         <BoxView Style="{StaticResource VerticalSeparatorStyle}"
                  HeightRequest="1"
@@ -487,8 +473,39 @@
                  BackgroundColor="{StaticResource DarkGray}"
                  Grid.Row="2"
                  Grid.Column="0"
-                 Grid.ColumnSpan="5"/>
+                 Grid.ColumnSpan="5"/>-->
+
+        <views:FloatingActionButton AutomationId="ProjectInfoPageRightNavButton"
+                                    HorizontalOptions="Start"
+                                    Image="chev_right.png"
+                                    RotationY="180"
+                                    TranslationX="5"
+                                    Clicked="OnLeftNavClicked"
+                                    Grid.Row="0"
+                                    Grid.Column="0"/>
+
+        <views:FloatingActionButton AutomationId="ProjectInfoPageProjectCommentButton"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Image="comments.png"
+                                    Clicked="OnCommentsClicked"
+                                    Grid.Row="0"
+                                    Grid.Column="1"/>
+
+        <views:FloatingActionButton AutomationId="ProjectInfoPageContactInfoButton"
+                                    HorizontalOptions="CenterAndExpand"
+                                    Image="contacts.png"
+                                    Clicked="OnContactsClicked"
+                                    Grid.Row="0"
+                                    Grid.Column="2"/>
+
+        <views:FloatingActionButton AutomationId="ProjectInfoPageLeftNavButton"
+                                    HorizontalOptions="End"
+                                    Image="chev_right.png"
+                                    TranslationX="-5"
+                                    Clicked="OnRightNavClicked"
+                                    Grid.Row="0"
+                                    Grid.Column="3"/>
       </Grid>
     </StackLayout>
   </ContentPage.Content>
-</ContentPage>
+</pages:ProjectInfoPageXaml>

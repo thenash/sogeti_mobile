@@ -5,22 +5,14 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportEffect(typeof(DropShadowEffect), "DropShadowEffect")]
-namespace Connect.Droid.Effects
-{
-    public class DropShadowEffect : PlatformEffect
-    {
-        public DropShadowEffect()
-        {
-        }
+namespace Connect.Droid.Effects {
 
-        protected override void OnAttached()
-        {
-            //Container
-        }
+    public class DropShadowEffect : PlatformEffect {
 
-        protected override void OnDetached()
-        {
-            
-        }
+        public DropShadowEffect() { }
+
+        protected override void OnAttached() { }
+
+        protected override void OnDetached() { }
     }
 }

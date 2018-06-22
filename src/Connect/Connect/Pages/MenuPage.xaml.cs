@@ -51,6 +51,10 @@ namespace Connect.Pages {
                 SetProjectLabels(project);
                 Navigate(new ProjectInfoPage());
             });
+
+            /* Subscription is going in the constructor so that the page will update values whether its displayed or not */
+            MessagingCenter.Unsubscribe<MainBasePage, ContentPage>(this, ConstantKeys.SwipePage);
+            MessagingCenter.Subscribe<MainBasePage, ContentPage>(this, ConstantKeys.SwipePage, (vm, page) => Navigate(page));
         }
 
         public void Navigate(Page page) {

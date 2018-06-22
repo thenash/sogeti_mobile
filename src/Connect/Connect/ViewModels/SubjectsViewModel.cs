@@ -210,12 +210,10 @@ namespace Connect.ViewModels {
             }
         }
 
-        private readonly string _projectId;
+        public string ProjectId;
 
-        public SubjectsViewModel(string projectId) {
+        public SubjectsViewModel() {
             Title = "Subjects";
-
-            _projectId = projectId;
 
             SubjectTrends  = new ObservableCollection<SubjectTrends>();
             SubjectDetails = new ObservableCollection<SubjectDetails>();
@@ -235,7 +233,7 @@ namespace Connect.ViewModels {
         /// <summary>
         /// Command to load/refresh artitists
         /// </summary>
-        public Command LoadSubjectDetailsCommand => _loadSubjectDetailsCommand ?? (_loadSubjectDetailsCommand = new Command(async () => await ExecuteLoadSubjectDetailsCommand(_projectId)));
+        public Command LoadSubjectDetailsCommand => _loadSubjectDetailsCommand ?? (_loadSubjectDetailsCommand = new Command(async () => await ExecuteLoadSubjectDetailsCommand(ProjectId)));
 
         private async Task ExecuteLoadSubjectDetailsCommand(string projectId) {
             if(IsBusy) {
@@ -365,7 +363,7 @@ namespace Connect.ViewModels {
         /// <summary>
         /// Command to load/refresh artitists
         /// </summary>
-        public Command LoadSubjectTrendsCommand => _loadSubjectTrendsCommand ?? (_loadSubjectTrendsCommand = new Command(async () => await ExecuteLoadSubjectTrendsCommand(_projectId)));
+        public Command LoadSubjectTrendsCommand => _loadSubjectTrendsCommand ?? (_loadSubjectTrendsCommand = new Command(async () => await ExecuteLoadSubjectTrendsCommand(ProjectId)));
 
         private async Task ExecuteLoadSubjectTrendsCommand(string projectId) {
             if(IsBusy) {
@@ -469,7 +467,7 @@ namespace Connect.ViewModels {
         /// <summary>
         /// Command to load/refresh Subject Stats.
         /// </summary>
-        public Command LoadSubjectStatsCommand  => _loadSubjectStatsCommand ?? (_loadSubjectStatsCommand = new Command(async () => await ExecuteLoadSubjectStatsCommand(_projectId)));
+        public Command LoadSubjectStatsCommand  => _loadSubjectStatsCommand ?? (_loadSubjectStatsCommand = new Command(async () => await ExecuteLoadSubjectStatsCommand(ProjectId)));
 
         private async Task ExecuteLoadSubjectStatsCommand(string projectId) {
             if(IsBusy) {
@@ -1057,7 +1055,7 @@ namespace Connect.ViewModels {
             //        safetySae   = 0
             //    }
             //};
-//#else //TODO: Figure out how to separate out planned, actual and total subject stats from each other
+//#else
 //            try {
 //                string url = "https://ecs.incresearch.com/ECS/mobile/substats/projectId/" + projectId;
 
@@ -1090,7 +1088,7 @@ namespace Connect.ViewModels {
         /// <summary>
         /// Command to load/refresh a project
         /// </summary>
-        public Command LoadProjectCommand => _loadProjectCommand ?? (_loadProjectCommand = new Command(async () => await ExecuteLoadProjectCommand(_projectId)));
+        public Command LoadProjectCommand => _loadProjectCommand ?? (_loadProjectCommand = new Command(async () => await ExecuteLoadProjectCommand(ProjectId)));
 
         private async Task ExecuteLoadProjectCommand(string projectId) {
             if(IsBusy) {

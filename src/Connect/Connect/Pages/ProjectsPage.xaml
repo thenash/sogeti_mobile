@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Connect.Pages.ProjectsPage"
-             xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect"
-             x:Name="ProjectsPageItem"
-             BackgroundColor="{StaticResource LightGray}"
-             Title="{Binding Title}">
+<pages:ProjectsPageXaml xmlns="http://xamarin.com/schemas/2014/forms"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        x:Class="Connect.Pages.ProjectsPage"
+                        xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect"
+                        xmlns:pages="clr-namespace:Connect.Pages;assembly=Connect"
+                        x:Name="ProjectsPageItem"
+                        BackgroundColor="{StaticResource LightGray}"
+                        Title="{Binding Title}">
   <ContentPage.ToolbarItems>
     <ToolbarItem Icon="logout.png"
                  Command="{Binding LogoutCommand}"/>
@@ -14,6 +15,7 @@
 	<ContentPage.Content>
     <StackLayout Padding="0,10,0,0"
                  HorizontalOptions="Center">
+
       <StackLayout Orientation="Horizontal"
                    Padding="10,0">
         <Label Text="{Binding ProjectCount, StringFormat='Results ({0})'}"
@@ -60,4 +62,5 @@
       </ListView>
     </StackLayout>
   </ContentPage.Content>
-</ContentPage>
+</pages:ProjectsPageXaml>
+

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect"
-             xmlns:telerikChart="clr-namespace:Telerik.XamarinForms.Chart;assembly=Telerik.XamarinForms.Chart"
-             x:Class="Connect.Pages.SubjectsPage"
-             BackgroundColor="{StaticResource LightGray}"
-             Title="{Binding Title}">
+<pages:SubjectsPageXaml xmlns="http://xamarin.com/schemas/2014/forms"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:myViews="clr-namespace:Connect.Views;assembly=Connect"
+                        xmlns:telerikChart="clr-namespace:Telerik.XamarinForms.Chart;assembly=Telerik.XamarinForms.Chart"
+                        xmlns:pages="clr-namespace:Connect.Pages;assembly=Connect"
+                        x:Class="Connect.Pages.SubjectsPage"
+                        BackgroundColor="{StaticResource LightGray}"
+                        Title="{Binding Title}">
 
   <ContentPage.ToolbarItems>
     <ToolbarItem Icon="logout.png"
@@ -477,4 +478,4 @@
       </StackLayout>
     </ScrollView>
   </ContentPage.Content>
-</ContentPage>
+</pages:SubjectsPageXaml>
