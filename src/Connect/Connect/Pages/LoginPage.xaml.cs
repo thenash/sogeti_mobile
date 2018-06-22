@@ -13,9 +13,10 @@ namespace Connect.Pages {
             InitializeComponent();
 
 #if DEBUG
-            UsernameEntry.Text = "tpdmdev2";
-            PasswordEntry.Text = "kL11179%";
-
+            //UsernameEntry.Text = "tpdmdev2";
+            //PasswordEntry.Text = "kL11179%";
+            UsernameEntry.Text = "amittapalli";
+            PasswordEntry.Text = "NAsh1234";
 #endif
         }
 
